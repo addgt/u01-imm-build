@@ -1,1 +1,129 @@
-RnJvbTogVTAxIHJvdXRlLUIgbG9jYWwgZml4IDxub25lPgpTdWJqZWN0OiBbUEFUQ0hdIHBvd2VyOiBzdXBwbHk6IHBtODkxNjogcmVhZCB0aGUgMTYtYml0IHBlcmlwaGVyYWwgdHlwZSBpbnRvIHUxNgoKQm90aCBwbTg5MTYtbGJjIGFuZCBwbTg5MTYtYm1zLXZtIHZlcmlmeSB0aGUgUE1JQyBwZXJpcGhlcmFsIHR5cGUgd2l0aApyZWdtYXBfYnVsa19yZWFkKC4uLiwgJnRtcCwgMikgaW50byBhbiB1bmluaXRpYWxpc2VkICd1bnNpZ25lZCBpbnQnLiBPbmx5IHRoZQpsb3cgdHdvIGJ5dGVzIGFyZSB3cml0dGVuLCBzbyB0aGUgY29tcGFyaXNvbiBhZ2FpbnN0IFBNODkxNl8qX1RZUEUgc2VlcyBzdGFjawpnYXJiYWdlIGluIHRoZSB1cHBlciBoYWxmIGFuZCBhbHdheXMgZmFpbHM6CiAgcG04OTE2LWxiYyAuLi4gZXJyb3IgLUVOT0RFVjogRGV2aWNlIHJlcG9ydGVkIHdyb25nIHR5cGU6IDB4RkZGRjE1MDIKICBwbTg5MTYtYm1zLXZtIC4uLiBlcnJvciAtRU5PREVWOiBEZXZpY2UgcmVwb3J0ZWQgd3JvbmcgdHlwZTogMHhGRkZGMDIwRAoobG93IGhhbHZlcyBtYXRjaCB0aGUgZXhwZWN0ZWQgY29uc3RhbnRzIGV4YWN0bHksIHRoZSBQTUlDIGlzIGZpbmUuKQpTYW1lIHBhdHRlcm4gaW4gdGhlIEJNUy1WTSBPQ1YgcmVhZHMgbWFrZXMgbGFzdF9vY3YgPSB0bXAgKiAzMDAgY2FycnkgZ2FyYmFnZS4KVXNlIHUxNiBidWZmZXJzLCBsaWtlIHRoZSBGSUZPIHJlYWRzIGluIHRoZSBzYW1lIGZpbGUgYWxyZWFkeSBkby4KLS0tIGEvZHJpdmVycy9wb3dlci9zdXBwbHkvcG04OTE2X2xiYy5jCisrKyBiL2RyaXZlcnMvcG93ZXIvc3VwcGx5L3BtODkxNl9sYmMuYwpAQCAtMjU2LDYgKzI1Niw3IEBACiAJc3RydWN0IHBvd2VyX3N1cHBseV9jb25maWcgcHN5X2NmZyA9IHt9OwogCWludCByZXQsIGxlbiwgaXJxOwogCXVuc2lnbmVkIGludCB0bXA7CisJdTE2IHR5cGU7CiAKIAljaGcgPSBkZXZtX2t6YWxsb2MoZGV2LCBzaXplb2YoKmNoZyksIEdGUF9LRVJORUwpOwogCWlmICghY2hnKQpAQCAtMjc4LDI4ICsyNzksMjggQEAKIAlpZiAocmV0KQogCQlyZXR1cm4gcmV0OwogCi0JcmV0ID0gcmVnbWFwX2J1bGtfcmVhZChjaGctPnJlZ21hcCwgY2hnLT5yZWdbTEJDX0NIR1JdICsgUE04OTE2X1BFUlBIX1RZUEUsICZ0bXAsIDIpOworCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoY2hnLT5yZWdtYXAsIGNoZy0+cmVnW0xCQ19DSEdSXSArIFBNODkxNl9QRVJQSF9UWVBFLCAmdHlwZSwgMik7CiAJaWYgKHJldCkKIAkJZ290byBjb21tX2Vycm9yOwotCWlmICh0bXAgIT0gUE04OTE2X0xCQ19DSEdSX1RZUEUpCisJaWYgKHR5cGUgIT0gUE04OTE2X0xCQ19DSEdSX1RZUEUpCiAJCWdvdG8gdHlwZV9lcnJvcjsKIAotCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoY2hnLT5yZWdtYXAsIGNoZy0+cmVnW0xCQ19CQVRfSUZdICsgUE04OTE2X1BFUlBIX1RZUEUsICZ0bXAsIDIpOworCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoY2hnLT5yZWdtYXAsIGNoZy0+cmVnW0xCQ19CQVRfSUZdICsgUE04OTE2X1BFUlBIX1RZUEUsICZ0eXBlLCAyKTsKIAlpZiAocmV0KQogCQlnb3RvIGNvbW1fZXJyb3I7Ci0JaWYgKHRtcCAhPSBQTTg5MTZfTEJDX0JBVF9JRl9UWVBFKQorCWlmICh0eXBlICE9IFBNODkxNl9MQkNfQkFUX0lGX1RZUEUpCiAJCWdvdG8gdHlwZV9lcnJvcjsKIAotCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoY2hnLT5yZWdtYXAsIGNoZy0+cmVnW0xCQ19VU0JdICsgUE04OTE2X1BFUlBIX1RZUEUsICZ0bXAsIDIpOworCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoY2hnLT5yZWdtYXAsIGNoZy0+cmVnW0xCQ19VU0JdICsgUE04OTE2X1BFUlBIX1RZUEUsICZ0eXBlLCAyKTsKIAlpZiAocmV0KQogCQlnb3RvIGNvbW1fZXJyb3I7Ci0JaWYgKHRtcCAhPSBQTTg5MTZfTEJDX1VTQl9UWVBFKQorCWlmICh0eXBlICE9IFBNODkxNl9MQkNfVVNCX1RZUEUpCiAJCWdvdG8gdHlwZV9lcnJvcjsKIAotCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoY2hnLT5yZWdtYXAsIGNoZy0+cmVnW0xCQ19NSVNDXSArIFBNODkxNl9QRVJQSF9UWVBFLCAmdG1wLCAyKTsKKwlyZXQgPSByZWdtYXBfYnVsa19yZWFkKGNoZy0+cmVnbWFwLCBjaGctPnJlZ1tMQkNfTUlTQ10gKyBQTTg5MTZfUEVSUEhfVFlQRSwgJnR5cGUsIDIpOwogCWlmIChyZXQpCiAJCWdvdG8gY29tbV9lcnJvcjsKLQlpZiAodG1wICE9IFBNODkxNl9MQkNfTUlTQ19UWVBFKQorCWlmICh0eXBlICE9IFBNODkxNl9MQkNfTUlTQ19UWVBFKQogCQlnb3RvIHR5cGVfZXJyb3I7CiAKIAlyZXQgPSByZWdtYXBfcmVhZChjaGctPnJlZ21hcCwgY2hnLT5yZWdbTEJDX0NIR1JdICsgUE04OTE2X0xCQ19DSEdSX0NIR19PUFRJT04sICZ0bXApOwpAQCAtMzU4LDcgKzM1OSw3IEBACiAJcmV0dXJuIGRldl9lcnJfcHJvYmUoZGV2LCByZXQsICJVbmFibGUgdG8gY29tbXVuaWNhdGUgd2l0aCBkZXZpY2VcbiIpOwogCiB0eXBlX2Vycm9yOgotCXJldHVybiBkZXZfZXJyX3Byb2JlKGRldiwgLUVOT0RFViwgIkRldmljZSByZXBvcnRlZCB3cm9uZyB0eXBlOiAweCVYXG4iLCB0bXApOworCXJldHVybiBkZXZfZXJyX3Byb2JlKGRldiwgLUVOT0RFViwgIkRldmljZSByZXBvcnRlZCB3cm9uZyB0eXBlOiAweCVYXG4iLCB0eXBlKTsKIH0KIAogc3RhdGljIGNvbnN0IHN0cnVjdCBvZl9kZXZpY2VfaWQgcG04OTE2X2xiY19jaGFyZ2VyX29mX21hdGNoW10gPSB7CgotLS0gYS9kcml2ZXJzL3Bvd2VyL3N1cHBseS9wbTg5MTZfYm1zX3ZtLmMKKysrIGIvZHJpdmVycy9wb3dlci9zdXBwbHkvcG04OTE2X2Jtc192bS5jCkBAIC0xNTEsNyArMTUxLDggQEAKIAlzdHJ1Y3QgcG04OTE2X2Jtc192bV9iYXR0ZXJ5ICpiYXQ7CiAJc3RydWN0IHBvd2VyX3N1cHBseV9jb25maWcgcHN5X2NmZyA9IHt9OwogCWludCByZXQsIGlycTsKLQl1bnNpZ25lZCBpbnQgdG1wOworCXUxNiB0eXBlOworCXUxNiBvY3Y7CiAKIAliYXQgPSBkZXZtX2t6YWxsb2MoZGV2LCBzaXplb2YoKmJhdCksIEdGUF9LRVJORUwpOwogCWlmICghYmF0KQpAQCAtMTY3LDEyICsxNjgsMTIgQEAKIAlpZiAocmV0IDwgMCkKIAkJcmV0dXJuIC1FSU5WQUw7CiAKLQlyZXQgPSByZWdtYXBfYnVsa19yZWFkKGJhdC0+cmVnbWFwLCBiYXQtPnJlZyArIFBNODkxNl9QRVJQSF9UWVBFLCAmdG1wLCAyKTsKKwlyZXQgPSByZWdtYXBfYnVsa19yZWFkKGJhdC0+cmVnbWFwLCBiYXQtPnJlZyArIFBNODkxNl9QRVJQSF9UWVBFLCAmdHlwZSwgMik7CiAJaWYgKHJldCkKIAkJZ290byBjb21tX2Vycm9yOwogCi0JaWYgKHRtcCAhPSBQTTg5MTZfQk1TX1ZNX1RZUEUpCi0JCXJldHVybiBkZXZfZXJyX3Byb2JlKGRldiwgLUVOT0RFViwgIkRldmljZSByZXBvcnRlZCB3cm9uZyB0eXBlOiAweCVYXG4iLCB0bXApOworCWlmICh0eXBlICE9IFBNODkxNl9CTVNfVk1fVFlQRSkKKwkJcmV0dXJuIGRldl9lcnJfcHJvYmUoZGV2LCAtRU5PREVWLCAiRGV2aWNlIHJlcG9ydGVkIHdyb25nIHR5cGU6IDB4JVhcbiIsIHR5cGUpOwogCiAJcmV0ID0gcmVnbWFwX3dyaXRlKGJhdC0+cmVnbWFwLCBiYXQtPnJlZyArIFBNODkxNl9CTVNfVk1fUzFfU0FNUExFX0lOVEVSVkFMX0NUTCwKIAkJCSAgIFBNODkxNl9CTVNfVk1fUzFfU0FNUExFX0lOVEVSVkFMKTsKQEAgLTE5MiwxMiArMTkzLDEyIEBACiAJCWdvdG8gY29tbV9lcnJvcjsKIAogCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoYmF0LT5yZWdtYXAsCi0JCQkgICAgICAgYmF0LT5yZWcgKyBQTTg5MTZfQk1TX1ZNX1MzX1M3X09DVl9EQVRBMCwgJnRtcCwgMik7CisJCQkgICAgICAgYmF0LT5yZWcgKyBQTTg5MTZfQk1TX1ZNX1MzX1M3X09DVl9EQVRBMCwgJm9jdiwgMik7CiAJaWYgKHJldCkKIAkJZ290byBjb21tX2Vycm9yOwogCiAJYmF0LT5sYXN0X29jdl90aW1lID0ga3RpbWVfZ2V0X3NlY29uZHMoKTsKLQliYXQtPmxhc3Rfb2N2ID0gdG1wICogMzAwOworCWJhdC0+bGFzdF9vY3YgPSBvY3YgKiAzMDA7CiAJYmF0LT52YmF0X25vdyA9IGJhdC0+bGFzdF9vY3Y7CiAKIAlwc3lfY2ZnLmRydl9kYXRhID0gYmF0OwpAQCAtMjU5LDEzICsyNjAsMTMgQEAKIHsKIAlzdHJ1Y3QgcG04OTE2X2Jtc192bV9iYXR0ZXJ5ICpiYXQgPSBwbGF0Zm9ybV9nZXRfZHJ2ZGF0YShwZGV2KTsKIAlpbnQgcmV0OwotCXVuc2lnbmVkIGludCB0bXA7CisJdTE2IG9jdjsKIAogCXJldCA9IHJlZ21hcF9idWxrX3JlYWQoYmF0LT5yZWdtYXAsCi0JCQkgICAgICAgYmF0LT5yZWcgKyBQTTg5MTZfQk1TX1ZNX1MzX1M3X09DVl9EQVRBMCwgJnRtcCwgMik7CisJCQkgICAgICAgYmF0LT5yZWcgKyBQTTg5MTZfQk1TX1ZNX1MzX1M3X09DVl9EQVRBMCwgJm9jdiwgMik7CiAKIAliYXQtPmxhc3Rfb2N2X3RpbWUgPSBrdGltZV9nZXRfc2Vjb25kcygpOwotCWJhdC0+bGFzdF9vY3YgPSB0bXAgKiAzMDA7CisJYmF0LT5sYXN0X29jdiA9IG9jdiAqIDMwMDsKIAogCXJldCA9IHJlZ21hcF93cml0ZShiYXQtPnJlZ21hcCwKIAkJCSAgIGJhdC0+cmVnICsgUE04OTE2X1NFQ19BQ0NFU1MsIFBNODkxNl9TRUNfTUFHSUMpOwo=
+From: U01 route-B local fix <none>
+Subject: [PATCH] power: supply: pm8916: read the 16-bit peripheral type into u16
+
+Both pm8916-lbc and pm8916-bms-vm verify the PMIC peripheral type with
+regmap_bulk_read(..., &tmp, 2) into an uninitialised 'unsigned int'. Only the
+low two bytes are written, so the comparison against PM8916_*_TYPE sees stack
+garbage in the upper half and always fails:
+  pm8916-lbc ... error -ENODEV: Device reported wrong type: 0xFFFF1502
+  pm8916-bms-vm ... error -ENODEV: Device reported wrong type: 0xFFFF020D
+(low halves match the expected constants exactly, the PMIC is fine.)
+Same pattern in the BMS-VM OCV reads makes last_ocv = tmp * 300 carry garbage.
+Use u16 buffers, like the FIFO reads in the same file already do.
+--- a/drivers/power/supply/pm8916_lbc.c
++++ b/drivers/power/supply/pm8916_lbc.c
+@@ -256,6 +256,7 @@
+ 	struct power_supply_config psy_cfg = {};
+ 	int ret, len, irq;
+ 	unsigned int tmp;
++	u16 type;
+ 
+ 	chg = devm_kzalloc(dev, sizeof(*chg), GFP_KERNEL);
+ 	if (!chg)
+@@ -278,28 +279,28 @@
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_PERPH_TYPE, &tmp, 2);
++	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_PERPH_TYPE, &type, 2);
+ 	if (ret)
+ 		goto comm_error;
+-	if (tmp != PM8916_LBC_CHGR_TYPE)
++	if (type != PM8916_LBC_CHGR_TYPE)
+ 		goto type_error;
+ 
+-	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_BAT_IF] + PM8916_PERPH_TYPE, &tmp, 2);
++	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_BAT_IF] + PM8916_PERPH_TYPE, &type, 2);
+ 	if (ret)
+ 		goto comm_error;
+-	if (tmp != PM8916_LBC_BAT_IF_TYPE)
++	if (type != PM8916_LBC_BAT_IF_TYPE)
+ 		goto type_error;
+ 
+-	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_USB] + PM8916_PERPH_TYPE, &tmp, 2);
++	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_USB] + PM8916_PERPH_TYPE, &type, 2);
+ 	if (ret)
+ 		goto comm_error;
+-	if (tmp != PM8916_LBC_USB_TYPE)
++	if (type != PM8916_LBC_USB_TYPE)
+ 		goto type_error;
+ 
+-	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_MISC] + PM8916_PERPH_TYPE, &tmp, 2);
++	ret = regmap_bulk_read(chg->regmap, chg->reg[LBC_MISC] + PM8916_PERPH_TYPE, &type, 2);
+ 	if (ret)
+ 		goto comm_error;
+-	if (tmp != PM8916_LBC_MISC_TYPE)
++	if (type != PM8916_LBC_MISC_TYPE)
+ 		goto type_error;
+ 
+ 	ret = regmap_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_CHG_OPTION, &tmp);
+@@ -358,7 +359,7 @@
+ 	return dev_err_probe(dev, ret, "Unable to communicate with device\n");
+ 
+ type_error:
+-	return dev_err_probe(dev, -ENODEV, "Device reported wrong type: 0x%X\n", tmp);
++	return dev_err_probe(dev, -ENODEV, "Device reported wrong type: 0x%X\n", type);
+ }
+ 
+ static const struct of_device_id pm8916_lbc_charger_of_match[] = {
+
+--- a/drivers/power/supply/pm8916_bms_vm.c
++++ b/drivers/power/supply/pm8916_bms_vm.c
+@@ -151,7 +151,8 @@
+ 	struct pm8916_bms_vm_battery *bat;
+ 	struct power_supply_config psy_cfg = {};
+ 	int ret, irq;
+-	unsigned int tmp;
++	u16 type;
++	u16 ocv;
+ 
+ 	bat = devm_kzalloc(dev, sizeof(*bat), GFP_KERNEL);
+ 	if (!bat)
+@@ -167,12 +168,12 @@
+ 	if (ret < 0)
+ 		return -EINVAL;
+ 
+-	ret = regmap_bulk_read(bat->regmap, bat->reg + PM8916_PERPH_TYPE, &tmp, 2);
++	ret = regmap_bulk_read(bat->regmap, bat->reg + PM8916_PERPH_TYPE, &type, 2);
+ 	if (ret)
+ 		goto comm_error;
+ 
+-	if (tmp != PM8916_BMS_VM_TYPE)
+-		return dev_err_probe(dev, -ENODEV, "Device reported wrong type: 0x%X\n", tmp);
++	if (type != PM8916_BMS_VM_TYPE)
++		return dev_err_probe(dev, -ENODEV, "Device reported wrong type: 0x%X\n", type);
+ 
+ 	ret = regmap_write(bat->regmap, bat->reg + PM8916_BMS_VM_S1_SAMPLE_INTERVAL_CTL,
+ 			   PM8916_BMS_VM_S1_SAMPLE_INTERVAL);
+@@ -192,12 +193,12 @@
+ 		goto comm_error;
+ 
+ 	ret = regmap_bulk_read(bat->regmap,
+-			       bat->reg + PM8916_BMS_VM_S3_S7_OCV_DATA0, &tmp, 2);
++			       bat->reg + PM8916_BMS_VM_S3_S7_OCV_DATA0, &ocv, 2);
+ 	if (ret)
+ 		goto comm_error;
+ 
+ 	bat->last_ocv_time = ktime_get_seconds();
+-	bat->last_ocv = tmp * 300;
++	bat->last_ocv = ocv * 300;
+ 	bat->vbat_now = bat->last_ocv;
+ 
+ 	psy_cfg.drv_data = bat;
+@@ -259,13 +260,13 @@
+ {
+ 	struct pm8916_bms_vm_battery *bat = platform_get_drvdata(pdev);
+ 	int ret;
+-	unsigned int tmp;
++	u16 ocv;
+ 
+ 	ret = regmap_bulk_read(bat->regmap,
+-			       bat->reg + PM8916_BMS_VM_S3_S7_OCV_DATA0, &tmp, 2);
++			       bat->reg + PM8916_BMS_VM_S3_S7_OCV_DATA0, &ocv, 2);
+ 
+ 	bat->last_ocv_time = ktime_get_seconds();
+-	bat->last_ocv = tmp * 300;
++	bat->last_ocv = ocv * 300;
+ 
+ 	ret = regmap_write(bat->regmap,
+ 			   bat->reg + PM8916_SEC_ACCESS, PM8916_SEC_MAGIC);

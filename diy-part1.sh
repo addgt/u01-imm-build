@@ -1,1 +1,28 @@
-IyEvYmluL2Jhc2gKIyBESVnohJrmnKwKIyBodHRwczovL2dpdGh1Yi5jb20vUDNURVJYL0FjdGlvbnMtT3BlbldydAojIOaWh+S7tuWQjTogZGl5LXBhcnQxLnNoCiMg5Yqf6IO96K+05piOOiBPcGVuV3J0IERJWeiEmuacrOesrDHpg6jliIbvvIjmm7TmlrBmZWVkc+S5i+WJje+8iQojIOeJiOadgzogKGMpIDIwMTktMjAyNCBQM1RFUlggPGh0dHBzOi8vcDN0ZXJ4LmNvbT4KIyDln7rkuo4gTUlUIOW8gOa6kOWNj+iuru+8jOivpuingSAvTElDRU5TRQoKIyDlj5bmtojms6jph4rkuIDkuKrmupAKIyBzZWQgLWkgJ3MvXiNcKC4qaGVsbG93b3JsZFwpL1wxLycgZmVlZHMuY29uZi5kZWZhdWx0CgojIOa3u+WKoOesrOS4ieaWuSBmZWVkIOa6kO+8iHNtYWxsLXBhY2thZ2Ug5YyF5ZCrIG9wZW5jbGFzaC9wYXNzd2FsbC9zc3ItcGx1cyDnrYnluLjnlKjmj5Lku7bvvIkKZWNobyAnc3JjLWdpdCBzbXBhY2thZ2UgaHR0cHM6Ly9naXRodWIuY29tL2tlbnpvazgvc21hbGwtcGFja2FnZScgPj4gZmVlZHMuY29uZi5kZWZhdWx0CiMg5re75Yqg56ys5LiJ5pa55rqQ77yMaVN0b3JlIOW6lOeUqOWVhuW6l++8jOe8luivkeaXtuWMheWQjei+k+WFpSBsdWNpLWFwcC1zdG9yZQplY2hvICdzcmMtZ2l0IHN0b3JlIGh0dHBzOi8vZ2l0aHViLmNvbS9saW5rZWFzZS9pc3RvcmUuZ2l0O21haW4nID4+IGZlZWRzLmNvbmYuZGVmYXVsdAoKCiMgT3BlbkNsYXNo5Luj55CGCiMgZ2l0IGNsb25lIC0tZGVwdGggMSBodHRwczovL2dpdGh1Yi5jb20vdmVybmVzb25nL09wZW5DbGFzaC5naXQgT3BlbkNsYXNoCgojIHR1cmJvYWNj572R57uc5Yqg6YCf77yI6ZyA6KaB55So5oi35Zyo6aG16Z2i6YCJ5oupIGx1Y2ktYXBwLXR1cmJvYWNjIOWQju+8jOeUsee8luivkeiEmuacrOiHquWKqOaJp+ihjO+8jOatpOWkhOS4jeWGjeaXoOadoeS7tui/kOihjO+8iQojIGN1cmwgLXNTTCBodHRwczovL3Jhdy5naXRodWJ1c2VyY29udGVudC5jb20vbXVmZW5nMDUvdHVyYm9hY2MvbWFpbi9hZGRfdHVyYm9hY2Muc2ggLW8gYWRkX3R1cmJvYWNjLnNoICYmIGJhc2ggYWRkX3R1cmJvYWNjLnNoCgojIOiwg+ivlQojIHNlZCAtaSAnc3xzcmMtZ2l0LWZ1bGwgb3BlbnN0aWNrIGh0dHBzOi8vZ2l0aHViLmNvbS9sa2l1eXUvb3BlbnN0aWNrLWZlZWRzLmdpdHxzcmMtZ2l0LWZ1bGwgb3BlbnN0aWNrIGh0dHBzOi8vZ2l0aHViLmNvbS94dXhpbjE5NTUvb3BlbnN0aWNrLWZlZWRzfGcnIGZlZWRzLmNvbmYuZGVmYXVsdAoKCgo=
+#!/bin/bash
+# DIY脚本
+# https://github.com/P3TERX/Actions-OpenWrt
+# 文件名: diy-part1.sh
+# 功能说明: OpenWrt DIY脚本第1部分（更新feeds之前）
+# 版权: (c) 2019-2024 P3TERX <https://p3terx.com>
+# 基于 MIT 开源协议，详见 /LICENSE
+
+# 取消注释一个源
+# sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+
+# 添加第三方 feed 源（small-package 包含 openclash/passwall/ssr-plus 等常用插件）
+echo 'src-git smpackage https://github.com/kenzok8/small-package' >> feeds.conf.default
+# 添加第三方源，iStore 应用商店，编译时包名输入 luci-app-store
+echo 'src-git store https://github.com/linkease/istore.git;main' >> feeds.conf.default
+
+
+# OpenClash代理
+# git clone --depth 1 https://github.com/vernesong/OpenClash.git OpenClash
+
+# turboacc网络加速（需要用户在页面选择 luci-app-turboacc 后，由编译脚本自动执行，此处不再无条件运行）
+# curl -sSL https://raw.githubusercontent.com/mufeng05/turboacc/main/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+
+# 调试
+# sed -i 's|src-git-full openstick https://github.com/lkiuyu/openstick-feeds.git|src-git-full openstick https://github.com/xuxin1955/openstick-feeds|g' feeds.conf.default
+
+
+

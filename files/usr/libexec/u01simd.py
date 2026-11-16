@@ -1,1 +1,223 @@
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwoiIiJVMDEg6K+75Y2h5bi46am777ya5byA5py65oyJ6YWN572u5oqKIFNJTSDpgInmi6nohJrmi4nmiJAi5Y2h5qe9IuaIliLlhoXnva7ljaEi6YKj5LiA5qGj5bm25LiA55u05Y2g5L2P77yMCuWNoeivu+S4jeWHuuadpeWwsemHjeWQr+S4gOasoSBNUFNTIOiuqSBtb2RlbSDph43mlrDnu5nljaHkuIrnlLXjgIIKCuS4uuS7gOS5iOW/hemhu+W4uOmpu++8mui/meWPsCBXRjIg55qEIERUQiDmioogc2ltX2VuL3NlbCDmjIflkJHkuobplJnor6/nmoTmjqfliLblmajlkozohJrkvY3vvIzlhoXmoLjkvqfkuI3kvJrpqbHliqjvvJsK6ICMIC9zeXMvY2xhc3MvZ3BpbyDmsqHlvIDvvIzlj6rog73nlKggY2RldiBBQkkgdjIg55Sz6K+3IGxpbmUg4oCU4oCUIGxpbmUg55qE5oyB5pyJ6ICF5LiA6YCA5Ye66ISa5bCx5o6J5Zue6buY6K6k55S15bmz77yMCuaJgOS7peimgeWBmuaIkOW4uOmpu+i/m+eoi++8iOi3nyBiYXRsZWQg5LiA5Liq5aWX6Lev77yJ44CCCgrohJrkvY3nlKjnmoTmmK/ljp/ljoLlronljZMgRFRCIOmHjCAvc29jL2dwaW9fbGVkcyDpgqPnu4TvvIhTaW1Td2l0Y2hUaHJlYWQg5YaZ55qE5bCx5piv5a6D5Lus77yJ77yaCiAgZ3BpbzExOSA9IGVzaW0xX2VuID0g5omY55uY5Y2h5qe977yMZ3BpbzE0ID0gZXNpbTJfZW4gPSDljp/mnLrlhoXnva7ljaHjgILkuKTmoLnkupLmlqXvvIzlj6rmi4npq5jopoHor7vnmoTpgqPmoLnjgIIK77yI5pen54mI55So55qEIGdwaW80OSDlrp7mtYvlr7npgInljaHmsqHmnInkvZznlKjvvIzlt7LljrvmjonjgILvvIkKCuWNoeS9jeWIh+aNou+8mi9ldGMvdTAxc2ltLmNvbmYg6YeM5YaZIHNpbV9zbG90PTDvvIjlj6ror7vljaHmp73vvInmiJYgc2ltX3Nsb3Q9Me+8iOWGhee9ruWNoe+8ie+8jOaUueWujCByZXN0YXJ044CCCuWPquS/neivgSLor7vljaEi6L+Z5LiA5Lu25LqL77ya5LiN572uIENGVU49MeOAgeS4jeaLqOWPt+OAggoiIiIKaW1wb3J0IGN0eXBlcywgb3MsIHNlbGVjdCwgc3RydWN0LCBzdWJwcm9jZXNzLCBzeXMsIHRpbWUKCkNPTkYgPSAiL2V0Yy91MDFzaW0uY29uZiIKREVGQVVMVF9TTE9UID0gMQpQSU5fVFJBWSA9IDExOSAgICAgICMgZXNpbTFfZW4gLT4gc2xvdCAwClBJTl9CVUlMVElOID0gMTQgICAgIyBlc2ltMl9lbiAtPiBzbG90IDEKUElOUyA9IFtQSU5fVFJBWSwgUElOX0JVSUxUSU5dClNMT1RfTEVWRUxTID0gezA6IFsxLCAwXSwgMTogWzAsIDFdfQpRTUlfREVWID0gIi9kZXYvd3dhbjBxbWkwIgpDSElQX0xBQkVMID0gInUwMXNpbSIKTUFHSUMgPSAweEI0ClNaX0NISVBJTkZPLCBTWl9SRVEsIFNaX1ZBTFVFUyA9IDY4LCA1OTIsIDE2CklPQ19DSElQSU5GTyA9ICgyIDw8IDMwKSB8IChTWl9DSElQSU5GTyA8PCAxNikgfCAoTUFHSUMgPDwgOCkgfCAweDAxCklPQ19HRVRfTElORSA9ICgzIDw8IDMwKSB8IChTWl9SRVEgPDwgMTYpIHwgKE1BR0lDIDw8IDgpIHwgMHgwNwpJT0NfU0VUX1ZBTFVFUyA9ICgzIDw8IDMwKSB8IChTWl9WQUxVRVMgPDwgMTYpIHwgKE1BR0lDIDw8IDgpIHwgMHgwRgpGTEFHX09VVFBVVCA9IDEgPDwgMwpPRkZfQ09ORl9GTEFHUywgT0ZGX05VTV9MSU5FUywgT0ZGX0ZEID0gMjg4LCA1NjAsIDU4OApSUFJPQyA9ICIvc3lzL2NsYXNzL3JlbW90ZXByb2MvcmVtb3RlcHJvYzAvc3RhdGUiCkFUREVWID0gIi9kZXYvd3dhbjBhdDAiCmxpYmMgPSBjdHlwZXMuQ0RMTCgibGliYy5zby42IiwgdXNlX2Vycm5vPVRydWUpCgoKZGVmIGxvZygqYSk6CiAgICBsaW5lID0gIiAiLmpvaW4oc3RyKHgpIGZvciB4IGluIGEpCiAgICBwcmludCh0aW1lLnN0cmZ0aW1lKCJbJW0tJWQgJUg6JU06JVNdIiksIGxpbmUsIGZsdXNoPVRydWUpCiAgICB0cnk6CiAgICAgICAgd2l0aCBvcGVuKCIvdG1wL3UwMXNpbS5sb2ciLCAiYSIpIGFzIGY6CiAgICAgICAgICAgIGYud3JpdGUodGltZS5zdHJmdGltZSgiWyVtLSVkICVIOiVNOiVTXSAiKSArIGxpbmUgKyAiXG4iKQogICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgcGFzcwoKCmRlZiBpb2N0bChmZCwgbnVtLCBidWYpOgogICAgcmV0dXJuIGxpYmMuaW9jdGwoZmQsIGN0eXBlcy5jX3Vsb25nKG51bSksIGJ1ZikKCgpkZWYgY2hpcHMoKToKICAgIG91dCA9IFtdCiAgICBmb3IgbiBpbiByYW5nZSg4KToKICAgICAgICBwID0gIi9kZXYvZ3Bpb2NoaXAlZCIgJSBuCiAgICAgICAgaWYgbm90IG9zLnBhdGguZXhpc3RzKHApOgogICAgICAgICAgICBjb250aW51ZQogICAgICAgIGZkID0gb3Mub3BlbihwLCBvcy5PX1JEV1IgfCBvcy5PX0NMT0VYRUMpCiAgICAgICAgYnVmID0gY3R5cGVzLmNyZWF0ZV9zdHJpbmdfYnVmZmVyKFNaX0NISVBJTkZPKQogICAgICAgIGlmIGlvY3RsKGZkLCBJT0NfQ0hJUElORk8sIGJ1ZikgPCAwOgogICAgICAgICAgICBvcy5jbG9zZShmZCkKICAgICAgICAgICAgY29udGludWUKICAgICAgICBuYW1lLCBsYWJlbCwgbGluZXMgPSBzdHJ1Y3QudW5wYWNrKCIzMnMzMnNJIiwgYnVmLnJhd1s6NzJdKQogICAgICAgIG91dC5hcHBlbmQoKGZkLCBwLCBuYW1lLnJzdHJpcChiIlwwIikuZGVjb2RlKCksIGxpbmVzKSkKICAgIHJldHVybiBvdXQKCgpkZWYgcmVhZF9jb25mKCk6CiAgICBzbG90ID0gREVGQVVMVF9TTE9UCiAgICBpZiBvcy5wYXRoLmV4aXN0cyhDT05GKToKICAgICAgICBmb3IgbGluZSBpbiBvcGVuKENPTkYpOgogICAgICAgICAgICBsaW5lID0gbGluZS5zdHJpcCgpCiAgICAgICAgICAgIGlmIGxpbmUuc3RhcnRzd2l0aCgic2ltX3Nsb3QiKToKICAgICAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgICAgICBzbG90ID0gaW50KGxpbmUuc3BsaXQoIj0iKVsxXS5zdHJpcCgpKSAmIDEKICAgICAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb246CiAgICAgICAgICAgICAgICAgICAgcGFzcwogICAgcmV0dXJuIHNsb3QKCgpkZWYgcmVlbnVtZXJhdGUoKToKICAgICIiIuaNouaho+WQjuiuqSBtb2RlbSDph43mlrDnu5kgVUlNIOS4iueUte+8jOWQpuWImeWug+i/mOS8muaKpeaXp+mCo+W8oOWNoeOAgiIiIgogICAgZm9yIG9wIGluICgiLS11aW0tc2ltLXBvd2VyLW9mZj0xIiwgIi0tdWltLXNpbS1wb3dlci1vbj0xIik6CiAgICAgICAgdHJ5OgogICAgICAgICAgICBzdWJwcm9jZXNzLnJ1bihbInFtaWNsaSIsICItZCIsIFFNSV9ERVYsIG9wXSwgdGltZW91dD0yMCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgc3Rkb3V0PXN1YnByb2Nlc3MuREVWTlVMTCwgc3RkZXJyPXN1YnByb2Nlc3MuREVWTlVMTCkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIGxvZygiJXMg5rKh6LeR5oiQOiAlcyIgJSAob3AsIGUpKQogICAgICAgIHRpbWUuc2xlZXAoMSkKCgpkZWYgaG9sZChzbG90KToKICAgICIiIui/lOWbniAoY2hpcGZkLCBsaW5lZmQp77ybbGluZWZkIOS4jeWFs++8jOiEmuWwseS4gOebtOS/neaMgeOAgjExOT3miZjnm5jljaHmp73nlLXmupDvvIwxND3lhoXnva7ljaHnlLXmupDjgIIiIiIKICAgIHBpbnMgPSBQSU5TCiAgICB2YWxzID0gU0xPVF9MRVZFTFNbc2xvdF0KICAgIGJpdHMgPSAwCiAgICBmb3IgaSwgdiBpbiBlbnVtZXJhdGUodmFscyk6CiAgICAgICAgaWYgdjoKICAgICAgICAgICAgYml0cyB8PSAxIDw8IGkKICAgIGNzID0gW2MgZm9yIGMgaW4gY2hpcHMoKSBpZiBjWzNdID4gbWF4KHBpbnMpXQogICAgaWYgbm90IGNzOgogICAgICAgIHJhaXNlIFN5c3RlbUV4aXQoIuayoeacieiDveimhuebliBncGlvJWQg55qEIGNoaXAiICUgbWF4KHBpbnMpKQogICAgYyA9IG1heChjcywga2V5PWxhbWJkYSB4OiB4WzNdKQogICAgYnVmID0gY3R5cGVzLmNyZWF0ZV9zdHJpbmdfYnVmZmVyKFNaX1JFUSkKICAgIHN0cnVjdC5wYWNrX2ludG8oIiVkSSIgJSBsZW4ocGlucyksIGJ1ZiwgMCwgKnBpbnMpCiAgICBidWZbMjU2OjI4OF0gPSBDSElQX0xBQkVMLmVuY29kZSgpLmxqdXN0KDMyLCBiIlwwIikKICAgIHN0cnVjdC5wYWNrX2ludG8oIlEiLCBidWYsIE9GRl9DT05GX0ZMQUdTLCBGTEFHX09VVFBVVCkKICAgIHN0cnVjdC5wYWNrX2ludG8oIkkiLCBidWYsIE9GRl9OVU1fTElORVMsIGxlbihwaW5zKSkKICAgIGlmIGlvY3RsKGNbMF0sIElPQ19HRVRfTElORSwgYnVmKSA8IDA6CiAgICAgICAgcmFpc2UgU3lzdGVtRXhpdCgiR0VUX0xJTkUg5aSx6LSlOiAlcyIgJSBvcy5zdHJlcnJvcihjdHlwZXMuZ2V0X2Vycm5vKCkpKQogICAgbGZkID0gc3RydWN0LnVucGFja19mcm9tKCJpIiwgYnVmLCBPRkZfRkQpWzBdCiAgICBtYXNrID0gKDEgPDwgbGVuKHBpbnMpKSAtIDEKICAgIGlmIGlvY3RsKGxmZCwgSU9DX1NFVF9WQUxVRVMsIGN0eXBlcy5jcmVhdGVfc3RyaW5nX2J1ZmZlcihzdHJ1Y3QucGFjaygiUVEiLCBiaXRzLCBtYXNrKSkpIDwgMDoKICAgICAgICByYWlzZSBTeXN0ZW1FeGl0KCJTRVRfVkFMVUVTIOWksei0pTogJXMiICUgb3Muc3RyZXJyb3IoY3R5cGVzLmdldF9lcnJubygpKSkKICAgIGxvZygiZ3BpbyVkKOWNoeanvSk9JWQgZ3BpbyVkKOWGhee9ruWNoSk9JWQgIGNoaXA9JXMgJXMgKCVkIGxpbmVzKSIKICAgICAgICAlIChQSU5fVFJBWSwgdmFsc1swXSwgUElOX0JVSUxUSU4sIHZhbHNbMV0sIGNbMl0sIGNbMV0sIGNbM10pKQogICAgcmV0dXJuIGNbMF0sIGxmZAoKCmRlZiBycHJvYyhvcCk6CiAgICBmZCA9IG9zLm9wZW4oUlBST0MsIG9zLk9fV1JPTkxZKQogICAgb3Mud3JpdGUoZmQsIG9wLmVuY29kZSgpKQogICAgb3MuY2xvc2UoZmQpCgoKZGVmIGF0X29uY2UoY21kLCB3YWl0PTMuMCk6CiAgICAiIiLlj5HkuIDmnaEgQVTjgILov5Tlm54gTm9uZT3lj6PooqvljaAv5peg5bqU562U77yI5LiN566X5aSx6LSl77yJ77yM5ZCm5YiZ6L+U5Zue5bqU562U5paH5pys44CCIiIiCiAgICBpZiBub3Qgb3MucGF0aC5leGlzdHMoQVRERVYpOgogICAgICAgIHJldHVybiBOb25lCiAgICB0cnk6CiAgICAgICAgZmQgPSBvcy5vcGVuKEFUREVWLCBvcy5PX1JEV1IpCiAgICBleGNlcHQgT1NFcnJvcjoKICAgICAgICByZXR1cm4gTm9uZQogICAgYnVmID0gYiIiCiAgICB0cnk6CiAgICAgICAgb3Mud3JpdGUoZmQsIChjbWQgKyAiXHJcbiIpLmVuY29kZSgpKQogICAgICAgIGRlYWRsaW5lID0gdGltZS50aW1lKCkgKyB3YWl0CiAgICAgICAgd2hpbGUgdGltZS50aW1lKCkgPCBkZWFkbGluZToKICAgICAgICAgICAgciwgXywgXyA9IHNlbGVjdC5zZWxlY3QoW2ZkXSwgW10sIFtdLCAwLjIpCiAgICAgICAgICAgIGlmIHI6CiAgICAgICAgICAgICAgICBkID0gb3MucmVhZChmZCwgNDA5NikKICAgICAgICAgICAgICAgIGlmIG5vdCBkOgogICAgICAgICAgICAgICAgICAgIGJyZWFrCiAgICAgICAgICAgICAgICBidWYgKz0gZAogICAgICAgICAgICAgICAgaWYgYiJPSyIgaW4gYnVmIG9yIGIiRVJST1IiIGluIGJ1ZjoKICAgICAgICAgICAgICAgICAgICBicmVhawogICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgcGFzcwogICAgZmluYWxseToKICAgICAgICBvcy5jbG9zZShmZCkKICAgIHR4dCA9IGJ1Zi5kZWNvZGUoInV0Zi04IiwgInJlcGxhY2UiKS5yZXBsYWNlKCJcciIsICIgIikuc3RyaXAoKQogICAgcmV0dXJuIHR4dCBvciBOb25lCgoKZGVmIHdhaXRfcmVhZHkoc2VjKToKICAgICIiIui9ruivoiBBVCtDUElOP+OAglJFQURZIOi/lOWbniBUcnVl77yb5Y+q5pyJIG1vZGVtIOaYjuehruWbnuS6hiLljaHkuI3lnKgv5pyq5Yid5aeL5YyWIuaJjei/lOWbniBGYWxzZeOAggogICAgQVQg5Y+j5rKh5bqU562U77yI5aSa5Y2K6KKrIE1vZGVtTWFuYWdlci9zaWdtbyDljaDnnYDvvInml7bkuI3liKTlpLHotKXvvIzkuIDnm7TnrYnliLDotoXml7bjgIIiIiIKICAgIGVuZCA9IHRpbWUudGltZSgpICsgc2VjCiAgICB3aGlsZSB0aW1lLnRpbWUoKSA8IGVuZDoKICAgICAgICB0eHQgPSBhdF9vbmNlKCJBVCtDUElOPyIpCiAgICAgICAgaWYgdHh0IGlzIE5vbmU6CiAgICAgICAgICAgIHRpbWUuc2xlZXAoMykKICAgICAgICAgICAgY29udGludWUKICAgICAgICBpZiAiUkVBRFkiIGluIHR4dDoKICAgICAgICAgICAgcmV0dXJuIFRydWUKICAgICAgICBpZiAiRVJST1IiIGluIHR4dCBvciAiU0lNIiBpbiB0eHQ6CiAgICAgICAgICAgIGxvZygiQ1BJTiDmmI7noa7kuI3lj6/nlKg6ICVzIiAlIHR4dFs6ODBdKQogICAgICAgICAgICByZXR1cm4gRmFsc2UKICAgICAgICBsb2coIkNQSU4g6L+Y5rKh5aW9OiAlcyIgJSB0eHRbOjgwXSkKICAgICAgICB0aW1lLnNsZWVwKDMpCiAgICBsb2coIuetiSAlZHMg5rKh5pyJ5piO56Gu57uT5p6c77yI5aSa5Y2K5pivIEFUIOWPo+iiq+WNoOeUqO+8ie+8jOS4jeaKmOiFviBNUFNTIiAlIHNlYykKICAgIHJldHVybiBOb25lCgoKZGVmIG1haW4oKToKICAgIGZvciBfIGluIHJhbmdlKDYwKToKICAgICAgICBpZiBvcy5wYXRoLmV4aXN0cyhSUFJPQykgYW5kIG9zLnBhdGguZXhpc3RzKCIvZGV2L2dwaW9jaGlwMCIpOgogICAgICAgICAgICBicmVhawogICAgICAgIHRpbWUuc2xlZXAoMikKICAgIGVsc2U6CiAgICAgICAgcmFpc2UgU3lzdGVtRXhpdCgi562J5LiN5YiwIHJlbW90ZXByb2MwL2dwaW9jaGlwMCIpCiAgICBzbG90ID0gcmVhZF9jb25mKCkKICAgIGZvciBpLCBhIGluIGVudW1lcmF0ZShzeXMuYXJndik6CiAgICAgICAgaWYgYSA9PSAiLS1zbG90IjoKICAgICAgICAgICAgc2xvdCA9IGludChzeXMuYXJndltpICsgMV0pICYgMQogICAgbG9nKCLmoaPkvY06IHNpbV9zbG90PSVkICglcykiICUgKHNsb3QsICLlj6ror7vljaHmp70iIGlmIHNsb3QgPT0gMCBlbHNlICLlhoXnva7ljaEiKSkKICAgIGNmZCwgbGZkID0gaG9sZChzbG90KQogICAgaWYgIi0tc3dpdGNoIiBpbiBzeXMuYXJndjoKICAgICAgICBsb2coIuWIh+aho++8muWFiOaUvuaOieaXpyBsaW5lIOWGjemHjeaWsOS4iueUtSIpCiAgICAgICAgb3MuY2xvc2UobGZkKQogICAgICAgIG9zLmNsb3NlKGNmZCkKICAgICAgICB0aW1lLnNsZWVwKDEpCiAgICAgICAgY2ZkLCBsZmQgPSBob2xkKHNsb3QpCiAgICByZWVudW1lcmF0ZSgpCiAgICBpZiAiLS1vbmNlIiBpbiBzeXMuYXJndjoKICAgICAgICBsb2coIue7k+aenDogJXMiICUgYXRfb25jZSgiQVQrQ1BJTj8iLCA2KSkKICAgICAgICByZXR1cm4KCiAgICByZXN0YXJ0cyA9IDAKICAgIGxhc3QgPSBOb25lCiAgICB3aGlsZSBUcnVlOgogICAgICAgIHIgPSB3YWl0X3JlYWR5KDIwIGlmIHJlc3RhcnRzID09IDAgZWxzZSAxMCkKICAgICAgICBpZiByICE9IGxhc3Q6CiAgICAgICAgICAgIGxvZygi54q25oCBIC0+ICVzIiAlIHtUcnVlOiAi6K+75Y2h5q2j5bi4IiwgRmFsc2U6ICLor7vljaHlpLHotKUiLCBOb25lOiAiQVQg5Y+j5rKh57uT5p6cIn1bcl0pCiAgICAgICAgICAgIGxhc3QgPSByCiAgICAgICAgaWYgciBpcyBUcnVlOgogICAgICAgICAgICByZXN0YXJ0cyA9IDAKICAgICAgICBlbGlmIHIgaXMgTm9uZToKICAgICAgICAgICAgcGFzcyAgICAgICAgICAgICAgICAgICAgICAjIEFUIOWPo+iiq+WNoO+8jOS7gOS5iOmDveS4jeWBmu+8jOS4i+i9ruWGjeeciwogICAgICAgIGVsaWYgcmVzdGFydHMgPCAzOgogICAgICAgICAgICByZXN0YXJ0cyArPSAxCiAgICAgICAgICAgIGxvZygi5Y2h5piO56Gu5LiN5Y+v55So77yM56ysICVkIOasoemHjeWQryBNUFNTIOmHjeaWsOe7meWNoeS4iueUtSIgJSByZXN0YXJ0cykKICAgICAgICAgICAgcnByb2MoInN0b3AiKQogICAgICAgICAgICB0aW1lLnNsZWVwKDQpCiAgICAgICAgICAgIHJwcm9jKCJzdGFydCIpCiAgICAgICAgICAgIHRpbWUuc2xlZXAoMTIpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgbG9nKCLkuInmrKHph43lkK/pg73or7vkuI3lh7rvvIzlj6rkv53mjIHohJrkvY0iKQogICAgICAgICAgICByZXN0YXJ0cyA9IDAgICAgICAgICAgICAgICMg5YaN562J5LiA6L2u77yM5Yir5b275bqV5pS+5byDCiAgICAgICAgdGltZS5zbGVlcCgzMCkKCgptYWluKCkK
+#!/usr/bin/env python3
+"""U01 读卡常驻：开机按配置把 SIM 选择脚拉成"卡槽"或"内置卡"那一档并一直占住，
+卡读不出来就重启一次 MPSS 让 modem 重新给卡上电。
+
+为什么必须常驻：这台 WF2 的 DTB 把 sim_en/sel 指向了错误的控制器和脚位，内核侧不会驱动；
+而 /sys/class/gpio 没开，只能用 cdev ABI v2 申请 line —— line 的持有者一退出脚就掉回默认电平，
+所以要做成常驻进程（跟 batled 一个套路）。
+
+脚位用的是原厂安卓 DTB 里 /soc/gpio_leds 那组（SimSwitchThread 写的就是它们）：
+  gpio119 = esim1_en = 托盘卡槽，gpio14 = esim2_en = 原机内置卡。两根互斥，只拉高要读的那根。
+（旧版用的 gpio49 实测对选卡没有作用，已去掉。）
+
+卡位切换：/etc/u01sim.conf 里写 sim_slot=0（只读卡槽）或 sim_slot=1（内置卡），改完 restart。
+只保证"读卡"这一件事：不置 CFUN=1、不拨号。
+"""
+import ctypes, os, select, struct, subprocess, sys, time
+
+CONF = "/etc/u01sim.conf"
+DEFAULT_SLOT = 1
+PIN_TRAY = 119      # esim1_en -> slot 0
+PIN_BUILTIN = 14    # esim2_en -> slot 1
+PINS = [PIN_TRAY, PIN_BUILTIN]
+SLOT_LEVELS = {0: [1, 0], 1: [0, 1]}
+QMI_DEV = "/dev/wwan0qmi0"
+CHIP_LABEL = "u01sim"
+MAGIC = 0xB4
+SZ_CHIPINFO, SZ_REQ, SZ_VALUES = 68, 592, 16
+IOC_CHIPINFO = (2 << 30) | (SZ_CHIPINFO << 16) | (MAGIC << 8) | 0x01
+IOC_GET_LINE = (3 << 30) | (SZ_REQ << 16) | (MAGIC << 8) | 0x07
+IOC_SET_VALUES = (3 << 30) | (SZ_VALUES << 16) | (MAGIC << 8) | 0x0F
+FLAG_OUTPUT = 1 << 3
+OFF_CONF_FLAGS, OFF_NUM_LINES, OFF_FD = 288, 560, 588
+RPROC = "/sys/class/remoteproc/remoteproc0/state"
+ATDEV = "/dev/wwan0at0"
+libc = ctypes.CDLL("libc.so.6", use_errno=True)
+
+
+def log(*a):
+    line = " ".join(str(x) for x in a)
+    print(time.strftime("[%m-%d %H:%M:%S]"), line, flush=True)
+    try:
+        with open("/tmp/u01sim.log", "a") as f:
+            f.write(time.strftime("[%m-%d %H:%M:%S] ") + line + "\n")
+    except OSError:
+        pass
+
+
+def ioctl(fd, num, buf):
+    return libc.ioctl(fd, ctypes.c_ulong(num), buf)
+
+
+def chips():
+    out = []
+    for n in range(8):
+        p = "/dev/gpiochip%d" % n
+        if not os.path.exists(p):
+            continue
+        fd = os.open(p, os.O_RDWR | os.O_CLOEXEC)
+        buf = ctypes.create_string_buffer(SZ_CHIPINFO)
+        if ioctl(fd, IOC_CHIPINFO, buf) < 0:
+            os.close(fd)
+            continue
+        name, label, lines = struct.unpack("32s32sI", buf.raw[:72])
+        out.append((fd, p, name.rstrip(b"\0").decode(), lines))
+    return out
+
+
+def read_conf():
+    slot = DEFAULT_SLOT
+    if os.path.exists(CONF):
+        for line in open(CONF):
+            line = line.strip()
+            if line.startswith("sim_slot"):
+                try:
+                    slot = int(line.split("=")[1].strip()) & 1
+                except Exception:
+                    pass
+    return slot
+
+
+def reenumerate():
+    """换档后让 modem 重新给 UIM 上电，否则它还会报旧那张卡。"""
+    for op in ("--uim-sim-power-off=1", "--uim-sim-power-on=1"):
+        try:
+            subprocess.run(["qmicli", "-d", QMI_DEV, op], timeout=20,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        except Exception as e:
+            log("%s 没跑成: %s" % (op, e))
+        time.sleep(1)
+
+
+def hold(slot):
+    """返回 (chipfd, linefd)；linefd 不关，脚就一直保持。119=托盘卡槽电源，14=内置卡电源。"""
+    pins = PINS
+    vals = SLOT_LEVELS[slot]
+    bits = 0
+    for i, v in enumerate(vals):
+        if v:
+            bits |= 1 << i
+    cs = [c for c in chips() if c[3] > max(pins)]
+    if not cs:
+        raise SystemExit("没有能覆盖 gpio%d 的 chip" % max(pins))
+    c = max(cs, key=lambda x: x[3])
+    buf = ctypes.create_string_buffer(SZ_REQ)
+    struct.pack_into("%dI" % len(pins), buf, 0, *pins)
+    buf[256:288] = CHIP_LABEL.encode().ljust(32, b"\0")
+    struct.pack_into("Q", buf, OFF_CONF_FLAGS, FLAG_OUTPUT)
+    struct.pack_into("I", buf, OFF_NUM_LINES, len(pins))
+    if ioctl(c[0], IOC_GET_LINE, buf) < 0:
+        raise SystemExit("GET_LINE 失败: %s" % os.strerror(ctypes.get_errno()))
+    lfd = struct.unpack_from("i", buf, OFF_FD)[0]
+    mask = (1 << len(pins)) - 1
+    if ioctl(lfd, IOC_SET_VALUES, ctypes.create_string_buffer(struct.pack("QQ", bits, mask))) < 0:
+        raise SystemExit("SET_VALUES 失败: %s" % os.strerror(ctypes.get_errno()))
+    log("gpio%d(卡槽)=%d gpio%d(内置卡)=%d  chip=%s %s (%d lines)"
+        % (PIN_TRAY, vals[0], PIN_BUILTIN, vals[1], c[2], c[1], c[3]))
+    return c[0], lfd
+
+
+def rproc(op):
+    fd = os.open(RPROC, os.O_WRONLY)
+    os.write(fd, op.encode())
+    os.close(fd)
+
+
+def at_once(cmd, wait=3.0):
+    """发一条 AT。返回 None=口被占/无应答（不算失败），否则返回应答文本。"""
+    if not os.path.exists(ATDEV):
+        return None
+    try:
+        fd = os.open(ATDEV, os.O_RDWR)
+    except OSError:
+        return None
+    buf = b""
+    try:
+        os.write(fd, (cmd + "\r\n").encode())
+        deadline = time.time() + wait
+        while time.time() < deadline:
+            r, _, _ = select.select([fd], [], [], 0.2)
+            if r:
+                d = os.read(fd, 4096)
+                if not d:
+                    break
+                buf += d
+                if b"OK" in buf or b"ERROR" in buf:
+                    break
+    except OSError:
+        pass
+    finally:
+        os.close(fd)
+    txt = buf.decode("utf-8", "replace").replace("\r", " ").strip()
+    return txt or None
+
+
+def wait_ready(sec):
+    """轮询 AT+CPIN?。READY 返回 True；只有 modem 明确回了"卡不在/未初始化"才返回 False。
+    AT 口没应答（多半被 ModemManager/sigmo 占着）时不判失败，一直等到超时。"""
+    end = time.time() + sec
+    while time.time() < end:
+        txt = at_once("AT+CPIN?")
+        if txt is None:
+            time.sleep(3)
+            continue
+        if "READY" in txt:
+            return True
+        if "ERROR" in txt or "SIM" in txt:
+            log("CPIN 明确不可用: %s" % txt[:80])
+            return False
+        log("CPIN 还没好: %s" % txt[:80])
+        time.sleep(3)
+    log("等 %ds 没有明确结果（多半是 AT 口被占用），不折腾 MPSS" % sec)
+    return None
+
+
+def main():
+    for _ in range(60):
+        if os.path.exists(RPROC) and os.path.exists("/dev/gpiochip0"):
+            break
+        time.sleep(2)
+    else:
+        raise SystemExit("等不到 remoteproc0/gpiochip0")
+    slot = read_conf()
+    for i, a in enumerate(sys.argv):
+        if a == "--slot":
+            slot = int(sys.argv[i + 1]) & 1
+    log("档位: sim_slot=%d (%s)" % (slot, "只读卡槽" if slot == 0 else "内置卡"))
+    cfd, lfd = hold(slot)
+    if "--switch" in sys.argv:
+        log("切档：先放掉旧 line 再重新上电")
+        os.close(lfd)
+        os.close(cfd)
+        time.sleep(1)
+        cfd, lfd = hold(slot)
+    reenumerate()
+    if "--once" in sys.argv:
+        log("结果: %s" % at_once("AT+CPIN?", 6))
+        return
+
+    restarts = 0
+    last = None
+    while True:
+        r = wait_ready(20 if restarts == 0 else 10)
+        if r != last:
+            log("状态 -> %s" % {True: "读卡正常", False: "读卡失败", None: "AT 口没结果"}[r])
+            last = r
+        if r is True:
+            restarts = 0
+        elif r is None:
+            pass                      # AT 口被占，什么都不做，下轮再看
+        elif restarts < 3:
+            restarts += 1
+            log("卡明确不可用，第 %d 次重启 MPSS 重新给卡上电" % restarts)
+            rproc("stop")
+            time.sleep(4)
+            rproc("start")
+            time.sleep(12)
+        else:
+            log("三次重启都读不出，只保持脚位")
+            restarts = 0              # 再等一轮，别彻底放弃
+        time.sleep(30)
+
+
+main()

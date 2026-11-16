@@ -1,1 +1,51 @@
-RnJvbSAyYjUzMzY5NjgxY2M4NTA5NGU5MzZlZmUxOGUyN2JmZjJkNjNmNGMwIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBKYW5pcyBHZXJ0dWxsYSA8Y29mZmVlaW1wbGllc2NvZGVAcHJvdG9uLm1lPgpEYXRlOiBUdWUsIDE4IEF1ZyAyMDI2IDA2OjQ2OjI5ICswMjAwClN1YmplY3Q6IFtQQVRDSF0gYXJtOiBmaXggYmlnLWVuZGlhbiBzdWItd29yZCBhcmd1bWVudCBvZmZzZXRzIGluIGNsb3N1cmVzCgpTdWItNC1ieXRlIGludGVnZXIgYXJncyBwYXNzZWQgaW4gMzItYml0IHJlZ2lzdGVycyBvciBvbiB0aGUgc3RhY2sgc2l0CmluIHRoZSBMU0Igb2YgdGhlIDQtYnl0ZSBzbG90LCB3aGljaCBvbiBiaWctZW5kaWFuIEFSTSBpcyBhdCBvZmZzZXQKNCAtIHNpemUuIFByZXZpb3VzbHkgYXNzdW1lZCBsaXR0bGUtZW5kaWFuIChvZmZzZXQgMCkuIEFkanVzdCBpbgpmZmlfcHJlcF9pbmNvbWluZ19hcmdzX1NZU1YgYW5kIGZmaV9wcmVwX2luY29taW5nX2FyZ3NfVkZQLgotLS0KIHNyYy9hcm0vZmZpLmMgfCAxNSArKysrKysrKysrKysrKysKIDEgZmlsZSBjaGFuZ2VkLCAxNSBpbnNlcnRpb25zKCspCgotLS0gYS9zcmMvYXJtL2ZmaS5jCisrKyBiL3NyYy9hcm0vZmZpLmMKQEAgLTQ2Nyw2ICs0NjcsMTEgQEAgZmZpX3ByZXBfaW5jb21pbmdfYXJnc19TWVNWIChmZmlfY2lmICpjaQogICAgICAgc2l6ZV90IHogPSB0eS0+c2l6ZTsKIAogICAgICAgYXJncCA9IGZmaV9hbGlnbiAodHksIGFyZ3ApOworI2lmZGVmIF9fQVJNRUJfXworICAgICAgaWYgKHogPCA0ICYmIHR5LT50eXBlICE9IEZGSV9UWVBFX1NUUlVDVCkKKwlhdmFsdWVbaV0gPSAodm9pZCAqKSAoYXJncCArIDQgLSB6KTsKKyAgICAgIGVsc2UKKyNlbmRpZgogICAgICAgYXZhbHVlW2ldID0gKHZvaWQgKikgYXJncDsKICAgICAgIGFyZ3AgKz0gejsKICAgICB9CkBAIC01MTUsNiArNTIwLDExIEBAIGZmaV9wcmVwX2luY29taW5nX2FyZ3NfVkZQIChmZmlfY2lmICpjaWYKIAkgIGlmICh0cmVncCArIHogPD0gZW9fcmVncCB8fCAhc3RhY2tfdXNlZCkKIAkgICAgewogCSAgICAgIC8qIEJlY2F1c2Ugd2UncmUgbGl0dGxlIGVuZGlhbiwgdGhpcyBpcyB3aGF0IGl0IHR1cm5zIGludG8uICAqLworI2lmZGVmIF9fQVJNRUJfXworCSAgICAgIGlmICh6IDwgNCAmJiB0eS0+dHlwZSAhPSBGRklfVFlQRV9TVFJVQ1QpCisJCWF2YWx1ZVtpXSA9ICh2b2lkICopICh0cmVncCArIDQgLSB6KTsKKwkgICAgICBlbHNlCisjZW5kaWYKIAkgICAgICBhdmFsdWVbaV0gPSAodm9pZCAqKSB0cmVncDsKIAkgICAgICByZWdwID0gdHJlZ3AgKyB6OwogCkBAIC01MzcsNiArNTQ3LDExIEBAIGZmaV9wcmVwX2luY29taW5nX2FyZ3NfVkZQIChmZmlfY2lmICpjaWYKIAogICAgICAgc3RhY2tfdXNlZCA9IDE7CiAgICAgICBhcmdwID0gZmZpX2FsaWduICh0eSwgYXJncCk7CisjaWZkZWYgX19BUk1FQl9fCisgICAgICBpZiAoeiA8IDQgJiYgdHktPnR5cGUgIT0gRkZJX1RZUEVfU1RSVUNUKQorCWF2YWx1ZVtpXSA9ICh2b2lkICopIChhcmdwICsgNCAtIHopOworICAgICAgZWxzZQorI2VuZGlmCiAgICAgICBhdmFsdWVbaV0gPSAodm9pZCAqKSBhcmdwOwogICAgICAgYXJncCArPSB6OwogICAgIH0K
+From 2b53369681cc85094e936efe18e27bff2d63f4c0 Mon Sep 17 00:00:00 2001
+From: Janis Gertulla <coffeeimpliescode@proton.me>
+Date: Tue, 18 Aug 2026 06:46:29 +0200
+Subject: [PATCH] arm: fix big-endian sub-word argument offsets in closures
+
+Sub-4-byte integer args passed in 32-bit registers or on the stack sit
+in the LSB of the 4-byte slot, which on big-endian ARM is at offset
+4 - size. Previously assumed little-endian (offset 0). Adjust in
+ffi_prep_incoming_args_SYSV and ffi_prep_incoming_args_VFP.
+---
+ src/arm/ffi.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+--- a/src/arm/ffi.c
++++ b/src/arm/ffi.c
+@@ -467,6 +467,11 @@ ffi_prep_incoming_args_SYSV (ffi_cif *ci
+       size_t z = ty->size;
+ 
+       argp = ffi_align (ty, argp);
++#ifdef __ARMEB__
++      if (z < 4 && ty->type != FFI_TYPE_STRUCT)
++	avalue[i] = (void *) (argp + 4 - z);
++      else
++#endif
+       avalue[i] = (void *) argp;
+       argp += z;
+     }
+@@ -515,6 +520,11 @@ ffi_prep_incoming_args_VFP (ffi_cif *cif
+ 	  if (tregp + z <= eo_regp || !stack_used)
+ 	    {
+ 	      /* Because we're little endian, this is what it turns into.  */
++#ifdef __ARMEB__
++	      if (z < 4 && ty->type != FFI_TYPE_STRUCT)
++		avalue[i] = (void *) (tregp + 4 - z);
++	      else
++#endif
+ 	      avalue[i] = (void *) tregp;
+ 	      regp = tregp + z;
+ 
+@@ -537,6 +547,11 @@ ffi_prep_incoming_args_VFP (ffi_cif *cif
+ 
+       stack_used = 1;
+       argp = ffi_align (ty, argp);
++#ifdef __ARMEB__
++      if (z < 4 && ty->type != FFI_TYPE_STRUCT)
++	avalue[i] = (void *) (argp + 4 - z);
++      else
++#endif
+       avalue[i] = (void *) argp;
+       argp += z;
+     }

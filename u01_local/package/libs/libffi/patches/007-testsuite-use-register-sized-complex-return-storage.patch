@@ -1,1 +1,65 @@
-RnJvbSBhNjhjZDU3OGM2YmI0Mjg0MTUwNjcxOWY1ZjM3MmViZmRlYmM1NzVmIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbnRob255IEdyZWVuIDxncmVlbkBtb3hpZWxvZ2ljLmNvbT4KRGF0ZTogVHVlLCAyNyBPY3QgMjAyNiAwNzo0NToyMiAtMDQwMApTdWJqZWN0OiBbUEFUQ0hdIHRlc3RzdWl0ZTogdXNlIHJlZ2lzdGVyLXNpemVkIGNvbXBsZXggcmV0dXJuIHN0b3JhZ2UKCi0tLQogdGVzdHN1aXRlL2xpYmZmaS5jb21wbGV4L2NvbXBsZXhfaW50X3NtYWxsLmMgfCAxOSArKysrKysrKysrKysrKysrLS0tCiAxIGZpbGUgY2hhbmdlZCwgMTYgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkKCi0tLSBhL3Rlc3RzdWl0ZS9saWJmZmkuY29tcGxleC9jb21wbGV4X2ludF9zbWFsbC5jCisrKyBiL3Rlc3RzdWl0ZS9saWJmZmkuY29tcGxleC9jb21wbGV4X2ludF9zbWFsbC5jCkBAIC0zNSw2ICszNSwxNSBAQCBGRklfQ09NUExFWF9UWVBFREVGKHNzaG9ydCwgc2hvcnQsIGZmaV90CiB0eXBlZGVmIF9Db21wbGV4IHNpZ25lZCBjaGFyIGNjOwogdHlwZWRlZiBfQ29tcGxleCBzaG9ydCBjczsKIAorLyogZmZpX2NhbGwgcmVxdWlyZXMgaXRzIHJldHVybiBzdG9yYWdlIHRvIGJlIGF0IGxlYXN0IHJlZ2lzdGVyLXNpemVkIGFuZAorICAgc3VpdGFibHkgYWxpZ25lZCwgZXZlbiB3aGVuIHRoZSBkZWNsYXJlZCByZXR1cm4gdHlwZSBpcyBzbWFsbGVyLiAgKi8KK3R5cGVkZWYgdW5pb24KK3sKKyAgZmZpX2FyZyBhbGlnbjsKKyAgY2MgY2NoYXI7CisgIGNzIGNzaG9ydDsKK30gY29tcGxleF9yZXN1bHQ7CisKIHN0YXRpYyBjYwogZl9jYyAoY2MgYSwgaW50IGspCiB7CkBAIC05Niw2ICsxMDUsNyBAQCBtYWluICh2b2lkKQogICBpbnQgaW50c1s4XSA9IHsgMSwgMiwgMywgNCwgNSwgNiwgNywgOCB9OwogICBjYyBhLCByYTsKICAgY3MgYiwgcmI7CisgIGNvbXBsZXhfcmVzdWx0IHJlc3VsdDsKICAgaW50IGsgPSAzLCBpOwogCiAgIHBjbCA9IGZmaV9jbG9zdXJlX2FsbG9jIChzaXplb2YgKGZmaV9jbG9zdXJlKSwgJmNvZGUpOwpAQCAtMTEyLDcgKzEyMiw4IEBAIG1haW4gKHZvaWQpCiAgIHZhbHVlc1sxXSA9ICZrOwogICBDSEVDSyAoZmZpX3ByZXBfY2lmICgmY2lmLCBGRklfREVGQVVMVF9BQkksIDIsICZmZmlfdHlwZV9jb21wbGV4X3NjaGFyLAogCQkgICAgICAgdHlwZXMpID09IEZGSV9PSyk7Ci0gIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZfY2MpLCAmcmEsIHZhbHVlcyk7CisgIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZfY2MpLCAmcmVzdWx0LCB2YWx1ZXMpOworICByYSA9IHJlc3VsdC5jY2hhcjsKICAgcHJpbnRmICgiY2M6ICVkLCVkaVxuIiwgKGludCkgX19yZWFsX18gcmEsIChpbnQpIF9faW1hZ19fIHJhKTsKICAgQ0hFQ0sgKF9fcmVhbF9fIHJhID09IDE1ICYmIF9faW1hZ19fIHJhID09IC0xMCk7CiAgIENIRUNLIChmZmlfcHJlcF9jbG9zdXJlX2xvYyAocGNsLCAmY2lmLCBjbHNfY2MsIE5VTEwsIGNvZGUpID09IEZGSV9PSyk7CkBAIC0xMjQsNyArMTM1LDggQEAgbWFpbiAodm9pZCkKICAgdmFsdWVzWzBdID0gJmI7CiAgIENIRUNLIChmZmlfcHJlcF9jaWYgKCZjaWYsIEZGSV9ERUZBVUxUX0FCSSwgMiwgJmZmaV90eXBlX2NvbXBsZXhfc3Nob3J0LAogCQkgICAgICAgdHlwZXMpID09IEZGSV9PSyk7Ci0gIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZfY3MpLCAmcmIsIHZhbHVlcyk7CisgIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZfY3MpLCAmcmVzdWx0LCB2YWx1ZXMpOworICByYiA9IHJlc3VsdC5jc2hvcnQ7CiAgIHByaW50ZiAoImNzOiAlZCwlZGlcbiIsIChpbnQpIF9fcmVhbF9fIHJiLCAoaW50KSBfX2ltYWdfXyByYik7CiAgIENIRUNLIChfX3JlYWxfXyByYiA9PSA5MDAgJiYgX19pbWFnX18gcmIgPT0gLTQwMyk7CiAgIENIRUNLIChmZmlfcHJlcF9jbG9zdXJlX2xvYyAocGNsLCAmY2lmLCBjbHNfY3MsIE5VTEwsIGNvZGUpID09IEZGSV9PSyk7CkBAIC0xNDMsNyArMTU1LDggQEAgbWFpbiAodm9pZCkKICAgdmFsdWVzWzldID0gJmI7CiAgIENIRUNLIChmZmlfcHJlcF9jaWYgKCZjaWYsIEZGSV9ERUZBVUxUX0FCSSwgMTAsICZmZmlfdHlwZV9jb21wbGV4X3NzaG9ydCwKIAkJICAgICAgIHR5cGVzKSA9PSBGRklfT0spOwotICBmZmlfY2FsbCAoJmNpZiwgRkZJX0ZOIChmX3N0YWNrKSwgJnJiLCB2YWx1ZXMpOworICBmZmlfY2FsbCAoJmNpZiwgRkZJX0ZOIChmX3N0YWNrKSwgJnJlc3VsdCwgdmFsdWVzKTsKKyAgcmIgPSByZXN1bHQuY3Nob3J0OwogICBwcmludGYgKCJzdGFjazogJWQsJWRpXG4iLCAoaW50KSBfX3JlYWxfXyByYiwgKGludCkgX19pbWFnX18gcmIpOwogICBDSEVDSyAoX19yZWFsX18gcmIgPT0gMzE1ICYmIF9faW1hZ19fIHJiID09IC0zODEpOwogICBDSEVDSyAoZmZpX3ByZXBfY2xvc3VyZV9sb2MgKHBjbCwgJmNpZiwgY2xzX3N0YWNrLCBOVUxMLCBjb2RlKSA9PSBGRklfT0spOwo=
+From a68cd578c6bb42841506719f5f372ebfdebc575f Mon Sep 17 00:00:00 2001
+From: Anthony Green <green@moxielogic.com>
+Date: Tue, 27 Oct 2026 07:45:22 -0400
+Subject: [PATCH] testsuite: use register-sized complex return storage
+
+---
+ testsuite/libffi.complex/complex_int_small.c | 19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
+
+--- a/testsuite/libffi.complex/complex_int_small.c
++++ b/testsuite/libffi.complex/complex_int_small.c
+@@ -35,6 +35,15 @@ FFI_COMPLEX_TYPEDEF(sshort, short, ffi_t
+ typedef _Complex signed char cc;
+ typedef _Complex short cs;
+ 
++/* ffi_call requires its return storage to be at least register-sized and
++   suitably aligned, even when the declared return type is smaller.  */
++typedef union
++{
++  ffi_arg align;
++  cc cchar;
++  cs cshort;
++} complex_result;
++
+ static cc
+ f_cc (cc a, int k)
+ {
+@@ -96,6 +105,7 @@ main (void)
+   int ints[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+   cc a, ra;
+   cs b, rb;
++  complex_result result;
+   int k = 3, i;
+ 
+   pcl = ffi_closure_alloc (sizeof (ffi_closure), &code);
+@@ -112,7 +122,8 @@ main (void)
+   values[1] = &k;
+   CHECK (ffi_prep_cif (&cif, FFI_DEFAULT_ABI, 2, &ffi_type_complex_schar,
+ 		       types) == FFI_OK);
+-  ffi_call (&cif, FFI_FN (f_cc), &ra, values);
++  ffi_call (&cif, FFI_FN (f_cc), &result, values);
++  ra = result.cchar;
+   printf ("cc: %d,%di\n", (int) __real__ ra, (int) __imag__ ra);
+   CHECK (__real__ ra == 15 && __imag__ ra == -10);
+   CHECK (ffi_prep_closure_loc (pcl, &cif, cls_cc, NULL, code) == FFI_OK);
+@@ -124,7 +135,8 @@ main (void)
+   values[0] = &b;
+   CHECK (ffi_prep_cif (&cif, FFI_DEFAULT_ABI, 2, &ffi_type_complex_sshort,
+ 		       types) == FFI_OK);
+-  ffi_call (&cif, FFI_FN (f_cs), &rb, values);
++  ffi_call (&cif, FFI_FN (f_cs), &result, values);
++  rb = result.cshort;
+   printf ("cs: %d,%di\n", (int) __real__ rb, (int) __imag__ rb);
+   CHECK (__real__ rb == 900 && __imag__ rb == -403);
+   CHECK (ffi_prep_closure_loc (pcl, &cif, cls_cs, NULL, code) == FFI_OK);
+@@ -143,7 +155,8 @@ main (void)
+   values[9] = &b;
+   CHECK (ffi_prep_cif (&cif, FFI_DEFAULT_ABI, 10, &ffi_type_complex_sshort,
+ 		       types) == FFI_OK);
+-  ffi_call (&cif, FFI_FN (f_stack), &rb, values);
++  ffi_call (&cif, FFI_FN (f_stack), &result, values);
++  rb = result.cshort;
+   printf ("stack: %d,%di\n", (int) __real__ rb, (int) __imag__ rb);
+   CHECK (__real__ rb == 315 && __imag__ rb == -381);
+   CHECK (ffi_prep_closure_loc (pcl, &cif, cls_stack, NULL, code) == FFI_OK);

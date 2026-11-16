@@ -1,1 +1,115 @@
-RnJvbSBlMzY0MGQwMzVmMjM4MDJiNDJhNGYxZDMyOWM5MTQ4YTA3MTc2ZTk1IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogVHVlLCAyMCBPY3QgMjAyNiAyMjo1OTo0MSArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIGxvb25nYXJjaDogYWRkIHN1cHBvcnQgZm9yIGNvbXBsZXggdHlwZXMKClRoZSBMb29uZ0FyY2ggcHNBQkkgcGFzc2VzIGEgY29tcGxleCBmbG9hdGluZy1wb2ludCBudW1iZXIsIGFuZCBhIHN0cnVjdApjb250YWluaW5nIGp1c3Qgb25lLCBhcyB0aG91Z2ggaXQgd2VyZSBhIHN0cnVjdCBvZiB0d28gZmxvYXRpbmctcG9pbnQKcmVhbHMuICBUaGF0IGlzIGV4YWN0bHkgdGhlIHJ1bGUgbGliZmZpIGFscmVhZHkgaW1wbGVtZW50cyBmb3Igc3RydWN0cwppbiBzdHJ1Y3RfcGFzc2VkX2FzX2VsZW1lbnRzKCk6IHR3byBmbG9hdHMgZ28gaW4gdHdvIEZQUnMgaWYgdHdvIGFyZQpmcmVlLCBvdGhlcndpc2UgdGhlIHZhbHVlIGZvbGxvd3MgdGhlIGludGVnZXIgY29udmVudGlvbiwgaW4gdXAgdG8gdHdvCkdQUnMgb3IgYnkgcmVmZXJlbmNlIGlmIGxhcmdlciB0aGFuIDIqR1JMRU4uCgpGbGF0dGVuIGFuIEZGSV9UWVBFX0NPTVBMRVggaW50byB0d28gZWxlbWVudHMgb2YgaXRzIGJhc2UgdHlwZSwgbGV0IHRoZQpmbG9hdCBzdHJ1Y3QgaGFuZGxpbmcgaW4gbWFyc2hhbCgpLCB1bm1hcnNoYWwoKSBhbmQgcGFzc2VkX2J5X3JlZigpCmFjY2VwdCBjb21wbGV4IHR5cGVzLCBhbmQgZGVmaW5lIEZGSV9UQVJHRVRfSEFTX0NPTVBMRVhfVFlQRS4gIEV2ZXJ5dGhpbmcKZWxzZSBmb2xsb3dzIGZyb20gdGhlIGV4aXN0aW5nIHN0cnVjdCBjb2RlOgoKICAtIGZsb2F0IGFuZCBkb3VibGUgX0NvbXBsZXggdXNlICRmMC8kZjEgd2hlbiB0d28gRlBScyBhcmUgbGVmdCwgYW5kCiAgICBvbmUgb3IgdHdvIEdQUnMgb3RoZXJ3aXNlLCBuZXZlciBvbmUgRlBSIGFuZCBvbmUgR1BSOwogIC0gdmFyaWFkaWMgY29tcGxleCBhcmd1bWVudHMgdXNlIHRoZSBpbnRlZ2VyIGNvbnZlbnRpb247CiAgLSBsb25nIGRvdWJsZSBfQ29tcGxleCAoMzIgYnl0ZXMpIGlzIHBhc3NlZCBieSByZWZlcmVuY2UgYW5kIHJldHVybmVkCiAgICB0aHJvdWdoIGEgaGlkZGVuIHBvaW50ZXI7CiAgLSBpbnRlZ2VyIGNvbXBsZXggdHlwZXMgYXJlIHBhY2tlZCBpbnRvIEdQUnMgbGlrZSBhIHNtYWxsIHN0cnVjdDsKICAtIGEgc3RydWN0IGhvbGRpbmcgYSBzaW5nbGUgY29tcGxleCB2YWx1ZSBmbGF0dGVucyB0byB0aGUgc2FtZSB0d28KICAgIHJlYWxzIGFuZCBpcyBwYXNzZWQgdGhlIHNhbWUgd2F5LgoKVGhpcyBtYXRjaGVzIEdDQydzIGNvZGUgZ2VuZXJhdGlvbiBmb3IgbHA2NGQuICBPbiB0aGUgc2luZ2xlLWZsb2F0IGFuZApzb2Z0LWZsb2F0IEFCSXMgdGhlIHBhcnRzIHRoYXQgYXJlIG5vdCBJU19GTE9BVCBmYWxsIGJhY2sgdG8gdGhlIGludGVnZXIKY29udmVudGlvbiwgYWdhaW4gYXMgdGhlIHBzQUJJIHJlcXVpcmVzLgpBc3Npc3RlZC1ieTogTExNClNpZ25lZC1vZmYtYnk6IERhbmllbCBHb2xsZSA8ZGFuaWVsQG1ha3JvdG9waWEub3JnPgotLS0KIHNyYy9sb29uZ2FyY2gvZmZpLmMgICAgICAgfCAyNSArKysrKysrKysrKysrKysrKystLS0tLS0tCiBzcmMvbG9vbmdhcmNoL2ZmaXRhcmdldC5oIHwgIDEgKwogMiBmaWxlcyBjaGFuZ2VkLCAxOSBpbnNlcnRpb25zKCspLCA3IGRlbGV0aW9ucygtKQoKLS0tIGEvc3JjL2xvb25nYXJjaC9mZmkuYworKysgYi9zcmMvbG9vbmdhcmNoL2ZmaS5jCkBAIC05Miw2ICs5Miw5IEBAIHR5cGVkZWYgc3RydWN0IGZsb2F0X3N0cnVjdF9pbmZvCiAgIGNoYXIgdHlwZTI7CiB9IGZsb2F0X3N0cnVjdF9pbmZvOwogCisjZGVmaW5lIElTX0FHR1JFR0FURSh0eXBlKSBcCisgICgodHlwZSkgPT0gRkZJX1RZUEVfU1RSVUNUIHx8ICh0eXBlKSA9PSBGRklfVFlQRV9DT01QTEVYKQorCiAjaWYgQUJJX0ZSTEVOID49IDY0CiAjIGRlZmluZSBJU19GTE9BVCh0eXBlKSAoKHR5cGUpID49IEZGSV9UWVBFX0ZMT0FUICYmICh0eXBlKSA8PSBGRklfVFlQRV9ET1VCTEUpCiAjZWxzZQpAQCAtMTA1LDcgKzEwOCwxNSBAQCBmbGF0dGVuX3N0cnVjdCAoZmZpX3R5cGUgKmluLCBmZmlfdHlwZSAqCiAKICAgaWYgKG91dCA9PSBvdXRfZW5kKQogICAgIHJldHVybiBvdXQ7Ci0gIGlmIChpbi0+dHlwZSAhPSBGRklfVFlQRV9TVFJVQ1QpCisgIGlmIChpbi0+dHlwZSA9PSBGRklfVFlQRV9DT01QTEVYKQorICAgIHsKKyAgICAgIC8qIFRoZSBwc0FCSSBwYXNzZXMgYSBjb21wbGV4IG51bWJlciBsaWtlIGEgc3RydWN0IG9mIHR3byByZWFscy4gICovCisgICAgICAqKG91dCsrKSA9IGluLT5lbGVtZW50c1swXTsKKyAgICAgIGlmIChvdXQgPT0gb3V0X2VuZCkKKwlyZXR1cm4gb3V0OworICAgICAgKihvdXQrKykgPSBpbi0+ZWxlbWVudHNbMF07CisgICAgfQorICBlbHNlIGlmIChpbi0+dHlwZSAhPSBGRklfVFlQRV9TVFJVQ1QpCiAgICAgKihvdXQrKykgPSBpbjsKICAgZWxzZQogICAgIGZvciAoaSA9IDA7IGluLT5lbGVtZW50c1tpXTsgaSsrKQpAQCAtMTEzLDkgKzEyNCw5IEBAIGZsYXR0ZW5fc3RydWN0IChmZmlfdHlwZSAqaW4sIGZmaV90eXBlICoKICAgcmV0dXJuIG91dDsKIH0KIAotLyogU3RydWN0cyB3aXRoIGF0IG1vc3QgdHdvIGZpZWxkcyBhZnRlciBmbGF0dGVuaW5nLCBvbmUgb2Ygd2hpY2ggaXMgb2YKLSAgIGZsb2F0aW5nIHBvaW50IHR5cGUsIGFyZSBwYXNzZWQgaW4gbXVsdGlwbGUgcmVnaXN0ZXJzIGlmIHN1ZmZpY2llbnQKLSAgIHJlZ2lzdGVycyBhcmUgYXZhaWxhYmxlLiAgKi8KKy8qIFN0cnVjdHMgYW5kIGNvbXBsZXggbnVtYmVycyB3aXRoIGF0IG1vc3QgdHdvIGZpZWxkcyBhZnRlciBmbGF0dGVuaW5nLAorICAgb25lIG9mIHdoaWNoIGlzIG9mIGZsb2F0aW5nIHBvaW50IHR5cGUsIGFyZSBwYXNzZWQgaW4gbXVsdGlwbGUgcmVnaXN0ZXJzCisgICBpZiBzdWZmaWNpZW50IHJlZ2lzdGVycyBhcmUgYXZhaWxhYmxlLiAgKi8KIHN0YXRpYyBmbG9hdF9zdHJ1Y3RfaW5mbwogc3RydWN0X3Bhc3NlZF9hc19lbGVtZW50cyAoY2FsbF9idWlsZGVyICpjYiwgZmZpX3R5cGUgKnRvcCkKIHsKQEAgLTI3OCw3ICsyODksNyBAQCBtYXJzaGFsIChjYWxsX2J1aWxkZXIgKmNiLCBmZmlfdHlwZSAqdHlwCiAgIHNpemVfdCByZWFsaWduWzJdOwogCiAjaWYgQUJJX0ZSTEVOCi0gIGlmICghdmFyICYmIHR5cGUtPnR5cGUgPT0gRkZJX1RZUEVfU1RSVUNUKQorICBpZiAoIXZhciAmJiBJU19BR0dSRUdBVEUgKHR5cGUtPnR5cGUpKQogICAgIHsKICAgICAgIGZsb2F0X3N0cnVjdF9pbmZvIGZzaSA9IHN0cnVjdF9wYXNzZWRfYXNfZWxlbWVudHMgKGNiLCB0eXBlKTsKICAgICAgIGlmIChmc2kuYXNfZWxlbWVudHMpCkBAIC0zNDcsNyArMzU4LDcgQEAgdW5tYXJzaGFsIChjYWxsX2J1aWxkZXIgKmNiLCBmZmlfdHlwZSAqdAogICB2b2lkICpwb2ludGVyOwogCiAjaWYgQUJJX0ZSTEVOCi0gIGlmICghdmFyICYmIHR5cGUtPnR5cGUgPT0gRkZJX1RZUEVfU1RSVUNUKQorICBpZiAoIXZhciAmJiBJU19BR0dSRUdBVEUgKHR5cGUtPnR5cGUpKQogICAgIHsKICAgICAgIGZsb2F0X3N0cnVjdF9pbmZvIGZzaSA9IHN0cnVjdF9wYXNzZWRfYXNfZWxlbWVudHMgKGNiLCB0eXBlKTsKICAgICAgIGlmIChmc2kuYXNfZWxlbWVudHMpCkBAIC00MTMsNyArNDI0LDcgQEAgc3RhdGljIGludAogcGFzc2VkX2J5X3JlZiAoY2FsbF9idWlsZGVyICpjYiwgZmZpX3R5cGUgKnR5cGUsIGludCB2YXIpCiB7CiAjaWYgQUJJX0ZSTEVOCi0gIGlmICghdmFyICYmIHR5cGUtPnR5cGUgPT0gRkZJX1RZUEVfU1RSVUNUKQorICBpZiAoIXZhciAmJiBJU19BR0dSRUdBVEUgKHR5cGUtPnR5cGUpKQogICAgIHsKICAgICAgIGZsb2F0X3N0cnVjdF9pbmZvIGZzaSA9IHN0cnVjdF9wYXNzZWRfYXNfZWxlbWVudHMgKGNiLCB0eXBlKTsKICAgICAgIGlmIChmc2kuYXNfZWxlbWVudHMpCi0tLSBhL3NyYy9sb29uZ2FyY2gvZmZpdGFyZ2V0LmgKKysrIGIvc3JjL2xvb25nYXJjaC9mZml0YXJnZXQuaApAQCAtODMsNiArODMsNyBAQCB0eXBlZGVmIGVudW0gZmZpX2FiaQogI2VuZGlmIC8qIExJQkZGSV9BU00gKi8KIAogI2RlZmluZSBGRklfVEFSR0VUX0hBU19JTlQxMjgKKyNkZWZpbmUgRkZJX1RBUkdFVF9IQVNfQ09NUExFWF9UWVBFCiAKIC8qIC0tLS0gRGVmaW5pdGlvbnMgZm9yIGNsb3N1cmVzIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tICovCiAK
+From e3640d035f23802b42a4f1d329c9148a07176e95 Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Tue, 20 Oct 2026 22:59:41 +0000
+Subject: [PATCH] loongarch: add support for complex types
+
+The LoongArch psABI passes a complex floating-point number, and a struct
+containing just one, as though it were a struct of two floating-point
+reals.  That is exactly the rule libffi already implements for structs
+in struct_passed_as_elements(): two floats go in two FPRs if two are
+free, otherwise the value follows the integer convention, in up to two
+GPRs or by reference if larger than 2*GRLEN.
+
+Flatten an FFI_TYPE_COMPLEX into two elements of its base type, let the
+float struct handling in marshal(), unmarshal() and passed_by_ref()
+accept complex types, and define FFI_TARGET_HAS_COMPLEX_TYPE.  Everything
+else follows from the existing struct code:
+
+  - float and double _Complex use $f0/$f1 when two FPRs are left, and
+    one or two GPRs otherwise, never one FPR and one GPR;
+  - variadic complex arguments use the integer convention;
+  - long double _Complex (32 bytes) is passed by reference and returned
+    through a hidden pointer;
+  - integer complex types are packed into GPRs like a small struct;
+  - a struct holding a single complex value flattens to the same two
+    reals and is passed the same way.
+
+This matches GCC's code generation for lp64d.  On the single-float and
+soft-float ABIs the parts that are not IS_FLOAT fall back to the integer
+convention, again as the psABI requires.
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ src/loongarch/ffi.c       | 25 ++++++++++++++++++-------
+ src/loongarch/ffitarget.h |  1 +
+ 2 files changed, 19 insertions(+), 7 deletions(-)
+
+--- a/src/loongarch/ffi.c
++++ b/src/loongarch/ffi.c
+@@ -92,6 +92,9 @@ typedef struct float_struct_info
+   char type2;
+ } float_struct_info;
+ 
++#define IS_AGGREGATE(type) \
++  ((type) == FFI_TYPE_STRUCT || (type) == FFI_TYPE_COMPLEX)
++
+ #if ABI_FRLEN >= 64
+ # define IS_FLOAT(type) ((type) >= FFI_TYPE_FLOAT && (type) <= FFI_TYPE_DOUBLE)
+ #else
+@@ -105,7 +108,15 @@ flatten_struct (ffi_type *in, ffi_type *
+ 
+   if (out == out_end)
+     return out;
+-  if (in->type != FFI_TYPE_STRUCT)
++  if (in->type == FFI_TYPE_COMPLEX)
++    {
++      /* The psABI passes a complex number like a struct of two reals.  */
++      *(out++) = in->elements[0];
++      if (out == out_end)
++	return out;
++      *(out++) = in->elements[0];
++    }
++  else if (in->type != FFI_TYPE_STRUCT)
+     *(out++) = in;
+   else
+     for (i = 0; in->elements[i]; i++)
+@@ -113,9 +124,9 @@ flatten_struct (ffi_type *in, ffi_type *
+   return out;
+ }
+ 
+-/* Structs with at most two fields after flattening, one of which is of
+-   floating point type, are passed in multiple registers if sufficient
+-   registers are available.  */
++/* Structs and complex numbers with at most two fields after flattening,
++   one of which is of floating point type, are passed in multiple registers
++   if sufficient registers are available.  */
+ static float_struct_info
+ struct_passed_as_elements (call_builder *cb, ffi_type *top)
+ {
+@@ -278,7 +289,7 @@ marshal (call_builder *cb, ffi_type *typ
+   size_t realign[2];
+ 
+ #if ABI_FRLEN
+-  if (!var && type->type == FFI_TYPE_STRUCT)
++  if (!var && IS_AGGREGATE (type->type))
+     {
+       float_struct_info fsi = struct_passed_as_elements (cb, type);
+       if (fsi.as_elements)
+@@ -347,7 +358,7 @@ unmarshal (call_builder *cb, ffi_type *t
+   void *pointer;
+ 
+ #if ABI_FRLEN
+-  if (!var && type->type == FFI_TYPE_STRUCT)
++  if (!var && IS_AGGREGATE (type->type))
+     {
+       float_struct_info fsi = struct_passed_as_elements (cb, type);
+       if (fsi.as_elements)
+@@ -413,7 +424,7 @@ static int
+ passed_by_ref (call_builder *cb, ffi_type *type, int var)
+ {
+ #if ABI_FRLEN
+-  if (!var && type->type == FFI_TYPE_STRUCT)
++  if (!var && IS_AGGREGATE (type->type))
+     {
+       float_struct_info fsi = struct_passed_as_elements (cb, type);
+       if (fsi.as_elements)
+--- a/src/loongarch/ffitarget.h
++++ b/src/loongarch/ffitarget.h
+@@ -83,6 +83,7 @@ typedef enum ffi_abi
+ #endif /* LIBFFI_ASM */
+ 
+ #define FFI_TARGET_HAS_INT128
++#define FFI_TARGET_HAS_COMPLEX_TYPE
+ 
+ /* ---- Definitions for closures ----------------------------------------- */
+ 

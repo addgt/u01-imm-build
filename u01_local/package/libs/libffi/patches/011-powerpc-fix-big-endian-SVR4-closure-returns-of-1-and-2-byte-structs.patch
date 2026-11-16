@@ -1,1 +1,86 @@
-RnJvbSBiYTk5NDkyMTUwNjE0N2RmZWIyZjM4YWQ0ZDI4NzRhNWJkNmU0ZjA5IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogVHVlLCAyMCBPY3QgMjAyNiAyMzozNzoxMSArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHBvd2VycGM6IGZpeCBiaWctZW5kaWFuIFNWUjQgY2xvc3VyZSByZXR1cm5zIG9mIDEtIGFuZCAyLWJ5dGUKIHN0cnVjdHMKCldpdGggRkZJX1NZU1ZfU1RSVUNUX1JFVCBhIHN0cnVjdCBvZiB1cCB0byA4IGJ5dGVzIGlzIHJldHVybmVkIGluIHIzL3I0LApyaWdodC1qdXN0aWZpZWQgaWYgc21hbGxlciB0aGFuIDQgYnl0ZXMuICBUaGUgY2xvc3VyZSBmdW5jdGlvbiBzdG9yZXMgaXQKYXQgdGhlIHN0YXJ0IG9mIHRoZSByZXR1cm4gdmFsdWUgYXJlYSwgYnV0IGNsb3N1cmVzIHJldHVybmluZyBhIDEtIG9yCjItYnl0ZSBzdHJ1Y3QgdXNlIHRoZSBQUENfTERfVTggYW5kIFBQQ19MRF9VMTYganVtcCB0YWJsZSBlbnRyaWVzLCB3aGljaApvbiBiaWctZW5kaWFuIGxvYWQgZnJvbSBvZmZzZXQgMyBhbmQgMiwgd2hlcmUgYW4gaW50ZWdlciB3aWRlbmVkIHRvCmZmaV9hcmcgaXMuCgpCZWZvcmUgdGhlIGNsb3N1cmUgcmV0dXJuIGhhbmRsaW5nIG1vdmVkIGZyb20gYXNzZW1ibHkgdG8gQywgdGhlc2UKc3RydWN0cyB3ZXJlIGxvYWRlZCBmcm9tIG9mZnNldCAwLiAgQWRkIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzEgYW5kClBQQzMyX1NZU1ZfTERfU1RSVUNUXzIgZW50cmllcyB0aGF0IGRvIHNvIGFnYWluIG9uIGJpZy1lbmRpYW4sIGFuZCBhbGlhcwp0aGVtIHRvIHRoZSBpbnRlZ2VyIGVudHJpZXMgb24gbGl0dGxlLWVuZGlhbi4gIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzcKbm93IGJyYW5jaGVzIHRvIC5Mc3RydWN0NTY3IGluc3RlYWQgb2YgZmFsbGluZyB0aHJvdWdoIGludG8gaXQsIHNvIHRoYXQKdGhlIG5ldyBlbnRyaWVzIGZvbGxvdyBpdCBpbiB0aGUgdGFibGUuCgpGRklfU1lTVl9TVFJVQ1RfUkVUIGlzIG5vdCB0aGUgZGVmYXVsdCBvbiBMaW51eCwgc28gdGhlIHRlc3RzdWl0ZSBkb2VzCm5vdCBjb3ZlciBpdC4gIFZlcmlmaWVkIGJ5IGJ1aWxkaW5nIGNsc18xXzFieXRlLCBjbHNfMmJ5dGUgYW5kIHRoZSBvdGhlcgpzbWFsbCBzdHJ1Y3QgY2xvc3VyZSB0ZXN0cyB3aXRoIC1tc3ZyNC1zdHJ1Y3QtcmV0dXJuIC1EX19TVlI0X1NUUlVDVF9SRVRVUk4KZm9yIDg1NDggYW5kIDQ2NGZwIHVuZGVyIHFlbXUtdXNlcjogY2xzXzFfMWJ5dGUgYW5kIGNsc18yYnl0ZSBhYm9ydAp3aXRob3V0IHRoaXMgY2hhbmdlIGFuZCBwYXNzIHdpdGggaXQsIHRoZSBvdGhlcnMgcGFzcyBlaXRoZXIgd2F5LgoKRml4ZXM6IDg0MGFkZDNiNmExYyAoIkFkZCBjb25kaXRpb25hbCB0YXJnZXQgc3VwcG9ydCBmb3IgX19pbnQxMjggKCM5NTEpIikKQXNzaXN0ZWQtYnk6IExMTQpTaWduZWQtb2ZmLWJ5OiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KLS0tCiBzcmMvcG93ZXJwYy9mZmlfcG93ZXJwYy5oIHwgIDQgKysrKwogc3JjL3Bvd2VycGMvZmZpX3N5c3YuYyAgICB8ICA0ICsrLS0KIHNyYy9wb3dlcnBjL3BwY19jbG9zdXJlLlMgfCAxMCArKysrKysrKystCiAzIGZpbGVzIGNoYW5nZWQsIDE1IGluc2VydGlvbnMoKyksIDMgZGVsZXRpb25zKC0pCgotLS0gYS9zcmMvcG93ZXJwYy9mZmlfcG93ZXJwYy5oCisrKyBiL3NyYy9wb3dlcnBjL2ZmaV9wb3dlcnBjLmgKQEAgLTYwLDExICs2MCwxNSBAQAogI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF81CVBQQzMyX0xEX1IzUjQKICNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfNglQUEMzMl9MRF9SM1I0CiAjZGVmaW5lIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzcJUFBDMzJfTERfUjNSNAorI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF8xCVBQQ19MRF9VOAorI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF8yCVBQQ19MRF9VMTYKICNlbHNlCiAjZGVmaW5lIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzMJMTEKICNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfNQkxMgogI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF82CTEzCiAjZGVmaW5lIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzcJMTQKKyNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMQkxNQorI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF8yCTE2CiAjZW5kaWYKIAogI2Vsc2UgLyogUE9XRVJQQzY0ICovCi0tLSBhL3NyYy9wb3dlcnBjL2ZmaV9zeXN2LmMKKysrIGIvc3JjL3Bvd2VycGMvZmZpX3N5c3YuYwpAQCAtOTYwLDkgKzk2MCw5IEBAIGZmaV9jbG9zdXJlX2hlbHBlcl9TWVNWIChmZmlfY2lmICpjaWYsCiAJc3dpdGNoIChzaXplKQogCSAgewogCSAgY2FzZSAxOgotCSAgICByZXR1cm4gUFBDX0xEX1U4OworCSAgICByZXR1cm4gUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMTsKIAkgIGNhc2UgMjoKLQkgICAgcmV0dXJuIFBQQ19MRF9VMTY7CisJICAgIHJldHVybiBQUEMzMl9TWVNWX0xEX1NUUlVDVF8yOwogCSAgY2FzZSAzOgogCSAgICByZXR1cm4gUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMzsKIAkgIGNhc2UgNDoKLS0tIGEvc3JjL3Bvd2VycGMvcHBjX2Nsb3N1cmUuUworKysgYi9zcmMvcG93ZXJwYy9wcGNfY2xvc3VyZS5TCkBAIC0yMjgsNyArMjI4LDE1IEBAIEUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfNwogCWx3eiAlcjMsMTEyKzAoJXIxKQogCWx3eiAlcjQsMTEyKzQoJXIxKQogCWxpICVyNSw4Ci0Jbm9wCisJYiAuTHN0cnVjdDU2NworCitFIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzEKKwlsYnogJXIzLDExMiswKCVyMSkKKwllcGlsb2d1ZQorCitFIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzIKKwlsaHogJXIzLDExMiswKCVyMSkKKwllcGlsb2d1ZQogCiAuTHN0cnVjdDU2NzoKIAlzdWJmaWMgJXI2LCVyNSwzMgo=
+From ba994921506147dfeb2f38ad4d2874a5bd6e4f09 Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Tue, 20 Oct 2026 23:37:11 +0000
+Subject: [PATCH] powerpc: fix big-endian SVR4 closure returns of 1- and 2-byte
+ structs
+
+With FFI_SYSV_STRUCT_RET a struct of up to 8 bytes is returned in r3/r4,
+right-justified if smaller than 4 bytes.  The closure function stores it
+at the start of the return value area, but closures returning a 1- or
+2-byte struct use the PPC_LD_U8 and PPC_LD_U16 jump table entries, which
+on big-endian load from offset 3 and 2, where an integer widened to
+ffi_arg is.
+
+Before the closure return handling moved from assembly to C, these
+structs were loaded from offset 0.  Add PPC32_SYSV_LD_STRUCT_1 and
+PPC32_SYSV_LD_STRUCT_2 entries that do so again on big-endian, and alias
+them to the integer entries on little-endian.  PPC32_SYSV_LD_STRUCT_7
+now branches to .Lstruct567 instead of falling through into it, so that
+the new entries follow it in the table.
+
+FFI_SYSV_STRUCT_RET is not the default on Linux, so the testsuite does
+not cover it.  Verified by building cls_1_1byte, cls_2byte and the other
+small struct closure tests with -msvr4-struct-return -D__SVR4_STRUCT_RETURN
+for 8548 and 464fp under qemu-user: cls_1_1byte and cls_2byte abort
+without this change and pass with it, the others pass either way.
+
+Fixes: 840add3b6a1c ("Add conditional target support for __int128 (#951)")
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ src/powerpc/ffi_powerpc.h |  4 ++++
+ src/powerpc/ffi_sysv.c    |  4 ++--
+ src/powerpc/ppc_closure.S | 10 +++++++++-
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+
+--- a/src/powerpc/ffi_powerpc.h
++++ b/src/powerpc/ffi_powerpc.h
+@@ -60,11 +60,15 @@
+ #define PPC32_SYSV_LD_STRUCT_5	PPC32_LD_R3R4
+ #define PPC32_SYSV_LD_STRUCT_6	PPC32_LD_R3R4
+ #define PPC32_SYSV_LD_STRUCT_7	PPC32_LD_R3R4
++#define PPC32_SYSV_LD_STRUCT_1	PPC_LD_U8
++#define PPC32_SYSV_LD_STRUCT_2	PPC_LD_U16
+ #else
+ #define PPC32_SYSV_LD_STRUCT_3	11
+ #define PPC32_SYSV_LD_STRUCT_5	12
+ #define PPC32_SYSV_LD_STRUCT_6	13
+ #define PPC32_SYSV_LD_STRUCT_7	14
++#define PPC32_SYSV_LD_STRUCT_1	15
++#define PPC32_SYSV_LD_STRUCT_2	16
+ #endif
+ 
+ #else /* POWERPC64 */
+--- a/src/powerpc/ffi_sysv.c
++++ b/src/powerpc/ffi_sysv.c
+@@ -960,9 +960,9 @@ ffi_closure_helper_SYSV (ffi_cif *cif,
+ 	switch (size)
+ 	  {
+ 	  case 1:
+-	    return PPC_LD_U8;
++	    return PPC32_SYSV_LD_STRUCT_1;
+ 	  case 2:
+-	    return PPC_LD_U16;
++	    return PPC32_SYSV_LD_STRUCT_2;
+ 	  case 3:
+ 	    return PPC32_SYSV_LD_STRUCT_3;
+ 	  case 4:
+--- a/src/powerpc/ppc_closure.S
++++ b/src/powerpc/ppc_closure.S
+@@ -228,7 +228,15 @@ E PPC32_SYSV_LD_STRUCT_7
+ 	lwz %r3,112+0(%r1)
+ 	lwz %r4,112+4(%r1)
+ 	li %r5,8
+-	nop
++	b .Lstruct567
++
++E PPC32_SYSV_LD_STRUCT_1
++	lbz %r3,112+0(%r1)
++	epilogue
++
++E PPC32_SYSV_LD_STRUCT_2
++	lhz %r3,112+0(%r1)
++	epilogue
+ 
+ .Lstruct567:
+ 	subfic %r6,%r5,32

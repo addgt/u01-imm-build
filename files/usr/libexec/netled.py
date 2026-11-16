@@ -1,1 +1,166 @@
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwoiIiJVMDEg5L+h5Y+354Gv77ya5pyJ572R57uc5Lqu6JOd77yM5rKh572R57uc5Lqu57qi44CCCgrohJrkvY3mmK/ov5nlj7DmnLrlo7PkuIrkuIDmraXmraXngrnlkI3ngrnlh7rmnaXnmoTvvIjku5bogonnnLznoa7orqTvvInvvJoKICBncGlvNzIgPSBjbGFzcyByZWQ6cG93ZXIgICA9IOS/oeWPt+eBr+e6ogogIGdwaW83MSA9IGNsYXNzIGdyZWVuOndhbiAgID0g5L+h5Y+354Gv6JOdICDihpAg57G75Yir5ZCN5Y+rIGdyZWVuIOS9huiCieecvOaYr+iTne+8jOWIq+eci+WQjeWtlwogIGdwaW83MyA9IGNsYXNzIGJsdWU6d2xhbiAgID0gV2lGaSDnga/vvIjlj6bkuIDkuKrlrZTvvIzlvZIgbGVkaWRsZSDnrqHvvIzov5nph4zkuI3norDvvIkKY2xhc3Mg5bey57uP5Y2g5L2P6ISa5L2N77yM55u05o6l5YaZIGJyaWdodG5lc3Mg5bCx6KGM77yM5LiN5YOPIHUwMXNpbS9iYXRsZWQg6YKj5qC36KaBIGNkZXYg5bi46am75Y2gIGxpbmXjgIIKCiLmnInnvZHnu5wi55qE5Yik5o2u55So55yf5a6e6YCa6Lev77yM5LiN55yL5p6a5Li+5YC877yaCiAgMSkgL3Byb2Mg6YeM5pyJ6LWwIHd3YW4wIOeahOm7mOiupOi3r+eUse+8mwogIDIpIOiDvSBwaW5nIOmAmuWFrOe9ke+8iOS4pOS4quaOoua1i+WcsOWdgOi9rua1ge+8jOi/nue7reS4pOasoeS4jemAmuaJjeeul+aWre+8ieOAggrnuqIv6JOd5Y+q5Zyo54q25oCB5Y+Y5YyW5pe25YaZ5LiA5qyh77yM6YG/5YWN5LiA55u05Yi3IHN5c2Zz44CCCgrlj6blpJborqQgL3RtcC9sZWRzX2Rhcmsg6L+Z5Z2X54mM5a2Q77yIbGVkaWRsZSDnq4vnmoTvvInvvJrniYzlrZDlnKjvvJ3otoXov4cgMyDliIbpkp/msqHmjInmjInplK7vvIwK5L+h5Y+354Gv5LiA5b6L54Gt77yb54mM5a2Q5pKk5o6J5ZCOIDAuNSDnp5LlhoXlm57liLDor6XmmL7npLrnmoTpopzoibLjgIIKCueUqOazle+8mm5ldGxlZC5weSAgICAgICAgICAgIOW4uOmpu++8iHByb2NkIOaLiei1t++8iQogICAgICBuZXRsZWQucHkgb25jZSAgICAgICDliKTkuIDmrKHjgIHlhpnkuIDmrKHnga/vvIznhLblkI7pgIDlh7oKICAgICAgbmV0bGVkLnB5IHRlc3QgICAgICAg57qiIDMg56eSIC0+IOiTnSAzIOenku+8jOiCieecvOehruiupOiEmuS9jeWvueW6lOWTquS4quminOiJsgoiIiIKaW1wb3J0IG9zLCByZSwgc3VicHJvY2Vzcywgc3lzLCB0aW1lCgpSRUQgPSAiL3N5cy9jbGFzcy9sZWRzL3JlZDpwb3dlci9icmlnaHRuZXNzIgpCTFVFID0gIi9zeXMvY2xhc3MvbGVkcy9ncmVlbjp3YW4vYnJpZ2h0bmVzcyIKQ09ORiA9ICIvZXRjL25ldGxlZC5jb25mIgpMT0dGID0gIi90bXAvbmV0bGVkLmxvZyIKREFSSyA9ICIvdG1wL2xlZHNfZGFyayIKREFSS19GUkVTSCA9IDYwICAgIyDniYzlrZAgNjAg56eS5YaF5rKh6KKrIGxlZGlkbGUg5Yi36L+H5bCx5b2T5a6D5q275LqG77yM5q2j5bi45pi+56S6ClBJTkdfSE9TVFMgPSBbIjIyMy41LjUuNSIsICIxMTQuMTE0LjExNC4xMTQiXQpQT0xMID0gMyAgICAgICAgICAjIOi3r+eUseWkmuS5heeci+S4gOasoQpQSU5HX0VWRVJZID0gMTAgICAjIOaciei3r+eUseaXtuWkmuS5hSBwaW5nIOS4gOasoQpQSU5HX0ZBSUxfTUFYID0gMiAjIOi/nuaOiei/meS5iOWkmuasoeaJjeeulyLmsqHnvZHnu5wiCkRBVEFfSUZBQ0UgPSAid3dhbjAiCgoKZGVmIGxvZygqYSk6CiAgICBsaW5lID0gdGltZS5zdHJmdGltZSgiWyVtLSVkICVIOiVNOiVTXSAiKSArICIgIi5qb2luKHN0cih4KSBmb3IgeCBpbiBhKQogICAgcHJpbnQobGluZSwgZmx1c2g9VHJ1ZSkKICAgIHRyeToKICAgICAgICB3aXRoIG9wZW4oTE9HRiwgImEiKSBhcyBmOgogICAgICAgICAgICBmLndyaXRlKGxpbmUgKyAiXG4iKQogICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgcGFzcwoKCmRlZiBjb25mKCk6CiAgICBpZmFjZSwgaG9zdHMgPSBEQVRBX0lGQUNFLCBsaXN0KFBJTkdfSE9TVFMpCiAgICBpZiBvcy5wYXRoLmV4aXN0cyhDT05GKToKICAgICAgICBmb3IgbG4gaW4gb3BlbihDT05GLCBlbmNvZGluZz0idXRmLTgiLCBlcnJvcnM9InJlcGxhY2UiKToKICAgICAgICAgICAgbG4gPSBsbi5zdHJpcCgpCiAgICAgICAgICAgIGlmIGxuLnN0YXJ0c3dpdGgoImlmYWNlIik6CiAgICAgICAgICAgICAgICBpZmFjZSA9IGxuLnNwbGl0KCI9IiwgMSlbMV0uc3RyaXAoKSBpZiAiPSIgaW4gbG4gZWxzZSBpZmFjZQogICAgICAgICAgICBlbGlmIGxuLnN0YXJ0c3dpdGgoImhvc3RzIik6CiAgICAgICAgICAgICAgICBob3N0cyA9IFtoIGZvciBoIGluIHJlLnNwbGl0KHIiWyxcc10rIiwgbG4uc3BsaXQoIj0iLCAxKVsxXSkgaWYgaF0KICAgIHJldHVybiBpZmFjZSwgaG9zdHMKCgpkZWYgcm91dGVfdXAoaWZhY2UpOgogICAgdHJ5OgogICAgICAgIG91dCA9IHN1YnByb2Nlc3MucnVuKFsiaXAiLCAicm91dGUiLCAic2hvdyIsICJkZWZhdWx0Il0sIGNhcHR1cmVfb3V0cHV0PVRydWUsIHRpbWVvdXQ9NSkKICAgICAgICByZXR1cm4gKCJkZXYgJXMiICUgaWZhY2UpIGluIG91dC5zdGRvdXQuZGVjb2RlKCJ1dGYtOCIsICJyZXBsYWNlIikKICAgIGV4Y2VwdCBFeGNlcHRpb246CiAgICAgICAgcmV0dXJuIEZhbHNlCgoKZGVmIHBpbmdfb2soaG9zdHMpOgogICAgZm9yIGggaW4gaG9zdHM6CiAgICAgICAgdHJ5OgogICAgICAgICAgICByID0gc3VicHJvY2Vzcy5ydW4oWyJwaW5nIiwgIi1jIiwgIjEiLCAiLVciLCAiMiIsIGhdLCBjYXB0dXJlX291dHB1dD1UcnVlLCB0aW1lb3V0PTYpCiAgICAgICAgICAgIGlmIHIucmV0dXJuY29kZSA9PSAwOgogICAgICAgICAgICAgICAgcmV0dXJuIFRydWUKICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICBwYXNzCiAgICByZXR1cm4gRmFsc2UKCgpkZWYgc2V0X2xlZChwYXRoLCB2YWwpOgogICAgdHJ5OgogICAgICAgIHdpdGggb3BlbihwYXRoLCAidyIpIGFzIGY6CiAgICAgICAgICAgIGYud3JpdGUoIjEiIGlmIHZhbCBlbHNlICIwIikKICAgICAgICByZXR1cm4gVHJ1ZQogICAgZXhjZXB0IE9TRXJyb3IgYXMgZToKICAgICAgICBsb2coIuWGmeeBr+Wksei0pSIsIHBhdGgsIGUpCiAgICAgICAgcmV0dXJuIEZhbHNlCgoKZGVmIGFwcGx5KG9uX2xpbmUpOgogICAgIiIib25fbGluZT1UcnVl77ya6JOd77yI5pyJ572R57uc77yJ77ybRmFsc2XvvJrnuqLvvIjmsqHnvZHnu5zvvIkiIiIKICAgIHNldF9sZWQoQkxVRSwgb25fbGluZSkKICAgIHNldF9sZWQoUkVELCBub3Qgb25fbGluZSkKCgpkZWYgaXNfZGFyaygpOgogICAgIiIibGVkaWRsZSDnq4vnnYDniYzlrZDkuJTov5jlnKjliLflv4Pot7MgPSDnjrDlnKjor6Xlhajnga3jgIIiIiIKICAgIHRyeToKICAgICAgICByZXR1cm4gdGltZS50aW1lKCkgLSBvcy5wYXRoLmdldG10aW1lKERBUkspIDwgREFSS19GUkVTSAogICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgcmV0dXJuIEZhbHNlCgoKZGVmIG1haW4oKToKICAgIG1vZGUgPSBzeXMuYXJndlsxXSBpZiBsZW4oc3lzLmFyZ3YpID4gMSBlbHNlICJydW4iCiAgICBpZmFjZSwgaG9zdHMgPSBjb25mKCkKICAgIGZvciBwIGluIChSRUQsIEJMVUUpOgogICAgICAgIGlmIG5vdCBvcy5wYXRoLmV4aXN0cyhwKToKICAgICAgICAgICAgcmFpc2UgU3lzdGVtRXhpdCgi5om+5LiN5YiwICVz77yMRFRCIOeahCBsZWRzIOiKgueCueayoei1t+adpSIgJSBwKQoKICAgIGlmIG1vZGUgPT0gInRlc3QiOgogICAgICAgIGxvZygi6Ieq5qOA77ya57qi54GvIDMg56eSIikKICAgICAgICBzZXRfbGVkKEJMVUUsIDApOyBzZXRfbGVkKFJFRCwgMSk7IHRpbWUuc2xlZXAoMykKICAgICAgICBsb2coIuiHquajgO+8muiTneeBryAzIOenkiIpCiAgICAgICAgc2V0X2xlZChSRUQsIDApOyBzZXRfbGVkKEJMVUUsIDEpOyB0aW1lLnNsZWVwKDMpCiAgICAgICAgbG9nKCLoh6rmo4Dnu5PmnZ8iKQogICAgICAgIHJldHVybgoKICAgIGlmIG1vZGUgPT0gIm9uY2UiOgogICAgICAgIGlmIGlzX2RhcmsoKToKICAgICAgICAgICAgbG9nKCJvbmNlOiDniYzlrZDlnKjvvIzlhYjkuI3liKQiKQogICAgICAgICAgICBzZXRfbGVkKEJMVUUsIDApOyBzZXRfbGVkKFJFRCwgMCkKICAgICAgICAgICAgcmV0dXJuCiAgICAgICAgdXAgPSByb3V0ZV91cChpZmFjZSkgYW5kIHBpbmdfb2soaG9zdHMpCiAgICAgICAgbG9nKCJvbmNlOiDot6/nlLE9JXMgLT4gJXMiICUgKHVwLCAi6JOdIiBpZiB1cCBlbHNlICLnuqIiKSkKICAgICAgICBhcHBseSh1cCkKICAgICAgICByZXR1cm4KCiAgICBsb2coIuWQr+WKqCBpZmFjZT0lcyBob3N0cz0lcyDok509JXMg57qiPSVzIiAlIChpZmFjZSwgIiwiLmpvaW4oaG9zdHMpLCBCTFVFLCBSRUQpKQogICAgb25saW5lID0gTm9uZQogICAgYXBwbGllZCA9IE5vbmUKICAgIGxhc3RfcGluZyA9IDAuMAogICAgZmFpbHMgPSAwCiAgICB3aGlsZSBUcnVlOgogICAgICAgIGlmIGlzX2RhcmsoKToKICAgICAgICAgICAgaWYgYXBwbGllZCAhPSAiZGFyayI6CiAgICAgICAgICAgICAgICBzZXRfbGVkKEJMVUUsIDApOyBzZXRfbGVkKFJFRCwgMCkKICAgICAgICAgICAgICAgIGFwcGxpZWQgPSAiZGFyayIKICAgICAgICAgICAgICAgIGxvZygi54mM5a2Q5Zyo77yIMyDliIbpkp/msqHmjInplK7vvInvvJrkv6Hlj7fnga/nga0iKQogICAgICAgICAgICB0aW1lLnNsZWVwKDAuNSkKICAgICAgICAgICAgY29udGludWUKICAgICAgICBpZiBhcHBsaWVkID09ICJkYXJrIjoKICAgICAgICAgICAgYXBwbGllZCA9IE5vbmUgICAgICAjIOWImuaMiemUruS6ruWbnuadpe+8jOmAvOWug+mHjeWGmeS4gOasoQogICAgICAgIGlmIHJvdXRlX3VwKGlmYWNlKToKICAgICAgICAgICAgaWYgb25saW5lIGlzIE5vbmUgb3IgdGltZS50aW1lKCkgLSBsYXN0X3BpbmcgPj0gUElOR19FVkVSWToKICAgICAgICAgICAgICAgIGxhc3RfcGluZyA9IHRpbWUudGltZSgpCiAgICAgICAgICAgICAgICBpZiBwaW5nX29rKGhvc3RzKToKICAgICAgICAgICAgICAgICAgICBmYWlscywgb25saW5lX25ldyA9IDAsIFRydWUKICAgICAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICAgICAgZmFpbHMgKz0gMQogICAgICAgICAgICAgICAgICAgIG9ubGluZV9uZXcgPSBGYWxzZSBpZiBmYWlscyA+PSBQSU5HX0ZBSUxfTUFYIGVsc2Ugb25saW5lCiAgICAgICAgICAgIGVsc2U6CiAgICAgICAgICAgICAgICBvbmxpbmVfbmV3ID0gb25saW5lCiAgICAgICAgZWxzZToKICAgICAgICAgICAgZmFpbHMsIG9ubGluZV9uZXcgPSBQSU5HX0ZBSUxfTUFYLCBGYWxzZQogICAgICAgIHdhbnQgPSAiYmx1ZSIgaWYgb25saW5lX25ldyBlbHNlICJyZWQiCiAgICAgICAgaWYgb25saW5lX25ldyAhPSBvbmxpbmU6CiAgICAgICAgICAgIGxvZygi5Yik5o2uICVzIC0+ICVz77yIcGluZyDov57mjokgJWQg5qyh77yJIgogICAgICAgICAgICAgICAgJSAoe05vbmU6ICI/IiwgVHJ1ZTogIuiTnSIsIEZhbHNlOiAi57qiIn1bb25saW5lXSwKICAgICAgICAgICAgICAgICAgIHtUcnVlOiAi6JOdIiwgRmFsc2U6ICLnuqIifVtvbmxpbmVfbmV3XSwgZmFpbHMpKQogICAgICAgICAgICBvbmxpbmUgPSBvbmxpbmVfbmV3CiAgICAgICAgaWYgd2FudCAhPSBhcHBsaWVkOgogICAgICAgICAgICBhcHBseShvbmxpbmUpCiAgICAgICAgICAgIGFwcGxpZWQgPSB3YW50CiAgICAgICAgdGltZS5zbGVlcChQT0xMKQoKCm1haW4oKQo=
+#!/usr/bin/env python3
+"""U01 信号灯：有网络亮蓝，没网络亮红。
+
+脚位是这台机壳上一步步点名点出来的（他肉眼确认）：
+  gpio72 = class red:power   = 信号灯红
+  gpio71 = class green:wan   = 信号灯蓝  ← 类别名叫 green 但肉眼是蓝，别看名字
+  gpio73 = class blue:wlan   = WiFi 灯（另一个孔，归 ledidle 管，这里不碰）
+class 已经占住脚位，直接写 brightness 就行，不像 u01sim/batled 那样要 cdev 常驻占 line。
+
+"有网络"的判据用真实通路，不看枚举值：
+  1) /proc 里有走 wwan0 的默认路由；
+  2) 能 ping 通公网（两个探测地址轮流，连续两次不通才算断）。
+红/蓝只在状态变化时写一次，避免一直刷 sysfs。
+
+另外认 /tmp/leds_dark 这块牌子（ledidle 立的）：牌子在＝超过 3 分钟没按按键，
+信号灯一律灭；牌子撤掉后 0.5 秒内回到该显示的颜色。
+
+用法：netled.py            常驻（procd 拉起）
+      netled.py once       判一次、写一次灯，然后退出
+      netled.py test       红 3 秒 -> 蓝 3 秒，肉眼确认脚位对应哪个颜色
+"""
+import os, re, subprocess, sys, time
+
+RED = "/sys/class/leds/red:power/brightness"
+BLUE = "/sys/class/leds/green:wan/brightness"
+CONF = "/etc/netled.conf"
+LOGF = "/tmp/netled.log"
+DARK = "/tmp/leds_dark"
+DARK_FRESH = 60   # 牌子 60 秒内没被 ledidle 刷过就当它死了，正常显示
+PING_HOSTS = ["223.5.5.5", "114.114.114.114"]
+POLL = 3          # 路由多久看一次
+PING_EVERY = 10   # 有路由时多久 ping 一次
+PING_FAIL_MAX = 2 # 连掉这么多次才算"没网络"
+DATA_IFACE = "wwan0"
+
+
+def log(*a):
+    line = time.strftime("[%m-%d %H:%M:%S] ") + " ".join(str(x) for x in a)
+    print(line, flush=True)
+    try:
+        with open(LOGF, "a") as f:
+            f.write(line + "\n")
+    except OSError:
+        pass
+
+
+def conf():
+    iface, hosts = DATA_IFACE, list(PING_HOSTS)
+    if os.path.exists(CONF):
+        for ln in open(CONF, encoding="utf-8", errors="replace"):
+            ln = ln.strip()
+            if ln.startswith("iface"):
+                iface = ln.split("=", 1)[1].strip() if "=" in ln else iface
+            elif ln.startswith("hosts"):
+                hosts = [h for h in re.split(r"[,\s]+", ln.split("=", 1)[1]) if h]
+    return iface, hosts
+
+
+def route_up(iface):
+    try:
+        out = subprocess.run(["ip", "route", "show", "default"], capture_output=True, timeout=5)
+        return ("dev %s" % iface) in out.stdout.decode("utf-8", "replace")
+    except Exception:
+        return False
+
+
+def ping_ok(hosts):
+    for h in hosts:
+        try:
+            r = subprocess.run(["ping", "-c", "1", "-W", "2", h], capture_output=True, timeout=6)
+            if r.returncode == 0:
+                return True
+        except Exception:
+            pass
+    return False
+
+
+def set_led(path, val):
+    try:
+        with open(path, "w") as f:
+            f.write("1" if val else "0")
+        return True
+    except OSError as e:
+        log("写灯失败", path, e)
+        return False
+
+
+def apply(on_line):
+    """on_line=True：蓝（有网络）；False：红（没网络）"""
+    set_led(BLUE, on_line)
+    set_led(RED, not on_line)
+
+
+def is_dark():
+    """ledidle 立着牌子且还在刷心跳 = 现在该全灭。"""
+    try:
+        return time.time() - os.path.getmtime(DARK) < DARK_FRESH
+    except OSError:
+        return False
+
+
+def main():
+    mode = sys.argv[1] if len(sys.argv) > 1 else "run"
+    iface, hosts = conf()
+    for p in (RED, BLUE):
+        if not os.path.exists(p):
+            raise SystemExit("找不到 %s，DTB 的 leds 节点没起来" % p)
+
+    if mode == "test":
+        log("自检：红灯 3 秒")
+        set_led(BLUE, 0); set_led(RED, 1); time.sleep(3)
+        log("自检：蓝灯 3 秒")
+        set_led(RED, 0); set_led(BLUE, 1); time.sleep(3)
+        log("自检结束")
+        return
+
+    if mode == "once":
+        if is_dark():
+            log("once: 牌子在，先不判")
+            set_led(BLUE, 0); set_led(RED, 0)
+            return
+        up = route_up(iface) and ping_ok(hosts)
+        log("once: 路由=%s -> %s" % (up, "蓝" if up else "红"))
+        apply(up)
+        return
+
+    log("启动 iface=%s hosts=%s 蓝=%s 红=%s" % (iface, ",".join(hosts), BLUE, RED))
+    online = None
+    applied = None
+    last_ping = 0.0
+    fails = 0
+    while True:
+        if is_dark():
+            if applied != "dark":
+                set_led(BLUE, 0); set_led(RED, 0)
+                applied = "dark"
+                log("牌子在（3 分钟没按键）：信号灯灭")
+            time.sleep(0.5)
+            continue
+        if applied == "dark":
+            applied = None      # 刚按键亮回来，逼它重写一次
+        if route_up(iface):
+            if online is None or time.time() - last_ping >= PING_EVERY:
+                last_ping = time.time()
+                if ping_ok(hosts):
+                    fails, online_new = 0, True
+                else:
+                    fails += 1
+                    online_new = False if fails >= PING_FAIL_MAX else online
+            else:
+                online_new = online
+        else:
+            fails, online_new = PING_FAIL_MAX, False
+        want = "blue" if online_new else "red"
+        if online_new != online:
+            log("判据 %s -> %s（ping 连掉 %d 次）"
+                % ({None: "?", True: "蓝", False: "红"}[online],
+                   {True: "蓝", False: "红"}[online_new], fails))
+            online = online_new
+        if want != applied:
+            apply(online)
+            applied = want
+        time.sleep(POLL)
+
+
+main()

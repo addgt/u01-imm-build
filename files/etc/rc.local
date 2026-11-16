@@ -1,1 +1,10 @@
-IyBQdXQgeW91ciBjdXN0b20gY29tbWFuZHMgaGVyZSB0aGF0IHNob3VsZCBiZSBleGVjdXRlZCBvbmNlCiMgdGhlIHN5c3RlbSBpbml0IGZpbmlzaGVkLiBCeSBkZWZhdWx0IHRoaXMgZmlsZSBkb2VzIG5vdGhpbmcuCiMg5LiL6Z2i5piv5ZCv5Yqo5bCP6b6Z6Jm+5Yqf6IO977yM6ZyA6KaB5oqK5bCP6b6Z6Jm+5Lyg5Yiwcm9vdC9waWNvY2xhd+ebruW9le+8jOadg+WKm+e7mTA3NzcKIyDpvpnomb7kuIvovb3lnLDlnYDmmK9odHRwczovL3BpY29jbGF3LmlvL2Rvd25sb2FkL++8jOS4i+i9vWxpbnV4IEFSTTY054mI5pysCiMgY2QgL3Jvb3QvcGljb2NsYXcgJiYgLi9waWNvY2xhdy1sYXVuY2hlciAtcHVibGljID4gL3Jvb3QvcGljb2NsYXcvcGljb2NsYXcubG9nIDI+JjEgJgojIFNpbUFkbWluIOi/meS4quaYr+euoeeQhnNpbeaJi+acuuWNoeeahOeoi+W6j++8jOW8gOa6kOWcsOWdgO+8mmh0dHBzOi8vZ2l0aHViLmNvbS8zODk5L1NpbUFkbWluCiMgY2QgL3Jvb3Qvc2ltYWRtaW4gJiYgLi9zaW1hZG1pbiA+IC9yb290L3NpbWFkbWluL3NpbWFkbWluLmxvZyAyPiYxICYKIyDnlLXph4/lm5vmoLznga/kuI3opoHlnKjov5nph4zotbfvvJrlroPnlLEgL2V0Yy9pbml0LmQvYmF0bGVk77yI6LeRIC91c3IvbGliZXhlYy9iYXRsZWQucHnvvInluLjpqbvnrqHvvIwKIyByYy5sb2NhbCDlho3otbfkuIDku70gL2V0Yy9iYXRsZWQuc2gg55qE6K+d77yM5Lik5Liq6L+b56iL5YaZ5ZCM5LiA57uEIGJhdDoxLi4077yM5qC85pWw5Lya5Lmx6Lez44CCCmV4aXQgMAo=
+# Put your custom commands here that should be executed once
+# the system init finished. By default this file does nothing.
+# 下面是启动小龙虾功能，需要把小龙虾传到root/picoclaw目录，权力给0777
+# 龙虾下载地址是https://picoclaw.io/download/，下载linux ARM64版本
+# cd /root/picoclaw && ./picoclaw-launcher -public > /root/picoclaw/picoclaw.log 2>&1 &
+# SimAdmin 这个是管理sim手机卡的程序，开源地址：https://github.com/3899/SimAdmin
+# cd /root/simadmin && ./simadmin > /root/simadmin/simadmin.log 2>&1 &
+# 电量四格灯不要在这里起：它由 /etc/init.d/batled（跑 /usr/libexec/batled.py）常驻管，
+# rc.local 再起一份 /etc/batled.sh 的话，两个进程写同一组 bat:1..4，格数会乱跳。
+exit 0

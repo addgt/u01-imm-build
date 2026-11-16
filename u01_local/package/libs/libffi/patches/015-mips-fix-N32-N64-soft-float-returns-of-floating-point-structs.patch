@@ -1,1 +1,113 @@
-RnJvbSA0Njg2YjI1MTI5Y2I1ZWUyMDViMjgzMjlkYWE1ZDRhMzRlY2JiOGIxIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogV2VkLCAyMSBPY3QgMjAyNiAwMToyNDoxNCArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIG1pcHM6IGZpeCBOMzIvTjY0IHNvZnQtZmxvYXQgcmV0dXJucyBvZiBmbG9hdGluZy1wb2ludAogc3RydWN0cwoKV2l0aCBzb2Z0IGZsb2F0LCBHQ0MgcmV0dXJucyBhIHN0cnVjdCBvZiBvbmUgb3IgdHdvIGZsb2F0IG9yIGRvdWJsZQpmaWVsZHMgd2l0aCB0aGUgZmlyc3QgZmllbGQgaW4gdjAgYW5kIHRoZSBzZWNvbmQgaW4gYTAsIGVhY2ggbGlrZSBhCnNjYWxhciBvZiBpdHMgdHlwZSwgaS5lLiBhIGZsb2F0IGluIHRoZSBsb3cgMzIgYml0cy4gIGxpYmZmaSBnb3QgdGhpcwpwYXJ0bHkgd3Jvbmc6CgogIC0gZmZpX2NhbGxfTjMyIHRvb2sgdGhlIHNlY29uZCBmaWVsZCBvZiBhIHN0cnVjdCBvZiB0d28gZmxvYXRzIG9yIG9mCiAgICBhIGRvdWJsZSBhbmQgYSBmbG9hdCBmcm9tIHYxOyAyZTgyNWUyMTlmYTAgKCJNSVBTOiBmaXggc29tZSBOMzIKICAgIHRlc3QgZmFpbHVyZSAoIzcwMSkiKSBoYWQgY2hhbmdlZCB0aGUgb3RoZXIgdHdvIGNhc2VzIHRvIGEwLgogIC0gZmZpX2Nsb3N1cmVfTjMyIGhhZCBubyBzb2Z0LWZsb2F0IHN0cnVjdCBjYXNlcyBhdCBhbGwgYW5kIHJldHVybmVkCiAgICB0aGVzZSBzdHJ1Y3RzIGxpa2UgYW55IHNtYWxsIHN0cnVjdCwgYXMgdGhlIGZpcnN0IDE2IGJ5dGVzIG9mIHRoZQogICAgcmV0dXJuIHZhbHVlIGluIHYwIGFuZCB2MS4gIFRoYXQgcHV0cyB0aGUgc2Vjb25kIGZpZWxkIGluIHRoZSB3cm9uZwogICAgcmVnaXN0ZXIsIGFuZCBvbiBiaWctZW5kaWFuIGEgc2luZ2xlIGZsb2F0IGluIHRoZSB1cHBlciBoYWxmIG9mIHYwLgoKU3RvcmUgdGhlIHNlY29uZCBmaWVsZCBmcm9tIGEwIGluIGZmaV9jYWxsX04zMiwgYW5kIHJldHVybiBzb2Z0LWZsb2F0CnN0cnVjdHMgb2Ygb25lIG9yIHR3byBmbG9hdGluZy1wb2ludCBmaWVsZHMgZnJvbSB0aGUgY2xvc3VyZSBpbiB2MCBhbmQKYTAuICBMaWtlIHRoZSBzb2Z0LWZsb2F0IGNhc2VzIGluIGZmaV9jYWxsX04zMiwgdGhlIG5ldyBjbG9zdXJlIGNhc2VzCmFyZSBvdXRzaWRlIHRoZSBoYXJkLWZsb2F0ICNpZmRlZiwgc28gYSBsaWJyYXJ5IGJ1aWx0IGZvciBoYXJkIGZsb2F0CmFsc28gaGFuZGxlcyBjaWZzIGZvciB0aGUgc29mdC1mbG9hdCBBQklzLgoKVGhpcyBmaXhlcyBjbHNfc3RydWN0X2ZwX3JldHVybiBvbiBtYWx0YSAobWlwczY0cjIsIGJvdGggZW5kaWFucykgYW5kCm9jdGVvbiAob2N0ZW9uKyksIG42NCBzb2Z0LWZsb2F0LCB1bmRlciBxZW11LXVzZXIsIGFuZCB0aGUgcmVtYWluaW5nCmZhaWx1cmUgb2YgbGliZmZpLmJoYWlibGUvdGVzdC1jYWxsYmFjayBvbiBiaWctZW5kaWFuLCBhIGNsb3N1cmUKcmV0dXJuaW5nIHN0cnVjdCB7IGZsb2F0IHg7IH0uICBUaGlzIGNvZGUgcHJlZGF0ZXMgdGhlIGdpdCBoaXN0b3J5LgpBc3Npc3RlZC1ieTogTExNClNpZ25lZC1vZmYtYnk6IERhbmllbCBHb2xsZSA8ZGFuaWVsQG1ha3JvdG9waWEub3JnPgotLS0KIHNyYy9taXBzL24zMi5TIHwgNDUgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tCiAxIGZpbGUgY2hhbmdlZCwgNDEgaW5zZXJ0aW9ucygrKSwgNCBkZWxldGlvbnMoLSkKCi0tLSBhL3NyYy9taXBzL24zMi5TCisrKyBiL3NyYy9taXBzL24zMi5TCkBAIC0zOTYsNyArMzk2LDcgQEAgcmV0c3RydWN0X2ZfZl9zb2Z0OgogCWphbAl0OQogCVJFR19MCXQ0LCA0KkZGSV9TSVpFT0ZfQVJHKCRmcCkKIAlzdwl2MCwgMCh0NCkKLQlzdwl2MSwgNCh0NCkKKwlzdwlhMCwgNCh0NCkKIAliCWVwaWxvZ3VlCiAJCiByZXRzdHJ1Y3RfZF9mX3NvZnQ6CQpAQCAtNDA0LDcgKzQwNCw3IEBAIHJldHN0cnVjdF9kX2Zfc29mdDoKIAlqYWwJdDkKIAlSRUdfTAl0NCwgNCpGRklfU0laRU9GX0FSRygkZnApCiAJc2QJdjAsIDAodDQpCi0Jc3cJdjEsIDgodDQpCisJc3cJYTAsIDgodDQpCiAJYgllcGlsb2d1ZQogCQogcmV0c3RydWN0X2ZfZF9zb2Z0OgkKQEAgLTcxMSwxOCArNzExLDU1IEBAIGNsc19yZXRzdHJ1Y3RfZF9mOgogCWIJY2xzX2VwaWxvZ3VlCiAJCiBjbHNfcmV0c3RydWN0X2ZfZDoJCi0JYm5lCXYwLCBGRklfVFlQRV9TVFJVQ1RfRkQsIGNsc19yZXRjb21wbGV4X2xkX2xkCisJYm5lCXYwLCBGRklfVFlQRV9TVFJVQ1RfRkQsIGNsc19yZXRzdHJ1Y3RfZl9zb2Z0CiAJbC5zCSRmMCwgVjBfT0ZGMigkc3ApCiAJbC5kCSRmMiwgVjFfT0ZGMigkc3ApCiAJYgljbHNfZXBpbG9ndWUKICNlbHNlCiBjbHNfbG9uZ2RvdWJsZV9zb2Z0OgotCWJuZQl2MCwgRkZJX1RZUEVfTE9OR0RPVUJMRSwgY2xzX3JldGNvbXBsZXhfbGRfbGQKKwlibmUJdjAsIEZGSV9UWVBFX0xPTkdET1VCTEUsIGNsc19yZXRzdHJ1Y3RfZl9zb2Z0CiAJUkVHX0wJdjAsIFYwX09GRjIoJHNwKQogCVJFR19MCWEwLCBWMV9PRkYyKCRzcCkgIyBub3QgdHlwbywgaXQgaXMgYTAsIEkgaGF2ZSBubyBpZGVhLCBnY2MgZG9lcyBkbyBpdAogCWIJY2xzX2VwaWxvZ3VlCiAjZW5kaWYKIAorCSMgV2l0aCBzb2Z0IGZsb2F0LCBhIHN0cnVjdCBvZiBvbmUgb3IgdHdvIGZsb2F0aW5nLXBvaW50IGZpZWxkcyBpcworCSMgcmV0dXJuZWQgd2l0aCB0aGUgZmlyc3QgZmllbGQgaW4gdjAgYW5kIHRoZSBzZWNvbmQgaW4gYTAsIGVhY2gKKwkjIGxpa2UgYSBzY2FsYXIgb2YgaXRzIHR5cGUuCitjbHNfcmV0c3RydWN0X2Zfc29mdDoKKwlibmUJdjAsIEZGSV9UWVBFX1NUUlVDVF9GX1NPRlQsIGNsc19yZXRzdHJ1Y3RfZF9zb2Z0CisJbHcJdjAsIFYwX09GRjIoJHNwKQorCWIJY2xzX2VwaWxvZ3VlCisKK2Nsc19yZXRzdHJ1Y3RfZF9zb2Z0OgorCWJuZQl2MCwgRkZJX1RZUEVfU1RSVUNUX0RfU09GVCwgY2xzX3JldHN0cnVjdF9mX2Zfc29mdAorCWxkCXYwLCBWMF9PRkYyKCRzcCkKKwliCWNsc19lcGlsb2d1ZQorCitjbHNfcmV0c3RydWN0X2ZfZl9zb2Z0OgorCWJuZQl2MCwgRkZJX1RZUEVfU1RSVUNUX0ZGX1NPRlQsIGNsc19yZXRzdHJ1Y3RfZF9kX3NvZnQKKwlsdwl2MCwgVjBfT0ZGMigkc3ApCisJbHcJYTAsIChWMF9PRkYyKzQpKCRzcCkKKwliCWNsc19lcGlsb2d1ZQorCitjbHNfcmV0c3RydWN0X2RfZF9zb2Z0OgorCWJuZQl2MCwgRkZJX1RZUEVfU1RSVUNUX0REX1NPRlQsIGNsc19yZXRzdHJ1Y3RfZl9kX3NvZnQKKwlsZAl2MCwgVjBfT0ZGMigkc3ApCisJbGQJYTAsIChWMF9PRkYyKzgpKCRzcCkKKwliCWNsc19lcGlsb2d1ZQorCitjbHNfcmV0c3RydWN0X2ZfZF9zb2Z0OgorCWJuZQl2MCwgRkZJX1RZUEVfU1RSVUNUX0ZEX1NPRlQsIGNsc19yZXRzdHJ1Y3RfZF9mX3NvZnQKKwlsdwl2MCwgVjBfT0ZGMigkc3ApCisJbGQJYTAsIChWMF9PRkYyKzgpKCRzcCkKKwliCWNsc19lcGlsb2d1ZQorCitjbHNfcmV0c3RydWN0X2RfZl9zb2Z0OgorCWJuZQl2MCwgRkZJX1RZUEVfU1RSVUNUX0RGX1NPRlQsIGNsc19yZXRjb21wbGV4X2xkX2xkCisJbGQJdjAsIFYwX09GRjIoJHNwKQorCWx3CWEwLCAoVjBfT0ZGMis4KSgkc3ApCisJYgljbHNfZXBpbG9ndWUKKwogY2xzX3JldGNvbXBsZXhfbGRfbGQ6CiAJYm5lCXYwLCBGRklfVFlQRV9DT01QTEVYX0xETEQsIGNsc19yZXRzdHJ1Y3Rfc21hbGwyCiAJUkVHX0wJdDgsIEEwX09GRjIoJHNwKQo=
+From 4686b25129cb5ee205b28329daa5d4a34ecbb8b1 Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Wed, 21 Oct 2026 01:24:14 +0000
+Subject: [PATCH] mips: fix N32/N64 soft-float returns of floating-point
+ structs
+
+With soft float, GCC returns a struct of one or two float or double
+fields with the first field in v0 and the second in a0, each like a
+scalar of its type, i.e. a float in the low 32 bits.  libffi got this
+partly wrong:
+
+  - ffi_call_N32 took the second field of a struct of two floats or of
+    a double and a float from v1; 2e825e219fa0 ("MIPS: fix some N32
+    test failure (#701)") had changed the other two cases to a0.
+  - ffi_closure_N32 had no soft-float struct cases at all and returned
+    these structs like any small struct, as the first 16 bytes of the
+    return value in v0 and v1.  That puts the second field in the wrong
+    register, and on big-endian a single float in the upper half of v0.
+
+Store the second field from a0 in ffi_call_N32, and return soft-float
+structs of one or two floating-point fields from the closure in v0 and
+a0.  Like the soft-float cases in ffi_call_N32, the new closure cases
+are outside the hard-float #ifdef, so a library built for hard float
+also handles cifs for the soft-float ABIs.
+
+This fixes cls_struct_fp_return on malta (mips64r2, both endians) and
+octeon (octeon+), n64 soft-float, under qemu-user, and the remaining
+failure of libffi.bhaible/test-callback on big-endian, a closure
+returning struct { float x; }.  This code predates the git history.
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ src/mips/n32.S | 45 +++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 41 insertions(+), 4 deletions(-)
+
+--- a/src/mips/n32.S
++++ b/src/mips/n32.S
+@@ -396,7 +396,7 @@ retstruct_f_f_soft:
+ 	jal	t9
+ 	REG_L	t4, 4*FFI_SIZEOF_ARG($fp)
+ 	sw	v0, 0(t4)
+-	sw	v1, 4(t4)
++	sw	a0, 4(t4)
+ 	b	epilogue
+ 	
+ retstruct_d_f_soft:	
+@@ -404,7 +404,7 @@ retstruct_d_f_soft:
+ 	jal	t9
+ 	REG_L	t4, 4*FFI_SIZEOF_ARG($fp)
+ 	sd	v0, 0(t4)
+-	sw	v1, 8(t4)
++	sw	a0, 8(t4)
+ 	b	epilogue
+ 	
+ retstruct_f_d_soft:	
+@@ -711,18 +711,55 @@ cls_retstruct_d_f:
+ 	b	cls_epilogue
+ 	
+ cls_retstruct_f_d:	
+-	bne	v0, FFI_TYPE_STRUCT_FD, cls_retcomplex_ld_ld
++	bne	v0, FFI_TYPE_STRUCT_FD, cls_retstruct_f_soft
+ 	l.s	$f0, V0_OFF2($sp)
+ 	l.d	$f2, V1_OFF2($sp)
+ 	b	cls_epilogue
+ #else
+ cls_longdouble_soft:
+-	bne	v0, FFI_TYPE_LONGDOUBLE, cls_retcomplex_ld_ld
++	bne	v0, FFI_TYPE_LONGDOUBLE, cls_retstruct_f_soft
+ 	REG_L	v0, V0_OFF2($sp)
+ 	REG_L	a0, V1_OFF2($sp) # not typo, it is a0, I have no idea, gcc does do it
+ 	b	cls_epilogue
+ #endif
+ 
++	# With soft float, a struct of one or two floating-point fields is
++	# returned with the first field in v0 and the second in a0, each
++	# like a scalar of its type.
++cls_retstruct_f_soft:
++	bne	v0, FFI_TYPE_STRUCT_F_SOFT, cls_retstruct_d_soft
++	lw	v0, V0_OFF2($sp)
++	b	cls_epilogue
++
++cls_retstruct_d_soft:
++	bne	v0, FFI_TYPE_STRUCT_D_SOFT, cls_retstruct_f_f_soft
++	ld	v0, V0_OFF2($sp)
++	b	cls_epilogue
++
++cls_retstruct_f_f_soft:
++	bne	v0, FFI_TYPE_STRUCT_FF_SOFT, cls_retstruct_d_d_soft
++	lw	v0, V0_OFF2($sp)
++	lw	a0, (V0_OFF2+4)($sp)
++	b	cls_epilogue
++
++cls_retstruct_d_d_soft:
++	bne	v0, FFI_TYPE_STRUCT_DD_SOFT, cls_retstruct_f_d_soft
++	ld	v0, V0_OFF2($sp)
++	ld	a0, (V0_OFF2+8)($sp)
++	b	cls_epilogue
++
++cls_retstruct_f_d_soft:
++	bne	v0, FFI_TYPE_STRUCT_FD_SOFT, cls_retstruct_d_f_soft
++	lw	v0, V0_OFF2($sp)
++	ld	a0, (V0_OFF2+8)($sp)
++	b	cls_epilogue
++
++cls_retstruct_d_f_soft:
++	bne	v0, FFI_TYPE_STRUCT_DF_SOFT, cls_retcomplex_ld_ld
++	ld	v0, V0_OFF2($sp)
++	lw	a0, (V0_OFF2+8)($sp)
++	b	cls_epilogue
++
+ cls_retcomplex_ld_ld:
+ 	bne	v0, FFI_TYPE_COMPLEX_LDLD, cls_retstruct_small2
+ 	REG_L	t8, A0_OFF2($sp)

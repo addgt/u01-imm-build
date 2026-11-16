@@ -1,1 +1,135 @@
-RnJvbSA0NjNhZTAyZTY2ZjRlYTZiZTQ1YTllMmJiMmY2NDZmYTNkYTdkNjJhIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogV2VkLCAyMSBPY3QgMjAyNiAwMToyNDoxNCArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHRlc3RzdWl0ZTogY2hlY2sgcmV0dXJuIHZhbHVlcyBvZiBzdHJ1Y3RzIHdpdGggb25lIG9yIHR3bwogZmxvYXRpbmctcG9pbnQgZmllbGRzCgpNYW55IEFCSXMgcmV0dXJuIGEgc3RydWN0IG9mIG9uZSBvciB0d28gZmxvYXQgb3IgZG91YmxlIGZpZWxkcwpkaWZmZXJlbnRseSBmcm9tIG90aGVyIHNtYWxsIHN0cnVjdHMsIGluIGZsb2F0aW5nLXBvaW50IHJlZ2lzdGVycywgb3IKd2l0aCBzb2Z0IGZsb2F0IGluIG90aGVyIEdQUnMgdGhhbiBhbiBpbnRlZ2VyIHN0cnVjdCBvZiB0aGUgc2FtZSBzaXplLgpPbmx5IGEgZmV3IG9mIHRoZXNlIGNvbWJpbmF0aW9ucyBhcmUgY292ZXJlZCwgbW9zdGx5IHRocm91Z2ggZmZpX2NhbGwuCgpBZGQgY2xzX3N0cnVjdF9mcF9yZXR1cm4sIHdoaWNoIHJldHVybnMgc3RydWN0cyBvZiBmbG9hdCwgZG91YmxlLCB0d28KZmxvYXRzLCB0d28gZG91YmxlcywgZmxvYXQgYW5kIGRvdWJsZSwgYW5kIGRvdWJsZSBhbmQgZmxvYXQsIGJvdGgKdGhyb3VnaCBmZmlfY2FsbCBhbmQgdGhyb3VnaCBjbG9zdXJlcy4KQXNzaXN0ZWQtYnk6IExMTQpTaWduZWQtb2ZmLWJ5OiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KLS0tCiB0ZXN0c3VpdGUvTWFrZWZpbGUuYW0gICAgICAgICAgICAgICAgICAgICAgICAgfCAgMiArLQogLi4uL2xpYmZmaS5jbG9zdXJlcy9jbHNfc3RydWN0X2ZwX3JldHVybi5jICAgIHwgOTkgKysrKysrKysrKysrKysrKysrKwogMiBmaWxlcyBjaGFuZ2VkLCAxMDAgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbigtKQogY3JlYXRlIG1vZGUgMTAwNjQ0IHRlc3RzdWl0ZS9saWJmZmkuY2xvc3VyZXMvY2xzX3N0cnVjdF9mcF9yZXR1cm4uYwoKLS0tIGEvdGVzdHN1aXRlL01ha2VmaWxlLmFtCisrKyBiL3Rlc3RzdWl0ZS9NYWtlZmlsZS5hbQpAQCAtNjQsNyArNjQsNyBAQCBFWFRSQV9ESVNUID0gY29uZmlnL2RlZmF1bHQuZXhwIGVtc2NyaXB0CiAJbGliZmZpLmNsb3N1cmVzL2Nsc19tdWx0aV9zc2hvcnRjaGFyLmMgbGliZmZpLmNsb3N1cmVzL2Nsc19tdWx0aV91Y2hhci5jIGxpYmZmaS5jbG9zdXJlcy9jbHNfbXVsdGlfdXNob3J0LmMgXAogCWxpYmZmaS5jbG9zdXJlcy9jbHNfbXVsdGlfdXNob3J0Y2hhci5jIGxpYmZmaS5jbG9zdXJlcy9jbHNfcG9pbnRlci5jIGxpYmZmaS5jbG9zdXJlcy9jbHNfcG9pbnRlcl9zdGFjay5jIFwKIAlsaWJmZmkuY2xvc3VyZXMvY2xzX3NjaGFyLmMgbGliZmZpLmNsb3N1cmVzL2Nsc19zaW50LmMgbGliZmZpLmNsb3N1cmVzL2Nsc19zc2hvcnQuYyBcCi0JbGliZmZpLmNsb3N1cmVzL2Nsc19zdHJ1Y3RfdmExLmMgbGliZmZpLmNsb3N1cmVzL2Nsc191Y2hhci5jIGxpYmZmaS5jbG9zdXJlcy9jbHNfdWludC5jIFwKKwlsaWJmZmkuY2xvc3VyZXMvY2xzX3N0cnVjdF9mcF9yZXR1cm4uYyBsaWJmZmkuY2xvc3VyZXMvY2xzX3N0cnVjdF92YTEuYyBsaWJmZmkuY2xvc3VyZXMvY2xzX3VjaGFyLmMgbGliZmZpLmNsb3N1cmVzL2Nsc191aW50LmMgXAogCWxpYmZmaS5jbG9zdXJlcy9jbHNfdWludF92YS5jIGxpYmZmaS5jbG9zdXJlcy9jbHNfdWxvbmdfdmEuYyBsaWJmZmkuY2xvc3VyZXMvY2xzX3Vsb25nbG9uZy5jIFwKIAlsaWJmZmkuY2xvc3VyZXMvY2xzX3VzaG9ydC5jIGxpYmZmaS5jbG9zdXJlcy9lcnJfYmFkX2FiaS5jIGxpYmZmaS5jbG9zdXJlcy9mZml0ZXN0LmggXAogCWxpYmZmaS5jbG9zdXJlcy9odWdlX3N0cnVjdC5jIGxpYmZmaS5jbG9zdXJlcy9uZXN0ZWRfc3RydWN0LmMgbGliZmZpLmNsb3N1cmVzL25lc3RlZF9zdHJ1Y3QxLmMgXAotLS0gL2Rldi9udWxsCisrKyBiL3Rlc3RzdWl0ZS9saWJmZmkuY2xvc3VyZXMvY2xzX3N0cnVjdF9mcF9yZXR1cm4uYwpAQCAtMCwwICsxLDk5IEBACisvKiBBcmVhOglmZmlfY2FsbCwgY2xvc3VyZV9jYWxsCisgICBQdXJwb3NlOglDaGVjayByZXR1cm4gdmFsdWVzIG9mIHN0cnVjdHMgd2l0aCBvbmUgb3IgdHdvIGZsb2F0aW5nLXBvaW50CisJCWZpZWxkcy4KKyAgIExpbWl0YXRpb25zOglub25lLgorICAgUFI6CQlub25lLiAgKi8KKworLyogeyBkZy1kbyBydW4gfSAqLworCisjaW5jbHVkZSAiZmZpdGVzdC5oIgorCisvKiBTZXZlcmFsIEFCSXMgcmV0dXJuIHRoZXNlIHN0cnVjdHMgaW4gZmxvYXRpbmctcG9pbnQgcmVnaXN0ZXJzLCBvciB3aXRoCisgICBzb2Z0IGZsb2F0IGluIHBhaXJzIG9mIEdQUnMgdGhhdCBkaWZmZXIgZnJvbSB0aG9zZSB1c2VkIGZvciBvdGhlciBzbWFsbAorICAgc3RydWN0cywgc28gdGhleSBuZWVkIHRoZWlyIG93biByZXR1cm4gcGF0aHMgaW4gZmZpX2NhbGwgYW5kIGluCisgICBjbG9zdXJlcy4gICovCisKK3R5cGVkZWYgc3RydWN0IHsgZmxvYXQgYTsgfSBzX2Y7Cit0eXBlZGVmIHN0cnVjdCB7IGRvdWJsZSBhOyB9IHNfZDsKK3R5cGVkZWYgc3RydWN0IHsgZmxvYXQgYTsgZmxvYXQgYjsgfSBzX2ZmOwordHlwZWRlZiBzdHJ1Y3QgeyBkb3VibGUgYTsgZG91YmxlIGI7IH0gc19kZDsKK3R5cGVkZWYgc3RydWN0IHsgZmxvYXQgYTsgZG91YmxlIGI7IH0gc19mZDsKK3R5cGVkZWYgc3RydWN0IHsgZG91YmxlIGE7IGZsb2F0IGI7IH0gc19kZjsKKworI2RlZmluZSBERUZJTkUobmFtZSwgZXEsIC4uLikJCQkJCQlcCitzdGF0aWMgbmFtZSBBQklfQVRUUgkJCQkJCQlcCitmbl8jI25hbWUgKGludCBrKQkJCQkJCQlcCit7CQkJCQkJCQkJXAorICBuYW1lIHIgPSB7IF9fVkFfQVJHU19fIH07CQkJCQkJXAorICByZXR1cm4gcjsJCQkJCQkJCVwKK30JCQkJCQkJCQlcCisJCQkJCQkJCQlcCitzdGF0aWMgdm9pZAkJCQkJCQkJXAorY2xzXyMjbmFtZSAoZmZpX2NpZiAqY2lmIF9fVU5VU0VEX18sIHZvaWQgKnJlc3AsIHZvaWQgKiphcmd2LAkJXAorCSAgICB2b2lkICp1c2VyZGF0YSBfX1VOVVNFRF9fKQkJCQkJXAorewkJCQkJCQkJCVwKKyAgKihuYW1lICopIHJlc3AgPSBmbl8jI25hbWUgKCooaW50ICopIGFyZ3ZbMF0pOwkJCVwKK30JCQkJCQkJCQlcCisJCQkJCQkJCQlcCitzdGF0aWMgaW50CQkJCQkJCQlcCitlcV8jI25hbWUgKG5hbWUgeCwgbmFtZSB5KQkJCQkJCVwKK3sJCQkJCQkJCQlcCisgIHJldHVybiBlcTsJCQkJCQkJCVwKK30KKworI2RlZmluZSBFUTEgKHguYSA9PSB5LmEpCisjZGVmaW5lIEVRMiAoeC5hID09IHkuYSAmJiB4LmIgPT0geS5iKQorCitERUZJTkUgKHNfZiwgRVExLCAxLjVmICogaykKK0RFRklORSAoc19kLCBFUTEsIDIuNSAqIGspCitERUZJTkUgKHNfZmYsIEVRMiwgMS41ZiAqIGssIC0wLjI1ZiAqIGspCitERUZJTkUgKHNfZGQsIEVRMiwgMi41ICogaywgLTAuNzUgKiBrKQorREVGSU5FIChzX2ZkLCBFUTIsIDEuNWYgKiBrLCAtMC43NSAqIGspCitERUZJTkUgKHNfZGYsIEVRMiwgMi41ICogaywgLTAuMjVmICogaykKKworI2RlZmluZSBDSEVDS19PTkUobmFtZSwgdHlwZTEsIHR5cGUyKQkJCQkJXAorICBkbyB7CQkJCQkJCQkJXAorICAgIGZmaV90eXBlICplbGVtZW50c1szXSA9IHsgdHlwZTEsIHR5cGUyLCBOVUxMIH07CQkJXAorICAgIGZmaV90eXBlIHR5cGU7CQkJCQkJCVwKKyAgICBmZmlfdHlwZSAqYXJnc1sxXSA9IHsgJmZmaV90eXBlX3NpbnQgfTsJCQkJXAorICAgIHZvaWQgKnZhbHVlc1sxXSA9IHsgJmsgfTsJCQkJCQlcCisgICAgZmZpX2NpZiBjaWY7CQkJCQkJCVwKKyAgICBmZmlfY2xvc3VyZSAqcGNsOwkJCQkJCQlcCisgICAgdm9pZCAqY29kZTsJCQkJCQkJCVwKKyAgICBuYW1lIHdhbnQgPSBmbl8jI25hbWUgKGspLCBnb3Q7CQkJCQlcCisJCQkJCQkJCQlcCisgICAgdHlwZS5zaXplID0gMDsJCQkJCQkJXAorICAgIHR5cGUuYWxpZ25tZW50ID0gMDsJCQkJCQkJXAorICAgIHR5cGUudHlwZSA9IEZGSV9UWVBFX1NUUlVDVDsJCQkJCVwKKyAgICB0eXBlLmVsZW1lbnRzID0gZWxlbWVudHM7CQkJCQkJXAorICAgIENIRUNLIChmZmlfcHJlcF9jaWYgKCZjaWYsIEFCSV9OVU0sIDEsICZ0eXBlLCBhcmdzKSA9PSBGRklfT0spOwlcCisJCQkJCQkJCQlcCisgICAgbWVtc2V0ICgmZ290LCAwLCBzaXplb2YgKGdvdCkpOwkJCQkJXAorICAgIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZuXyMjbmFtZSksICZnb3QsIHZhbHVlcyk7CQkJXAorICAgIENIRUNLIChlcV8jI25hbWUgKGdvdCwgd2FudCkpOwkJCQkJXAorCQkJCQkJCQkJXAorICAgIHBjbCA9IGZmaV9jbG9zdXJlX2FsbG9jIChzaXplb2YgKGZmaV9jbG9zdXJlKSwgJmNvZGUpOwkJXAorICAgIENIRUNLIChwY2wgIT0gTlVMTCk7CQkJCQkJXAorICAgIENIRUNLIChmZmlfcHJlcF9jbG9zdXJlX2xvYyAocGNsLCAmY2lmLCBjbHNfIyNuYW1lLCBOVUxMLCBjb2RlKQlcCisJICAgPT0gRkZJX09LKTsJCQkJCQkJXAorICAgIG1lbXNldCAoJmdvdCwgMCwgc2l6ZW9mIChnb3QpKTsJCQkJCVwKKyAgICBnb3QgPSAoKG5hbWUgKEFCSV9BVFRSICopKGludCkpIGNvZGUpIChrKTsJCQkJXAorICAgIENIRUNLIChlcV8jI25hbWUgKGdvdCwgd2FudCkpOwkJCQkJXAorICAgIGZmaV9jbG9zdXJlX2ZyZWUgKHBjbCk7CQkJCQkJXAorICAgIHByaW50ZiAoIiVzOiBva1xuIiwgI25hbWUpOwkJCQkJCVwKKyAgfSB3aGlsZSAoMCkKKworaW50CittYWluICh2b2lkKQoreworICBpbnQgayA9IDM7CisKKyAgQ0hFQ0tfT05FIChzX2YsICZmZmlfdHlwZV9mbG9hdCwgTlVMTCk7CisgIENIRUNLX09ORSAoc19kLCAmZmZpX3R5cGVfZG91YmxlLCBOVUxMKTsKKyAgQ0hFQ0tfT05FIChzX2ZmLCAmZmZpX3R5cGVfZmxvYXQsICZmZmlfdHlwZV9mbG9hdCk7CisgIENIRUNLX09ORSAoc19kZCwgJmZmaV90eXBlX2RvdWJsZSwgJmZmaV90eXBlX2RvdWJsZSk7CisgIENIRUNLX09ORSAoc19mZCwgJmZmaV90eXBlX2Zsb2F0LCAmZmZpX3R5cGVfZG91YmxlKTsKKyAgQ0hFQ0tfT05FIChzX2RmLCAmZmZpX3R5cGVfZG91YmxlLCAmZmZpX3R5cGVfZmxvYXQpOworCisgIGV4aXQgKDApOworfQo=
+From 463ae02e66f4ea6be45a9e2bb2f646fa3da7d62a Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Wed, 21 Oct 2026 01:24:14 +0000
+Subject: [PATCH] testsuite: check return values of structs with one or two
+ floating-point fields
+
+Many ABIs return a struct of one or two float or double fields
+differently from other small structs, in floating-point registers, or
+with soft float in other GPRs than an integer struct of the same size.
+Only a few of these combinations are covered, mostly through ffi_call.
+
+Add cls_struct_fp_return, which returns structs of float, double, two
+floats, two doubles, float and double, and double and float, both
+through ffi_call and through closures.
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ testsuite/Makefile.am                         |  2 +-
+ .../libffi.closures/cls_struct_fp_return.c    | 99 +++++++++++++++++++
+ 2 files changed, 100 insertions(+), 1 deletion(-)
+ create mode 100644 testsuite/libffi.closures/cls_struct_fp_return.c
+
+--- a/testsuite/Makefile.am
++++ b/testsuite/Makefile.am
+@@ -64,7 +64,7 @@ EXTRA_DIST = config/default.exp emscript
+ 	libffi.closures/cls_multi_sshortchar.c libffi.closures/cls_multi_uchar.c libffi.closures/cls_multi_ushort.c \
+ 	libffi.closures/cls_multi_ushortchar.c libffi.closures/cls_pointer.c libffi.closures/cls_pointer_stack.c \
+ 	libffi.closures/cls_schar.c libffi.closures/cls_sint.c libffi.closures/cls_sshort.c \
+-	libffi.closures/cls_struct_va1.c libffi.closures/cls_uchar.c libffi.closures/cls_uint.c \
++	libffi.closures/cls_struct_fp_return.c libffi.closures/cls_struct_va1.c libffi.closures/cls_uchar.c libffi.closures/cls_uint.c \
+ 	libffi.closures/cls_uint_va.c libffi.closures/cls_ulong_va.c libffi.closures/cls_ulonglong.c \
+ 	libffi.closures/cls_ushort.c libffi.closures/err_bad_abi.c libffi.closures/ffitest.h \
+ 	libffi.closures/huge_struct.c libffi.closures/nested_struct.c libffi.closures/nested_struct1.c \
+--- /dev/null
++++ b/testsuite/libffi.closures/cls_struct_fp_return.c
+@@ -0,0 +1,99 @@
++/* Area:	ffi_call, closure_call
++   Purpose:	Check return values of structs with one or two floating-point
++		fields.
++   Limitations:	none.
++   PR:		none.  */
++
++/* { dg-do run } */
++
++#include "ffitest.h"
++
++/* Several ABIs return these structs in floating-point registers, or with
++   soft float in pairs of GPRs that differ from those used for other small
++   structs, so they need their own return paths in ffi_call and in
++   closures.  */
++
++typedef struct { float a; } s_f;
++typedef struct { double a; } s_d;
++typedef struct { float a; float b; } s_ff;
++typedef struct { double a; double b; } s_dd;
++typedef struct { float a; double b; } s_fd;
++typedef struct { double a; float b; } s_df;
++
++#define DEFINE(name, eq, ...)						\
++static name ABI_ATTR							\
++fn_##name (int k)							\
++{									\
++  name r = { __VA_ARGS__ };						\
++  return r;								\
++}									\
++									\
++static void								\
++cls_##name (ffi_cif *cif __UNUSED__, void *resp, void **argv,		\
++	    void *userdata __UNUSED__)					\
++{									\
++  *(name *) resp = fn_##name (*(int *) argv[0]);			\
++}									\
++									\
++static int								\
++eq_##name (name x, name y)						\
++{									\
++  return eq;								\
++}
++
++#define EQ1 (x.a == y.a)
++#define EQ2 (x.a == y.a && x.b == y.b)
++
++DEFINE (s_f, EQ1, 1.5f * k)
++DEFINE (s_d, EQ1, 2.5 * k)
++DEFINE (s_ff, EQ2, 1.5f * k, -0.25f * k)
++DEFINE (s_dd, EQ2, 2.5 * k, -0.75 * k)
++DEFINE (s_fd, EQ2, 1.5f * k, -0.75 * k)
++DEFINE (s_df, EQ2, 2.5 * k, -0.25f * k)
++
++#define CHECK_ONE(name, type1, type2)					\
++  do {									\
++    ffi_type *elements[3] = { type1, type2, NULL };			\
++    ffi_type type;							\
++    ffi_type *args[1] = { &ffi_type_sint };				\
++    void *values[1] = { &k };						\
++    ffi_cif cif;							\
++    ffi_closure *pcl;							\
++    void *code;								\
++    name want = fn_##name (k), got;					\
++									\
++    type.size = 0;							\
++    type.alignment = 0;							\
++    type.type = FFI_TYPE_STRUCT;					\
++    type.elements = elements;						\
++    CHECK (ffi_prep_cif (&cif, ABI_NUM, 1, &type, args) == FFI_OK);	\
++									\
++    memset (&got, 0, sizeof (got));					\
++    ffi_call (&cif, FFI_FN (fn_##name), &got, values);			\
++    CHECK (eq_##name (got, want));					\
++									\
++    pcl = ffi_closure_alloc (sizeof (ffi_closure), &code);		\
++    CHECK (pcl != NULL);						\
++    CHECK (ffi_prep_closure_loc (pcl, &cif, cls_##name, NULL, code)	\
++	   == FFI_OK);							\
++    memset (&got, 0, sizeof (got));					\
++    got = ((name (ABI_ATTR *)(int)) code) (k);				\
++    CHECK (eq_##name (got, want));					\
++    ffi_closure_free (pcl);						\
++    printf ("%s: ok\n", #name);						\
++  } while (0)
++
++int
++main (void)
++{
++  int k = 3;
++
++  CHECK_ONE (s_f, &ffi_type_float, NULL);
++  CHECK_ONE (s_d, &ffi_type_double, NULL);
++  CHECK_ONE (s_ff, &ffi_type_float, &ffi_type_float);
++  CHECK_ONE (s_dd, &ffi_type_double, &ffi_type_double);
++  CHECK_ONE (s_fd, &ffi_type_float, &ffi_type_double);
++  CHECK_ONE (s_df, &ffi_type_double, &ffi_type_float);
++
++  exit (0);
++}

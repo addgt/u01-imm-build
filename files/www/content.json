@@ -1,1 +1,169 @@
-ewogICJ2ZXJzaW9uIjogIjEuMCIsCiAgIm5hdiI6IFsKICAgIHsKICAgICAgInRleHQiOiAib3BlbndydOiuqOiuuuekvuWMuiIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3g3NzgwL2ltbW9ydGFsd3J0LUFjdGlvcy9kaXNjdXNzaW9ucyIKICAgIH0sCiAgICB7CiAgICAgICJ0ZXh0IjogIui0reS5sOiuvuWkhyIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9tLnRiLmNuL2guaWtld0tlRT90az1zWTV6NTI2NUxvZiBDWjAwNyIKICAgIH0sCiAgICB7CiAgICAgICJ0ZXh0IjogIuaKlumfsyIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9tLnRiLmNuL2guaWtld0tlRT90az1zWTV6NTI2NUxvZiBDWjAwNyIKICAgIH0sCiAgICB7CiAgICAgICJ0ZXh0IjogIkdpdEh1YiIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3g3NzgwIgogICAgfSwKICAgIHsKICAgICAgInRleHQiOiAi5Yi35py657O757uf5aSH5Lu9IiwKICAgICAgInVybCI6ICJodHRwczovL3d3dy4xMjM5MTIuY29tL3MvZGdYYmp2LUdmc2ZkIgogICAgfQogIF0sCiAgImhlYWRlciI6IHsKICAgICJ0aXRsZSI6ICLlvIDlp4vkuYvliY3vvIzor7fku5Tnu4bpmIXor7siLAogICAgInN1YnRpdGxlIjogIuWFiOmYheivu+S9v+eUqOivtOaYju+8jOmBv+WFjeWboOaTjeS9nOS4jeW9k+WvvOiHtOWKn+iDveaNn+Wdj+OAgiIKICB9LAogICJzdGVwcyI6IFsKICAgIHsKICAgICAgIndhcm4iOiBmYWxzZSwKICAgICAgInRleHQiOiAi5Y+R546w6K6+5aSH5LiN6IO95a6J6KOF5o+S5Lu277yM5pu05paw5rqQ5Lmf5Ye66ZSZ77yM5Li76KaB5L2g55qE54mI5pys5Y+v6IO96ZyA6KaB5pu05paw5LqG77yM5YaF5qC46ZyA6KaB5pu05paw5LqG44CC5Y+q6IO96Ieq5bex5L2/55So5pyA5paw54mI5pys57O757uf77yM5LiL6Z2i572R5Z2A5omT5byA77yM5Y+v5Lul5YK755Oc5LiA6ZSu5pu05paw5a6a5Yi25Zu65Lu244CCIiwKICAgICAgIndhcm5pbmdzIjogWwogICAgICAgICLimqAg5Y2H57qn5pyA5paw54mI5pys6KGl5LiB77yM6ZyA6KaB5L2/55SoUXVhbGNvbW1QcmVtaXVtVG9vbOWkh+S7vXJvb3Rmc+WSjGJvb3Tkv6nkuKrliIbljLrjgIIiLAogICAgICAgICLimqAg5Yi35py65pyJ6aOO6Zmp77yM5Yi35py65Y+v6IO95Lya5a+86Ie05LiN6IO95byA5py677yM5Yi35py66K+35YWI5a2m5Lmg5LiA5Lqb5Yi35py655+l6K+G44CCIgogICAgICBdLAogICAgICAidGVybWluYWxzIjogWwogICAgICAgIHsKICAgICAgICAgICJ0aXRsZSI6ICJiYXNoIOKAlCDoh6rlrprkuYnlm7rku7YiLAogICAgICAgICAgImxpbmVzIjogWwogICAgICAgICAgICAiIyDliLfmnLrliY3or7flpIfku73liIbljLrvvIzmiJbogIXlpIfku73lpb1tb2RlbS43euWfuuW4puOAgiIsCiAgICAgICAgICAgICIjIOWfuuW4puWcqOmmlumhteS4i+i9veWMuu+8jOi/meS4qumdnuW4uOmHjeimge+8jOS4ouWkseaXoOazleaJvuWbniIsCiAgICAgICAgICAgICIjIDEu5Yip55SoZ2l0aHVi6Ieq5a6a5LmJ5YWo5paw5Zu65Lu2IiwKICAgICAgICAgICAgImh0dHBzOi8vZ2l0aHViLmNvbS94Nzc4MC9pbW1vcnRhbHdydC1BY3Rpb3MiLAogICAgICAgICAgICAiIyAyLuWNh+e6p+acgOaWsOWbuuS7tuWPkeeOsOaJi+acuuWNoeicgueqneS4jeiDveeUqO+8jOivt+i/mOWOn+WfuuW4puOAgiIsCiAgICAgICAgICAgICIjL2xpYi9maXJtd2FyZSAgI+aKiuWfuuW4pui/mOWOn+WIsOi/meS4quebruW9lSIKICAgICAgICAgIF0KICAgICAgICB9CiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJ3YXJuIjogZmFsc2UsCiAgICAgICJ0ZXh0IjogIuiuvuWkh+aUr+aMgeaPkuWFpeaJi+acuuWNoe+8jOWFvOWuuee9kemAmuOAgeenu+WKqOOAgeeUteS/oeOAguiZmuaLn+WPt+WPiumDqOWIhuiiq+Wxj+iUveWPt+eggeWPr+iDveaXoOazleS9v+eUqO+8jOaOqOiNkOS8mOWFiOS9v+eUqOiBlOmAmuaIlueUteS/oe+8jOenu+WKqOWcqOmDqOWIhuWcsOWMuuWPl+mZkOOAgiIsCiAgICAgICJ3YXJuaW5ncyI6IFsKICAgICAgICAi4pqgIOWmguaenOS9oOaEn+inieaJi+acuuWNoeS4jeiDveS9v+eUqO+8jOS4jeimgeedgOaApe+8jOWPr+S7peS9v+eUqOWutumHjOe9kee7nO+8jOaIluiAheaPkuWFpeeUteiEkeebtOaOpei/nuaOpeiuvue9ruOAgiIsCiAgICAgICAgIuKaoCDorr7lpIfkuIrnmoTnm5bluL3kuI3opoHmi7/mjonvvIzmi7/mjonkvJrlr7zoh7TmiYvmnLrljaHkv6Hlj7flj5jlvLHjgIIiCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJ3YXJuIjogZmFsc2UsCiAgICAgICJ0ZXh0IjogIuezu+e7n+eDreeCueS4jui3r+eUseWZqCBXaUZpIOWtmOWcqOWGsueqge+8jOS6jOiAheWPquiDveWtmOWcqOS4gOS4quOAgui/nuaOpeWutuW6rSBXaUZpIOWQjueDreeCueWPr+iDveiHquWKqOaWreW8gO+8jOi/nuaOpeWutumHjHdpZmnmmK/opoHorr7nva5pcO+8jOmBv+WFjSBJUCDkuKLlpLHjgIIiLAogICAgICAid2FybmluZ3MiOiBbCiAgICAgICAgIuKaoCDkvb/nlKjmiYvmnLrljaHng63ngrnvvIznoazku7bkvJrlj5Hng63vvIzov5nmmK/noazku7bpgJrnl4XvvIzoh6rooYzotK3kubDmlaPng63niYfvvIzotLTkuIrog73pmY3kvY7muKnluqbjgIIiCiAgICAgIF0KICAgIH0sCiAgICB7CiAgICAgICJ3YXJuIjogdHJ1ZSwKICAgICAgInRleHQiOiAi572R57uc5Z+65bim5Li66K6+5aSH54us5pyJ77yM5YyF5ZCr56e75Yqo572R57uc6K6+572u5LiO6amx5Yqo77yM5q+P5Y+w6K6+5aSH5Z2H5LiN55u45ZCM77yM5Lii5aSx5peg5rOV5om+5Zue77yM5oiR6L+Z5rKh5pyJ5aSH5Lu944CCIiwKICAgICAgIndhcm5pbmdzIjogWwogICAgICAgICLimqAg5LiA5pem5Lii5aSx5peg5rOV5om+5Zue77yM5bCG5a+86Ie05aSW6YOo5omL5py65Y2h5peg5rOV5L2/55So44CC6K+35Yqh5b+F5o+Q5YmN5aSH5Lu977yM5YiH5Yu/5Yig6Zmk44CCIgogICAgICBdCiAgICB9LAogICAgewogICAgICAid2FybiI6IGZhbHNlLAogICAgICAidGV4dCI6ICLlpoLpnIDnrqHnkIboh6rlkK/liqjpobnvvIzlj6/lnKggT3BlbldydCDlkI7lj7DmjInku6XkuIvot6/lvoTmk43kvZzvvIzlnKjjgIzmnKzlnLDlkK/liqjohJrmnKzjgI3kuK3nvJbovpHmiJbliKDpmaTlr7nlupTlkK/liqjpobnjgIIiLAogICAgICAiYnJlYWRjcnVtYiI6IFsKICAgICAgICAiT3BlbldydCDlkI7lj7AiLAogICAgICAgICLns7vnu58iLAogICAgICAgICLlkK/liqjpobkiLAogICAgICAgICLmnKzlnLDlkK/liqjohJrmnKwiCiAgICAgIF0sCiAgICAgICJ0ZXJtaW5hbHMiOiBbCiAgICAgICAgewogICAgICAgICAgInRpdGxlIjogImJhc2gg4oCUIOWQr+WKqCBNaW5lY3JhZnQg5pyN5Yqh56uvIiwKICAgICAgICAgICJsaW5lcyI6IFsKICAgICAgICAgICAgIiMg5ZCv5YqoIEN1YmVyaXRlIE1pbmVjcmFmdCDmnI3liqHnq68iLAogICAgICAgICAgICAiIyDnq6/lj6Ppu5jorqQgMjU1NjXvvIzlkK/liqjlkI7njqnlrrbljbPlj6/ov57mjqUiLAogICAgICAgICAgICAiL3Jvb3QvQ3ViZXJpdGUiCiAgICAgICAgICBdCiAgICAgICAgfSwKICAgICAgICB7CiAgICAgICAgICAidGl0bGUiOiAiYmFzaCDigJQg5ZCv5YqoIFBpY29jbGF3IOWwj+m+meiZviIsCiAgICAgICAgICAibGluZXMiOiBbCiAgICAgICAgICAgICIjIOWQr+WKqCBQaWNvY2xhdyBBSSDlsI/pvpnomb7vvIjlkI7lj7Dov5DooYzvvIkiLAogICAgICAgICAgICAiIyDml6Xlv5fovpPlh7rliLAgL3RtcC9waWNvY2xhdy5sb2ciLAogICAgICAgICAgICAiY2QgL3Jvb3QvcGljb2NsYXcgJiYgLi9waWNvY2xhdy1sYXVuY2hlciAtcHVibGljID4gL3RtcC9waWNvY2xhdy5sb2cgMj4mMSAmIgogICAgICAgICAgXQogICAgICAgIH0KICAgICAgXQogICAgfSwKICAgIHsKICAgICAgIndhcm4iOiBmYWxzZSwKICAgICAgInRleHQiOiAi5aaC5p6c5LiN5oOz5L2/55So5aSW6YOo5aSn5Y2h77yM5Y+v5Lul6Ieq6KGM5pu05pS55YiH5byA6ISa5pys77yI6YOo5YiG5py65Z6L5rKh5pyJ6L+Z5Liq6ISa5pys77yJIiwKICAgICAgIndhcm5pbmdzIjogWwogICAgICAgICLimqAg5aaC5p6c5L2g5Zyo6L+Z6YeM5rKh5om+5Yiw5YiH5Y2h6ISa5pys77yM6YKj5Y+q6IO96K+05piO5L2g55qE5py65Zmo5LiN6IO95YiH5Y2hIgogICAgICBdLAogICAgICAidGVybWluYWxzIjogWwogICAgICAgIHsKICAgICAgICAgICJ0aXRsZSI6ICJiYXNoIOKAlCDliIfljaHohJrmnKzkvY3nva4iLAogICAgICAgICAgImNvZGUiOiAiL2V0Yy9jYXJkc3dpdGNoL2NhcmRzd2l0Y2guc2giCiAgICAgICAgfQogICAgICBdCiAgICB9LAogICAgewogICAgICAid2FybiI6IGZhbHNlLAogICAgICAidGV4dCI6ICLlpoLmnpzkvaDmhJ/op4lwaWNvY2xhdyBhaSDov5nkuKrlsI/pvpnomb7lpKrljaDlhoXlrZjkuobvvIzlj6/ku6XlnKjlkK/liqjpobnph4zpnaLliKDpmaQiLAogICAgICAid2FybmluZ3MiOiBbCiAgICAgICAgIuKaoCDov5nkuKrmmK9nb+WGmeeahOWwj+m+meiZvu+8jOWPr+S7peW4ruS9oOWujOaIkOS4gOS6m+W3peS9nO+8jOi/kOihjOS7u+WKoeaXtuWNoOWGheWtmCIKICAgICAgXSwKICAgICAgInRlcm1pbmFscyI6IFsKICAgICAgICB7CiAgICAgICAgICAidGl0bGUiOiAiYmFzaCDigJQgcGljb2NsYXciLAogICAgICAgICAgImNvZGUiOiAiY2QgL3Jvb3QvcGljb2NsYXcgJiYgLi9waWNvY2xhdy1sYXVuY2hlciAtcHVibGljID4gL3RtcC9waWNvY2xhdy5sb2cgMj4mMSAmIgogICAgICAgIH0KICAgICAgXQogICAgfSwKICAgIHsKICAgICAgIndhcm4iOiBmYWxzZSwKICAgICAgInRleHQiOiAi6YOo5YiG5o+S5Lu25a6J6KOF55qE5pe25YCZ5Y+v6IO95Lya56C05Z2P57O757uf77yM5L6L5aaC6Ziy54Gr5aKZ5Y6f54mI57O757uf5pyJ77yM5Zyo5a6J6KOF5YW25LuW6Ziy54Gr5aKZ5bCx5Lya5Yay56qB77yM5Lil6YeN5Lya5Ye6546w5LiN6IO95byA5py6IiwKICAgICAgIndhcm5pbmdzIjogWwogICAgICAgICLimqAg5aSn6YOo5YiG5o+S5Lu25rKh5pyJ5Yay56qB77yM6YOo5YiG5o+S5Lu25Lya5ZKM5Y6f57O757uf5Yay56qB44CCIgogICAgICBdCiAgICB9CiAgXSwKICAiZG93bmxvYWRzIjogWwogICAgewogICAgICAibmFtZSI6ICLpmo/ouqtXaUZp5Yqp5omLIiwKICAgICAgIm1ldGEiOiAi6ZqP6LqrV2lGaeWKqeaJiy56aXAiLAogICAgICAidXJsIjogImh0dHBzOi8vZG93bmxvYWQuY3Nkbi5uZXQvZG93bmxvYWQvc3hwMzA5OTMyMTQ3LzkyNTU3OTIzP29wc19yZXF1ZXN0X21pc2M9JTI1N0IlMjUyMnJlcXVlc3QlMjU1RmlkJTI1MjIlMjUzQSUyNTIyZTJkYjZlOWVmNjRhNzYyNWIxMTE2ZjA5ZjIwMTQ3ZmElMjUyMiUyNTJDJTI1MjJzY20lMjUyMiUyNTNBJTI1MjIyMDE0MDcxMy4xMzAxMDIzMzQuLiUyNTIyJTI1N0QmcmVxdWVzdF9pZD1lMmRiNmU5ZWY2NGE3NjI1YjExMTZmMDlmMjAxNDdmYSZiaXpfaWQ9MSZ1dG1fbWVkaXVtPWRpc3RyaWJ1dGUucGNfc2VhcmNoX3Jlc3VsdC5ub25lLXRhc2stZG93bmxvYWQtMn5kb3dubG9hZH5iYWlkdV9sYW5kaW5nX3YyfmRlZmF1bHQtMS05MjU1NzkyMy1udWxsLW51bGwuMjY5XnY0XnBjX3NlYXJjaF9kb3dubG9hZF9yZXN1bHRfYmFzZTImdXRtX3Rlcm09JUU5JTlBJThGJUU4JUJBJUFCd2lmaSVFNSU4QSVBOSVFNiU4OSU4QiZzcG09MTAxOC4yMjI2LjMwMDEuNDQ1MS4yIgogICAgfSwKICAgIHsKICAgICAgIm5hbWUiOiAi5Yi35py65bel5YW35aSn5YWoIiwKICAgICAgIm1ldGEiOiAicWl0YWdvbmdqLjd6IiwKICAgICAgInVybCI6ICJodHRwczovL3d3dy4xMjM5MTIuY29tL3MvZGdYYmp2LUdmc2ZkIgogICAgfQogIF0sCiAgImFydGljbGVzIjogWwogICAgewogICAgICAidGl0bGUiOiAi6auY6YCaNDEw6ZqP6Lqrd2lmaeeOqeazleiuqOiuuuekvuWMuiIsCiAgICAgICJtZXRhIjogImdpdGh1YiDCtyBnaXRodWIuY29tIiwKICAgICAgInVybCI6ICJodHRwczovL2dpdGh1Yi5jb20veDc3ODAvaW1tb3J0YWx3cnQtQWN0aW9zL2Rpc2N1c3Npb25zIgogICAgfSwKICAgIHsKICAgICAgInRpdGxlIjogIuaegeeugOeahG9wZW53cnTlm7rku7bliLfmnLrljIUiLAogICAgICAibWV0YSI6ICJnaXRodWIgwrcgZ2l0aHViLmNvbSIsCiAgICAgICJ1cmwiOiAiaHR0cHM6Ly9naXRodWIuY29tL3g3NzgwL0FjdGlvbnMtaW1tb3J0YWx3cnQiCiAgICB9LAogICAgewogICAgICAidGl0bGUiOiAi6auY6YCaIDQxMCA5MDA4IOaooeW8jyArIOWItyBEZWJpYW4gMTMg5Zu+5paHIiwKICAgICAgIm1ldGEiOiAiY3BvbGFyIMK3IHd3dy5jcG9sYXIuY29tIiwKICAgICAgInVybCI6ICJodHRwczovL3d3dy5jcG9sYXIuY29tL2Jsb2cvZmxhc2gtZGViaWFuLTEzLWFuZC1lbmFibGUtc3NoLXJlbW90ZS1hY2Nlc3MiCiAgICB9LAogICAgewogICAgICAidGl0bGUiOiAiSW1tb3J0YWxXcnTnvJbor5HmlZnnqIss5a6a5Yi25Zu65Lu2IiwKICAgICAgIm1ldGEiOiAiZ2Vla3h3IMK3IHd3dy5nZWVreHcudG9wIiwKICAgICAgInVybCI6ICJodHRwczovL3d3dy5nZWVreHcudG9wLzIwNTMvIgogICAgfQogIF0KfQ==
+{
+  "version": "1.0",
+  "nav": [
+    {
+      "text": "openwrt讨论社区",
+      "url": "https://github.com/x7780/immortalwrt-Actios/discussions"
+    },
+    {
+      "text": "购买设备",
+      "url": "https://m.tb.cn/h.ikewKeE?tk=sY5z5265Lof CZ007"
+    },
+    {
+      "text": "抖音",
+      "url": "https://m.tb.cn/h.ikewKeE?tk=sY5z5265Lof CZ007"
+    },
+    {
+      "text": "GitHub",
+      "url": "https://github.com/x7780"
+    },
+    {
+      "text": "刷机系统备份",
+      "url": "https://www.123912.com/s/dgXbjv-Gfsfd"
+    }
+  ],
+  "header": {
+    "title": "开始之前，请仔细阅读",
+    "subtitle": "先阅读使用说明，避免因操作不当导致功能损坏。"
+  },
+  "steps": [
+    {
+      "warn": false,
+      "text": "发现设备不能安装插件，更新源也出错，主要你的版本可能需要更新了，内核需要更新了。只能自己使用最新版本系统，下面网址打开，可以傻瓜一键更新定制固件。",
+      "warnings": [
+        "⚠ 升级最新版本补丁，需要使用QualcommPremiumTool备份rootfs和boot俩个分区。",
+        "⚠ 刷机有风险，刷机可能会导致不能开机，刷机请先学习一些刷机知识。"
+      ],
+      "terminals": [
+        {
+          "title": "bash — 自定义固件",
+          "lines": [
+            "# 刷机前请备份分区，或者备份好modem.7z基带。",
+            "# 基带在首页下载区，这个非常重要，丢失无法找回",
+            "# 1.利用github自定义全新固件",
+            "https://github.com/x7780/immortalwrt-Actios",
+            "# 2.升级最新固件发现手机卡蜂窝不能用，请还原基带。",
+            "#/lib/firmware  #把基带还原到这个目录"
+          ]
+        }
+      ]
+    },
+    {
+      "warn": false,
+      "text": "设备支持插入手机卡，兼容网通、移动、电信。虚拟号及部分被屏蔽号码可能无法使用，推荐优先使用联通或电信，移动在部分地区受限。",
+      "warnings": [
+        "⚠ 如果你感觉手机卡不能使用，不要着急，可以使用家里网络，或者插入电脑直接连接设置。",
+        "⚠ 设备上的盖帽不要拿掉，拿掉会导致手机卡信号变弱。"
+      ]
+    },
+    {
+      "warn": false,
+      "text": "系统热点与路由器 WiFi 存在冲突，二者只能存在一个。连接家庭 WiFi 后热点可能自动断开，连接家里wifi是要设置ip，避免 IP 丢失。",
+      "warnings": [
+        "⚠ 使用手机卡热点，硬件会发热，这是硬件通病，自行购买散热片，贴上能降低温度。"
+      ]
+    },
+    {
+      "warn": true,
+      "text": "网络基带为设备独有，包含移动网络设置与驱动，每台设备均不相同，丢失无法找回，我这没有备份。",
+      "warnings": [
+        "⚠ 一旦丢失无法找回，将导致外部手机卡无法使用。请务必提前备份，切勿删除。"
+      ]
+    },
+    {
+      "warn": false,
+      "text": "如需管理自启动项，可在 OpenWrt 后台按以下路径操作，在「本地启动脚本」中编辑或删除对应启动项。",
+      "breadcrumb": [
+        "OpenWrt 后台",
+        "系统",
+        "启动项",
+        "本地启动脚本"
+      ],
+      "terminals": [
+        {
+          "title": "bash — 启动 Minecraft 服务端",
+          "lines": [
+            "# 启动 Cuberite Minecraft 服务端",
+            "# 端口默认 25565，启动后玩家即可连接",
+            "/root/Cuberite"
+          ]
+        },
+        {
+          "title": "bash — 启动 Picoclaw 小龙虾",
+          "lines": [
+            "# 启动 Picoclaw AI 小龙虾（后台运行）",
+            "# 日志输出到 /tmp/picoclaw.log",
+            "cd /root/picoclaw && ./picoclaw-launcher -public > /tmp/picoclaw.log 2>&1 &"
+          ]
+        }
+      ]
+    },
+    {
+      "warn": false,
+      "text": "如果不想使用外部大卡，可以自行更改切开脚本（部分机型没有这个脚本）",
+      "warnings": [
+        "⚠ 如果你在这里没找到切卡脚本，那只能说明你的机器不能切卡"
+      ],
+      "terminals": [
+        {
+          "title": "bash — 切卡脚本位置",
+          "code": "/etc/cardswitch/cardswitch.sh"
+        }
+      ]
+    },
+    {
+      "warn": false,
+      "text": "如果你感觉picoclaw ai 这个小龙虾太占内存了，可以在启动项里面删除",
+      "warnings": [
+        "⚠ 这个是go写的小龙虾，可以帮你完成一些工作，运行任务时占内存"
+      ],
+      "terminals": [
+        {
+          "title": "bash — picoclaw",
+          "code": "cd /root/picoclaw && ./picoclaw-launcher -public > /tmp/picoclaw.log 2>&1 &"
+        }
+      ]
+    },
+    {
+      "warn": false,
+      "text": "部分插件安装的时候可能会破坏系统，例如防火墙原版系统有，在安装其他防火墙就会冲突，严重会出现不能开机",
+      "warnings": [
+        "⚠ 大部分插件没有冲突，部分插件会和原系统冲突。"
+      ]
+    }
+  ],
+  "downloads": [
+    {
+      "name": "随身WiFi助手",
+      "meta": "随身WiFi助手.zip",
+      "url": "https://download.csdn.net/download/sxp309932147/92557923?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522e2db6e9ef64a7625b1116f09f20147fa%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=e2db6e9ef64a7625b1116f09f20147fa&biz_id=1&utm_medium=distribute.pc_search_result.none-task-download-2~download~baidu_landing_v2~default-1-92557923-null-null.269^v4^pc_search_download_result_base2&utm_term=%E9%9A%8F%E8%BA%ABwifi%E5%8A%A9%E6%89%8B&spm=1018.2226.3001.4451.2"
+    },
+    {
+      "name": "刷机工具大全",
+      "meta": "qitagongj.7z",
+      "url": "https://www.123912.com/s/dgXbjv-Gfsfd"
+    }
+  ],
+  "articles": [
+    {
+      "title": "高通410随身wifi玩法讨论社区",
+      "meta": "github · github.com",
+      "url": "https://github.com/x7780/immortalwrt-Actios/discussions"
+    },
+    {
+      "title": "极简的openwrt固件刷机包",
+      "meta": "github · github.com",
+      "url": "https://github.com/x7780/Actions-immortalwrt"
+    },
+    {
+      "title": "高通 410 9008 模式 + 刷 Debian 13 图文",
+      "meta": "cpolar · www.cpolar.com",
+      "url": "https://www.cpolar.com/blog/flash-debian-13-and-enable-ssh-remote-access"
+    },
+    {
+      "title": "ImmortalWrt编译教程,定制固件",
+      "meta": "geekxw · www.geekxw.top",
+      "url": "https://www.geekxw.top/2053/"
+    }
+  ]
+}

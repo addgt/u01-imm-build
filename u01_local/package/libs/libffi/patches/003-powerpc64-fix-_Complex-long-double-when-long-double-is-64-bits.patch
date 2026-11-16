@@ -1,1 +1,73 @@
-RnJvbSBjMDQzMzc4ZDI2MWQwYTMyZTk2NmZiNTYyMmZmMzZmYmY5ZWFlZDk1IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbnRob255IEdyZWVuIDxncmVlbkBtb3hpZWxvZ2ljLmNvbT4KRGF0ZTogVHVlLCAxNSBTZXAgMjAyNiAwNzozNDowMCAtMDQwMApTdWJqZWN0OiBbUEFUQ0hdIHBvd2VycGM2NDogZml4IF9Db21wbGV4IGxvbmcgZG91YmxlIHdoZW4gbG9uZyBkb3VibGUgaXMgNjQKIGJpdHMKClBSICMxMDAzIGFkZGVkIF9Db21wbGV4IGxvbmcgZG91YmxlIHN1cHBvcnQgZm9yIHRoZSBJQk0tMTI4IGFuZCBJRUVFLTEyOApmb3JtYXRzLCBidXQgaXQgcmVhZCAibm90IElFRUUtMTI4IiBhcyAiSUJNLTEyOCIgYW5kIHNvIGFzc3VtZWQKc2l6ZW9mKGxvbmcgZG91YmxlKSA9PSAxNiB3aGVyZXZlciBGRklfVFlQRV9MT05HRE9VQkxFICE9IEZGSV9UWVBFX0RPVUJMRS4KT24gcG93ZXJwYyB0aGF0IGNvbmRpdGlvbiBzYXlzIG5vdGhpbmcgYWJvdXQgdGhlIHdpZHRoOiBIQVZFX0xPTkdfRE9VQkxFX1ZBUklBTlQKZm9yY2VzIEhBVkVfTE9OR19ET1VCTEUgb24sIGFuZCB0aGUgYWN0dWFsIHdpZHRoIGNvbWVzIGZyb20gdGhlCkZGSV9MSU5VWF9MT05HX0RPVUJMRV8xMjggYml0IG9mIHRoZSBBQkkgYXQgcnVudGltZS4KClRhcmdldHMgd2l0aCBhIGRpc3RpbmN0IGJ1dCA2NC1iaXQgbG9uZyBkb3VibGUgLS0gbXVzbCBwcGM2NGxlLCBvciBhbnkgYnVpbGQKd2l0aCAtbWxvbmctZG91YmxlLTY0IC0tIHRoZXJlZm9yZSBjb3VudGVkIDQgRlBScyBhbmQgNCBHUFIgc2hhZG93IHNsb3RzIGZvcgplYWNoIF9Db21wbGV4IGxvbmcgZG91YmxlIGFyZ3VtZW50IGFuZCByZWFkIGZvdXIgZG91YmxlcyBvdXQgb2YgYSAxNi1ieXRlCnZhbHVlLCBjcmFzaGluZyBjb21wbGV4X2xvbmdkb3VibGUsIHJldHVybl9jb21wbGV4MV9sb25nZG91YmxlLApyZXR1cm5fY29tcGxleDJfbG9uZ2RvdWJsZSBhbmQgY2xzX2NvbXBsZXhfdmFfbG9uZ2RvdWJsZS4KCk5vcm1hbGl6ZSB0aGUgY29tcGxleCBlbGVtZW50IHR5cGUgdG8gRkZJX1RZUEVfRE9VQkxFIHdoZW4gdGhlIEFCSSBzYXlzIGxvbmcKZG91YmxlIGlzIDY0IGJpdHMsIGFzIGRpc2NvdmVyX2hvbW9nZW5lb3VzX2FnZ3JlZ2F0ZSBhbmQgYm90aCBfQ29tcGxleCByZXR1cm4KcGF0aHMgYWxyZWFkeSBkbywgbGV0dGluZyB0aGUgZXhpc3RpbmcgZG91YmxlIGNvZGUgaGFuZGxlIHRob3NlIHZhbHVlcy4gIFRoZQp0aHJlZSBhcmd1bWVudCBwYXRocyBmaXhlZCBoZXJlIHdlcmUgdGhlIG9ubHkgb25lcyB0aGF0IGhhcmRjb2RlZCB0aGUgSUJNLTEyOAp3aWR0aDsgdGhlIHJlc3QgYXJlIGRyaXZlbiBieSBydHlwZS0+c2l6ZSBvciBieSB0aGUgZWxlbWVudCBjb3VudCBmcm9tCmRpc2NvdmVyX2hvbW9nZW5lb3VzX2FnZ3JlZ2F0ZSBhbmQgd2VyZSBhbHJlYWR5IGNvcnJlY3QuCgpSZXBvcnRlZCBhbmQgZGlhZ25vc2VkIGJ5IEphbmlzIEdlcnR1bGxhLCB3aG8gYWxzbyBwcm9wb3NlZCBhIGZpeC4KCkZpeGVzICMxMDEzCgpDby1hdXRob3JlZC1ieTogSmFuaXMgR2VydHVsbGEgPGNvZmZlZWltcGxpZXNjb2RlQHByb3Rvbi5tZT4KQ28tQXV0aG9yZWQtQnk6IENsYXVkZSBPcHVzIDUgKDFNIGNvbnRleHQpIDxub3JlcGx5QGFudGhyb3BpYy5jb20+Ci0tLQogc3JjL3Bvd2VycGMvZmZpX2xpbnV4NjQuYyB8IDE0ICsrKysrKysrKysrKysrCiAxIGZpbGUgY2hhbmdlZCwgMTQgaW5zZXJ0aW9ucygrKQoKLS0tIGEvc3JjL3Bvd2VycGMvZmZpX2xpbnV4NjQuYworKysgYi9zcmMvcG93ZXJwYy9mZmlfbGludXg2NC5jCkBAIC0zOTMsNiArMzkzLDEyIEBAIGhvbW9nZW5lb3VzOgogCSAgICAgdW5kZXIgRUxGdjIsIGFuZCBpcyB3aGF0IGRpZmZlcmVudGlhdGVzIF9Db21wbGV4IGZyb20gYQogCSAgICAgc2FtZS1zaXplZCBzdHJ1Y3R7VDtUO30gd2hpY2ggdXNlcyBmZXdlciBHUFIgc2hhZG93IHNsb3RzLiAgKi8KIAkgIGVsdCA9ICgqcHRyKS0+ZWxlbWVudHNbMF0tPnR5cGU7CisjaWYgRkZJX1RZUEVfTE9OR0RPVUJMRSAhPSBGRklfVFlQRV9ET1VCTEUKKwkgIC8qIEEgNjQtYml0IGxvbmcgZG91YmxlIGlzIHBhc3NlZCBleGFjdGx5IGxpa2UgYSBkb3VibGUuICAqLworCSAgaWYgKGVsdCA9PSBGRklfVFlQRV9MT05HRE9VQkxFCisJICAgICAgJiYgKGNpZi0+YWJpICYgRkZJX0xJTlVYX0xPTkdfRE9VQkxFXzEyOCkgPT0gMCkKKwkgICAgZWx0ID0gRkZJX1RZUEVfRE9VQkxFOworI2VuZGlmCiAJICBzd2l0Y2ggKGVsdCkKIAkgICAgewogCSAgICBjYXNlIEZGSV9UWVBFX0ZMT0FUOgpAQCAtNzc2LDYgKzc4MiwxMCBAQCBmZmlfcHJlcF9hcmdzNjQgKGV4dGVuZGVkX2NpZiAqZWNpZiwgdW5zCiAJY2FzZSBGRklfVFlQRV9DT01QTEVYOgogCSAgZWx0ID0gKCpwdHIpLT5lbGVtZW50c1swXS0+dHlwZTsKICNpZiBGRklfVFlQRV9MT05HRE9VQkxFICE9IEZGSV9UWVBFX0RPVUJMRQorCSAgLyogQSA2NC1iaXQgbG9uZyBkb3VibGUgaXMgcGFzc2VkIGV4YWN0bHkgbGlrZSBhIGRvdWJsZS4gICovCisJICBpZiAoZWx0ID09IEZGSV9UWVBFX0xPTkdET1VCTEUKKwkgICAgICAmJiAoZWNpZi0+Y2lmLT5hYmkgJiBGRklfTElOVVhfTE9OR19ET1VCTEVfMTI4KSA9PSAwKQorCSAgICBlbHQgPSBGRklfVFlQRV9ET1VCTEU7CiAJICBpZiAoZWx0ID09IEZGSV9UWVBFX0xPTkdET1VCTEUKIAkgICAgICAmJiAoZWNpZi0+Y2lmLT5hYmkgJiBGRklfTElOVVhfTE9OR19ET1VCTEVfSUVFRTEyOCkgIT0gMCkKIAkgICAgewpAQCAtMTM5OCw2ICsxNDA4LDEwIEBAIGZmaV9jbG9zdXJlX2hlbHBlcl9MSU5VWDY0IChmZmlfY2lmICpjaWYKIAkgICAgdW5zaWduZWQgaW50IGo7CiAJICAgIGVsdCA9IGFyZ190eXBlc1tpXS0+ZWxlbWVudHNbMF0tPnR5cGU7CiAjaWYgRkZJX1RZUEVfTE9OR0RPVUJMRSAhPSBGRklfVFlQRV9ET1VCTEUKKwkgICAgLyogQSA2NC1iaXQgbG9uZyBkb3VibGUgYXJyaXZlcyBleGFjdGx5IGxpa2UgYSBkb3VibGUuICAqLworCSAgICBpZiAoZWx0ID09IEZGSV9UWVBFX0xPTkdET1VCTEUKKwkJJiYgKGNpZi0+YWJpICYgRkZJX0xJTlVYX0xPTkdfRE9VQkxFXzEyOCkgPT0gMCkKKwkgICAgICBlbHQgPSBGRklfVFlQRV9ET1VCTEU7CiAJICAgIGlmIChlbHQgPT0gRkZJX1RZUEVfTE9OR0RPVUJMRQogCQkmJiAoY2lmLT5hYmkgJiBGRklfTElOVVhfTE9OR19ET1VCTEVfSUVFRTEyOCkgIT0gMCkKIAkgICAgICB7Cg==
+From c043378d261d0a32e966fb5622ff36fbf9eaed95 Mon Sep 17 00:00:00 2001
+From: Anthony Green <green@moxielogic.com>
+Date: Tue, 15 Sep 2026 07:34:00 -0400
+Subject: [PATCH] powerpc64: fix _Complex long double when long double is 64
+ bits
+
+PR #1003 added _Complex long double support for the IBM-128 and IEEE-128
+formats, but it read "not IEEE-128" as "IBM-128" and so assumed
+sizeof(long double) == 16 wherever FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE.
+On powerpc that condition says nothing about the width: HAVE_LONG_DOUBLE_VARIANT
+forces HAVE_LONG_DOUBLE on, and the actual width comes from the
+FFI_LINUX_LONG_DOUBLE_128 bit of the ABI at runtime.
+
+Targets with a distinct but 64-bit long double -- musl ppc64le, or any build
+with -mlong-double-64 -- therefore counted 4 FPRs and 4 GPR shadow slots for
+each _Complex long double argument and read four doubles out of a 16-byte
+value, crashing complex_longdouble, return_complex1_longdouble,
+return_complex2_longdouble and cls_complex_va_longdouble.
+
+Normalize the complex element type to FFI_TYPE_DOUBLE when the ABI says long
+double is 64 bits, as discover_homogeneous_aggregate and both _Complex return
+paths already do, letting the existing double code handle those values.  The
+three argument paths fixed here were the only ones that hardcoded the IBM-128
+width; the rest are driven by rtype->size or by the element count from
+discover_homogeneous_aggregate and were already correct.
+
+Reported and diagnosed by Janis Gertulla, who also proposed a fix.
+
+Fixes #1013
+
+Co-authored-by: Janis Gertulla <coffeeimpliescode@proton.me>
+Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>
+---
+ src/powerpc/ffi_linux64.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+--- a/src/powerpc/ffi_linux64.c
++++ b/src/powerpc/ffi_linux64.c
+@@ -393,6 +393,12 @@ homogeneous:
+ 	     under ELFv2, and is what differentiates _Complex from a
+ 	     same-sized struct{T;T;} which uses fewer GPR shadow slots.  */
+ 	  elt = (*ptr)->elements[0]->type;
++#if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++	  /* A 64-bit long double is passed exactly like a double.  */
++	  if (elt == FFI_TYPE_LONGDOUBLE
++	      && (cif->abi & FFI_LINUX_LONG_DOUBLE_128) == 0)
++	    elt = FFI_TYPE_DOUBLE;
++#endif
+ 	  switch (elt)
+ 	    {
+ 	    case FFI_TYPE_FLOAT:
+@@ -776,6 +782,10 @@ ffi_prep_args64 (extended_cif *ecif, uns
+ 	case FFI_TYPE_COMPLEX:
+ 	  elt = (*ptr)->elements[0]->type;
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++	  /* A 64-bit long double is passed exactly like a double.  */
++	  if (elt == FFI_TYPE_LONGDOUBLE
++	      && (ecif->cif->abi & FFI_LINUX_LONG_DOUBLE_128) == 0)
++	    elt = FFI_TYPE_DOUBLE;
+ 	  if (elt == FFI_TYPE_LONGDOUBLE
+ 	      && (ecif->cif->abi & FFI_LINUX_LONG_DOUBLE_IEEE128) != 0)
+ 	    {
+@@ -1398,6 +1408,10 @@ ffi_closure_helper_LINUX64 (ffi_cif *cif
+ 	    unsigned int j;
+ 	    elt = arg_types[i]->elements[0]->type;
+ #if FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
++	    /* A 64-bit long double arrives exactly like a double.  */
++	    if (elt == FFI_TYPE_LONGDOUBLE
++		&& (cif->abi & FFI_LINUX_LONG_DOUBLE_128) == 0)
++	      elt = FFI_TYPE_DOUBLE;
+ 	    if (elt == FFI_TYPE_LONGDOUBLE
+ 		&& (cif->abi & FFI_LINUX_LONG_DOUBLE_IEEE128) != 0)
+ 	      {

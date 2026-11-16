@@ -1,1 +1,201 @@
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwoiIiJVMDEgYmF0dGVyeS1iYXIgTEVEcyBkcml2ZW4gc3RyYWlnaHQgZnJvbSB0aGUgR1BJTyBjZGV2IChBQkkgdjIpLgoKVGhlIHJ1bm5pbmcgSW1tb3J0YWxXcnQgYnVpbGQgaGFzIG5vIGJhdHRlcnkgZHJpdmVyIGFuZCBubyBiYXQ6eCBMRUQgbm9kZXMsIGJ1dAovZGV2L2dwaW9jaGlwKiBpcyB0aGVyZSB3aXRoIENPTkZJR19HUElPX0NERVY9eSwgc28gdGhlIGZvdXIgcHJvZHVjdGlvbiBiYXR0ZXJ5CmJhcnMgKGdwaW8gMCAvIDkxIC8gMSAvIDEwMCwgdGFrZW4gZnJvbSB0aGUgc3RvY2sgRFRCKSBjYW4gYmUgZHJpdmVuIGZyb20gdXNlcgpzcGFjZSBhbmQgcmVmaWxsZWQgZnJvbSB0aGUgUE04OTE2IFZBREMgVlNZUyBjaGFubmVsLgoKTGF5b3V0cyBhbmQgaW9jdGwgbnVtYmVycyBhcmUgcmVhZCBvZmYgaW5jbHVkZS91YXBpL2xpbnV4L2dwaW8uaCBhdCB0YWcgdjYuMTg6Cm1hZ2ljIDB4QjQsIGdwaW9jaGlwX2luZm8gPSA2OCBieXRlcyAobm8gYmFzZSBmaWVsZCksIGdwaW9fdjJfbGluZV9yZXF1ZXN0ID0gNTkyLgoiIiIKaW1wb3J0IGN0eXBlcywgb3MsIHN0cnVjdCwgc3lzLCB0aW1lCgpCQVJfUElOUyA9IFswLCA5MSwgMSwgMTAwXSAgICAgICAgICAgICAgIyBiYXIxLi5iYXI0LCBzdG9jay1EVEIgb3JkZXIKUE9MTCA9IDE1ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICMgc2Vjb25kcyBiZXR3ZWVuIHJlYWRzCk1WID0gWyg0MDUwLCA0KSwgKDM4NTAsIDMpLCAoMzY1MCwgMiksICgzNDAwLCAxKV0KSFlTVCA9IDQwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICMg5Y2H5qGj6KaB5YaN5aSa5rao6L+Z5LmI5aSaIG1W77yM6Ziy6ZiI5YC86ZmE6L+R6Lez5qC8ClVTQklOX01JTiA9IDQwMDAgICAgICAgICAgICAgICAgICAgICAgICAjIFVTQklOIOmrmOS6juatpOWAvOeul+aPkuedgOeUte+8iOWPqueUqOS6juaXpeW/l++8iQpJTlZFUlQgPSAwICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIyBzZXQgMSBpZiBhIGJhciBsaWdodHMgd2hlbiBkcml2ZW4gbG93CkxPR19QQVRIID0gIi90bXAvYmF0bGVkLmxvZyIKREFSSyA9ICIvdG1wL2xlZHNfZGFyayIgICAgICAgICAgICAgICAgICMgbGVkaWRsZSDnq4vnmoTniYzlrZDvvJozIOWIhumSn+ayoeaMieaMiemUru+8jOWFqOeBrQpEQVJLX0ZSRVNIID0gNjAgICAgICAgICAgICAgICAgICAgICAgICAgIyDniYzlrZAgNjAg56eS5rKh6KKr5Yi36L+H5bCx5b2TIGxlZGlkbGUg5q275LqGCgpNQUdJQyA9IDB4QjQKU1pfQ0hJUElORk8sIFNaX1JFUSwgU1pfVkFMVUVTID0gNjgsIDU5MiwgMTYKSU9DX0NISVBJTkZPID0gKDIgPDwgMzApIHwgKFNaX0NISVBJTkZPIDw8IDE2KSB8IChNQUdJQyA8PCA4KSB8IDB4MDEKSU9DX0dFVF9MSU5FID0gKDMgPDwgMzApIHwgKFNaX1JFUSA8PCAxNikgfCAoTUFHSUMgPDwgOCkgfCAweDA3CklPQ19TRVRfVkFMVUVTID0gKDMgPDwgMzApIHwgKFNaX1ZBTFVFUyA8PCAxNikgfCAoTUFHSUMgPDwgOCkgfCAweDBGCkZMQUdfQUNUSVZFX0xPVywgRkxBR19PVVRQVVQgPSAxIDw8IDEsIDEgPDwgMwpPRkZfQ09ORl9GTEFHUywgT0ZGX05VTV9MSU5FUywgT0ZGX0ZEID0gMjg4LCA1NjAsIDU4OAoKbGliYyA9IGN0eXBlcy5DRExMKCJsaWJjLnNvLjYiLCB1c2VfZXJybm89VHJ1ZSkKCgpkZWYgX2lvY3RsKGZkLCBudW0sIGJ1Zik6CiAgICByZXR1cm4gbGliYy5pb2N0bChmZCwgY3R5cGVzLmNfdWxvbmcobnVtKSwgYnVmKQoKCmRlZiBjaGlwcygpOgogICAgb3V0ID0gW10KICAgIGZvciBuIGluIHJhbmdlKDgpOgogICAgICAgIHBhdGggPSAiL2Rldi9ncGlvY2hpcCVkIiAlIG4KICAgICAgICBpZiBub3Qgb3MucGF0aC5leGlzdHMocGF0aCk6CiAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgZmQgPSBvcy5vcGVuKHBhdGgsIG9zLk9fUkRXUiB8IG9zLk9fQ0xPRVhFQykKICAgICAgICBidWYgPSBjdHlwZXMuY3JlYXRlX3N0cmluZ19idWZmZXIoU1pfQ0hJUElORk8pCiAgICAgICAgaWYgX2lvY3RsKGZkLCBJT0NfQ0hJUElORk8sIGJ1ZikgPCAwOgogICAgICAgICAgICBvcy5jbG9zZShmZCkKICAgICAgICAgICAgY29udGludWUKICAgICAgICBuYW1lLCBsYWJlbCwgbGluZXMgPSBzdHJ1Y3QudW5wYWNrKCIzMnMzMnNJIiwgYnVmLnJhdykKICAgICAgICBvdXQuYXBwZW5kKChmZCwgcGF0aCwgbmFtZS5yc3RyaXAoYiJcMCIpLmRlY29kZSgpLCBsYWJlbC5yc3RyaXAoYiJcMCIpLmRlY29kZSgpLCBsaW5lcykpCiAgICByZXR1cm4gb3V0CgoKZGVmIGNoaXBfZm9yKHBpbik6CiAgICBiZXN0ID0gTm9uZQogICAgZm9yIGMgaW4gY2hpcHMoKToKICAgICAgICBpZiBjWzRdID4gcGluIGFuZCAoYmVzdCBpcyBOb25lIG9yIGNbNF0gPiBiZXN0WzRdKToKICAgICAgICAgICAgYmVzdCA9IGMKICAgIHJldHVybiBiZXN0CgoKY2xhc3MgQmFyczoKICAgIGRlZiBfX2luaXRfXyhzZWxmKToKICAgICAgICBjID0gY2hpcF9mb3IobWF4KEJBUl9QSU5TKSkKICAgICAgICBpZiBub3QgYzoKICAgICAgICAgICAgcmFpc2UgU3lzdGVtRXhpdCgibm8gZ3Bpb2NoaXAgY292ZXJzIGdwaW8gJWQgKHNlZW46ICVzKSIKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAlIChtYXgoQkFSX1BJTlMpLCBbKHhbMl0sIHhbNF0pIGZvciB4IGluIGNoaXBzKCldKSkKICAgICAgICBzZWxmLmNmZCwgc2VsZi5wYXRoLCBzZWxmLmNoaXAsIHNlbGYubGFiZWwsIHNlbGYubGluZXMgPSBjCiAgICAgICAgc2VsZi5idWYgPSBjdHlwZXMuY3JlYXRlX3N0cmluZ19idWZmZXIoU1pfUkVRKQogICAgICAgIHN0cnVjdC5wYWNrX2ludG8oIjRJIiwgc2VsZi5idWYsIDAsICpCQVJfUElOUykKICAgICAgICBzZWxmLmJ1ZlsyNTY6Mjg4XSA9IGIiYmF0bGVkIi5sanVzdCgzMiwgYiJcMCIpCiAgICAgICAgc3RydWN0LnBhY2tfaW50bygiUSIsIHNlbGYuYnVmLCBPRkZfQ09ORl9GTEFHUywgRkxBR19PVVRQVVQpCiAgICAgICAgc3RydWN0LnBhY2tfaW50bygiSSIsIHNlbGYuYnVmLCBPRkZfTlVNX0xJTkVTLCBsZW4oQkFSX1BJTlMpKQogICAgICAgIGlmIF9pb2N0bChzZWxmLmNmZCwgSU9DX0dFVF9MSU5FLCBzZWxmLmJ1ZikgPCAwOgogICAgICAgICAgICByYWlzZSBTeXN0ZW1FeGl0KCJHUElPX1YyX0dFVF9MSU5FIGZhaWxlZDogJXMiICUgb3Muc3RyZXJyb3IoY3R5cGVzLmdldF9lcnJubygpKSkKICAgICAgICBzZWxmLmZkID0gc3RydWN0LnVucGFja19mcm9tKCJpIiwgc2VsZi5idWYsIE9GRl9GRClbMF0KICAgICAgICBpZiBzZWxmLmZkIDwgMDoKICAgICAgICAgICAgcmFpc2UgU3lzdGVtRXhpdCgia2VybmVsIHJldHVybmVkIGZkICVkIiAlIHNlbGYuZmQpCgogICAgZGVmIHNob3coc2VsZiwgbik6CiAgICAgICAgb24gPSBbMSBpZiBpIDw9IG4gZWxzZSAwIGZvciBpIGluIHJhbmdlKDEsIDUpXQogICAgICAgIGJpdHMgPSAwCiAgICAgICAgZm9yIGksIHYgaW4gZW51bWVyYXRlKG9uKToKICAgICAgICAgICAgaWYgdiBeIElOVkVSVDoKICAgICAgICAgICAgICAgIGJpdHMgfD0gMSA8PCBpCiAgICAgICAgcmMgPSBfaW9jdGwoc2VsZi5mZCwgSU9DX1NFVF9WQUxVRVMsCiAgICAgICAgICAgICAgICAgICAgY3R5cGVzLmNyZWF0ZV9zdHJpbmdfYnVmZmVyKHN0cnVjdC5wYWNrKCJRUSIsIGJpdHMsICgxIDw8IDQpIC0gMSkpKQogICAgICAgIGlmIHJjIDwgMDoKICAgICAgICAgICAgcmFpc2UgU3lzdGVtRXhpdCgiU0VUX1ZBTFVFUyBmYWlsZWQ6ICVzIiAlIG9zLnN0cmVycm9yKGN0eXBlcy5nZXRfZXJybm8oKSkpCiAgICAgICAgcmV0dXJuIG9uCgogICAgZGVmIGNsb3NlKHNlbGYpOgogICAgICAgIG9zLmNsb3NlKHNlbGYuZmQpCgoKZGVmIGFkY19tdihsYWJlbCk6CiAgICAiIiLmjIkgKl9sYWJlbCDmib4gUE1JQyBBREMg6YCa6YGT5bm26K+75ZueIG1W77yb6K+75LiN5Yiw6L+U5ZueIE5vbmXvvIjkuI3njJzvvInjgIIiIiIKICAgIHJvb3QgPSAiL3N5cy9idXMvaWlvL2RldmljZXMiCiAgICBpZiBub3Qgb3MucGF0aC5pc2Rpcihyb290KToKICAgICAgICByZXR1cm4gTm9uZQogICAgZm9yIGQgaW4gc29ydGVkKG9zLmxpc3RkaXIocm9vdCkpOgogICAgICAgIGJhc2UgPSBvcy5wYXRoLmpvaW4ocm9vdCwgZCkKICAgICAgICBmb3IgZiBpbiBvcy5saXN0ZGlyKGJhc2UpOgogICAgICAgICAgICBpZiBmLmVuZHN3aXRoKCJfbGFiZWwiKToKICAgICAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgICAgICBpZiBvcGVuKG9zLnBhdGguam9pbihiYXNlLCBmKSkucmVhZCgpLnN0cmlwKCkgIT0gbGFiZWw6CiAgICAgICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgICAgICAgICBleGNlcHQgT1NFcnJvcjoKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgICAgIHJldHVybiBpbnQob3Blbihvcy5wYXRoLmpvaW4oYmFzZSwgZls6LTZdICsgIl9pbnB1dCIpKS5yZWFkKCkpIC8vIDEwMDAKICAgICAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb246CiAgICAgICAgICAgICAgICAgICAgcmV0dXJuIE5vbmUKICAgIHJldHVybiBOb25lCgoKZGVmIHZzeXNfbXYoKToKICAgIHJldHVybiBhZGNfbXYoIlZTWVMiKQoKCmRlZiBiYXJzX2Zyb21fbXYobXYsIGN1cj1Ob25lKToKICAgICIiIueUteWOiyAtPiDmoLzmlbDjgILor7vkuI3liLDnlLXljovlsLHlhajnga3vvIjlroHlj6/msqHmjIfnpLrvvIzkuZ/liKvnu5nkuIDkuKrlgYfmu6HmoLzvvInjgIIKCiAgICBjdXI9Tm9uZSDooajnpLoi6L+Y5LiN55+l6YGT5LiK5LiA5qGjIu+8iOWImuW8gOacuuOAgeaIluWImuaMiemUruS6ruWbnuadpe+8ie+8jOi/meaXtuS4jeWKoOi/n+a7nu+8mgogICAg6L+f5rue5piv6Ziy5q2i5bey57uP5pi+56S655qE5qC85pWw5Zyo6ZiI5YC86ZmE6L+R5p2l5Zue6Lez77yM5LiN5piv55So5p2l6Zi75q2i56ys5LiA5qC85Lqu6LW35p2l44CCCiAgICAiIiIKICAgIGlmIG12IGlzIE5vbmU6CiAgICAgICAgcmV0dXJuIDAKICAgIGx2bCA9IDAKICAgIGZvciB0aHJlc2gsIG4gaW4gTVY6CiAgICAgICAgaWYgbXYgPj0gdGhyZXNoOgogICAgICAgICAgICBsdmwgPSBuCiAgICAgICAgICAgIGJyZWFrCiAgICBpZiBjdXIgaXMgbm90IE5vbmUgYW5kIGx2bCA+IGN1cjoKICAgICAgICBuZWVkID0gZGljdCgobiwgdCkgZm9yIHQsIG4gaW4gTVYpLmdldChsdmwpCiAgICAgICAgaWYgbmVlZCBpcyBub3QgTm9uZSBhbmQgbXYgPCBuZWVkICsgSFlTVDoKICAgICAgICAgICAgbHZsID0gY3VyCiAgICByZXR1cm4gbHZsCgoKZGVmIGxvZyhtc2cpOgogICAgbGluZSA9IHRpbWUuc3RyZnRpbWUoIlslbS0lZCAlSDolTTolU10gIikgKyBtc2cKICAgIHRyeToKICAgICAgICBwcmludChsaW5lLCBmbHVzaD1UcnVlKQogICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICBwYXNzCiAgICB0cnk6CiAgICAgICAgd2l0aCBvcGVuKExPR19QQVRILCAiYSIsIGVuY29kaW5nPSJ1dGYtOCIsIGVycm9ycz0icmVwbGFjZSIpIGFzIGY6CiAgICAgICAgICAgIGYud3JpdGUobGluZSArICJcbiIpCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgdHJ5OgogICAgICAgICAgICB3aXRoIG9wZW4oIi90bXAvYmF0bGVkLmVyciIsICJhIikgYXMgZjoKICAgICAgICAgICAgICAgIGYud3JpdGUoImxvZygpIOWGmSAlcyDlpLHotKU6ICVzICVzXG4iICUgKExPR19QQVRILCB0eXBlKGUpLl9fbmFtZV9fLCBlKSkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICBwYXNzCgoKZGVmIGlzX2RhcmsoKToKICAgIHRyeToKICAgICAgICByZXR1cm4gdGltZS50aW1lKCkgLSBvcy5wYXRoLmdldG10aW1lKERBUkspIDwgREFSS19GUkVTSAogICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgcmV0dXJuIEZhbHNlCgoKZGVmIG1haW4oKToKICAgIGIgPSBCYXJzKCkKICAgIHByaW50KCJjaGlwPSVzIGxhYmVsPSVzICglcywgJWQgbGluZXMpIHBpbnM9JXMgSU5WRVJUPSVkIgogICAgICAgICAgJSAoYi5jaGlwLCBiLmxhYmVsLCBiLnBhdGgsIGIubGluZXMsIEJBUl9QSU5TLCBJTlZFUlQpKQogICAgbG9nKCLlkK/liqggcGlkPSVkIOmYiOWAvD0lcyDov5/mu549JWQiICUgKG9zLmdldHBpZCgpLCBNViwgSFlTVCkpCiAgICBpZiAiLS10ZXN0IiBpbiBzeXMuYXJndjoKICAgICAgICBmb3IgbiBpbiByYW5nZSg1KToKICAgICAgICAgICAgcHJpbnQoIiAgYmFycz0lZCBkcml2ZW49JXMiICUgKG4sIGIuc2hvdyhuKSkpCiAgICAgICAgICAgIHRpbWUuc2xlZXAoMS4yKQogICAgICAgIG12ID0gdnN5c19tdigpCiAgICAgICAgcHJpbnQoIlZTWVM9JXMgbVYgLT4gJWQgYmFycyIgJSAobXYsIGJhcnNfZnJvbV9tdihtdikpKQogICAgICAgIGIuY2xvc2UoKQogICAgICAgIHJldHVybgogICAgY3VyID0gLTEKICAgIHdoaWxlIFRydWU6CiAgICAgICAgaWYgaXNfZGFyaygpOgogICAgICAgICAgICBpZiBjdXIgIT0gLTI6CiAgICAgICAgICAgICAgICBiLnNob3coMCkKICAgICAgICAgICAgICAgIGN1ciA9IC0yCiAgICAgICAgICAgICAgICBsb2coIueJjOWtkOWcqO+8iDMg5YiG6ZKf5rKh5oyJ6ZSu77yJ77ya5Zub5qC854GtIikKICAgICAgICAgICAgdGltZS5zbGVlcCgwLjUpCiAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgaWYgY3VyID09IC0yOgogICAgICAgICAgICBjdXIgPSAtMSAgICAgICAgICAjIOWImuaMiemUruS6ruWbnuadpe+8jOmHjeWIpOS4gOasoQogICAgICAgIG12ID0gdnN5c19tdigpCiAgICAgICAgdXNiID0gYWRjX212KCJVU0JJTiIpCiAgICAgICAgbiA9IGJhcnNfZnJvbV9tdihtdiwgY3VyIGlmIGN1ciA+PSAwIGVsc2UgTm9uZSkKICAgICAgICBpZiBuICE9IGN1cjoKICAgICAgICAgICAgbG9nKCJWU1lTPSVzIG1WIFVTQklOPSVzIG1WKCVzKSAtPiAlZCDmoLwiCiAgICAgICAgICAgICAgICAlIChtdiwgdXNiLCAi5o+S55S1IiBpZiAodXNiIG9yIDApID49IFVTQklOX01JTiBlbHNlICLnlLXmsaAiLCBuKSkKICAgICAgICAgICAgY3VyID0gbgogICAgICAgIGIuc2hvdyhjdXIpCiAgICAgICAgdGltZS5zbGVlcChQT0xMKQoKCm1haW4oKQo=
+#!/usr/bin/env python3
+"""U01 battery-bar LEDs driven straight from the GPIO cdev (ABI v2).
+
+The running ImmortalWrt build has no battery driver and no bat:x LED nodes, but
+/dev/gpiochip* is there with CONFIG_GPIO_CDEV=y, so the four production battery
+bars (gpio 0 / 91 / 1 / 100, taken from the stock DTB) can be driven from user
+space and refilled from the PM8916 VADC VSYS channel.
+
+Layouts and ioctl numbers are read off include/uapi/linux/gpio.h at tag v6.18:
+magic 0xB4, gpiochip_info = 68 bytes (no base field), gpio_v2_line_request = 592.
+"""
+import ctypes, os, struct, sys, time
+
+BAR_PINS = [0, 91, 1, 100]              # bar1..bar4, stock-DTB order
+POLL = 15                               # seconds between reads
+MV = [(4050, 4), (3850, 3), (3650, 2), (3400, 1)]
+HYST = 40                               # 升档要再多涨这么多 mV，防阈值附近跳格
+USBIN_MIN = 4000                        # USBIN 高于此值算插着电（只用于日志）
+INVERT = 0                              # set 1 if a bar lights when driven low
+LOG_PATH = "/tmp/batled.log"
+DARK = "/tmp/leds_dark"                 # ledidle 立的牌子：3 分钟没按按键，全灭
+DARK_FRESH = 60                         # 牌子 60 秒没被刷过就当 ledidle 死了
+
+MAGIC = 0xB4
+SZ_CHIPINFO, SZ_REQ, SZ_VALUES = 68, 592, 16
+IOC_CHIPINFO = (2 << 30) | (SZ_CHIPINFO << 16) | (MAGIC << 8) | 0x01
+IOC_GET_LINE = (3 << 30) | (SZ_REQ << 16) | (MAGIC << 8) | 0x07
+IOC_SET_VALUES = (3 << 30) | (SZ_VALUES << 16) | (MAGIC << 8) | 0x0F
+FLAG_ACTIVE_LOW, FLAG_OUTPUT = 1 << 1, 1 << 3
+OFF_CONF_FLAGS, OFF_NUM_LINES, OFF_FD = 288, 560, 588
+
+libc = ctypes.CDLL("libc.so.6", use_errno=True)
+
+
+def _ioctl(fd, num, buf):
+    return libc.ioctl(fd, ctypes.c_ulong(num), buf)
+
+
+def chips():
+    out = []
+    for n in range(8):
+        path = "/dev/gpiochip%d" % n
+        if not os.path.exists(path):
+            continue
+        fd = os.open(path, os.O_RDWR | os.O_CLOEXEC)
+        buf = ctypes.create_string_buffer(SZ_CHIPINFO)
+        if _ioctl(fd, IOC_CHIPINFO, buf) < 0:
+            os.close(fd)
+            continue
+        name, label, lines = struct.unpack("32s32sI", buf.raw)
+        out.append((fd, path, name.rstrip(b"\0").decode(), label.rstrip(b"\0").decode(), lines))
+    return out
+
+
+def chip_for(pin):
+    best = None
+    for c in chips():
+        if c[4] > pin and (best is None or c[4] > best[4]):
+            best = c
+    return best
+
+
+class Bars:
+    def __init__(self):
+        c = chip_for(max(BAR_PINS))
+        if not c:
+            raise SystemExit("no gpiochip covers gpio %d (seen: %s)"
+                             % (max(BAR_PINS), [(x[2], x[4]) for x in chips()]))
+        self.cfd, self.path, self.chip, self.label, self.lines = c
+        self.buf = ctypes.create_string_buffer(SZ_REQ)
+        struct.pack_into("4I", self.buf, 0, *BAR_PINS)
+        self.buf[256:288] = b"batled".ljust(32, b"\0")
+        struct.pack_into("Q", self.buf, OFF_CONF_FLAGS, FLAG_OUTPUT)
+        struct.pack_into("I", self.buf, OFF_NUM_LINES, len(BAR_PINS))
+        if _ioctl(self.cfd, IOC_GET_LINE, self.buf) < 0:
+            raise SystemExit("GPIO_V2_GET_LINE failed: %s" % os.strerror(ctypes.get_errno()))
+        self.fd = struct.unpack_from("i", self.buf, OFF_FD)[0]
+        if self.fd < 0:
+            raise SystemExit("kernel returned fd %d" % self.fd)
+
+    def show(self, n):
+        on = [1 if i <= n else 0 for i in range(1, 5)]
+        bits = 0
+        for i, v in enumerate(on):
+            if v ^ INVERT:
+                bits |= 1 << i
+        rc = _ioctl(self.fd, IOC_SET_VALUES,
+                    ctypes.create_string_buffer(struct.pack("QQ", bits, (1 << 4) - 1)))
+        if rc < 0:
+            raise SystemExit("SET_VALUES failed: %s" % os.strerror(ctypes.get_errno()))
+        return on
+
+    def close(self):
+        os.close(self.fd)
+
+
+def adc_mv(label):
+    """按 *_label 找 PMIC ADC 通道并读回 mV；读不到返回 None（不猜）。"""
+    root = "/sys/bus/iio/devices"
+    if not os.path.isdir(root):
+        return None
+    for d in sorted(os.listdir(root)):
+        base = os.path.join(root, d)
+        for f in os.listdir(base):
+            if f.endswith("_label"):
+                try:
+                    if open(os.path.join(base, f)).read().strip() != label:
+                        continue
+                except OSError:
+                    continue
+                try:
+                    return int(open(os.path.join(base, f[:-6] + "_input")).read()) // 1000
+                except Exception:
+                    return None
+    return None
+
+
+def vsys_mv():
+    return adc_mv("VSYS")
+
+
+def bars_from_mv(mv, cur=None):
+    """电压 -> 格数。读不到电压就全灭（宁可没指示，也别给一个假满格）。
+
+    cur=None 表示"还不知道上一档"（刚开机、或刚按键亮回来），这时不加迟滞：
+    迟滞是防止已经显示的格数在阈值附近来回跳，不是用来阻止第一格亮起来。
+    """
+    if mv is None:
+        return 0
+    lvl = 0
+    for thresh, n in MV:
+        if mv >= thresh:
+            lvl = n
+            break
+    if cur is not None and lvl > cur:
+        need = dict((n, t) for t, n in MV).get(lvl)
+        if need is not None and mv < need + HYST:
+            lvl = cur
+    return lvl
+
+
+def log(msg):
+    line = time.strftime("[%m-%d %H:%M:%S] ") + msg
+    try:
+        print(line, flush=True)
+    except Exception:
+        pass
+    try:
+        with open(LOG_PATH, "a", encoding="utf-8", errors="replace") as f:
+            f.write(line + "\n")
+    except Exception as e:
+        try:
+            with open("/tmp/batled.err", "a") as f:
+                f.write("log() 写 %s 失败: %s %s\n" % (LOG_PATH, type(e).__name__, e))
+        except Exception:
+            pass
+
+
+def is_dark():
+    try:
+        return time.time() - os.path.getmtime(DARK) < DARK_FRESH
+    except OSError:
+        return False
+
+
+def main():
+    b = Bars()
+    print("chip=%s label=%s (%s, %d lines) pins=%s INVERT=%d"
+          % (b.chip, b.label, b.path, b.lines, BAR_PINS, INVERT))
+    log("启动 pid=%d 阈值=%s 迟滞=%d" % (os.getpid(), MV, HYST))
+    if "--test" in sys.argv:
+        for n in range(5):
+            print("  bars=%d driven=%s" % (n, b.show(n)))
+            time.sleep(1.2)
+        mv = vsys_mv()
+        print("VSYS=%s mV -> %d bars" % (mv, bars_from_mv(mv)))
+        b.close()
+        return
+    cur = -1
+    while True:
+        if is_dark():
+            if cur != -2:
+                b.show(0)
+                cur = -2
+                log("牌子在（3 分钟没按键）：四格灭")
+            time.sleep(0.5)
+            continue
+        if cur == -2:
+            cur = -1          # 刚按键亮回来，重判一次
+        mv = vsys_mv()
+        usb = adc_mv("USBIN")
+        n = bars_from_mv(mv, cur if cur >= 0 else None)
+        if n != cur:
+            log("VSYS=%s mV USBIN=%s mV(%s) -> %d 格"
+                % (mv, usb, "插电" if (usb or 0) >= USBIN_MIN else "电池", n))
+            cur = n
+        b.show(cur)
+        time.sleep(POLL)
+
+
+main()

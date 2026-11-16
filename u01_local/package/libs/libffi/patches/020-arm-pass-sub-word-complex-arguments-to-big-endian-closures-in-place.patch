@@ -1,1 +1,54 @@
-RnJvbSA4MDc2NDRhMTY4NTRhNDM1YmVkYmE3YTFiMTViZGQ3YzRjMmU5NjU1IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogV2VkLCAyMSBPY3QgMjAyNiAwMToyNDowOCArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIGFybTogcGFzcyBzdWItd29yZCBjb21wbGV4IGFyZ3VtZW50cyB0byBiaWctZW5kaWFuIGNsb3N1cmVzCiBpbiBwbGFjZQoKT24gYmlnLWVuZGlhbiBBUk0sIGFuIGludGVnZXIgYXJndW1lbnQgbmFycm93ZXIgdGhhbiA0IGJ5dGVzIGlzIGluIHRoZQpsb3ctb3JkZXIgZW5kIG9mIGl0cyByZWdpc3RlciBvciBzdGFjayBzbG90LCBhdCBvZmZzZXQgNCAtIHNpemUsIHdoaWNoCnRoZSBjbG9zdXJlIGFyZ3VtZW50IGNvZGUgbm93IHRha2VzIGludG8gYWNjb3VudCBmb3IgZXZlcnl0aGluZyBleGNlcHQKc3RydWN0cy4gIENvbXBsZXggdmFsdWVzIGFyZSBjb21wb3NpdGUgdHlwZXMgbGlrZSBzdHJ1Y3RzLCB0aG91Z2gsIGFuZAphcmUgcGFzc2VkIGFzIGlmIGxvYWRlZCBmcm9tIG1lbW9yeSB3aXRoIExEUiwgYXQgb2Zmc2V0IDA6IEdDQyBwYXNzZXMgYQpfQ29tcGxleCBjaGFyIGluIHRoZSB1cHBlciBoYWxmIG9mIHIwLgoKRXhjbHVkZSBjb21wbGV4IHR5cGVzIGZyb20gdGhlIGFkanVzdG1lbnQgYXMgd2VsbC4KCmNvbXBsZXhfaW50X3NtYWxsIGZhaWxlZCBvbiBpeHA0eHggKHhzY2FsZSwgYmlnLWVuZGlhbikgdW5kZXIgcWVtdS11c2VyCndoZW4gYSBjbG9zdXJlIHJlYWQgYSBfQ29tcGxleCBzaWduZWQgY2hhciBhcmd1bWVudC4KCkZpeGVzOiAyYjUzMzY5NjgxY2MgKCJhcm06IGZpeCBiaWctZW5kaWFuIHN1Yi13b3JkIGFyZ3VtZW50IG9mZnNldHMgaW4gY2xvc3VyZXMiKQpBc3Npc3RlZC1ieTogTExNClNpZ25lZC1vZmYtYnk6IERhbmllbCBHb2xsZSA8ZGFuaWVsQG1ha3JvdG9waWEub3JnPgotLS0KIHNyYy9hcm0vZmZpLmMgfCA2ICsrKy0tLQogMSBmaWxlIGNoYW5nZWQsIDMgaW5zZXJ0aW9ucygrKSwgMyBkZWxldGlvbnMoLSkKCi0tLSBhL3NyYy9hcm0vZmZpLmMKKysrIGIvc3JjL2FybS9mZmkuYwpAQCAtNDgwLDcgKzQ4MCw3IEBAIGZmaV9wcmVwX2luY29taW5nX2FyZ3NfU1lTViAoZmZpX2NpZiAqY2kKIAogICAgICAgYXJncCA9IGZmaV9hbGlnbiAodHksIGFyZ3ApOwogI2lmZGVmIF9fQVJNRUJfXwotICAgICAgaWYgKHogPCA0ICYmIHR5LT50eXBlICE9IEZGSV9UWVBFX1NUUlVDVCkKKyAgICAgIGlmICh6IDwgNCAmJiB0eS0+dHlwZSAhPSBGRklfVFlQRV9TVFJVQ1QgJiYgdHktPnR5cGUgIT0gRkZJX1RZUEVfQ09NUExFWCkKIAlhdmFsdWVbaV0gPSAodm9pZCAqKSAoYXJncCArIDQgLSB6KTsKICAgICAgIGVsc2UKICNlbmRpZgpAQCAtNTMzLDcgKzUzMyw3IEBAIGZmaV9wcmVwX2luY29taW5nX2FyZ3NfVkZQIChmZmlfY2lmICpjaWYKIAkgICAgewogCSAgICAgIC8qIEJlY2F1c2Ugd2UncmUgbGl0dGxlIGVuZGlhbiwgdGhpcyBpcyB3aGF0IGl0IHR1cm5zIGludG8uICAqLwogI2lmZGVmIF9fQVJNRUJfXwotCSAgICAgIGlmICh6IDwgNCAmJiB0eS0+dHlwZSAhPSBGRklfVFlQRV9TVFJVQ1QpCisJICAgICAgaWYgKHogPCA0ICYmIHR5LT50eXBlICE9IEZGSV9UWVBFX1NUUlVDVCAmJiB0eS0+dHlwZSAhPSBGRklfVFlQRV9DT01QTEVYKQogCQlhdmFsdWVbaV0gPSAodm9pZCAqKSAodHJlZ3AgKyA0IC0geik7CiAJICAgICAgZWxzZQogI2VuZGlmCkBAIC01NjAsNyArNTYwLDcgQEAgZmZpX3ByZXBfaW5jb21pbmdfYXJnc19WRlAgKGZmaV9jaWYgKmNpZgogICAgICAgc3RhY2tfdXNlZCA9IDE7CiAgICAgICBhcmdwID0gZmZpX2FsaWduICh0eSwgYXJncCk7CiAjaWZkZWYgX19BUk1FQl9fCi0gICAgICBpZiAoeiA8IDQgJiYgdHktPnR5cGUgIT0gRkZJX1RZUEVfU1RSVUNUKQorICAgICAgaWYgKHogPCA0ICYmIHR5LT50eXBlICE9IEZGSV9UWVBFX1NUUlVDVCAmJiB0eS0+dHlwZSAhPSBGRklfVFlQRV9DT01QTEVYKQogCWF2YWx1ZVtpXSA9ICh2b2lkICopIChhcmdwICsgNCAtIHopOwogICAgICAgZWxzZQogI2VuZGlmCg==
+From 807644a16854a435bedba7a1b15bdd7c4c2e9655 Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Wed, 21 Oct 2026 01:24:08 +0000
+Subject: [PATCH] arm: pass sub-word complex arguments to big-endian closures
+ in place
+
+On big-endian ARM, an integer argument narrower than 4 bytes is in the
+low-order end of its register or stack slot, at offset 4 - size, which
+the closure argument code now takes into account for everything except
+structs.  Complex values are composite types like structs, though, and
+are passed as if loaded from memory with LDR, at offset 0: GCC passes a
+_Complex char in the upper half of r0.
+
+Exclude complex types from the adjustment as well.
+
+complex_int_small failed on ixp4xx (xscale, big-endian) under qemu-user
+when a closure read a _Complex signed char argument.
+
+Fixes: 2b53369681cc ("arm: fix big-endian sub-word argument offsets in closures")
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ src/arm/ffi.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+--- a/src/arm/ffi.c
++++ b/src/arm/ffi.c
+@@ -480,7 +480,7 @@ ffi_prep_incoming_args_SYSV (ffi_cif *ci
+ 
+       argp = ffi_align (ty, argp);
+ #ifdef __ARMEB__
+-      if (z < 4 && ty->type != FFI_TYPE_STRUCT)
++      if (z < 4 && ty->type != FFI_TYPE_STRUCT && ty->type != FFI_TYPE_COMPLEX)
+ 	avalue[i] = (void *) (argp + 4 - z);
+       else
+ #endif
+@@ -533,7 +533,7 @@ ffi_prep_incoming_args_VFP (ffi_cif *cif
+ 	    {
+ 	      /* Because we're little endian, this is what it turns into.  */
+ #ifdef __ARMEB__
+-	      if (z < 4 && ty->type != FFI_TYPE_STRUCT)
++	      if (z < 4 && ty->type != FFI_TYPE_STRUCT && ty->type != FFI_TYPE_COMPLEX)
+ 		avalue[i] = (void *) (tregp + 4 - z);
+ 	      else
+ #endif
+@@ -560,7 +560,7 @@ ffi_prep_incoming_args_VFP (ffi_cif *cif
+       stack_used = 1;
+       argp = ffi_align (ty, argp);
+ #ifdef __ARMEB__
+-      if (z < 4 && ty->type != FFI_TYPE_STRUCT)
++      if (z < 4 && ty->type != FFI_TYPE_STRUCT && ty->type != FFI_TYPE_COMPLEX)
+ 	avalue[i] = (void *) (argp + 4 - z);
+       else
+ #endif

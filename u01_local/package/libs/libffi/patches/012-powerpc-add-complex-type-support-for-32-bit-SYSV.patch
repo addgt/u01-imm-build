@@ -1,1 +1,429 @@
-RnJvbSA1ZTlmMzRkNmU3NWZiNTM4YWUwMzliZDUxMTdiNWQ2ZjI0ZWQzMGUwIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogVHVlLCAyMCBPY3QgMjAyNiAyMzowODoyNyArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHBvd2VycGM6IGFkZCBjb21wbGV4IHR5cGUgc3VwcG9ydCBmb3IgMzItYml0IFNZU1YKClRoZSAzMi1iaXQgU1lTViBBQkkgcGFzc2VzIGFuZCByZXR1cm5zIGNvbXBsZXggdmFsdWVzIGluIEdQUnMsIG5ldmVyIGluCkZQUnMsIGV2ZW4gd2l0aCBoYXJkIGZsb2F0LiAgR0NDIGRvZXMgbm90IHNwbGl0IHRoZW0gZm9yIHRoaXMgQUJJIGJ1dAp0cmVhdHMgZWFjaCBvbmUgYXMgYSBzaW5nbGUgaXRlbSBvZiBhcyBtYW55IHdvcmRzIGFzIGl0IG5lZWRzLCBhbmQKdGhvc2UgaXRlbXMgZm9sbG93IHRoZSBzYW1lIHJ1bGVzIGFzIGludGVnZXJzIG9mIHRoZSBzYW1lIHNpemU6CgogIC0gb25lIHdvcmQgKF9Db21wbGV4IGNoYXIgYW5kIHNob3J0KSBsaWtlIGFuIGludCwgcmlnaHQtanVzdGlmaWVkOwogIC0gdHdvIHdvcmRzIChmbG9hdCBhbmQgaW50IF9Db21wbGV4KSBsaWtlIGxvbmcgbG9uZzogaW4gYW4gZXZlbi9vZGQKICAgIEdQUiBwYWlyIChyMzpyNCwgcjU6cjYsIHI3OnI4LCByOTpyMTApLCBvdGhlcndpc2UgOC1ieXRlIGFsaWduZWQgb24KICAgIHRoZSBzdGFjaywgYW5kIHRoZSByZW1haW5pbmcgR1BScyBjb3VudCBhcyB1c2VkOwogIC0gbW9yZSB3b3JkcyAoZG91YmxlIGFuZCBsb25nIGxvbmcgX0NvbXBsZXgsIGZvdXIgd29yZHMpIGluCiAgICBjb25zZWN1dGl2ZSBHUFJzIHdpdGggbm8gcGFpciBhbGlnbm1lbnQgaWYgdGhleSBhbGwgZml0LCBvdGhlcndpc2UKICAgIDQtYnl0ZSBhbGlnbmVkIG9uIHRoZSBzdGFjaywgYW5kIGV2ZXJ5IGxhdGVyIGFyZ3VtZW50IGdvZXMgdG8gdGhlCiAgICBzdGFjayB0b287CiAgLSByZXR1cm5lZCBpbiByMywgcjM6cjQgb3IgcjMtcjYuCgpBbGwgb2YgdGhlc2UgYWxyZWFkeSBleGlzdCBmb3Igc29mdC1mbG9hdCBsb25nIGRvdWJsZSAoRkZJX1RZUEVfVUlOVDEyOCkKYW5kIGxvbmcgbG9uZywgc28gbWFwIGNvbXBsZXggdHlwZXMgb250byB0aGVtIGJ5IHNpemUgaW4gYSBuZXcKdHJhbnNsYXRlX3R5cGUoKSwgdXNlZCBldmVyeXdoZXJlIHRyYW5zbGF0ZV9mbG9hdCgpIHdhcy4KCldpdGggYSAxMjgtYml0IGxvbmcgZG91YmxlLCBsb25nIGRvdWJsZSBfQ29tcGxleCB0YWtlcyBlaWdodCB3b3JkczogaXQKZ29lcyBpbiByMy1yMTAgd2hlbiBpdCBpcyB0aGUgZmlyc3QgYXJndW1lbnQgYW5kIG9uIHRoZSBzdGFjayBvdGhlcndpc2UsCmFuZCBpcyByZXR1cm5lZCBpbiByMy1yMTAuICBIYW5kbGUgaXQgYXMgYW4gaW50ZXJuYWwgRkZJX1RZUEVfVUlOVDI1NiwKcGFzc2VkIGxpa2UgRkZJX1RZUEVfVUlOVDEyOCB3aXRoIGVpZ2h0IHdvcmRzLCB3aXRoIGEgbmV3CkZMQUdfUkVUVVJOU18yNTZCSVRTIHRoYXQgbWFrZXMgZmZpX2NhbGxfU1lTViBhbHNvIHN0b3JlIHI3LXIxMCwgYW5kIGEKUFBDMzJfTERfUjNSMTAgY2xvc3VyZSByZXR1cm4gZW50cnkuICBUaGUgY2xvc3VyZSdzIHJldHVybiB2YWx1ZSBhcmVhCmlzIGV4YWN0bHkgMzIgYnl0ZXMuCgpBIF9Db21wbGV4IGNoYXIgaXMgcmV0dXJuZWQgcmlnaHQtanVzdGlmaWVkIGluIHIzLCBzbyBmZmlfY2FsbCB1c2VzIHRoZQpzbWFsbCBzdHJ1Y3QgYm91bmNlIGJ1ZmZlciBmb3IgaXQgYW5kIHRoZSBjbG9zdXJlIGhlbHBlciBzaGlmdHMgaXQgaW50bwpwbGFjZS4gIFRoZSBFTEZ2MiBoYW5kbGluZyBvZiB0aGF0IGJvdW5jZSBidWZmZXIgZm9yIGludGVnZXIgY29tcGxleAp0eXBlcyBpcyBub3cgbGltaXRlZCB0byBwb3dlcnBjNjQuCgpmZmlfcHJlcF90eXBlc19zeXN2KCkgcmVzaXplcyBmZmlfdHlwZV9sb25nZG91YmxlIGFjY29yZGluZyB0byB0aGUgYWJpOwprZWVwIGZmaV90eXBlX2NvbXBsZXhfbG9uZ2RvdWJsZSBpbiBzdGVwIHdpdGggaXQsIGFzIGZmaV9saW51eDY0LmMgZG9lcy4KClRoaXMgbWF0Y2hlcyBHQ0MncyBjb2RlIGdlbmVyYXRpb24gZm9yIDg1NDggKHNvZnQtZmxvYXQpIGFuZCA0NjRmcAooaGFyZC1mbG9hdCksIHdpdGggNjQtYml0IGxvbmcgZG91YmxlIChtdXNsKSBhbmQgd2l0aAotbWxvbmctZG91YmxlLTEyOC4KQXNzaXN0ZWQtYnk6IExMTQpTaWduZWQtb2ZmLWJ5OiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KLS0tCiBzcmMvcG93ZXJwYy9mZmkuYyAgICAgICAgIHwgICAyICstCiBzcmMvcG93ZXJwYy9mZmlfcG93ZXJwYy5oIHwgIDE2ICsrKy0tCiBzcmMvcG93ZXJwYy9mZmlfc3lzdi5jICAgIHwgMTI1ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tCiBzcmMvcG93ZXJwYy9mZml0YXJnZXQuaCAgIHwgIDExICsrKy0KIHNyYy9wb3dlcnBjL3BwY19jbG9zdXJlLlMgfCAgMTEgKysrKwogc3JjL3Bvd2VycGMvc3lzdi5TICAgICAgICB8ICAgNSArKwogNiBmaWxlcyBjaGFuZ2VkLCAxMzQgaW5zZXJ0aW9ucygrKSwgMzYgZGVsZXRpb25zKC0pCgotLS0gYS9zcmMvcG93ZXJwYy9mZmkuYworKysgYi9zcmMvcG93ZXJwYy9mZmkuYwpAQCAtMTE0LDcgKzExNCw3IEBAIGZmaV9jYWxsX2ludCAoZmZpX2NpZiAqY2lmLAogICBpZiAocnZhbHVlICYmIGVjaWYucnZhbHVlID09IHNtc3RfYnVmZmVyKQogICAgIHsKICAgICAgIHVuc2lnbmVkIGludCByc2l6ZSA9IGNpZi0+cnR5cGUtPnNpemU7Ci0jaWZkZWYgRkZJX1RBUkdFVF9IQVNfQ09NUExFWF9UWVBFCisjaWYgZGVmaW5lZCAoRkZJX1RBUkdFVF9IQVNfQ09NUExFWF9UWVBFKSAmJiBkZWZpbmVkIChQT1dFUlBDNjQpCiAgICAgICAvKiBJbnRlZ2VyLXR5cGVkIF9Db21wbGV4OiB0aGUgLkxzbWFsbF9zdHJ1Y3QgcmV0dXJuIHBhdGggc3RvcmVkCiAJIHIzIGF0IGJ1ZmZlciBvZmZzZXQgMCBhbmQgcjQgYXQgb2Zmc2V0IDguICBFeHRyYWN0IG9uZSBpbm5lci0KIAkgc2l6ZWQgaGFsZiBmcm9tIGVhY2ggc2xvdCDigJQgcmlnaHQtanVzdGlmaWVkIG9uIEJFLCBsb3ctYWRkcmVzcwotLS0gYS9zcmMvcG93ZXJwYy9mZmlfcG93ZXJwYy5oCisrKyBiL3NyYy9wb3dlcnBjL2ZmaV9wb3dlcnBjLmgKQEAgLTU0LDYgKzU0LDkgQEAKIC8qIE5lZWRlZCBmb3Igc29mdC1mbG9hdCBsb25nLWRvdWJsZS4gKi8KICNkZWZpbmUgUFBDMzJfTERfUjNSNgkJMTAKIAorLyogTmVlZGVkIGZvciBfQ29tcGxleCBsb25nIGRvdWJsZSB3aXRoIGEgMTI4LWJpdCBsb25nIGRvdWJsZS4gICovCisjZGVmaW5lIFBQQzMyX0xEX1IzUjEwCQkxMQorCiAvKiBOZWVkZWQgZm9yIEZGSV9TWVNWIHNtYWxsIHN0cnVjdHVyZSByZXR1cm5zLiAgKi8KICNpZmRlZiBfX0xJVFRMRV9FTkRJQU5fXwogI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF8zCVBQQzMyX0xEX1IzCkBAIC02MywxMiArNjYsMTIgQEAKICNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMQlQUENfTERfVTgKICNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMglQUENfTERfVTE2CiAjZWxzZQotI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF8zCTExCi0jZGVmaW5lIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzUJMTIKLSNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfNgkxMwotI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF83CTE0Ci0jZGVmaW5lIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzEJMTUKLSNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMgkxNgorI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF8zCTEyCisjZGVmaW5lIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzUJMTMKKyNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfNgkxNAorI2RlZmluZSBQUEMzMl9TWVNWX0xEX1NUUlVDVF83CTE1CisjZGVmaW5lIFBQQzMyX1NZU1ZfTERfU1RSVUNUXzEJMTYKKyNkZWZpbmUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMgkxNwogI2VuZGlmCiAKICNlbHNlIC8qIFBPV0VSUEM2NCAqLwpAQCAtMTE2LDYgKzExOSw3IEBAIGVudW0gewogICAvKiBUaGVzZSBnbyBpbiBjcjYgKi8KICAgRkxBR19SRVRVUk5TXzY0QklUUyAgID0gMSA8PCAoMzEtMjcpLAogICBGTEFHX1JFVFVSTlNfMTI4QklUUyAgPSAxIDw8ICgzMS0yNiksCisgIEZMQUdfUkVUVVJOU18yNTZCSVRTICA9IDEgPDwgKDMxLTI1KSwgLyogVXNlZCBieSBzeXN2IGNvZGUgKi8KIAogICBGTEFHX0NPTVBBVCAgICAgICAgICAgPSAxIDw8ICgzMS0gOCksIC8qIE5vdCB1c2VkIGJ5IGFzc2VtYmx5ICovCiAKLS0tIGEvc3JjL3Bvd2VycGMvZmZpX3N5c3YuYworKysgYi9zcmMvcG93ZXJwYy9mZmlfc3lzdi5jCkBAIC00Miw2ICs0MiwxMCBAQAogI2RlZmluZSBOVU1fR1BSX0FSR19SRUdJU1RFUlMgOAogI2RlZmluZSBOVU1fRlBSX0FSR19SRUdJU1RFUlMgOAogCisvKiBJbnRlcm5hbCB0eXBlIGZvciBhbiBlaWdodC13b3JkIGNvbXBsZXggdmFsdWUsIGkuZS4gX0NvbXBsZXggbG9uZyBkb3VibGUKKyAgIHdpdGggYSAxMjgtYml0IGxvbmcgZG91YmxlLiAgKi8KKyNkZWZpbmUgRkZJX1RZUEVfVUlOVDI1NiAoRkZJX1RZUEVfTEFTVCArIDEpCisKIAogI2lmIEhBVkVfTE9OR19ET1VCTEVfVkFSSUFOVCAmJiBGRklfVFlQRV9MT05HRE9VQkxFICE9IEZGSV9UWVBFX0RPVUJMRQogLyogQWRqdXN0IHNpemUgb2YgZmZpX3R5cGVfbG9uZ2RvdWJsZS4gICovCkBAIC01OCw2ICs2MiwxMiBAQCBmZmlfcHJlcF90eXBlc19zeXN2IChmZmlfYWJpIGFiaSkKICAgICAgIGZmaV90eXBlX2xvbmdkb3VibGUuc2l6ZSA9IDE2OwogICAgICAgZmZpX3R5cGVfbG9uZ2RvdWJsZS5hbGlnbm1lbnQgPSAxNjsKICAgICB9CisjaWZkZWYgRkZJX1RBUkdFVF9IQVNfQ09NUExFWF9UWVBFCisgIC8qIF9Db21wbGV4IGxvbmcgZG91YmxlIGlzIHR3byBoYWx2ZXMgb2Ygd2hhdGV2ZXIgbG9uZyBkb3VibGUganVzdAorICAgICBiZWNhbWUsIHNvIGtlZXAgaXRzIHNpemUgYW5kIGFsaWdubWVudCBpbiBzdGVwLiAgKi8KKyAgZmZpX3R5cGVfY29tcGxleF9sb25nZG91YmxlLnNpemUgPSAyICogZmZpX3R5cGVfbG9uZ2RvdWJsZS5zaXplOworICBmZmlfdHlwZV9jb21wbGV4X2xvbmdkb3VibGUuYWxpZ25tZW50ID0gZmZpX3R5cGVfbG9uZ2RvdWJsZS5hbGlnbm1lbnQ7CisjZW5kaWYKIH0KICNlbmRpZgogCkBAIC04OSw2ICs5OSwzOSBAQCB0cmFuc2xhdGVfZmxvYXQgKGludCBhYmksIGludCB0eXBlKQogICByZXR1cm4gdHlwZTsKIH0KIAorLyogVHJhbnNmb3JtIGEgdHlwZSB0byB0aGUgdHlwZSB0aGF0IGlzIHBhc3NlZCBhbmQgcmV0dXJuZWQgdGhlIHNhbWUgd2F5LgorICAgQ29tcGxleCB2YWx1ZXMgYWx3YXlzIGdvIGluIEdQUnMsIG5ldmVyIGluIEZQUnMsIGV2ZW4gd2l0aCBoYXJkIGZsb2F0OgorICAgR0NDIGRvZXMgbm90IHNwbGl0IHRoZW0gZm9yIHRoaXMgQUJJIGJ1dCBwYXNzZXMgZWFjaCBvbmUgYXMgYSBzaW5nbGUKKyAgIGl0ZW0gb2YgYXMgbWFueSB3b3JkcyBhcyBpdCBuZWVkcywganVzdCBsaWtlIGFuIGludGVnZXIgb2YgdGhhdCBzaXplLiAgKi8KK3N0YXRpYyBpbnQKK3RyYW5zbGF0ZV90eXBlIChpbnQgYWJpLCBjb25zdCBmZmlfdHlwZSAqdCkKK3sKKyAgaWYgKHQtPnR5cGUgIT0gRkZJX1RZUEVfQ09NUExFWCkKKyAgICByZXR1cm4gdHJhbnNsYXRlX2Zsb2F0IChhYmksIHQtPnR5cGUpOworCisgIHN3aXRjaCAodC0+c2l6ZSkKKyAgICB7CisgICAgY2FzZSAyOgorICAgICAgLyogX0NvbXBsZXggY2hhci4gICovCisgICAgICByZXR1cm4gRkZJX1RZUEVfVUlOVDE2OworICAgIGNhc2UgNDoKKyAgICAgIC8qIF9Db21wbGV4IHNob3J0LiAgKi8KKyAgICAgIHJldHVybiBGRklfVFlQRV9VSU5UMzI7CisgICAgY2FzZSA4OgorICAgICAgLyogZmxvYXQgYW5kIGludCBfQ29tcGxleDogdHdvIHdvcmRzLCBsaWtlIGxvbmcgbG9uZy4gICovCisgICAgICByZXR1cm4gRkZJX1RZUEVfVUlOVDY0OworICAgIGNhc2UgMTY6CisgICAgICAvKiBkb3VibGUsIGxvbmcgbG9uZyBhbmQgNjQtYml0IGxvbmcgZG91YmxlIF9Db21wbGV4LiAgKi8KKyAgICAgIHJldHVybiBGRklfVFlQRV9VSU5UMTI4OworICAgIGNhc2UgMzI6CisgICAgICAvKiAxMjgtYml0IGxvbmcgZG91YmxlIF9Db21wbGV4LiAgKi8KKyAgICAgIHJldHVybiBGRklfVFlQRV9VSU5UMjU2OworICAgIGRlZmF1bHQ6CisgICAgICBGRklfQVNTRVJUICgwKTsKKyAgICAgIHJldHVybiBGRklfVFlQRV9TVFJVQ1Q7CisgICAgfQorfQorCiAvKiBQZXJmb3JtIG1hY2hpbmUgZGVwZW5kZW50IGNpZiBwcm9jZXNzaW5nICovCiBzdGF0aWMgZmZpX3N0YXR1cwogZmZpX3ByZXBfY2lmX3N5c3ZfY29yZSAoZmZpX2NpZiAqY2lmKQpAQCAtMTIxLDcgKzE2NCw3IEBAIGZmaV9wcmVwX2NpZl9zeXN2X2NvcmUgKGZmaV9jaWYgKmNpZikKICAgICAgLSBsb25nIGRvdWJsZXMgKGlmIG5vdCBlcXVpdmFsZW50IHRvIGRvdWJsZSkgYXJlIHJldHVybmVkIGluCiAgICAgIGZwcjEsZnByMiBmb3IgTGludXggYW5kIGFzIGZvciBsYXJnZSBzdHJ1Y3RzIGZvciBTeXNWLiAgKi8KIAotICB0eXBlID0gdHJhbnNsYXRlX2Zsb2F0IChjaWYtPmFiaSwgdHlwZSk7CisgIHR5cGUgPSB0cmFuc2xhdGVfdHlwZSAoY2lmLT5hYmksIGNpZi0+cnR5cGUpOwogCiAgIHN3aXRjaCAodHlwZSkKICAgICB7CkBAIC0xNDAsNiArMTgzLDkgQEAgZmZpX3ByZXBfY2lmX3N5c3ZfY29yZSAoZmZpX2NpZiAqY2lmKQogI2VuZGlmCiAgICAgICBicmVhazsKIAorICAgIGNhc2UgRkZJX1RZUEVfVUlOVDI1NjoKKyAgICAgIGZsYWdzIHw9IEZMQUdfUkVUVVJOU18yNTZCSVRTOworICAgICAgLyogRmFsbCB0aHJvdWdoLiAgKi8KICAgICBjYXNlIEZGSV9UWVBFX1VJTlQxMjg6CiAgICAgICBmbGFncyB8PSBGTEFHX1JFVFVSTlNfMTI4QklUUzsKICAgICAgIC8qIEZhbGwgdGhyb3VnaC4gICovCkBAIC0xNDgsNiArMTk0LDEzIEBAIGZmaV9wcmVwX2NpZl9zeXN2X2NvcmUgKGZmaV9jaWYgKmNpZikKICAgICAgIGZsYWdzIHw9IEZMQUdfUkVUVVJOU182NEJJVFM7CiAgICAgICBicmVhazsKIAorICAgIGNhc2UgRkZJX1RZUEVfVUlOVDE2OgorICAgICAgLyogQSBfQ29tcGxleCBjaGFyIGlzIHJldHVybmVkIHJpZ2h0LWp1c3RpZmllZCBpbiByMywgbGlrZSBhIHNtYWxsCisJIHN0cnVjdC4gIFVzZSB0aGUgc21hbGwgc3RydWN0IGJvdW5jZSBidWZmZXIgdG8gZXh0cmFjdCBpdC4gICovCisgICAgICBpZiAoY2lmLT5ydHlwZS0+dHlwZSA9PSBGRklfVFlQRV9DT01QTEVYKQorCWZsYWdzIHw9IEZMQUdfUkVUVVJOU19TTVNUOworICAgICAgYnJlYWs7CisKICAgICBjYXNlIEZGSV9UWVBFX1NUUlVDVDoKICAgICAgIC8qIFRoZSBmaW5hbCBTWVNWIEFCSSBzYXlzIHRoYXQgc3RydWN0dXJlcyBzbWFsbGVyIG9yIGVxdWFsIDggYnl0ZXMKIAkgYXJlIHJldHVybmVkIGluIHIzL3I0LiAgQSBkcmFmdCBBQkkgdXNlZCBieSBsaW51eCBpbnN0ZWFkCkBAIC0xNzYsOSArMjI5LDggQEAgZmZpX3ByZXBfY2lmX3N5c3ZfY29yZSAoZmZpX2NpZiAqY2lmKQogICAgICBTdHVmZiBvbiB0aGUgc3RhY2sgbmVlZHMgdG8ga2VlcCBwcm9wZXIgYWxpZ25tZW50LiAgKi8KICAgZm9yIChwdHIgPSBjaWYtPmFyZ190eXBlcywgaSA9IGNpZi0+bmFyZ3M7IGkgPiAwOyBpLS0sIHB0cisrKQogICAgIHsKLSAgICAgIHVuc2lnbmVkIHNob3J0IHR5cGVudW0gPSAoKnB0ciktPnR5cGU7Ci0KLSAgICAgIHR5cGVudW0gPSB0cmFuc2xhdGVfZmxvYXQgKGNpZi0+YWJpLCB0eXBlbnVtKTsKKyAgICAgIHVuc2lnbmVkIHNob3J0IHR5cGVudW0gPSB0cmFuc2xhdGVfdHlwZSAoY2lmLT5hYmksICpwdHIpOworICAgICAgdW5zaWduZWQgbndvcmRzOwogCiAgICAgICBzd2l0Y2ggKHR5cGVudW0pCiAJewpAQCAtMjI0LDE2ICsyNzYsMTkgQEAgZmZpX3ByZXBfY2lmX3N5c3ZfY29yZSAoZmZpX2NpZiAqY2lmKQogI2VuZGlmCiAJICBicmVhazsKIAorCWNhc2UgRkZJX1RZUEVfVUlOVDI1NjoKIAljYXNlIEZGSV9UWVBFX1VJTlQxMjg6CiAJICAvKiBBIGxvbmcgZG91YmxlIGluIEZGSV9MSU5VWF9TT0ZUX0ZMT0FUIGNhbiB1c2Ugb25seSBhIHNldAogCSAgICAgb2YgZm91ciBjb25zZWN1dGl2ZSBncHJzLiBJZiB3ZSBkbyBub3QgaGF2ZSBlbm91Z2gsIHdlCi0JICAgICBoYXZlIHRvIGFkanVzdCB0aGUgZ3ByX2NvdW50IHZhbHVlLiAgKi8KLQkgIGlmIChncHJfY291bnQgPj0gTlVNX0dQUl9BUkdfUkVHSVNURVJTIC0gMykKKwkgICAgIGhhdmUgdG8gYWRqdXN0IHRoZSBncHJfY291bnQgdmFsdWUuICBDb21wbGV4IHZhbHVlcyBvZiBmb3VyCisJICAgICBvciBlaWdodCB3b3JkcyBhcmUgcGFzc2VkIHRoZSBzYW1lIHdheS4gICovCisJICBud29yZHMgPSB0eXBlbnVtID09IEZGSV9UWVBFX1VJTlQyNTYgPyA4IDogNDsKKwkgIGlmIChncHJfY291bnQgPiBOVU1fR1BSX0FSR19SRUdJU1RFUlMgLSBud29yZHMpCiAJICAgIGdwcl9jb3VudCA9IE5VTV9HUFJfQVJHX1JFR0lTVEVSUzsKIAkgIGlmIChncHJfY291bnQgPj0gTlVNX0dQUl9BUkdfUkVHSVNURVJTKQotCSAgICBzdGFja19jb3VudCArPSA0OworCSAgICBzdGFja19jb3VudCArPSBud29yZHM7CiAJICBlbHNlCi0JICAgIGdwcl9jb3VudCArPSA0OworCSAgICBncHJfY291bnQgKz0gbndvcmRzOwogCSAgYnJlYWs7CiAKIAljYXNlIEZGSV9UWVBFX1VJTlQ2NDoKQEAgLTQ1OCw5ICs1MTMsOCBAQCBmZmlfcHJlcF9hcmdzX1NZU1YgKGV4dGVuZGVkX2NpZiAqZWNpZiwKICAgICAgICBpID4gMDsKICAgICAgICBpLS0sIHB0cisrLCBwX2FyZ3YudisrKQogICAgIHsKLSAgICAgIHVuc2lnbmVkIGludCB0eXBlbnVtID0gKCpwdHIpLT50eXBlOwotCi0gICAgICB0eXBlbnVtID0gdHJhbnNsYXRlX2Zsb2F0IChlY2lmLT5jaWYtPmFiaSwgdHlwZW51bSk7CisgICAgICB1bnNpZ25lZCBpbnQgdHlwZW51bSA9IHRyYW5zbGF0ZV90eXBlIChlY2lmLT5jaWYtPmFiaSwgKnB0cik7CisgICAgICB1bnNpZ25lZCBpbnQgaWksIG53b3JkczsKIAogICAgICAgLyogTm93IHRlc3QgdGhlIHRyYW5zbGF0ZWQgdmFsdWUgKi8KICAgICAgIHN3aXRjaCAodHlwZW51bSkKQEAgLTUxOCwxNiArNTcyLDE4IEBAIGZmaV9wcmVwX2FyZ3NfU1lTViAoZXh0ZW5kZWRfY2lmICplY2lmLAogCSAgYnJlYWs7CiAjZW5kaWYgLyogaGF2ZSBGUFJzICovCiAKKwljYXNlIEZGSV9UWVBFX1VJTlQyNTY6CiAJY2FzZSBGRklfVFlQRV9VSU5UMTI4OgogCSAgLyogVGhlIHNvZnQgZmxvYXQgQUJJIGZvciBsb25nIGRvdWJsZXMgd29ya3MgbGlrZSB0aGlzLCBhIGxvbmcgZG91YmxlCiAJICAgICBpcyBwYXNzZWQgaW4gZm91ciBjb25zZWN1dGl2ZSBHUFJzIGlmIGF2YWlsYWJsZS4gIEEgbWF4aW11bSBvZiAyCiAJICAgICBsb25nIGRvdWJsZXMgY2FuIGJlIHBhc3NlZCBpbiBncHJzLiAgSWYgd2UgZG8gbm90IGhhdmUgNCBHUFJzCi0JICAgICBsZWZ0LCB0aGUgbG9uZyBkb3VibGUgaXMgcGFzc2VkIG9uIHRoZSBzdGFjaywgNC1ieXRlIGFsaWduZWQuICAqLwotCSAgaWYgKGdwcl9iYXNlLnUgPj0gZ3ByX2VuZC51IC0gMykKKwkgICAgIGxlZnQsIHRoZSBsb25nIGRvdWJsZSBpcyBwYXNzZWQgb24gdGhlIHN0YWNrLCA0LWJ5dGUgYWxpZ25lZC4KKwkgICAgIENvbXBsZXggdmFsdWVzIG9mIGZvdXIgb3IgZWlnaHQgd29yZHMgYXJlIHBhc3NlZCB0aGUgc2FtZSB3YXkuICAqLworCSAgbndvcmRzID0gdHlwZW51bSA9PSBGRklfVFlQRV9VSU5UMjU2ID8gOCA6IDQ7CisJICBpZiAoZ3ByX2Jhc2UudSA+IGdwcl9lbmQudSAtIG53b3JkcykKIAkgICAgewotCSAgICAgIHVuc2lnbmVkIGludCBpaTsKIAkgICAgICBncHJfYmFzZS51ID0gZ3ByX2VuZC51OwotCSAgICAgIGZvciAoaWkgPSAwOyBpaSA8IDQ7IGlpKyspCisJICAgICAgZm9yIChpaSA9IDA7IGlpIDwgbndvcmRzOyBpaSsrKQogCQl7CiAJCSAgdW5zaWduZWQgaW50IGludF90bXAgPSAoKnBfYXJndi51aSlbaWldOwogCQkgICpuZXh0X2FyZy51KysgPSBpbnRfdG1wOwpAQCAtNTM1LDggKzU5MSw3IEBAIGZmaV9wcmVwX2FyZ3NfU1lTViAoZXh0ZW5kZWRfY2lmICplY2lmLAogCSAgICB9CiAJICBlbHNlCiAJICAgIHsKLQkgICAgICB1bnNpZ25lZCBpbnQgaWk7Ci0JICAgICAgZm9yIChpaSA9IDA7IGlpIDwgNDsgaWkrKykKKwkgICAgICBmb3IgKGlpID0gMDsgaWkgPCBud29yZHM7IGlpKyspCiAJCXsKIAkJICB1bnNpZ25lZCBpbnQgaW50X3RtcCA9ICgqcF9hcmd2LnVpKVtpaV07CiAJCSAgKmdwcl9iYXNlLnUrKyA9IGludF90bXA7CkBAIC03MDksNyArNzY0LDcgQEAgZmZpX2Nsb3N1cmVfaGVscGVyX1NZU1YgKGZmaV9jaWYgKmNpZiwKICAgYXZhbHVlID0gYWxsb2NhIChjaWYtPm5hcmdzICogc2l6ZW9mICh2b2lkICopKTsKIAogICAvKiBGaXJzdCB0cmFuc2xhdGUgZm9yIHNvZnRmbG9hdC9ub25saW51eCAqLwotICBydHlwZW51bSA9IHRyYW5zbGF0ZV9mbG9hdCAoY2lmLT5hYmksIHJ0eXBlbnVtKTsKKyAgcnR5cGVudW0gPSB0cmFuc2xhdGVfdHlwZSAoY2lmLT5hYmksIGNpZi0+cnR5cGUpOwogCiAgIC8qIENvcHkgdGhlIGNhbGxlcidzIHN0cnVjdHVyZSByZXR1cm4gdmFsdWUgYWRkcmVzcyBzbyB0aGF0IHRoZSBjbG9zdXJlCiAgICAgIHJldHVybnMgdGhlIGRhdGEgZGlyZWN0bHkgdG8gdGhlIGNhbGxlci4KQEAgLTcyOSwxMCArNzg0LDkgQEAgZmZpX2Nsb3N1cmVfaGVscGVyX1NZU1YgKGZmaV9jaWYgKmNpZiwKIAogICAvKiBHcmFiIHRoZSBhZGRyZXNzZXMgb2YgdGhlIGFyZ3VtZW50cyBmcm9tIHRoZSBzdGFjayBmcmFtZS4gICovCiAgIHdoaWxlIChpIDwgYXZuKSB7Ci0gICAgdW5zaWduZWQgc2hvcnQgdHlwZW51bSA9IGFyZ190eXBlc1tpXS0+dHlwZTsKLQogICAgIC8qIFdlIG1heSBuZWVkIHRvIGhhbmRsZSBzb21lIHZhbHVlcyBkZXBlbmRpbmcgb24gQUJJLiAgKi8KLSAgICB0eXBlbnVtID0gdHJhbnNsYXRlX2Zsb2F0IChjaWYtPmFiaSwgdHlwZW51bSk7CisgICAgdW5zaWduZWQgc2hvcnQgdHlwZW51bSA9IHRyYW5zbGF0ZV90eXBlIChjaWYtPmFiaSwgYXJnX3R5cGVzW2ldKTsKKyAgICBsb25nIG53b3JkczsKIAogICAgIHN3aXRjaCAodHlwZW51bSkKICAgICAgIHsKQEAgLTc5NiwyMCArODUwLDIzIEBAIGZmaV9jbG9zdXJlX2hlbHBlcl9TWVNWIChmZmlfY2lmICpjaWYsCiAjIGVuZGlmCiAjZW5kaWYKIAorICAgICAgY2FzZSBGRklfVFlQRV9VSU5UMjU2OgogICAgICAgY2FzZSBGRklfVFlQRV9VSU5UMTI4OgogCS8qIFRlc3QgaWYgZm9yIHRoZSB3aG9sZSBsb25nIGRvdWJsZSwgNCBncHJzIGFyZSBhdmFpbGFibGUuCi0JICAgb3RoZXJ3aXNlIHRoZSBzdHVmZiBlbmRzIHVwIG9uIHRoZSBzdGFjay4gICovCi0JaWYgKG5nIDwgTlVNX0dQUl9BUkdfUkVHSVNURVJTIC0gMykKKwkgICBvdGhlcndpc2UgdGhlIHN0dWZmIGVuZHMgdXAgb24gdGhlIHN0YWNrLiAgVGhlIHNhbWUgaG9sZHMKKwkgICBmb3IgY29tcGxleCB2YWx1ZXMgb2YgZm91ciBvciBlaWdodCB3b3Jkcy4gICovCisJbndvcmRzID0gdHlwZW51bSA9PSBGRklfVFlQRV9VSU5UMjU2ID8gOCA6IDQ7CisJaWYgKG5nIDw9IE5VTV9HUFJfQVJHX1JFR0lTVEVSUyAtIG53b3JkcykKIAkgIHsKIAkgICAgYXZhbHVlW2ldID0gcGdyOwotCSAgICBwZ3IgKz0gNDsKLQkgICAgbmcgKz0gNDsKKwkgICAgcGdyICs9IG53b3JkczsKKwkgICAgbmcgKz0gbndvcmRzOwogCSAgfQogCWVsc2UKIAkgIHsKIAkgICAgYXZhbHVlW2ldID0gcHN0OwotCSAgICBwc3QgKz0gNDsKLQkgICAgbmcgPSA4KzQ7CisJICAgIHBzdCArPSBud29yZHM7CisJICAgIG5nID0gTlVNX0dQUl9BUkdfUkVHSVNURVJTOwogCSAgfQogCWJyZWFrOwogCkBAIC05NDAsNiArOTk3LDE4IEBAIGZmaV9jbG9zdXJlX2hlbHBlcl9TWVNWIChmZmlfY2lmICpjaWYsCiAgICAgY2FzZSBGRklfVFlQRV9TSU5UODoKICAgICAgIHJldHVybiBQUENfTERfUzg7CiAgICAgY2FzZSBGRklfVFlQRV9VSU5UMTY6CisgICAgICBpZiAoY2lmLT5ydHlwZS0+dHlwZSA9PSBGRklfVFlQRV9DT01QTEVYKQorCXsKKwkgIC8qIEEgX0NvbXBsZXggY2hhciBpcyByZXR1cm5lZCByaWdodC1qdXN0aWZpZWQgaW4gcjMuICAqLworCSAgdW5zaWduZWQgaW50IHdvcmQgPSAwOworI2lmZGVmIF9fTElUVExFX0VORElBTl9fCisJICBtZW1jcHkgKCZ3b3JkLCBydmFsdWUsIDIpOworI2Vsc2UKKwkgIG1lbWNweSAoKGNoYXIgKikgJndvcmQgKyAyLCBydmFsdWUsIDIpOworI2VuZGlmCisJICAqKHVuc2lnbmVkIGludCAqKSBydmFsdWUgPSB3b3JkOworCSAgcmV0dXJuIFBQQ19MRF9VMzI7CisJfQogICAgICAgcmV0dXJuIFBQQ19MRF9VMTY7CiAgICAgY2FzZSBGRklfVFlQRV9TSU5UMTY6CiAgICAgICByZXR1cm4gUFBDX0xEX1MxNjsKQEAgLTk1NSw2ICsxMDI0LDggQEAgZmZpX2Nsb3N1cmVfaGVscGVyX1NZU1YgKGZmaV9jaWYgKmNpZiwKICAgICAgIHJldHVybiBQUENfTERfSTY0OwogICAgIGNhc2UgRkZJX1RZUEVfVUlOVDEyODoKICAgICAgIHJldHVybiBQUEMzMl9MRF9SM1I2OworICAgIGNhc2UgRkZJX1RZUEVfVUlOVDI1NjoKKyAgICAgIHJldHVybiBQUEMzMl9MRF9SM1IxMDsKICAgICBjYXNlIEZGSV9UWVBFX1NUUlVDVDoKICAgICAgIGlmIChjaWYtPmFiaSAmIEZGSV9TWVNWX1NUUlVDVF9SRVQpCiAJc3dpdGNoIChzaXplKQotLS0gYS9zcmMvcG93ZXJwYy9mZml0YXJnZXQuaAorKysgYi9zcmMvcG93ZXJwYy9mZml0YXJnZXQuaApAQCAtMTU1LDggKzE1NSwxNSBAQCB0eXBlZGVmIGVudW0gZmZpX2FiaSB7CiAgICBFTEZ2MiwgZmxvYXQvZG91YmxlIF9Db21wbGV4IGFyZSBwYXNzZWQgYW5kIHJldHVybmVkIGFzIGEgMi1lbGVtZW50CiAgICBob21vZ2VuZW91cyBmbG9hdGluZy1wb2ludCBhZ2dyZWdhdGUsIGJ1dCBlYWNoIHNjYWxhciBoYWxmIGNvbnN1bWVzIGEKICAgIEdQUiBzaGFkb3cgc2xvdCBvZiBpdHMgb3duIOKAlCBpLmUuIHRoZSBzYW1lIHdheSB0aGUgdW5kZXJseWluZyBDIEFCSQotICAgaGFuZGxlcyB0aGVtLCB3aGljaCBpcyB3aGF0IEdDQydzIHNwbGl0X2NvbXBsZXhfYXJnIGVtaXRzLiAgKi8KLSNpZiBkZWZpbmVkKFBPV0VSUEM2NCkgJiYgX0NBTExfRUxGID09IDIKKyAgIGhhbmRsZXMgdGhlbSwgd2hpY2ggaXMgd2hhdCBHQ0MncyBzcGxpdF9jb21wbGV4X2FyZyBlbWl0cy4KKworICAgVGhleSBhcmUgYWxzbyBzdXBwb3J0ZWQgb24gMzItYml0IFNZU1YsIHdoZXJlIGNvbXBsZXggdmFsdWVzIGFyZSBwYXNzZWQKKyAgIGFuZCByZXR1cm5lZCBpbiBHUFJzIGxpa2UgaW50ZWdlcnMgb2YgdGhlIHNhbWUgc2l6ZS4gICovCisjaWYgZGVmaW5lZChQT1dFUlBDNjQpCisjIGlmIF9DQUxMX0VMRiA9PSAyCisjICBkZWZpbmUgRkZJX1RBUkdFVF9IQVNfQ09NUExFWF9UWVBFCisjIGVuZGlmCisjZWxpZiBkZWZpbmVkIChQT1dFUlBDKSB8fCBkZWZpbmVkIChQT1dFUlBDX0ZSRUVCU0QpCiAjIGRlZmluZSBGRklfVEFSR0VUX0hBU19DT01QTEVYX1RZUEUKICNlbmRpZgogCi0tLSBhL3NyYy9wb3dlcnBjL3BwY19jbG9zdXJlLlMKKysrIGIvc3JjL3Bvd2VycGMvcHBjX2Nsb3N1cmUuUwpAQCAtMjAyLDEwICsyMDIsMTcgQEAgRSBQUENfTERfUzE2CiAJZXBpbG9ndWUKIAogRSBQUEMzMl9MRF9SM1I2CisuTHIzcjY6CiAJbHd6ICVyNSwxMTIrOCglcjEpCiAJbHd6ICVyNiwxMTIrMTIoJXIxKQogCWIgLkxyM3I0CiAKK0UgUFBDMzJfTERfUjNSMTAKKwlsd3ogJXI3LDExMisxNiglcjEpCisJbHd6ICVyOCwxMTIrMjAoJXIxKQorCWx3eiAlcjksMTEyKzI0KCVyMSkKKwliIC5McjNyMTAKKwogI2lmbmRlZiBfX0xJVFRMRV9FTkRJQU5fXwogRSBQUEMzMl9TWVNWX0xEX1NUUlVDVF8zCiAJbHd6ICVyMywxMTIrMCglcjEpCkBAIC0yNDcsNiArMjU0LDEwIEBAIEUgUFBDMzJfU1lTVl9MRF9TVFJVQ1RfMgogCWVwaWxvZ3VlCiAjZW5kaWYKIAorLkxyM3IxMDoKKwlsd3ogJXIxMCwxMTIrMjgoJXIxKQorCWIgLkxyM3I2CisKIAkuY2ZpX2VuZHByb2MKIEVORChmZmlfY2xvc3VyZV9TWVNWKQogCi0tLSBhL3NyYy9wb3dlcnBjL3N5c3YuUworKysgYi9zcmMvcG93ZXJwYy9zeXN2LlMKQEAgLTExNiw2ICsxMTYsMTEgQEAgRU5UUlkoZmZpX2NhbGxfU1lTVikKIAliZgkyNixMKGRvbmVfcmV0dXJuX3ZhbHVlKQogCXN0dyAgICAgJXI1LDgoJXIzMCkKIAlzdHcJJXI2LDEyKCVyMzApCisJYmYJMjUsTChkb25lX3JldHVybl92YWx1ZSkKKwlzdHcJJXI3LDE2KCVyMzApCisJc3R3CSVyOCwyMCglcjMwKQorCXN0dwklcjksMjQoJXIzMCkKKwlzdHcJJXIxMCwyOCglcjMwKQogCS8qIEZhbGwgdGhyb3VnaC4uLiAgKi8KIAogTChkb25lX3JldHVybl92YWx1ZSk6Cg==
+From 5e9f34d6e75fb538ae039bd5117b5d6f24ed30e0 Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Tue, 20 Oct 2026 23:08:27 +0000
+Subject: [PATCH] powerpc: add complex type support for 32-bit SYSV
+
+The 32-bit SYSV ABI passes and returns complex values in GPRs, never in
+FPRs, even with hard float.  GCC does not split them for this ABI but
+treats each one as a single item of as many words as it needs, and
+those items follow the same rules as integers of the same size:
+
+  - one word (_Complex char and short) like an int, right-justified;
+  - two words (float and int _Complex) like long long: in an even/odd
+    GPR pair (r3:r4, r5:r6, r7:r8, r9:r10), otherwise 8-byte aligned on
+    the stack, and the remaining GPRs count as used;
+  - more words (double and long long _Complex, four words) in
+    consecutive GPRs with no pair alignment if they all fit, otherwise
+    4-byte aligned on the stack, and every later argument goes to the
+    stack too;
+  - returned in r3, r3:r4 or r3-r6.
+
+All of these already exist for soft-float long double (FFI_TYPE_UINT128)
+and long long, so map complex types onto them by size in a new
+translate_type(), used everywhere translate_float() was.
+
+With a 128-bit long double, long double _Complex takes eight words: it
+goes in r3-r10 when it is the first argument and on the stack otherwise,
+and is returned in r3-r10.  Handle it as an internal FFI_TYPE_UINT256,
+passed like FFI_TYPE_UINT128 with eight words, with a new
+FLAG_RETURNS_256BITS that makes ffi_call_SYSV also store r7-r10, and a
+PPC32_LD_R3R10 closure return entry.  The closure's return value area
+is exactly 32 bytes.
+
+A _Complex char is returned right-justified in r3, so ffi_call uses the
+small struct bounce buffer for it and the closure helper shifts it into
+place.  The ELFv2 handling of that bounce buffer for integer complex
+types is now limited to powerpc64.
+
+ffi_prep_types_sysv() resizes ffi_type_longdouble according to the abi;
+keep ffi_type_complex_longdouble in step with it, as ffi_linux64.c does.
+
+This matches GCC's code generation for 8548 (soft-float) and 464fp
+(hard-float), with 64-bit long double (musl) and with
+-mlong-double-128.
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ src/powerpc/ffi.c         |   2 +-
+ src/powerpc/ffi_powerpc.h |  16 +++--
+ src/powerpc/ffi_sysv.c    | 125 ++++++++++++++++++++++++++++++--------
+ src/powerpc/ffitarget.h   |  11 +++-
+ src/powerpc/ppc_closure.S |  11 ++++
+ src/powerpc/sysv.S        |   5 ++
+ 6 files changed, 134 insertions(+), 36 deletions(-)
+
+--- a/src/powerpc/ffi.c
++++ b/src/powerpc/ffi.c
+@@ -114,7 +114,7 @@ ffi_call_int (ffi_cif *cif,
+   if (rvalue && ecif.rvalue == smst_buffer)
+     {
+       unsigned int rsize = cif->rtype->size;
+-#ifdef FFI_TARGET_HAS_COMPLEX_TYPE
++#if defined (FFI_TARGET_HAS_COMPLEX_TYPE) && defined (POWERPC64)
+       /* Integer-typed _Complex: the .Lsmall_struct return path stored
+ 	 r3 at buffer offset 0 and r4 at offset 8.  Extract one inner-
+ 	 sized half from each slot — right-justified on BE, low-address
+--- a/src/powerpc/ffi_powerpc.h
++++ b/src/powerpc/ffi_powerpc.h
+@@ -54,6 +54,9 @@
+ /* Needed for soft-float long-double. */
+ #define PPC32_LD_R3R6		10
+ 
++/* Needed for _Complex long double with a 128-bit long double.  */
++#define PPC32_LD_R3R10		11
++
+ /* Needed for FFI_SYSV small structure returns.  */
+ #ifdef __LITTLE_ENDIAN__
+ #define PPC32_SYSV_LD_STRUCT_3	PPC32_LD_R3
+@@ -63,12 +66,12 @@
+ #define PPC32_SYSV_LD_STRUCT_1	PPC_LD_U8
+ #define PPC32_SYSV_LD_STRUCT_2	PPC_LD_U16
+ #else
+-#define PPC32_SYSV_LD_STRUCT_3	11
+-#define PPC32_SYSV_LD_STRUCT_5	12
+-#define PPC32_SYSV_LD_STRUCT_6	13
+-#define PPC32_SYSV_LD_STRUCT_7	14
+-#define PPC32_SYSV_LD_STRUCT_1	15
+-#define PPC32_SYSV_LD_STRUCT_2	16
++#define PPC32_SYSV_LD_STRUCT_3	12
++#define PPC32_SYSV_LD_STRUCT_5	13
++#define PPC32_SYSV_LD_STRUCT_6	14
++#define PPC32_SYSV_LD_STRUCT_7	15
++#define PPC32_SYSV_LD_STRUCT_1	16
++#define PPC32_SYSV_LD_STRUCT_2	17
+ #endif
+ 
+ #else /* POWERPC64 */
+@@ -116,6 +119,7 @@ enum {
+   /* These go in cr6 */
+   FLAG_RETURNS_64BITS   = 1 << (31-27),
+   FLAG_RETURNS_128BITS  = 1 << (31-26),
++  FLAG_RETURNS_256BITS  = 1 << (31-25), /* Used by sysv code */
+ 
+   FLAG_COMPAT           = 1 << (31- 8), /* Not used by assembly */
+ 
+--- a/src/powerpc/ffi_sysv.c
++++ b/src/powerpc/ffi_sysv.c
+@@ -42,6 +42,10 @@
+ #define NUM_GPR_ARG_REGISTERS 8
+ #define NUM_FPR_ARG_REGISTERS 8
+ 
++/* Internal type for an eight-word complex value, i.e. _Complex long double
++   with a 128-bit long double.  */
++#define FFI_TYPE_UINT256 (FFI_TYPE_LAST + 1)
++
+ 
+ #if HAVE_LONG_DOUBLE_VARIANT && FFI_TYPE_LONGDOUBLE != FFI_TYPE_DOUBLE
+ /* Adjust size of ffi_type_longdouble.  */
+@@ -58,6 +62,12 @@ ffi_prep_types_sysv (ffi_abi abi)
+       ffi_type_longdouble.size = 16;
+       ffi_type_longdouble.alignment = 16;
+     }
++#ifdef FFI_TARGET_HAS_COMPLEX_TYPE
++  /* _Complex long double is two halves of whatever long double just
++     became, so keep its size and alignment in step.  */
++  ffi_type_complex_longdouble.size = 2 * ffi_type_longdouble.size;
++  ffi_type_complex_longdouble.alignment = ffi_type_longdouble.alignment;
++#endif
+ }
+ #endif
+ 
+@@ -89,6 +99,39 @@ translate_float (int abi, int type)
+   return type;
+ }
+ 
++/* Transform a type to the type that is passed and returned the same way.
++   Complex values always go in GPRs, never in FPRs, even with hard float:
++   GCC does not split them for this ABI but passes each one as a single
++   item of as many words as it needs, just like an integer of that size.  */
++static int
++translate_type (int abi, const ffi_type *t)
++{
++  if (t->type != FFI_TYPE_COMPLEX)
++    return translate_float (abi, t->type);
++
++  switch (t->size)
++    {
++    case 2:
++      /* _Complex char.  */
++      return FFI_TYPE_UINT16;
++    case 4:
++      /* _Complex short.  */
++      return FFI_TYPE_UINT32;
++    case 8:
++      /* float and int _Complex: two words, like long long.  */
++      return FFI_TYPE_UINT64;
++    case 16:
++      /* double, long long and 64-bit long double _Complex.  */
++      return FFI_TYPE_UINT128;
++    case 32:
++      /* 128-bit long double _Complex.  */
++      return FFI_TYPE_UINT256;
++    default:
++      FFI_ASSERT (0);
++      return FFI_TYPE_STRUCT;
++    }
++}
++
+ /* Perform machine dependent cif processing */
+ static ffi_status
+ ffi_prep_cif_sysv_core (ffi_cif *cif)
+@@ -121,7 +164,7 @@ ffi_prep_cif_sysv_core (ffi_cif *cif)
+      - long doubles (if not equivalent to double) are returned in
+      fpr1,fpr2 for Linux and as for large structs for SysV.  */
+ 
+-  type = translate_float (cif->abi, type);
++  type = translate_type (cif->abi, cif->rtype);
+ 
+   switch (type)
+     {
+@@ -140,6 +183,9 @@ ffi_prep_cif_sysv_core (ffi_cif *cif)
+ #endif
+       break;
+ 
++    case FFI_TYPE_UINT256:
++      flags |= FLAG_RETURNS_256BITS;
++      /* Fall through.  */
+     case FFI_TYPE_UINT128:
+       flags |= FLAG_RETURNS_128BITS;
+       /* Fall through.  */
+@@ -148,6 +194,13 @@ ffi_prep_cif_sysv_core (ffi_cif *cif)
+       flags |= FLAG_RETURNS_64BITS;
+       break;
+ 
++    case FFI_TYPE_UINT16:
++      /* A _Complex char is returned right-justified in r3, like a small
++	 struct.  Use the small struct bounce buffer to extract it.  */
++      if (cif->rtype->type == FFI_TYPE_COMPLEX)
++	flags |= FLAG_RETURNS_SMST;
++      break;
++
+     case FFI_TYPE_STRUCT:
+       /* The final SYSV ABI says that structures smaller or equal 8 bytes
+ 	 are returned in r3/r4.  A draft ABI used by linux instead
+@@ -176,9 +229,8 @@ ffi_prep_cif_sysv_core (ffi_cif *cif)
+      Stuff on the stack needs to keep proper alignment.  */
+   for (ptr = cif->arg_types, i = cif->nargs; i > 0; i--, ptr++)
+     {
+-      unsigned short typenum = (*ptr)->type;
+-
+-      typenum = translate_float (cif->abi, typenum);
++      unsigned short typenum = translate_type (cif->abi, *ptr);
++      unsigned nwords;
+ 
+       switch (typenum)
+ 	{
+@@ -224,16 +276,19 @@ ffi_prep_cif_sysv_core (ffi_cif *cif)
+ #endif
+ 	  break;
+ 
++	case FFI_TYPE_UINT256:
+ 	case FFI_TYPE_UINT128:
+ 	  /* A long double in FFI_LINUX_SOFT_FLOAT can use only a set
+ 	     of four consecutive gprs. If we do not have enough, we
+-	     have to adjust the gpr_count value.  */
+-	  if (gpr_count >= NUM_GPR_ARG_REGISTERS - 3)
++	     have to adjust the gpr_count value.  Complex values of four
++	     or eight words are passed the same way.  */
++	  nwords = typenum == FFI_TYPE_UINT256 ? 8 : 4;
++	  if (gpr_count > NUM_GPR_ARG_REGISTERS - nwords)
+ 	    gpr_count = NUM_GPR_ARG_REGISTERS;
+ 	  if (gpr_count >= NUM_GPR_ARG_REGISTERS)
+-	    stack_count += 4;
++	    stack_count += nwords;
+ 	  else
+-	    gpr_count += 4;
++	    gpr_count += nwords;
+ 	  break;
+ 
+ 	case FFI_TYPE_UINT64:
+@@ -458,9 +513,8 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+        i > 0;
+        i--, ptr++, p_argv.v++)
+     {
+-      unsigned int typenum = (*ptr)->type;
+-
+-      typenum = translate_float (ecif->cif->abi, typenum);
++      unsigned int typenum = translate_type (ecif->cif->abi, *ptr);
++      unsigned int ii, nwords;
+ 
+       /* Now test the translated value */
+       switch (typenum)
+@@ -518,16 +572,18 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+ 	  break;
+ #endif /* have FPRs */
+ 
++	case FFI_TYPE_UINT256:
+ 	case FFI_TYPE_UINT128:
+ 	  /* The soft float ABI for long doubles works like this, a long double
+ 	     is passed in four consecutive GPRs if available.  A maximum of 2
+ 	     long doubles can be passed in gprs.  If we do not have 4 GPRs
+-	     left, the long double is passed on the stack, 4-byte aligned.  */
+-	  if (gpr_base.u >= gpr_end.u - 3)
++	     left, the long double is passed on the stack, 4-byte aligned.
++	     Complex values of four or eight words are passed the same way.  */
++	  nwords = typenum == FFI_TYPE_UINT256 ? 8 : 4;
++	  if (gpr_base.u > gpr_end.u - nwords)
+ 	    {
+-	      unsigned int ii;
+ 	      gpr_base.u = gpr_end.u;
+-	      for (ii = 0; ii < 4; ii++)
++	      for (ii = 0; ii < nwords; ii++)
+ 		{
+ 		  unsigned int int_tmp = (*p_argv.ui)[ii];
+ 		  *next_arg.u++ = int_tmp;
+@@ -535,8 +591,7 @@ ffi_prep_args_SYSV (extended_cif *ecif,
+ 	    }
+ 	  else
+ 	    {
+-	      unsigned int ii;
+-	      for (ii = 0; ii < 4; ii++)
++	      for (ii = 0; ii < nwords; ii++)
+ 		{
+ 		  unsigned int int_tmp = (*p_argv.ui)[ii];
+ 		  *gpr_base.u++ = int_tmp;
+@@ -709,7 +764,7 @@ ffi_closure_helper_SYSV (ffi_cif *cif,
+   avalue = alloca (cif->nargs * sizeof (void *));
+ 
+   /* First translate for softfloat/nonlinux */
+-  rtypenum = translate_float (cif->abi, rtypenum);
++  rtypenum = translate_type (cif->abi, cif->rtype);
+ 
+   /* Copy the caller's structure return value address so that the closure
+      returns the data directly to the caller.
+@@ -729,10 +784,9 @@ ffi_closure_helper_SYSV (ffi_cif *cif,
+ 
+   /* Grab the addresses of the arguments from the stack frame.  */
+   while (i < avn) {
+-    unsigned short typenum = arg_types[i]->type;
+-
+     /* We may need to handle some values depending on ABI.  */
+-    typenum = translate_float (cif->abi, typenum);
++    unsigned short typenum = translate_type (cif->abi, arg_types[i]);
++    long nwords;
+ 
+     switch (typenum)
+       {
+@@ -796,20 +850,23 @@ ffi_closure_helper_SYSV (ffi_cif *cif,
+ # endif
+ #endif
+ 
++      case FFI_TYPE_UINT256:
+       case FFI_TYPE_UINT128:
+ 	/* Test if for the whole long double, 4 gprs are available.
+-	   otherwise the stuff ends up on the stack.  */
+-	if (ng < NUM_GPR_ARG_REGISTERS - 3)
++	   otherwise the stuff ends up on the stack.  The same holds
++	   for complex values of four or eight words.  */
++	nwords = typenum == FFI_TYPE_UINT256 ? 8 : 4;
++	if (ng <= NUM_GPR_ARG_REGISTERS - nwords)
+ 	  {
+ 	    avalue[i] = pgr;
+-	    pgr += 4;
+-	    ng += 4;
++	    pgr += nwords;
++	    ng += nwords;
+ 	  }
+ 	else
+ 	  {
+ 	    avalue[i] = pst;
+-	    pst += 4;
+-	    ng = 8+4;
++	    pst += nwords;
++	    ng = NUM_GPR_ARG_REGISTERS;
+ 	  }
+ 	break;
+ 
+@@ -940,6 +997,18 @@ ffi_closure_helper_SYSV (ffi_cif *cif,
+     case FFI_TYPE_SINT8:
+       return PPC_LD_S8;
+     case FFI_TYPE_UINT16:
++      if (cif->rtype->type == FFI_TYPE_COMPLEX)
++	{
++	  /* A _Complex char is returned right-justified in r3.  */
++	  unsigned int word = 0;
++#ifdef __LITTLE_ENDIAN__
++	  memcpy (&word, rvalue, 2);
++#else
++	  memcpy ((char *) &word + 2, rvalue, 2);
++#endif
++	  *(unsigned int *) rvalue = word;
++	  return PPC_LD_U32;
++	}
+       return PPC_LD_U16;
+     case FFI_TYPE_SINT16:
+       return PPC_LD_S16;
+@@ -955,6 +1024,8 @@ ffi_closure_helper_SYSV (ffi_cif *cif,
+       return PPC_LD_I64;
+     case FFI_TYPE_UINT128:
+       return PPC32_LD_R3R6;
++    case FFI_TYPE_UINT256:
++      return PPC32_LD_R3R10;
+     case FFI_TYPE_STRUCT:
+       if (cif->abi & FFI_SYSV_STRUCT_RET)
+ 	switch (size)
+--- a/src/powerpc/ffitarget.h
++++ b/src/powerpc/ffitarget.h
+@@ -155,8 +155,15 @@ typedef enum ffi_abi {
+    ELFv2, float/double _Complex are passed and returned as a 2-element
+    homogeneous floating-point aggregate, but each scalar half consumes a
+    GPR shadow slot of its own — i.e. the same way the underlying C ABI
+-   handles them, which is what GCC's split_complex_arg emits.  */
+-#if defined(POWERPC64) && _CALL_ELF == 2
++   handles them, which is what GCC's split_complex_arg emits.
++
++   They are also supported on 32-bit SYSV, where complex values are passed
++   and returned in GPRs like integers of the same size.  */
++#if defined(POWERPC64)
++# if _CALL_ELF == 2
++#  define FFI_TARGET_HAS_COMPLEX_TYPE
++# endif
++#elif defined (POWERPC) || defined (POWERPC_FREEBSD)
+ # define FFI_TARGET_HAS_COMPLEX_TYPE
+ #endif
+ 
+--- a/src/powerpc/ppc_closure.S
++++ b/src/powerpc/ppc_closure.S
+@@ -202,10 +202,17 @@ E PPC_LD_S16
+ 	epilogue
+ 
+ E PPC32_LD_R3R6
++.Lr3r6:
+ 	lwz %r5,112+8(%r1)
+ 	lwz %r6,112+12(%r1)
+ 	b .Lr3r4
+ 
++E PPC32_LD_R3R10
++	lwz %r7,112+16(%r1)
++	lwz %r8,112+20(%r1)
++	lwz %r9,112+24(%r1)
++	b .Lr3r10
++
+ #ifndef __LITTLE_ENDIAN__
+ E PPC32_SYSV_LD_STRUCT_3
+ 	lwz %r3,112+0(%r1)
+@@ -247,6 +254,10 @@ E PPC32_SYSV_LD_STRUCT_2
+ 	epilogue
+ #endif
+ 
++.Lr3r10:
++	lwz %r10,112+28(%r1)
++	b .Lr3r6
++
+ 	.cfi_endproc
+ END(ffi_closure_SYSV)
+ 
+--- a/src/powerpc/sysv.S
++++ b/src/powerpc/sysv.S
+@@ -116,6 +116,11 @@ ENTRY(ffi_call_SYSV)
+ 	bf	26,L(done_return_value)
+ 	stw     %r5,8(%r30)
+ 	stw	%r6,12(%r30)
++	bf	25,L(done_return_value)
++	stw	%r7,16(%r30)
++	stw	%r8,20(%r30)
++	stw	%r9,24(%r30)
++	stw	%r10,28(%r30)
+ 	/* Fall through...  */
+ 
+ L(done_return_value):

@@ -1,1 +1,110 @@
-RnJvbSA5M2FiNmFmODVlNzhiYjk4ZTMzMTY5Mjg3NTE5MzE0NTY0NWM1OGZkIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogVHVlLCAyMCBPY3QgMjAyNiAyMzozNzoxMSArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHBvd2VycGM2NDogZml4IGJpZy1lbmRpYW4gRUxGdjIgY2xvc3VyZSByZXR1cm5zIG9mIDEtIHRvCiA0LWJ5dGUgc3RydWN0cwoKRUxGdjIgcmV0dXJucyBhIHN0cnVjdCBvZiB1cCB0byA4IGJ5dGVzIHJpZ2h0LWp1c3RpZmllZCBpbiByMy4gIFRoZQpjbG9zdXJlIGZ1bmN0aW9uIHN0b3JlcyBpdCBhdCB0aGUgc3RhcnQgb2YgdGhlIHJldHVybiB2YWx1ZSBhcmVhLCBpbgppdHMgbm9ybWFsIG1lbW9yeSBsYXlvdXQsIHNvIG9uIGJpZy1lbmRpYW4gdGhlIGNsb3N1cmUgYXNzZW1ibHkgaGFzIHRvCmxvYWQgdGhlIHN0cnVjdCBmcm9tIG9mZnNldCAwIGFuZCBzaGlmdCBpdCByaWdodC4gIFRoYXQgaXMgd2hhdApQUEM2NF9MRF9TVFJVQ1RfNS82LzcgZG8sIGJ1dCBzdHJ1Y3RzIG9mIDEsIDIgYW5kIDQgYnl0ZXMgdXNlIHRoZSBqdW1wCnRhYmxlIGVudHJpZXMgZm9yIGludGVnZXIgcmV0dXJuIHZhbHVlcywgd2hpY2ggbG9hZCBmcm9tIHRoZSBlbmQgb2YgdGhlCmRvdWJsZXdvcmQgd2hlcmUgYW4gaW50ZWdlciB3aWRlbmVkIHRvIGZmaV9hcmcgaXMuICBQUEM2NF9MRF9TVFJVQ1RfMwpsb2FkcyBmcm9tIG9mZnNldCA0IGFuZCBzaGlmdHMgYnkgdGhlIGNvbnRlbnRzIG9mIHI4LgoKVGhlIGludGVnZXIgZW50cmllcyB3ZXJlIGludHJvZHVjZWQgZm9yIHN0cnVjdHMgd2hlbiB0aGUgY2xvc3VyZSByZXR1cm4KaGFuZGxpbmcgbW92ZWQgZnJvbSBhc3NlbWJseSB0byBDLCByZXBsYWNpbmcgdGhlIG9sZCBzaGlmdCBvZiB0aGUgZmlyc3QKZG91Ymxld29yZCBieSA4IC0gc2l6ZSBieXRlcy4gIFJlc3RvcmUgdGhhdCBiZWhhdmlvdXIgd2l0aCBlbnRyaWVzIGZvcgoxLSwgMi0gYW5kIDQtYnl0ZSBzdHJ1Y3RzIG9uIGJpZy1lbmRpYW4sIHdoaWNoIGFsaWFzIHRoZSBpbnRlZ2VyIGVudHJpZXMKb24gbGl0dGxlLWVuZGlhbiBhcyBiZWZvcmUsIGFuZCBtYWtlIFBQQzY0X0xEX1NUUlVDVF8zIGxvYWQgYW5kIHNoaWZ0CnRoZSBkb3VibGV3b3JkIGxpa2UgdGhlIG90aGVycy4KClRoaXMgZml4ZXMgY2xzXzFfMWJ5dGUsIGNsc18yYnl0ZSwgY2xzXzNfMWJ5dGUsIGNsc18zYnl0ZTEsIGNsc18zYnl0ZTIsCmNsc180XzFieXRlLCBjbHNfNGJ5dGUsIHNpbmdsZV9lbnRyeV9zdHJ1Y3RzMSBhbmQgc2luZ2xlX2VudHJ5X3N0cnVjdHMzLAphbmQgdGhlIHN0cnVjdC1yZXR1cm5pbmcgY2FsbGJhY2tzIGluIGxpYmZmaS5iaGFpYmxlL3Rlc3QtY2FsbGJhY2ssIG9uCmJpZy1lbmRpYW4gRUxGdjIgKG11c2wgcG93ZXJwYzY0LCBlNTUwMCB1bmRlciBxZW11LXVzZXIpLgoKRml4ZXM6IDg0MGFkZDNiNmExYyAoIkFkZCBjb25kaXRpb25hbCB0YXJnZXQgc3VwcG9ydCBmb3IgX19pbnQxMjggKCM5NTEpIikKQXNzaXN0ZWQtYnk6IExMTQpTaWduZWQtb2ZmLWJ5OiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KLS0tCiBzcmMvcG93ZXJwYy9mZmlfbGludXg2NC5jICAgICB8ICA2ICsrKy0tLQogc3JjL3Bvd2VycGMvZmZpX3Bvd2VycGMuaCAgICAgfCAgNiArKysrKysKIHNyYy9wb3dlcnBjL2xpbnV4NjRfY2xvc3VyZS5TIHwgMTkgKysrKysrKysrKysrKysrKystLQogMyBmaWxlcyBjaGFuZ2VkLCAyNiBpbnNlcnRpb25zKCspLCA1IGRlbGV0aW9ucygtKQoKLS0tIGEvc3JjL3Bvd2VycGMvZmZpX2xpbnV4NjQuYworKysgYi9zcmMvcG93ZXJwYy9mZmlfbGludXg2NC5jCkBAIC0xNjQ5LDEzICsxNjQ5LDEzIEBAIGZmaV9jbG9zdXJlX2hlbHBlcl9MSU5VWDY0IChmZmlfY2lmICpjaWYKIAkJY2FzZSAwOgogCQkgIHJldHVybiBQUENfTERfTk9ORTsKIAkJY2FzZSAxOgotCQkgIHJldHVybiBQUENfTERfVTg7CisJCSAgcmV0dXJuIFBQQzY0X0xEX1NUUlVDVF8xOwogCQljYXNlIDI6Ci0JCSAgcmV0dXJuIFBQQ19MRF9VMTY7CisJCSAgcmV0dXJuIFBQQzY0X0xEX1NUUlVDVF8yOwogCQljYXNlIDM6CiAJCSAgcmV0dXJuIFBQQzY0X0xEX1NUUlVDVF8zOwogCQljYXNlIDQ6Ci0JCSAgcmV0dXJuIFBQQ19MRF9VMzI7CisJCSAgcmV0dXJuIFBQQzY0X0xEX1NUUlVDVF80OwogCQljYXNlIDU6CiAJCSAgcmV0dXJuIFBQQzY0X0xEX1NUUlVDVF81OwogCQljYXNlIDY6Ci0tLSBhL3NyYy9wb3dlcnBjL2ZmaV9wb3dlcnBjLmgKKysrIGIvc3JjL3Bvd2VycGMvZmZpX3Bvd2VycGMuaApAQCAtODQsMTEgKzg0LDE3IEBACiAjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF81CVBQQ19MRF9JNjQKICNkZWZpbmUgUFBDNjRfTERfU1RSVUNUXzYJUFBDX0xEX0k2NAogI2RlZmluZSBQUEM2NF9MRF9TVFJVQ1RfNwlQUENfTERfSTY0CisjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF8xCVBQQ19MRF9VOAorI2RlZmluZSBQUEM2NF9MRF9TVFJVQ1RfMglQUENfTERfVTE2CisjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF80CVBQQ19MRF9VMzIKICNlbHNlCiAjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF8zCTE2CiAjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF81CTE3CiAjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF82CTE4CiAjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF83CTE5CisjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF8xCTIwCisjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF8yCTIxCisjZGVmaW5lIFBQQzY0X0xEX1NUUlVDVF80CTIyCiAjZW5kaWYKIAogI2VuZGlmIC8qIFBPV0VSUEM2NCAqLwotLS0gYS9zcmMvcG93ZXJwYy9saW51eDY0X2Nsb3N1cmUuUworKysgYi9zcmMvcG93ZXJwYy9saW51eDY0X2Nsb3N1cmUuUwpAQCAtMzQyLDggKzM0Miw4IEBAIEUgUFBDNjRfTERfRE9VQkxFX0hPTU9HCiAKICNpZm5kZWYgX19MSVRUTEVfRU5ESUFOX18KIEUgUFBDNjRfTERfU1RSVUNUXzMKLQlsd3ogJXIzLCBSRVRWQUwrNCglcjEpCi0Jc3JkICVyMywgJXIzLCA4CisJbGQgJXIzLCBSRVRWQUwrMCglcjEpCisJc3JkaSAlcjMsICVyMywgNDAKIAllcGlsb2d1ZQogCiBFIFBQQzY0X0xEX1NUUlVDVF81CkBAIC0zNjAsNiArMzYwLDIxIEBAIEUgUFBDNjRfTERfU1RSVUNUXzcKIAlsZCAlcjMsIFJFVFZBTCswKCVyMSkKIAlzcmRpICVyMywgJXIzLCA4CiAJZXBpbG9ndWUKKworRSBQUEM2NF9MRF9TVFJVQ1RfMQorCWxkICVyMywgUkVUVkFMKzAoJXIxKQorCXNyZGkgJXIzLCAlcjMsIDU2CisJZXBpbG9ndWUKKworRSBQUEM2NF9MRF9TVFJVQ1RfMgorCWxkICVyMywgUkVUVkFMKzAoJXIxKQorCXNyZGkgJXIzLCAlcjMsIDQ4CisJZXBpbG9ndWUKKworRSBQUEM2NF9MRF9TVFJVQ1RfNAorCWxkICVyMywgUkVUVkFMKzAoJXIxKQorCXNyZGkgJXIzLCAlcjMsIDMyCisJZXBpbG9ndWUKICNlbmRpZgogCiAuTG1vcmVkb3VibGU6Cg==
+From 93ab6af85e78bb98e331692875193145645c58fd Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Tue, 20 Oct 2026 23:37:11 +0000
+Subject: [PATCH] powerpc64: fix big-endian ELFv2 closure returns of 1- to
+ 4-byte structs
+
+ELFv2 returns a struct of up to 8 bytes right-justified in r3.  The
+closure function stores it at the start of the return value area, in
+its normal memory layout, so on big-endian the closure assembly has to
+load the struct from offset 0 and shift it right.  That is what
+PPC64_LD_STRUCT_5/6/7 do, but structs of 1, 2 and 4 bytes use the jump
+table entries for integer return values, which load from the end of the
+doubleword where an integer widened to ffi_arg is.  PPC64_LD_STRUCT_3
+loads from offset 4 and shifts by the contents of r8.
+
+The integer entries were introduced for structs when the closure return
+handling moved from assembly to C, replacing the old shift of the first
+doubleword by 8 - size bytes.  Restore that behaviour with entries for
+1-, 2- and 4-byte structs on big-endian, which alias the integer entries
+on little-endian as before, and make PPC64_LD_STRUCT_3 load and shift
+the doubleword like the others.
+
+This fixes cls_1_1byte, cls_2byte, cls_3_1byte, cls_3byte1, cls_3byte2,
+cls_4_1byte, cls_4byte, single_entry_structs1 and single_entry_structs3,
+and the struct-returning callbacks in libffi.bhaible/test-callback, on
+big-endian ELFv2 (musl powerpc64, e5500 under qemu-user).
+
+Fixes: 840add3b6a1c ("Add conditional target support for __int128 (#951)")
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ src/powerpc/ffi_linux64.c     |  6 +++---
+ src/powerpc/ffi_powerpc.h     |  6 ++++++
+ src/powerpc/linux64_closure.S | 19 +++++++++++++++++--
+ 3 files changed, 26 insertions(+), 5 deletions(-)
+
+--- a/src/powerpc/ffi_linux64.c
++++ b/src/powerpc/ffi_linux64.c
+@@ -1649,13 +1649,13 @@ ffi_closure_helper_LINUX64 (ffi_cif *cif
+ 		case 0:
+ 		  return PPC_LD_NONE;
+ 		case 1:
+-		  return PPC_LD_U8;
++		  return PPC64_LD_STRUCT_1;
+ 		case 2:
+-		  return PPC_LD_U16;
++		  return PPC64_LD_STRUCT_2;
+ 		case 3:
+ 		  return PPC64_LD_STRUCT_3;
+ 		case 4:
+-		  return PPC_LD_U32;
++		  return PPC64_LD_STRUCT_4;
+ 		case 5:
+ 		  return PPC64_LD_STRUCT_5;
+ 		case 6:
+--- a/src/powerpc/ffi_powerpc.h
++++ b/src/powerpc/ffi_powerpc.h
+@@ -84,11 +84,17 @@
+ #define PPC64_LD_STRUCT_5	PPC_LD_I64
+ #define PPC64_LD_STRUCT_6	PPC_LD_I64
+ #define PPC64_LD_STRUCT_7	PPC_LD_I64
++#define PPC64_LD_STRUCT_1	PPC_LD_U8
++#define PPC64_LD_STRUCT_2	PPC_LD_U16
++#define PPC64_LD_STRUCT_4	PPC_LD_U32
+ #else
+ #define PPC64_LD_STRUCT_3	16
+ #define PPC64_LD_STRUCT_5	17
+ #define PPC64_LD_STRUCT_6	18
+ #define PPC64_LD_STRUCT_7	19
++#define PPC64_LD_STRUCT_1	20
++#define PPC64_LD_STRUCT_2	21
++#define PPC64_LD_STRUCT_4	22
+ #endif
+ 
+ #endif /* POWERPC64 */
+--- a/src/powerpc/linux64_closure.S
++++ b/src/powerpc/linux64_closure.S
+@@ -342,8 +342,8 @@ E PPC64_LD_DOUBLE_HOMOG
+ 
+ #ifndef __LITTLE_ENDIAN__
+ E PPC64_LD_STRUCT_3
+-	lwz %r3, RETVAL+4(%r1)
+-	srd %r3, %r3, 8
++	ld %r3, RETVAL+0(%r1)
++	srdi %r3, %r3, 40
+ 	epilogue
+ 
+ E PPC64_LD_STRUCT_5
+@@ -360,6 +360,21 @@ E PPC64_LD_STRUCT_7
+ 	ld %r3, RETVAL+0(%r1)
+ 	srdi %r3, %r3, 8
+ 	epilogue
++
++E PPC64_LD_STRUCT_1
++	ld %r3, RETVAL+0(%r1)
++	srdi %r3, %r3, 56
++	epilogue
++
++E PPC64_LD_STRUCT_2
++	ld %r3, RETVAL+0(%r1)
++	srdi %r3, %r3, 48
++	epilogue
++
++E PPC64_LD_STRUCT_4
++	ld %r3, RETVAL+0(%r1)
++	srdi %r3, %r3, 32
++	epilogue
+ #endif
+ 
+ .Lmoredouble:

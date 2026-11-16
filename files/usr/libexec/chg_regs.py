@@ -1,1 +1,321 @@
-IyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwoiIiJQTTg5MTYg5YWF55S15Zmo55qE5Y+q6K+76YCa6YGT77yI6L+Z54mIIE9wZW5XcnQg5YaF5qC46YeM5rKh5pyJ5Lu75L2V5YWF55S16amx5Yqo77yM5Y+q5YmpIHJlZ21hcCBkZWJ1Z2Zz77yJ44CCCgrlhoXmoLggNi4xOCBkcml2ZXJzL2Jhc2UvcmVnbWFwL3JlZ21hcC1kZWJ1Z2ZzLmMg55qE5LqL5a6e77yI5bey5qC45a+55rqQ56CB77yM5Yir5YaN6K+V6ZSZ77yJ77yaCiAgLSBhY2Nlc3MgID0gMDQwMO+8jERFRklORV9TSE9XX0FUVFJJQlVURe+8jOWPquiDveWIl+WHuuiuv+mXruihqO+8jOayoeaciSAud3JpdGUgID0+IOWGmeWug+W/hSBFSU5WQUwKICAtIHJlZ2lzdGVycyA9IDA0MDDvvJvlj6rmnInnvJbor5Hml7blrprkuYkgUkVHTUFQX0FMTE9XX1dSSVRFX0RFQlVHRlMg5omNIDA2MDAg5LiU5bimIC53cml0Ze+8jAogICAg6L+Z5Lu95YaF5qC46LWw55qE5pivICNlbHNlIOWIhuaUryA9PiDmlbTku70gZGVidWdmcyDlj6rog73or7vvvIzlhpnkuI3kuoYKICAtIHJlZ2lzdGVycyDmr4/ooYzlrprplb/vvIhyZWdfbGVuICsgMiArIDIqdmFsX2J5dGVzICsgMyDlrZfoioLlkKsgJ1xuJ++8ie+8jAogICAg6KGM6aaW5Lya5Zue5pi+5YGP56e7ID0+IOeUqCBzZWVrIOWumuS9jeWIsCBhZGRyKnRvdCDlsLHog73lj6ror7vpgqPkuIDkuKrvvIzkuI3nlKjmlbTniYfmiasKCueUqOazle+8iOiuvuWkh+S+pyByb29077yJ77yaCiAgY2hnX3JlZ3MucHkgcHJvYmUgICAgICAgICAgICAgIOiupOi3r++8muacieWTquS6myBtYXDjgIHojIPlm7TjgIHooYzplb/jgIFTUE1JIOe7keWumuOAgS9kZXYvbWVtIOWcqOS4jeWcqAogIGNoZ19yZWdzLnB5IHJlYWQgQUREUiBbTl0gICAgICDlj6ror7vkuIDkuKrvvIjmiJbku47ov5nlvIDlp4vnmoQgTiDkuKrvvInlr4TlrZjlmagKICBjaGdfcmVncy5weSBkdW1wIFNUQVJUIEVORCAgICAg6L+e57ut5Y+q6K+76L2s5YKo77yI5pyA5aSaIDB4MTAwIOS4qu+8jOe7neS4jei2iueVjO+8iQogIGNoZ19yZWdzLnB5IHN0YXQgICAgICAgICAgICAgICDlhYXnlLXnm7jlhbPlr4TlrZjlmajpgJDkuKrngrnlkI0gKyDkurror53op6Pph4oKICBjaGdfcmVncy5weSBjaGVjayBb56eSXSAgICAgICAgIOWIt+acuuWQjumqjOaUtu+8mnBvd2VyX3N1cHBseSArIElCQVQg5o2i566XICsgZG1lc2cgKyBWU1lTIOi1sOWKvwoK546v5aKD5Y+Y6YePIENIR19NQVAg5oyH5a6a55So5ZOq5LiqIHJlZ21hcO+8iOm7mOiupCAwLTAw77yM5Y2zIHNwbWkgYnVzMCBzaWQw77yJ44CCCiIiIgppbXBvcnQgZ2xvYiwgb3MsIHN5cywgdGltZQoKTUFYRFVNUCA9IDB4MTAwCgojIFBNODkxNiBMQkMg5YGP56e777yI5Li757q/IGRyaXZlcnMvcG93ZXIvc3VwcGx5L3BtODkxNi1sYmMuYyArIENBRiBxcG5wLWxpbmVhci1jaGFyZ2VyLmPvvIkKQ0hHUiA9IHsKICAgIDB4MTAwODogKCJDSEdfT1BUSU9OIiwgImJpdDc9MSDmiY3mmK8gUE1JQyDlhYXnlLXlmajkvb/og70iKSwKICAgIDB4MTAwOTogKCJDSEdfU1RBVFVTIiwgImJpdDcgY2hnX2RvbmUvYml0NiBiYXR0X29rL2JpdDUgY2hnX25vdF9kb25lIiksCiAgICAweDEwMTA6ICgiQ0hHX0lOVF9SVF9TVFMiLCAiYml0MCB2YmF0X2xvL2JpdDUgZmFzdF9jaGcvYml0NiBjaGdfZmFpbGVkL2JpdDcgY2hnX2RvbmUiKSwKICAgIDB4MTA0MDogKCJWRERfTUFYIiwgIihtVi00MDAwKS8yNe+8jDQuMjBWPTB4MDgiKSwKICAgIDB4MTA0MTogKCJWRERfU0FGRSIsICLlkIwgVkREX01BWCDliLvluqYiKSwKICAgIDB4MTA0NDogKCJJQkFUX01BWCIsICJtQS85MC0xIiksCiAgICAweDEwNDU6ICgiSUJBVF9TQUZFIiwgIm1BLzkwLTEiKSwKICAgIDB4MTA0NzogKCJWSU5fTUlOIiwgIihtVi00MjAwKS8yNyIpLAogICAgMHgxMDQ5OiAoIkNIR19DVFJMIiwgImJpdDcgQ0hHX0VOQUJMRSAvIGJpdDUgUFNUR19FTiAvIGJpdDAgRk9SQ0VfQkFUVF9PTiIpLAogICAgMHgxMDRBOiAoIkNIR19GQUlMRUQiLCAiYml0NyDlhpkgMSDmuIXpmaQiKSwKICAgIDB4MTA1MjogKCJWQkFUX1dFQUsiLCAiKHVWLTMuMFYpLzE4NzUwIiksCiAgICAweDEwNjA6ICgiVENIR19NQVhfRU4iLCAiIiksCiAgICAweDEwNjE6ICgiVENIR19NQVgiLCAibWluLzQtMSIpLAogICAgMHgxMDY1OiAoIkNIR19XRE9HX0VOIiwgIiIpLAogICAgMHgxMEQwOiAoIlNFQ19BQ0NFU1MiLCAi5YaZIDB4QTUg5omN6Kej6ZSBIDB4MTBEQS8weDEwRUUiKSwKICAgIDB4MTBFRTogKCJWQkFUX0RFVEVDVCIsICJiaXRzMTowPTIg5by65Yi2J+S9juS6jiBWQkFUJyIpLAp9CkJBVElGID0gewogICAgMHgxMjA4OiAoIkJBVFRfU1RfUkRZPyIsICJiaXQ3IOeUteaxoOWcqOS9je+8iOivu+eahOaYr+WFheeUteWZqOeahOWIpOaWre+8iSIpLAogICAgMHgxMjEwOiAoIkJBVF9JRl9SVF9TVFMiLCAiYml0MCBiYXR0X3ByZXMvYml0MSB0ZW1wX29rIiksCn0KVVNCID0gewogICAgMHgxMzEwOiAoIlVTQl9SVF9TVFMiLCAiYml0MSBVU0JJTl9WQUxJRO+8iFVTQiDnlLXmupDlnKjkuI3lnKjvvIkiKSwKfQoKCmRlZiBtYXBzKCk6CiAgICByZXR1cm4gc29ydGVkKGQgZm9yIGQgaW4gZ2xvYi5nbG9iKCIvc3lzL2tlcm5lbC9kZWJ1Zy9yZWdtYXAvKiIpIGlmIG9zLnBhdGguaXNkaXIoZCkpCgoKZGVmIHBpY2soKToKICAgIHdhbnQgPSBvcy5lbnZpcm9uLmdldCgiQ0hHX01BUCIpCiAgICBtcyA9IG1hcHMoKQogICAgaWYgbm90IG1zOgogICAgICAgIHJhaXNlIFN5c3RlbUV4aXQoIuayoeaciSByZWdtYXAgZGVidWdmc++8iOaMgui9veS6huWQl++8n++8iSIpCiAgICBpZiB3YW50OgogICAgICAgIGZvciBtIGluIG1zOgogICAgICAgICAgICBpZiBvcy5wYXRoLmJhc2VuYW1lKG0pID09IHdhbnQ6CiAgICAgICAgICAgICAgICByZXR1cm4gbQogICAgICAgIHJhaXNlIFN5c3RlbUV4aXQoIkNIR19NQVA9JXMg5LiN5ZyoICVzIOmHjCIgJSAod2FudCwgW29zLnBhdGguYmFzZW5hbWUoeCkgZm9yIHggaW4gbXNdKSkKICAgIGZvciBtIGluIG1zOgogICAgICAgIGlmIG9zLnBhdGguYmFzZW5hbWUobSkgPT0gIjAtMDAiOgogICAgICAgICAgICByZXR1cm4gbQogICAgcmV0dXJuIG1zWzBdCgoKZGVmIGxheW91dChtKToKICAgICIiIumHj+S4gOasoSByZWdpc3RlcnMg55qE6KGM6ZW/77ya56ysIDAg6KGM5bCx5piv5YGP56e7IDDvvIzooYzmlofmnKwgKyDmjaLooYwgPSB0b3TjgIIiIiIKICAgIHdpdGggb3Blbihvcy5wYXRoLmpvaW4obSwgInJlZ2lzdGVycyIpLCAicmIiKSBhcyBmOgogICAgICAgIHMgPSBmLnJlYWQoNjQpLmRlY29kZSgiYXNjaWkiLCAicmVwbGFjZSIpCiAgICBmaXJzdCA9IHMuc3BsaXRsaW5lcygpWzBdCiAgICB0b3QgPSBsZW4oZmlyc3QpICsgMQogICAgcmVnX2xlbiA9IGZpcnN0LmluZGV4KCI6IikKICAgIHJldHVybiByZWdfbGVuLCB0b3QKCgpkZWYgX2xpbmVzKG0sIGFkZHIsIG4pOgogICAgcmVnX2xlbiwgdG90ID0gbGF5b3V0KG0pCiAgICB3aXRoIG9wZW4ob3MucGF0aC5qb2luKG0sICJyZWdpc3RlcnMiKSwgInJiIikgYXMgZjoKICAgICAgICBmLnNlZWsoYWRkciAqIHRvdCkKICAgICAgICBzID0gZi5yZWFkKG4gKiB0b3QpLmRlY29kZSgiYXNjaWkiLCAicmVwbGFjZSIpCiAgICBvdXQgPSBbXQogICAgZm9yIGxuIGluIHMuc3BsaXRsaW5lcygpOgogICAgICAgIGhlYWQsIF8sIHZhbCA9IGxuLnBhcnRpdGlvbigiOiIpCiAgICAgICAgdHJ5OgogICAgICAgICAgICBnb3QgPSBpbnQoaGVhZC5zdHJpcCgpLCAxNikKICAgICAgICBleGNlcHQgVmFsdWVFcnJvcjoKICAgICAgICAgICAgcmFpc2UgU3lzdGVtRXhpdCgi6KGM5qC85byP5rKh6K6k5Ye65p2l77yaJXIiICUgbG4pCiAgICAgICAgb3V0LmFwcGVuZCgoZ290LCB2YWwuc3RyaXAoKSkpCiAgICBpZiBvdXQgYW5kIG91dFswXVswXSAhPSBhZGRyOgogICAgICAgIHJhaXNlIFN5c3RlbUV4aXQoIuWumuS9jeayoeWvueS4iu+8muaDs+imgSAweCV477yM6KGM6aaW57uZIDB4JXjvvIh0b3Q9JWTvvIkiICUgKGFkZHIsIG91dFswXVswXSwgdG90KSkKICAgIHJldHVybiBvdXQKCgpkZWYgcmQoYWRkciwgbT1Ob25lKToKICAgIG0gPSBtIG9yIHBpY2soKQogICAgcmV0dXJuIF9saW5lcyhtLCBhZGRyLCAxKVswXVsxXQoKCmRlZiB2YWwodik6CiAgICByZXR1cm4gTm9uZSBpZiAiWCIgaW4gdi51cHBlcigpIGVsc2UgaW50KHYsIDE2KQoKCmRlZiBzaG93KGFkZHIsIHYsIHRhYmxlKToKICAgIG5hbWUsIG5vdGUgPSB0YWJsZS5nZXQoYWRkciwgKCI/IiwgIiIpKQogICAgbiA9IHZhbCh2KQogICAgZGVjID0gIiIgaWYgbiBpcyBOb25lIGVsc2UgIiAgPTBiJXMiICUgZm9ybWF0KG4sICIwOGIiKQogICAgcHJpbnQoIjB4JTA0eCAlLTE0cyAlcyVzICAgJXMiICUgKGFkZHIsIG5hbWUsIHYsIGRlYywgbm90ZSkpCgoKZGVmIGR1bXAobSwgbG8sIGhpKToKICAgIGlmIGhpIC0gbG8gKyAxID4gTUFYRFVNUDoKICAgICAgICByYWlzZSBTeXN0ZW1FeGl0KCLkuIDmrKHmnIDlpJror7sgJWQg5Liq77yM5Yir6LSqIiAlIE1BWERVTVApCiAgICBwcmludCgiIyAlcyAgMHgleC0weCV4ICDpgJDooYwgPSDlgY/np7s6IOWAvCIgJSAob3MucGF0aC5iYXNlbmFtZShtKSwgbG8sIGhpKSkKICAgIGZvciBnb3QsIHYgaW4gX2xpbmVzKG0sIGxvLCBoaSAtIGxvICsgMSk6CiAgICAgICAgcHJpbnQoIjB4JTA0eCAlcyIgJSAoZ290LCB2KSkKCgpkZWYgc3RhdCgpOgogICAgbSA9IHBpY2soKQogICAgcmVnX2xlbiwgdG90ID0gbGF5b3V0KG0pCiAgICBwcmludCgiPT0gbWFwICVzIChyYW5nZT0lcywg6KGM6ZW/ICVkKSIgJSAob3MucGF0aC5iYXNlbmFtZShtKSwKICAgICAgICAgIG9wZW4ob3MucGF0aC5qb2luKG0sICJyYW5nZSIpKS5yZWFkKCkuc3RyaXAoKSBpZiBvcy5wYXRoLmV4aXN0cyhvcy5wYXRoLmpvaW4obSwgInJhbmdlIikpIGVsc2UgIj8iLCB0b3QpKQogICAgZm9yIGJhc2UsIHRibCBpbiAoKENIR1IsIENIR1IpLCAoQkFUSUYsIEJBVElGKSwgKFVTQiwgVVNCKSk6CiAgICAgICAgZm9yIGEgaW4gc29ydGVkKHRibCk6CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIHNob3coYSwgcmQoYSwgbSksIHRibCkKICAgICAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbiBhcyBlOgogICAgICAgICAgICAgICAgcHJpbnQoIjB4JTA0eCDor7vlpLHotKXvvJolcyIgJSAoYSwgZSkpCiAgICAjIOWFheeUteS9v+iDveS9jeeOsOWcuuWIpOivuwogICAgdHJ5OgogICAgICAgIGMgPSB2YWwocmQoMHgxMDQ5LCBtKSkKICAgICAgICBvID0gdmFsKHJkKDB4MTAwOCwgbSkpCiAgICAgICAgdSA9IHZhbChyZCgweDEzMTAsIG0pKQogICAgICAgIGYgPSB2YWwocmQoMHgxMDEwLCBtKSkKICAgICAgICBwcmludCgiLS0tIOWIpOivuyIpCiAgICAgICAgcHJpbnQoIiAgIENIR19DVFJMLmJpdDcg5L2/6IO9ID0gJXMiICUgKE5vbmUgaWYgYyBpcyBOb25lIGVsc2UgKGMgPj4gNykgJiAxKSkKICAgICAgICBwcmludCgiICAgQ0hHX09QVElPTi5iaXQ3IOS9v+iDvSA9ICVzIiAlIChOb25lIGlmIG8gaXMgTm9uZSBlbHNlIChvID4+IDcpICYgMSkpCiAgICAgICAgcHJpbnQoIiAgIFVTQklOX1ZBTElEID0gJXMiICUgKE5vbmUgaWYgdSBpcyBOb25lIGVsc2UgKHUgPj4gMSkgJiAxKSkKICAgICAgICBwcmludCgiICAgQ0hHX0ZBSUxFRCA9ICVzICBDSEdfRE9ORSA9ICVzICBGQVNUX0NIRyA9ICVzIiAlICgKICAgICAgICAgICAgTm9uZSBpZiBmIGlzIE5vbmUgZWxzZSAoZiA+PiA2KSAmIDEsCiAgICAgICAgICAgIE5vbmUgaWYgZiBpcyBOb25lIGVsc2UgKGYgPj4gNykgJiAxLAogICAgICAgICAgICBOb25lIGlmIGYgaXMgTm9uZSBlbHNlIChmID4+IDUpICYgMSkpCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgcHJpbnQoIuWIpOivu+Wksei0pe+8miVzIiAlIGUpCgoKZGVmIHByb2JlKCk6CiAgICBtcyA9IG1hcHMoKQogICAgcHJpbnQoIuWPr+eUqCBtYXDvvJolcyIgJSAiICIuam9pbihvcy5wYXRoLmJhc2VuYW1lKHgpIGZvciB4IGluIG1zKSkKICAgIGZvciBtIGluIG1zOgogICAgICAgIHByaW50KCI9PSAlcyAg5paH5Lu2PSVzIiAlIChvcy5wYXRoLmJhc2VuYW1lKG0pLCAiICIuam9pbihzb3J0ZWQob3MubGlzdGRpcihtKSkpKSkKICAgICAgICBmb3IgZiBpbiAoIm5hbWUiLCAicmFuZ2UiLCAiYWNjZXNzIik6CiAgICAgICAgICAgIHAgPSBvcy5wYXRoLmpvaW4obSwgZikKICAgICAgICAgICAgaWYgbm90IG9zLnBhdGguZXhpc3RzKHApOgogICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgc3QgPSBvcy5zdGF0KHApCiAgICAgICAgICAgIGlmIGYgPT0gImFjY2VzcyI6CiAgICAgICAgICAgICAgICBwcmludCgiICAgJXMgbW9kZT0lb++8iDA0MDA95Y+q6K+777yM5rqQ56CB6YeM5rKh5pyJIC53cml0Ze+8iSIgJSAoZiwgc3Quc3RfbW9kZSAmIDBvNzc3KSkKICAgICAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgICAgIHByaW50KCIgICAlcyA9ICVzIiAlIChmLCBvcGVuKHApLnJlYWQoKS5zdHJpcCgpWzoxMjBdKSkKICAgICAgICB0cnk6CiAgICAgICAgICAgIHJlZ19sZW4sIHRvdCA9IGxheW91dChtKQogICAgICAgICAgICBwcmludCgiICAg6KGM6ZW/IHRvdD0lZO+8iHJlZ19sZW49JWTvvIkiICUgKHRvdCwgcmVnX2xlbikpCiAgICAgICAgICAgIGZvciBhIGluICgweDAwMDQsIDB4MDAwNSwgMHgwMDA2LCAweDAwMDcsIDB4MDAwOCwgMHgxMDA4LCAweDEwNDksIDB4MTMxMCwgMHg0MDA4KToKICAgICAgICAgICAgICAgIHByaW50KCIgICAweCUwNHggLT4gJXMiICUgKGEsIHJkKGEsIG0pKSkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGU6CiAgICAgICAgICAgIHByaW50KCIgICDor7vpgJrpgZPov5jmsqHpgJrvvJolcyIgJSBlKQogICAgcHJpbnQoIj09IOWGmemAmumBk+WAmemAiSIpCiAgICBwcmludCgiICAgL2Rldi9tZW0gPSAlcyIgJSAoIuWcqCIgaWYgb3MucGF0aC5leGlzdHMoIi9kZXYvbWVtIikgZWxzZSAi5rKh5pyJIikpCiAgICBmb3IgYmFzZSBpbiAoIi9zeXMvYnVzL3NwbWkvZGV2aWNlcyIsICIvc3lzL2J1cy9zcG1pL2RyaXZlcnMiKToKICAgICAgICBpZiBvcy5wYXRoLmlzZGlyKGJhc2UpOgogICAgICAgICAgICBmb3IgZCBpbiBzb3J0ZWQob3MubGlzdGRpcihiYXNlKSk6CiAgICAgICAgICAgICAgICBwID0gb3MucGF0aC5qb2luKGJhc2UsIGQpCiAgICAgICAgICAgICAgICBleHRyYSA9ICIiCiAgICAgICAgICAgICAgICBmb3IgZiBpbiAoIm5hbWUiLCAiZHJpdmVyIiwgIm9mX25vZGUiKToKICAgICAgICAgICAgICAgICAgICBxID0gb3MucGF0aC5qb2luKHAsIGYpCiAgICAgICAgICAgICAgICAgICAgaWYgb3MucGF0aC5leGlzdHMocSk6CiAgICAgICAgICAgICAgICAgICAgICAgIGV4dHJhICs9ICIgJXM9JXMiICUgKGYsIG9zLnJlYWRsaW5rKHEpIGlmIG9zLnBhdGguaXNsaW5rKHEpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVsc2Ugb3BlbihxKS5yZWFkKCkuc3RyaXAoKSkKICAgICAgICAgICAgICAgIHByaW50KCIgICAlcy8lcyVzIiAlIChiYXNlLCBkLCBleHRyYSkpCgoKZGVmIGR0YigpOgogICAgIiIi5oqKIERUQiDph4zot5/lhYXnlLXmsr7ovrnnmoToioLngrnlsZ7mgKfljp/moLfmiZPlh7rmnaXvvIjmlofmnKzog73or7vlsLHor7vvvIzor7vkuI3pgJrnu5kgaGV477yJ44CCIiIiCiAgICBpbXBvcnQgZm5tYXRjaAogICAgcm9vdHMgPSBnbG9iLmdsb2IoIi9wcm9jL2RldmljZS10cmVlL3NvY0AwL3NwbWlAKi9wbWljQCoiKQogICAgaWYgbm90IHJvb3RzOgogICAgICAgIHByaW50KCLmib7kuI3liLAgc3BtaS9wbWljIOiKgueCuSIpCiAgICAgICAgcmV0dXJuCiAgICBmb3IgcG0gaW4gcm9vdHM6CiAgICAgICAgcHJpbnQoIj09ICVzIiAlIHBtKQogICAgICAgIGZvciBub2RlIGluIHNvcnRlZChnbG9iLmdsb2Iob3MucGF0aC5qb2luKHBtLCAiKiIpKSk6CiAgICAgICAgICAgIGlmIG5vdCBvcy5wYXRoLmlzZGlyKG5vZGUpOgogICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgdGFnID0gb3MucGF0aC5iYXNlbmFtZShub2RlKQogICAgICAgICAgICBpZiBub3QgKGZubWF0Y2guZm5tYXRjaCh0YWcubG93ZXIoKSwgIipjaGFyZyoiKSBvcgogICAgICAgICAgICAgICAgICAgIGZubWF0Y2guZm5tYXRjaCh0YWcubG93ZXIoKSwgIipiYXR0KiIpIG9yCiAgICAgICAgICAgICAgICAgICAgZm5tYXRjaC5mbm1hdGNoKHRhZy5sb3dlcigpLCAiKnVzYioiKSk6CiAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgICAgICBwcmludCgiICAtLSAlcyIgJSB0YWcpCiAgICAgICAgICAgIGZvciBmIGluIHNvcnRlZChnbG9iLmdsb2Iob3MucGF0aC5qb2luKG5vZGUsICIqIikpKToKICAgICAgICAgICAgICAgIHJhdyA9IG9wZW4oZiwgInJiIikucmVhZCgpCiAgICAgICAgICAgICAgICB0eHQgPSByYXcucmVwbGFjZShiIlwwIiwgYiIgIikuZGVjb2RlKCJ1dGYtOCIsICJyZXBsYWNlIikuc3RyaXAoKQogICAgICAgICAgICAgICAgcHJpbnRhYmxlID0gYWxsKDMyIDw9IGIgPCAxMjcgb3IgYiBpbiAoOSwgMzIpIGZvciBiIGluIHJhdykKICAgICAgICAgICAgICAgIHByaW50KCIgICAgICUtMjRzICVzIiAlIChvcy5wYXRoLmJhc2VuYW1lKGYpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHR4dCBpZiBwcmludGFibGUgYW5kIHR4dCBlbHNlIHJhdy5oZXgoKSkpCiAgICAgICAgZm9yIGYgaW4gc29ydGVkKGdsb2IuZ2xvYihvcy5wYXRoLmpvaW4ocG0sICIqIikpKToKICAgICAgICAgICAgaWYgb3MucGF0aC5pc2ZpbGUoZik6CiAgICAgICAgICAgICAgICByYXcgPSBvcGVuKGYsICJyYiIpLnJlYWQoKQogICAgICAgICAgICAgICAgdHh0ID0gcmF3LnJlcGxhY2UoYiJcMCIsIGIiICIpLmRlY29kZSgidXRmLTgiLCAicmVwbGFjZSIpLnN0cmlwKCkKICAgICAgICAgICAgICAgIHByaW50KCIgICAo55u05bGeKSAlLTIycyAlcyIgJSAob3MucGF0aC5iYXNlbmFtZShmKSwgdHh0IGlmIHR4dCBlbHNlIHJhdy5oZXgoKSkpCgoKZGVmIGFkY19tdihsYWJlbCk6CiAgICAiIiLmjIkgKl9sYWJlbCDmib4gUE1JQyBBREMg6YCa6YGT6K+7IG1W77yI5ZKMIGJhdGxlZC5weSDlkIzkuIDlpZfmib7ms5XvvIzor7vkuI3liLDnu5kgTm9uZe+8ieOAgiIiIgogICAgcm9vdCA9ICIvc3lzL2J1cy9paW8vZGV2aWNlcyIKICAgIGlmIG5vdCBvcy5wYXRoLmlzZGlyKHJvb3QpOgogICAgICAgIHJldHVybiBOb25lCiAgICBmb3IgZCBpbiBzb3J0ZWQob3MubGlzdGRpcihyb290KSk6CiAgICAgICAgYmFzZSA9IG9zLnBhdGguam9pbihyb290LCBkKQogICAgICAgIGZvciBmIGluIG9zLmxpc3RkaXIoYmFzZSk6CiAgICAgICAgICAgIGlmIG5vdCBmLmVuZHN3aXRoKCJfbGFiZWwiKToKICAgICAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIGlmIG9wZW4ob3MucGF0aC5qb2luKGJhc2UsIGYpKS5yZWFkKCkuc3RyaXAoKSAhPSBsYWJlbDoKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgICAgICAgICAgcmV0dXJuIGludChvcGVuKG9zLnBhdGguam9pbihiYXNlLCBmWzotNl0gKyAiX2lucHV0IikpLnJlYWQoKSkgLy8gMTAwMAogICAgICAgICAgICBleGNlcHQgT1NFcnJvcjoKICAgICAgICAgICAgICAgIHJldHVybiBOb25lCiAgICByZXR1cm4gTm9uZQoKCmRlZiBjaGVjayhzZWNzPTEwKToKICAgICIiIuWIt+acuuWQjuS4gOadoeWRveS7pOmqjOaUtu+8mumpseWKqOi1t+adpeayoeOAgeWvhOWtmOWZqOiiq+aKrOWIsOWkmuWwkeOAgeeUteWOi+aYr+a2qOi/mOaYr+aOieOAguWFqOeoi+WPquivu+OAgiIiIgogICAgbSA9IHBpY2soKQogICAgcHJpbnQoIj09IDEpIHBvd2VyX3N1cHBseSIpCiAgICBwcyA9ICIvc3lzL2NsYXNzL3Bvd2VyX3N1cHBseSIKICAgIG5hbWVzID0gc29ydGVkKG9zLmxpc3RkaXIocHMpKSBpZiBvcy5wYXRoLmlzZGlyKHBzKSBlbHNlIFtdCiAgICBpZiBub3QgbmFtZXM6CiAgICAgICAgcHJpbnQoIiAgIOepuiA9PiDlhYXnlLUv55S16YeP6amx5Yqo5qC55pys5rKh6LW35p2l77yIY29uZmlnIOaIliBEVEIg5rOo5YWl5rKh6L+b5Lqn54mp77yJIikKICAgIGZvciBkIGluIG5hbWVzOgogICAgICAgIHAgPSBvcy5wYXRoLmpvaW4ocHMsIGQpCiAgICAgICAgZ290ID0gW10KICAgICAgICBmb3IgayBpbiAoInR5cGUiLCAib25saW5lIiwgInN0YXR1cyIsICJoZWFsdGgiLCAidm9sdGFnZV9ub3ciLAogICAgICAgICAgICAgICAgICAiY29uc3RhbnRfY2hhcmdlX3ZvbHRhZ2VfbWF4X3V2X25vdyIsICJjb25zdGFudF9jaGFyZ2VfY3VycmVudF9tYXhfdXZfbm93Iik6CiAgICAgICAgICAgIGYgPSBvcy5wYXRoLmpvaW4ocCwgaykKICAgICAgICAgICAgaWYgb3MucGF0aC5leGlzdHMoZik6CiAgICAgICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICAgICAgZ290LmFwcGVuZCgiJXM9JXMiICUgKGssIG9wZW4oZikucmVhZCgpLnN0cmlwKCkpKQogICAgICAgICAgICAgICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgICAgICAgICAgICAgcGFzcwogICAgICAgIGRydiA9ICIiCiAgICAgICAgbGluayA9IG9zLnBhdGguam9pbihwLCAiZGV2aWNlIikKICAgICAgICBpZiBvcy5wYXRoLmlzbGluayhsaW5rKToKICAgICAgICAgICAgZHJ2ID0gIiA8LSAiICsgb3MucGF0aC5iYXNlbmFtZShvcy5wYXRoLnJlYWxwYXRoKGxpbmspKQogICAgICAgIHByaW50KCIgICAlcyVzXG4gICAgICAlcyIgJSAoZCwgZHJ2LCAiICAiLmpvaW4oZ290KSkpCgogICAgcHJpbnQoIj09IDIpIOWFs+mUruWvhOWtmOWZqO+8iElCQVQg5Y2V5L2N5o2i566X77yabUE9KGNvZGUrMSkqOTDvvIw5MG1BPeWkjeS9jem7mOiupD3msqHkurrphY3ov4fvvIkiKQogICAgZm9yIGEsIG5hbWUgaW4gKCgweDEwNDQsICJJQkFUX01BWCIpLCAoMHgxMDQ1LCAiSUJBVF9TQUZFIiksCiAgICAgICAgICAgICAgICAgICAgKDB4MTA0MCwgIlZERF9NQVgiKSwgKDB4MTA0OSwgIkNIR19DVFJMIiksICgweDEwMDksICJDSEdfU1RBVFVTIikpOgogICAgICAgIHYgPSB2YWwocmQoYSwgbSkpCiAgICAgICAgZXh0cmEgPSAiIgogICAgICAgIGlmIHYgaXMgbm90IE5vbmUgYW5kIGEgaW4gKDB4MTA0NCwgMHgxMDQ1KToKICAgICAgICAgICAgZXh0cmEgPSAiID0gJWQgbUEiICUgKCh2ICsgMSkgKiA5MCkKICAgICAgICBpZiB2IGlzIG5vdCBOb25lIGFuZCBhID09IDB4MTA0MDoKICAgICAgICAgICAgZXh0cmEgPSAiID0gJWQgbVYiICUgKDQwMDAgKyB2ICogMjUpCiAgICAgICAgcHJpbnQoIiAgIDB4JTA0eCAlLTExcyAlcyVzIiAlIChhLCBuYW1lLCByZChhLCBtKSwgZXh0cmEpKQoKICAgIHByaW50KCI9PSAzKSDlhoXmoLjor7TnmoTor50iKQogICAgdHJ5OgogICAgICAgIGltcG9ydCBzdWJwcm9jZXNzCiAgICAgICAgbG9nID0gc3VicHJvY2Vzcy5ydW4oWyJkbWVzZyJdLCBjYXB0dXJlX291dHB1dD1UcnVlLCB0aW1lb3V0PTMwKS5zdGRvdXQuZGVjb2RlKCJ1dGYtOCIsICJyZXBsYWNlIikKICAgICAgICBoaXRzID0gW2wgZm9yIGwgaW4gbG9nLnNwbGl0bGluZXMoKQogICAgICAgICAgICAgICAgaWYgYW55KGsgaW4gbC5sb3dlcigpIGZvciBrIGluICgicG04OTE2LWxiYyIsICJwbTg5MTYtYm1zIiwgImNoYXJnZXJAMTAwMCIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJ1c2ItZGV0ZWN0IiwgInBvd2VyX3N1cHBseSIpKV0KICAgICAgICBwcmludCgiXG4iLmpvaW4oIiAgICIgKyBoIGZvciBoIGluIGhpdHNbLTE1Ol0pIGlmIGhpdHMgZWxzZSAiICAgZG1lc2cg6YeM5rKh5pyJ5YWF55S155u45YWz6KGMIikKICAgIGV4Y2VwdCBFeGNlcHRpb24gYXMgZToKICAgICAgICBwcmludCgiICAgZG1lc2cg6K+75LiN5LqG77yaJXMiICUgZSkKCiAgICBwcmludCgiPT0gNCkgVlNZUyDotbDlir/vvIjpmpQgJWQg56eS5Lik5qyh77yb5raoPeWcqOWFhe+8jOaOiT3ov5jlnKjmlL7nlLXvvIkiICUgc2VjcykKICAgIGEgPSBhZGNfbXYoIlZTWVMiKQogICAgdGltZS5zbGVlcChzZWNzKQogICAgYiA9IGFkY19tdigiVlNZUyIpCiAgICBwcmludCgiICAgJXMgbVYgLT4gJXMgbVYgICVzIiAlIChhLCBiLCAi77yI6K+75LiN5YiwIFZTWVMg6YCa6YGT77yJIiBpZiBhIGlzIE5vbmUgb3IgYiBpcyBOb25lIGVsc2UKICAgICAgICAgICgi5raoICVkIG1WIOKHkiDnnJ/lnKjlhYUiICUgKGIgLSBhKSBpZiBiID4gYSBlbHNlICLmsqHmtqgg4oeSIOayoeWcqOWFhSIgaWYgYiA9PSBhIGVsc2UgIuaOiSAlZCBtViDih5Ig6L+Y5Zyo5pS+55S1IiAlIChhIC0gYikpKSkKCgpkZWYgbWFpbigpOgogICAgYXJncyA9IHN5cy5hcmd2WzE6XQogICAgbW9kZSA9IGFyZ3NbMF0gaWYgYXJncyBlbHNlICJwcm9iZSIKICAgIGlmIG1vZGUgPT0gImR0YiI6CiAgICAgICAgZHRiKCkKICAgICAgICByZXR1cm4KICAgIGlmIG1vZGUgPT0gInByb2JlIjoKICAgICAgICBwcm9iZSgpCiAgICAgICAgcmV0dXJuCiAgICBpZiBtb2RlID09ICJzdGF0IjoKICAgICAgICBzdGF0KCkKICAgICAgICByZXR1cm4KICAgIGlmIG1vZGUgPT0gImNoZWNrIjoKICAgICAgICBjaGVjayhpbnQoYXJnc1sxXSkgaWYgbGVuKGFyZ3MpID4gMSBlbHNlIDEwKQogICAgICAgIHJldHVybgogICAgbSA9IHBpY2soKQogICAgaWYgbW9kZSA9PSAiZHVtcCIgYW5kIGxlbihhcmdzKSA+PSAzOgogICAgICAgIGR1bXAobSwgaW50KGFyZ3NbMV0sIDE2KSwgaW50KGFyZ3NbMl0sIDE2KSkKICAgIGVsaWYgbW9kZSA9PSAicmVhZCIgYW5kIGxlbihhcmdzKSA+PSAyOgogICAgICAgIGEgPSBpbnQoYXJnc1sxXSwgMTYpCiAgICAgICAgbiA9IGludChhcmdzWzJdKSBpZiBsZW4oYXJncykgPiAyIGVsc2UgMQogICAgICAgIGZvciBnb3QsIHYgaW4gX2xpbmVzKG0sIGEsIG1pbihuLCBNQVhEVU1QKSk6CiAgICAgICAgICAgIHByaW50KCIweCUwNHggJXMiICUgKGdvdCwgdikpCiAgICBlbHNlOgogICAgICAgIHJhaXNlIFN5c3RlbUV4aXQoX19kb2NfXykKCgptYWluKCkK
+#!/usr/bin/env python3
+"""PM8916 充电器的只读通道（这版 OpenWrt 内核里没有任何充电驱动，只剩 regmap debugfs）。
+
+内核 6.18 drivers/base/regmap/regmap-debugfs.c 的事实（已核对源码，别再试错）：
+  - access  = 0400，DEFINE_SHOW_ATTRIBUTE，只能列出访问表，没有 .write  => 写它必 EINVAL
+  - registers = 0400；只有编译时定义 REGMAP_ALLOW_WRITE_DEBUGFS 才 0600 且带 .write，
+    这份内核走的是 #else 分支 => 整份 debugfs 只能读，写不了
+  - registers 每行定长（reg_len + 2 + 2*val_bytes + 3 字节含 '\n'），
+    行首会回显偏移 => 用 seek 定位到 addr*tot 就能只读那一个，不用整片扫
+
+用法（设备侧 root）：
+  chg_regs.py probe              认路：有哪些 map、范围、行长、SPMI 绑定、/dev/mem 在不在
+  chg_regs.py read ADDR [N]      只读一个（或从这开始的 N 个）寄存器
+  chg_regs.py dump START END     连续只读转储（最多 0x100 个，绝不越界）
+  chg_regs.py stat               充电相关寄存器逐个点名 + 人话解释
+  chg_regs.py check [秒]         刷机后验收：power_supply + IBAT 换算 + dmesg + VSYS 走势
+
+环境变量 CHG_MAP 指定用哪个 regmap（默认 0-00，即 spmi bus0 sid0）。
+"""
+import glob, os, sys, time
+
+MAXDUMP = 0x100
+
+# PM8916 LBC 偏移（主线 drivers/power/supply/pm8916-lbc.c + CAF qpnp-linear-charger.c）
+CHGR = {
+    0x1008: ("CHG_OPTION", "bit7=1 才是 PMIC 充电器使能"),
+    0x1009: ("CHG_STATUS", "bit7 chg_done/bit6 batt_ok/bit5 chg_not_done"),
+    0x1010: ("CHG_INT_RT_STS", "bit0 vbat_lo/bit5 fast_chg/bit6 chg_failed/bit7 chg_done"),
+    0x1040: ("VDD_MAX", "(mV-4000)/25，4.20V=0x08"),
+    0x1041: ("VDD_SAFE", "同 VDD_MAX 刻度"),
+    0x1044: ("IBAT_MAX", "mA/90-1"),
+    0x1045: ("IBAT_SAFE", "mA/90-1"),
+    0x1047: ("VIN_MIN", "(mV-4200)/27"),
+    0x1049: ("CHG_CTRL", "bit7 CHG_ENABLE / bit5 PSTG_EN / bit0 FORCE_BATT_ON"),
+    0x104A: ("CHG_FAILED", "bit7 写 1 清除"),
+    0x1052: ("VBAT_WEAK", "(uV-3.0V)/18750"),
+    0x1060: ("TCHG_MAX_EN", ""),
+    0x1061: ("TCHG_MAX", "min/4-1"),
+    0x1065: ("CHG_WDOG_EN", ""),
+    0x10D0: ("SEC_ACCESS", "写 0xA5 才解锁 0x10DA/0x10EE"),
+    0x10EE: ("VBAT_DETECT", "bits1:0=2 强制'低于 VBAT'"),
+}
+BATIF = {
+    0x1208: ("BATT_ST_RDY?", "bit7 电池在位（读的是充电器的判断）"),
+    0x1210: ("BAT_IF_RT_STS", "bit0 batt_pres/bit1 temp_ok"),
+}
+USB = {
+    0x1310: ("USB_RT_STS", "bit1 USBIN_VALID（USB 电源在不在）"),
+}
+
+
+def maps():
+    return sorted(d for d in glob.glob("/sys/kernel/debug/regmap/*") if os.path.isdir(d))
+
+
+def pick():
+    want = os.environ.get("CHG_MAP")
+    ms = maps()
+    if not ms:
+        raise SystemExit("没有 regmap debugfs（挂载了吗？）")
+    if want:
+        for m in ms:
+            if os.path.basename(m) == want:
+                return m
+        raise SystemExit("CHG_MAP=%s 不在 %s 里" % (want, [os.path.basename(x) for x in ms]))
+    for m in ms:
+        if os.path.basename(m) == "0-00":
+            return m
+    return ms[0]
+
+
+def layout(m):
+    """量一次 registers 的行长：第 0 行就是偏移 0，行文本 + 换行 = tot。"""
+    with open(os.path.join(m, "registers"), "rb") as f:
+        s = f.read(64).decode("ascii", "replace")
+    first = s.splitlines()[0]
+    tot = len(first) + 1
+    reg_len = first.index(":")
+    return reg_len, tot
+
+
+def _lines(m, addr, n):
+    reg_len, tot = layout(m)
+    with open(os.path.join(m, "registers"), "rb") as f:
+        f.seek(addr * tot)
+        s = f.read(n * tot).decode("ascii", "replace")
+    out = []
+    for ln in s.splitlines():
+        head, _, val = ln.partition(":")
+        try:
+            got = int(head.strip(), 16)
+        except ValueError:
+            raise SystemExit("行格式没认出来：%r" % ln)
+        out.append((got, val.strip()))
+    if out and out[0][0] != addr:
+        raise SystemExit("定位没对上：想要 0x%x，行首给 0x%x（tot=%d）" % (addr, out[0][0], tot))
+    return out
+
+
+def rd(addr, m=None):
+    m = m or pick()
+    return _lines(m, addr, 1)[0][1]
+
+
+def val(v):
+    return None if "X" in v.upper() else int(v, 16)
+
+
+def show(addr, v, table):
+    name, note = table.get(addr, ("?", ""))
+    n = val(v)
+    dec = "" if n is None else "  =0b%s" % format(n, "08b")
+    print("0x%04x %-14s %s%s   %s" % (addr, name, v, dec, note))
+
+
+def dump(m, lo, hi):
+    if hi - lo + 1 > MAXDUMP:
+        raise SystemExit("一次最多读 %d 个，别贪" % MAXDUMP)
+    print("# %s  0x%x-0x%x  逐行 = 偏移: 值" % (os.path.basename(m), lo, hi))
+    for got, v in _lines(m, lo, hi - lo + 1):
+        print("0x%04x %s" % (got, v))
+
+
+def stat():
+    m = pick()
+    reg_len, tot = layout(m)
+    print("== map %s (range=%s, 行长 %d)" % (os.path.basename(m),
+          open(os.path.join(m, "range")).read().strip() if os.path.exists(os.path.join(m, "range")) else "?", tot))
+    for base, tbl in ((CHGR, CHGR), (BATIF, BATIF), (USB, USB)):
+        for a in sorted(tbl):
+            try:
+                show(a, rd(a, m), tbl)
+            except Exception as e:
+                print("0x%04x 读失败：%s" % (a, e))
+    # 充电使能位现场判读
+    try:
+        c = val(rd(0x1049, m))
+        o = val(rd(0x1008, m))
+        u = val(rd(0x1310, m))
+        f = val(rd(0x1010, m))
+        print("--- 判读")
+        print("   CHG_CTRL.bit7 使能 = %s" % (None if c is None else (c >> 7) & 1))
+        print("   CHG_OPTION.bit7 使能 = %s" % (None if o is None else (o >> 7) & 1))
+        print("   USBIN_VALID = %s" % (None if u is None else (u >> 1) & 1))
+        print("   CHG_FAILED = %s  CHG_DONE = %s  FAST_CHG = %s" % (
+            None if f is None else (f >> 6) & 1,
+            None if f is None else (f >> 7) & 1,
+            None if f is None else (f >> 5) & 1))
+    except Exception as e:
+        print("判读失败：%s" % e)
+
+
+def probe():
+    ms = maps()
+    print("可用 map：%s" % " ".join(os.path.basename(x) for x in ms))
+    for m in ms:
+        print("== %s  文件=%s" % (os.path.basename(m), " ".join(sorted(os.listdir(m)))))
+        for f in ("name", "range", "access"):
+            p = os.path.join(m, f)
+            if not os.path.exists(p):
+                continue
+            st = os.stat(p)
+            if f == "access":
+                print("   %s mode=%o（0400=只读，源码里没有 .write）" % (f, st.st_mode & 0o777))
+                continue
+            print("   %s = %s" % (f, open(p).read().strip()[:120]))
+        try:
+            reg_len, tot = layout(m)
+            print("   行长 tot=%d（reg_len=%d）" % (tot, reg_len))
+            for a in (0x0004, 0x0005, 0x0006, 0x0007, 0x0008, 0x1008, 0x1049, 0x1310, 0x4008):
+                print("   0x%04x -> %s" % (a, rd(a, m)))
+        except Exception as e:
+            print("   读通道还没通：%s" % e)
+    print("== 写通道候选")
+    print("   /dev/mem = %s" % ("在" if os.path.exists("/dev/mem") else "没有"))
+    for base in ("/sys/bus/spmi/devices", "/sys/bus/spmi/drivers"):
+        if os.path.isdir(base):
+            for d in sorted(os.listdir(base)):
+                p = os.path.join(base, d)
+                extra = ""
+                for f in ("name", "driver", "of_node"):
+                    q = os.path.join(p, f)
+                    if os.path.exists(q):
+                        extra += " %s=%s" % (f, os.readlink(q) if os.path.islink(q)
+                                             else open(q).read().strip())
+                print("   %s/%s%s" % (base, d, extra))
+
+
+def dtb():
+    """把 DTB 里跟充电沾边的节点属性原样打出来（文本能读就读，读不通给 hex）。"""
+    import fnmatch
+    roots = glob.glob("/proc/device-tree/soc@0/spmi@*/pmic@*")
+    if not roots:
+        print("找不到 spmi/pmic 节点")
+        return
+    for pm in roots:
+        print("== %s" % pm)
+        for node in sorted(glob.glob(os.path.join(pm, "*"))):
+            if not os.path.isdir(node):
+                continue
+            tag = os.path.basename(node)
+            if not (fnmatch.fnmatch(tag.lower(), "*charg*") or
+                    fnmatch.fnmatch(tag.lower(), "*batt*") or
+                    fnmatch.fnmatch(tag.lower(), "*usb*")):
+                continue
+            print("  -- %s" % tag)
+            for f in sorted(glob.glob(os.path.join(node, "*"))):
+                raw = open(f, "rb").read()
+                txt = raw.replace(b"\0", b" ").decode("utf-8", "replace").strip()
+                printable = all(32 <= b < 127 or b in (9, 32) for b in raw)
+                print("     %-24s %s" % (os.path.basename(f),
+                                         txt if printable and txt else raw.hex()))
+        for f in sorted(glob.glob(os.path.join(pm, "*"))):
+            if os.path.isfile(f):
+                raw = open(f, "rb").read()
+                txt = raw.replace(b"\0", b" ").decode("utf-8", "replace").strip()
+                print("   (直属) %-22s %s" % (os.path.basename(f), txt if txt else raw.hex()))
+
+
+def adc_mv(label):
+    """按 *_label 找 PMIC ADC 通道读 mV（和 batled.py 同一套找法，读不到给 None）。"""
+    root = "/sys/bus/iio/devices"
+    if not os.path.isdir(root):
+        return None
+    for d in sorted(os.listdir(root)):
+        base = os.path.join(root, d)
+        for f in os.listdir(base):
+            if not f.endswith("_label"):
+                continue
+            try:
+                if open(os.path.join(base, f)).read().strip() != label:
+                    continue
+                return int(open(os.path.join(base, f[:-6] + "_input")).read()) // 1000
+            except OSError:
+                return None
+    return None
+
+
+def check(secs=10):
+    """刷机后一条命令验收：驱动起来没、寄存器被抬到多少、电压是涨还是掉。全程只读。"""
+    m = pick()
+    print("== 1) power_supply")
+    ps = "/sys/class/power_supply"
+    names = sorted(os.listdir(ps)) if os.path.isdir(ps) else []
+    if not names:
+        print("   空 => 充电/电量驱动根本没起来（config 或 DTB 注入没进产物）")
+    for d in names:
+        p = os.path.join(ps, d)
+        got = []
+        for k in ("type", "online", "status", "health", "voltage_now",
+                  "constant_charge_voltage_max_uv_now", "constant_charge_current_max_uv_now"):
+            f = os.path.join(p, k)
+            if os.path.exists(f):
+                try:
+                    got.append("%s=%s" % (k, open(f).read().strip()))
+                except OSError:
+                    pass
+        drv = ""
+        link = os.path.join(p, "device")
+        if os.path.islink(link):
+            drv = " <- " + os.path.basename(os.path.realpath(link))
+        print("   %s%s\n      %s" % (d, drv, "  ".join(got)))
+
+    print("== 2) 关键寄存器（IBAT 单位换算：mA=(code+1)*90，90mA=复位默认=没人配过）")
+    for a, name in ((0x1044, "IBAT_MAX"), (0x1045, "IBAT_SAFE"),
+                    (0x1040, "VDD_MAX"), (0x1049, "CHG_CTRL"), (0x1009, "CHG_STATUS")):
+        v = val(rd(a, m))
+        extra = ""
+        if v is not None and a in (0x1044, 0x1045):
+            extra = " = %d mA" % ((v + 1) * 90)
+        if v is not None and a == 0x1040:
+            extra = " = %d mV" % (4000 + v * 25)
+        print("   0x%04x %-11s %s%s" % (a, name, rd(a, m), extra))
+
+    print("== 3) 内核说的话")
+    try:
+        import subprocess
+        log = subprocess.run(["dmesg"], capture_output=True, timeout=30).stdout.decode("utf-8", "replace")
+        hits = [l for l in log.splitlines()
+                if any(k in l.lower() for k in ("pm8916-lbc", "pm8916-bms", "charger@1000",
+                                                "usb-detect", "power_supply"))]
+        print("\n".join("   " + h for h in hits[-15:]) if hits else "   dmesg 里没有充电相关行")
+    except Exception as e:
+        print("   dmesg 读不了：%s" % e)
+
+    print("== 4) VSYS 走势（隔 %d 秒两次；涨=在充，掉=还在放电）" % secs)
+    a = adc_mv("VSYS")
+    time.sleep(secs)
+    b = adc_mv("VSYS")
+    print("   %s mV -> %s mV  %s" % (a, b, "（读不到 VSYS 通道）" if a is None or b is None else
+          ("涨 %d mV ⇒ 真在充" % (b - a) if b > a else "没涨 ⇒ 没在充" if b == a else "掉 %d mV ⇒ 还在放电" % (a - b))))
+
+
+def main():
+    args = sys.argv[1:]
+    mode = args[0] if args else "probe"
+    if mode == "dtb":
+        dtb()
+        return
+    if mode == "probe":
+        probe()
+        return
+    if mode == "stat":
+        stat()
+        return
+    if mode == "check":
+        check(int(args[1]) if len(args) > 1 else 10)
+        return
+    m = pick()
+    if mode == "dump" and len(args) >= 3:
+        dump(m, int(args[1], 16), int(args[2], 16))
+    elif mode == "read" and len(args) >= 2:
+        a = int(args[1], 16)
+        n = int(args[2]) if len(args) > 2 else 1
+        for got, v in _lines(m, a, min(n, MAXDUMP)):
+            print("0x%04x %s" % (got, v))
+    else:
+        raise SystemExit(__doc__)
+
+
+main()

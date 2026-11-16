@@ -1,1 +1,27 @@
-RnJvbSAxODc3NzQ3YTg5NjZhOTQ2NjgwMmI4ZjgwN2Y0ZGVjOTE0MWY5YTQ4IE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBodWFuZ3dlbmJpbiA8aHVhbmd3ZW5iaW5Aa3lsaW5vcy5jbj4KRGF0ZTogTW9uLCAzMSBBdWcgMjAyNiAxNzoyOToyNyArMDgwMApTdWJqZWN0OiBbUEFUQ0hdIGNsb3N1cmVzOiBoYW5kbGUgcGFnZSBzaXplIGxvb2t1cCBmYWlsdXJlCgphbGxvY2F0ZV9zcGFjZSgpIHVzZXMgdGhlIHZhbHVlIHJldHVybmVkIGJ5IHN5c2NvbmYoX1NDX1BBR0VTSVpFKQphcyB0aGUgc2l6ZSBvZiBhIGxvY2FsIGJ1ZmZlciB3aXRob3V0IGNoZWNraW5nIGZvciBmYWlsdXJlLgoKUmV0dXJuIGVhcmx5IHdoZW4gdGhlIHBhZ2Ugc2l6ZSBsb29rdXAgZmFpbHMgb3IgcHJvZHVjZXMgYW4gaW52YWxpZAp2YWx1ZSwgYXZvaWRpbmcgY3JlYXRpb24gb2YgYW4gaW52YWxpZCB2YXJpYWJsZS1sZW5ndGggYXJyYXkuCgpTaWduZWQtb2ZmLWJ5OiBodWFuZ3dlbmJpbiA8aHVhbmd3ZW5iaW5Aa3lsaW5vcy5jbj4KLS0tCiBzcmMvY2xvc3VyZXMuYyB8IDIgKysKIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKykKCi0tLSBhL3NyYy9jbG9zdXJlcy5jCisrKyBiL3NyYy9jbG9zdXJlcy5jCkBAIC04MDAsNiArODAwLDggQEAgYWxsb2NhdGVfc3BhY2UgKGludCBmZCwgb2ZmX3QgbGVuKQogICAvKiBPYnRhaW4gc3lzdGVtIHBhZ2Ugc2l6ZS4gKi8KICAgaWYgKCFwYWdlX3NpemUpCiAgICAgcGFnZV9zaXplID0gc3lzY29uZihfU0NfUEFHRVNJWkUpOworICBpZiAocGFnZV9zaXplIDw9IDApCisgICAgcmV0dXJuIC0xOwogCiAgIHVuc2lnbmVkIGNoYXIgYnVmW3BhZ2Vfc2l6ZV07CiAgIG1lbXNldCAoYnVmLCAwLCBwYWdlX3NpemUpOwo=
+From 1877747a8966a9466802b8f807f4dec9141f9a48 Mon Sep 17 00:00:00 2001
+From: huangwenbin <huangwenbin@kylinos.cn>
+Date: Mon, 31 Aug 2026 17:29:27 +0800
+Subject: [PATCH] closures: handle page size lookup failure
+
+allocate_space() uses the value returned by sysconf(_SC_PAGESIZE)
+as the size of a local buffer without checking for failure.
+
+Return early when the page size lookup fails or produces an invalid
+value, avoiding creation of an invalid variable-length array.
+
+Signed-off-by: huangwenbin <huangwenbin@kylinos.cn>
+---
+ src/closures.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+--- a/src/closures.c
++++ b/src/closures.c
+@@ -800,6 +800,8 @@ allocate_space (int fd, off_t len)
+   /* Obtain system page size. */
+   if (!page_size)
+     page_size = sysconf(_SC_PAGESIZE);
++  if (page_size <= 0)
++    return -1;
+ 
+   unsigned char buf[page_size];
+   memset (buf, 0, page_size);

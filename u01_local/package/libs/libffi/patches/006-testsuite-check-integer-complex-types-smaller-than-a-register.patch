@@ -1,1 +1,194 @@
-RnJvbSA2NDUyMDIwYzIwNWNiODhlY2EwMGExODY1NjE5ZTY0ODYwZGE1ZWQwIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogVHVlLCAyMCBPY3QgMjAyNiAyMzo0ODozNCArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHRlc3RzdWl0ZTogY2hlY2sgaW50ZWdlciBjb21wbGV4IHR5cGVzIHNtYWxsZXIgdGhhbiBhCiByZWdpc3RlcgoKY29tcGxleF9pbnQuYyBkZWZpbmVzIGEgX0NvbXBsZXggdW5zaWduZWQgY2hhciB0eXBlIGJ1dCBvbmx5IHVzZXMKX0NvbXBsZXggaW50LCBzbyBub3RoaW5nIHRlc3RzIGNvbXBsZXggdmFsdWVzIHRoYXQgZml0IGludG8gYSBzaW5nbGUKcmVnaXN0ZXIgb3Igc3RhY2sgc2xvdC4gIFNldmVyYWwgdGFyZ2V0cyBwYXNzIGFuZCByZXR1cm4gdGhvc2UKZGlmZmVyZW50bHkgZnJvbSB0aGUgbGFyZ2VyIGNvbXBsZXggdHlwZXMsIGUuZy4gcmlnaHQtanVzdGlmaWVkIHdpdGhpbgp0aGUgcmVnaXN0ZXIuCgpBZGQgY29tcGxleF9pbnRfc21hbGwsIHdoaWNoIHBhc3NlcyBhbmQgcmV0dXJucyBfQ29tcGxleCBzaWduZWQgY2hhciBhbmQKX0NvbXBsZXggc2hvcnQgdGhyb3VnaCBmZmlfY2FsbCBhbmQgdGhyb3VnaCBjbG9zdXJlcywgYm90aCBpbiByZWdpc3RlcnMKYW5kLCBhZnRlciBlaWdodCBpbnRzLCBvbiB0aGUgc3RhY2suCkFzc2lzdGVkLWJ5OiBMTE0KU2lnbmVkLW9mZi1ieTogRGFuaWVsIEdvbGxlIDxkYW5pZWxAbWFrcm90b3BpYS5vcmc+Ci0tLQogdGVzdHN1aXRlL01ha2VmaWxlLmFtICAgICAgICAgICAgICAgICAgICAgICAgfCAgIDIgKy0KIHRlc3RzdWl0ZS9saWJmZmkuY29tcGxleC9jb21wbGV4X2ludF9zbWFsbC5jIHwgMTU3ICsrKysrKysrKysrKysrKysrKysKIDIgZmlsZXMgY2hhbmdlZCwgMTU4IGluc2VydGlvbnMoKyksIDEgZGVsZXRpb24oLSkKIGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0c3VpdGUvbGliZmZpLmNvbXBsZXgvY29tcGxleF9pbnRfc21hbGwuYwoKLS0tIGEvdGVzdHN1aXRlL01ha2VmaWxlLmFtCisrKyBiL3Rlc3RzdWl0ZS9NYWtlZmlsZS5hbQpAQCAtODMsNyArODMsNyBAQCBFWFRSQV9ESVNUID0gY29uZmlnL2RlZmF1bHQuZXhwIGVtc2NyaXB0CiAJbGliZmZpLmNvbXBsZXgvY2xzX2NvbXBsZXhfdmFfZG91YmxlLmMgbGliZmZpLmNvbXBsZXgvY2xzX2NvbXBsZXhfdmFfZmxvYXQuYyBsaWJmZmkuY29tcGxleC9jbHNfY29tcGxleF92YV9sb25nZG91YmxlLmMgXAogCWxpYmZmaS5jb21wbGV4L2NvbXBsZXguZXhwIGxpYmZmaS5jb21wbGV4L2NvbXBsZXguaW5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfZGVmc19kb3VibGUuaW5jIFwKIAlsaWJmZmkuY29tcGxleC9jb21wbGV4X2RlZnNfZmxvYXQuaW5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfZGVmc19sb25nZG91YmxlLmluYyBsaWJmZmkuY29tcGxleC9jb21wbGV4X2RvdWJsZS5jIFwKLQlsaWJmZmkuY29tcGxleC9jb21wbGV4X2Zsb2F0LmMgbGliZmZpLmNvbXBsZXgvY29tcGxleF9pMTI4LmMgbGliZmZpLmNvbXBsZXgvY29tcGxleF9pbnQuYyBsaWJmZmkuY29tcGxleC9jb21wbGV4X2xvbmdkb3VibGUuYyBcCisJbGliZmZpLmNvbXBsZXgvY29tcGxleF9mbG9hdC5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfaTEyOC5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfaW50LmMgbGliZmZpLmNvbXBsZXgvY29tcGxleF9pbnRfc21hbGwuYyBsaWJmZmkuY29tcGxleC9jb21wbGV4X2xvbmdkb3VibGUuYyBcCiAJbGliZmZpLmNvbXBsZXgvY29tcGxleF9sb25nZG91YmxlX2FiaS5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVncy5pbmMgbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzX2RvdWJsZS5jIFwKIAlsaWJmZmkuY29tcGxleC9jb21wbGV4X3JlZ3NfZmxvYXQuYyBsaWJmZmkuY29tcGxleC9jb21wbGV4X3JlZ3NfbG9uZ2RvdWJsZS5jIFwKIAlsaWJmZmkuY29tcGxleC9mZml0ZXN0LmggbGliZmZpLmNvbXBsZXgvbWFueV9jb21wbGV4LmluYyBsaWJmZmkuY29tcGxleC9tYW55X2NvbXBsZXhfZG91YmxlLmMgXAotLS0gL2Rldi9udWxsCisrKyBiL3Rlc3RzdWl0ZS9saWJmZmkuY29tcGxleC9jb21wbGV4X2ludF9zbWFsbC5jCkBAIC0wLDAgKzEsMTU3IEBACisvKiBBcmVhOglmZmlfY2FsbCwgY2xvc3VyZV9jYWxsCisgICBQdXJwb3NlOglDaGVjayBpbnRlZ2VyIGNvbXBsZXggdHlwZXMgc21hbGxlciB0aGFuIGEgcmVnaXN0ZXIuCisgICBMaW1pdGF0aW9uczoJbm9uZS4KKyAgIFBSOgkJbm9uZS4gICovCisKKy8qIHsgZGctZG8gcnVuIH0gKi8KKworI2luY2x1ZGUgImZmaXRlc3QuaCIKKyNpbmNsdWRlIDxjb21wbGV4Lmg+CisKKy8qIF9Db21wbGV4IHNpZ25lZCBjaGFyIGFuZCBfQ29tcGxleCBzaG9ydCBhcmUgcGFzc2VkIGFuZCByZXR1cm5lZCBpbiBhCisgICBzaW5nbGUgcmVnaXN0ZXIgb3Igc3RhY2sgc2xvdCBvbiBtb3N0IHRhcmdldHMsIHdoaWNoIGZvciBjb21wbGV4IHZhbHVlcworICAgaXMgYSBkaWZmZXJlbnQgY29kZSBwYXRoIGZyb20gdGhlIGxhcmdlciB0eXBlcy4gIFRoZSBsYXN0IGZ1bmN0aW9uCisgICBwYXNzZXMgYm90aCBhZnRlciBlaWdodCBpbnRzLCBzbyB0aGF0IHRoZXkgZ28gdG8gdGhlIHN0YWNrIG9uIHRhcmdldHMKKyAgIHdpdGggZWlnaHQgYXJndW1lbnQgcmVnaXN0ZXJzLiAgKi8KKworI2RlZmluZSBGRklfQ09NUExFWF9UWVBFREVGKG5hbWUsIHR5cGUsIGZmaXR5cGUpCSAgICAgXAorICBzdGF0aWMgZmZpX3R5cGUgKmZmaV9lbGVtZW50c19jb21wbGV4XyMjbmFtZSBbMl0gPSB7CSAgICAgXAorICAgIChmZmlfdHlwZSAqKSgmZmZpdHlwZSksIE5VTEwJCQkgICAgIFwKKyAgfTsJCQkJCQkJICAgICBcCisgIHN0cnVjdCBzdHJ1Y3RfYWxpZ25fY29tcGxleF8jI25hbWUgewkJCSAgICAgXAorICAgIGNoYXIgYzsJCQkJCQkgICAgIFwKKyAgICBfQ29tcGxleCB0eXBlIHg7CQkJCQkgICAgIFwKKyAgfTsJCQkJCQkJICAgICBcCisgIHN0YXRpYyBmZmlfdHlwZSBmZmlfdHlwZV9jb21wbGV4XyMjbmFtZSA9IHsJCSAgICAgXAorICAgIHNpemVvZihfQ29tcGxleCB0eXBlKSwJCQkJICAgICBcCisgICAgb2Zmc2V0b2Yoc3RydWN0IHN0cnVjdF9hbGlnbl9jb21wbGV4XyMjbmFtZSwgeCksCSAgICAgXAorICAgIEZGSV9UWVBFX0NPTVBMRVgsCQkJCQkgICAgIFwKKyAgICAoZmZpX3R5cGUgKiopZmZpX2VsZW1lbnRzX2NvbXBsZXhfIyNuYW1lCQkgICAgIFwKKyAgfQorCitGRklfQ09NUExFWF9UWVBFREVGKHNjaGFyLCBzaWduZWQgY2hhciwgZmZpX3R5cGVfc2NoYXIpOworRkZJX0NPTVBMRVhfVFlQRURFRihzc2hvcnQsIHNob3J0LCBmZmlfdHlwZV9zc2hvcnQpOworCit0eXBlZGVmIF9Db21wbGV4IHNpZ25lZCBjaGFyIGNjOwordHlwZWRlZiBfQ29tcGxleCBzaG9ydCBjczsKKworc3RhdGljIGNjCitmX2NjIChjYyBhLCBpbnQgaykKK3sKKyAgX19yZWFsX18gYSA9IF9fcmVhbF9fIGEgKiBrOworICBfX2ltYWdfXyBhID0gX19pbWFnX18gYSAtIGs7CisgIHJldHVybiBhOworfQorCitzdGF0aWMgY3MKK2ZfY3MgKGNzIGEsIGludCBrKQoreworICBfX3JlYWxfXyBhID0gX19yZWFsX18gYSAqIGs7CisgIF9faW1hZ19fIGEgPSBfX2ltYWdfXyBhIC0gazsKKyAgcmV0dXJuIGE7Cit9CisKK3N0YXRpYyBjcworZl9zdGFjayAoaW50IGkxLCBpbnQgaTIsIGludCBpMywgaW50IGk0LCBpbnQgaTUsIGludCBpNiwgaW50IGk3LCBpbnQgaTgsCisJIGNjIGEsIGNzIGIpCit7CisgIF9fcmVhbF9fIGIgPSBfX3JlYWxfXyBiICsgX19yZWFsX18gYSArIGkxICsgaTIgKyBpMyArIGk0OworICBfX2ltYWdfXyBiID0gX19pbWFnX18gYiArIF9faW1hZ19fIGEgKyBpNSArIGk2ICsgaTcgKyBpODsKKyAgcmV0dXJuIGI7Cit9CisKK3N0YXRpYyB2b2lkCitjbHNfY2MgKGZmaV9jaWYgKmNpZiBfX1VOVVNFRF9fLCB2b2lkICpyZXNwLCB2b2lkICoqYXJncywKKwl2b2lkICp1c2VyZGF0YSBfX1VOVVNFRF9fKQoreworICAqKGNjICopIHJlc3AgPSBmX2NjICgqKGNjICopIGFyZ3NbMF0sICooaW50ICopIGFyZ3NbMV0pOworfQorCitzdGF0aWMgdm9pZAorY2xzX2NzIChmZmlfY2lmICpjaWYgX19VTlVTRURfXywgdm9pZCAqcmVzcCwgdm9pZCAqKmFyZ3MsCisJdm9pZCAqdXNlcmRhdGEgX19VTlVTRURfXykKK3sKKyAgKihjcyAqKSByZXNwID0gZl9jcyAoKihjcyAqKSBhcmdzWzBdLCAqKGludCAqKSBhcmdzWzFdKTsKK30KKworc3RhdGljIHZvaWQKK2Nsc19zdGFjayAoZmZpX2NpZiAqY2lmIF9fVU5VU0VEX18sIHZvaWQgKnJlc3AsIHZvaWQgKiphcmdzLAorCSAgIHZvaWQgKnVzZXJkYXRhIF9fVU5VU0VEX18pCit7CisgICooY3MgKikgcmVzcCA9IGZfc3RhY2sgKCooaW50ICopIGFyZ3NbMF0sICooaW50ICopIGFyZ3NbMV0sCisJCQkgICooaW50ICopIGFyZ3NbMl0sICooaW50ICopIGFyZ3NbM10sCisJCQkgICooaW50ICopIGFyZ3NbNF0sICooaW50ICopIGFyZ3NbNV0sCisJCQkgICooaW50ICopIGFyZ3NbNl0sICooaW50ICopIGFyZ3NbN10sCisJCQkgICooY2MgKikgYXJnc1s4XSwgKihjcyAqKSBhcmdzWzldKTsKK30KKworaW50CittYWluICh2b2lkKQoreworICBmZmlfY2lmIGNpZjsKKyAgZmZpX3R5cGUgKnR5cGVzWzEwXTsKKyAgdm9pZCAqdmFsdWVzWzEwXTsKKyAgZmZpX2Nsb3N1cmUgKnBjbDsKKyAgdm9pZCAqY29kZTsKKyAgaW50IGludHNbOF0gPSB7IDEsIDIsIDMsIDQsIDUsIDYsIDcsIDggfTsKKyAgY2MgYSwgcmE7CisgIGNzIGIsIHJiOworICBpbnQgayA9IDMsIGk7CisKKyAgcGNsID0gZmZpX2Nsb3N1cmVfYWxsb2MgKHNpemVvZiAoZmZpX2Nsb3N1cmUpLCAmY29kZSk7CisgIENIRUNLIChwY2wgIT0gTlVMTCk7CisKKyAgX19yZWFsX18gYSA9IDU7CisgIF9faW1hZ19fIGEgPSAtNzsKKyAgX19yZWFsX18gYiA9IDMwMDsKKyAgX19pbWFnX18gYiA9IC00MDA7CisKKyAgdHlwZXNbMF0gPSAmZmZpX3R5cGVfY29tcGxleF9zY2hhcjsKKyAgdHlwZXNbMV0gPSAmZmZpX3R5cGVfc2ludDsKKyAgdmFsdWVzWzBdID0gJmE7CisgIHZhbHVlc1sxXSA9ICZrOworICBDSEVDSyAoZmZpX3ByZXBfY2lmICgmY2lmLCBGRklfREVGQVVMVF9BQkksIDIsICZmZmlfdHlwZV9jb21wbGV4X3NjaGFyLAorCQkgICAgICAgdHlwZXMpID09IEZGSV9PSyk7CisgIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZfY2MpLCAmcmEsIHZhbHVlcyk7CisgIHByaW50ZiAoImNjOiAlZCwlZGlcbiIsIChpbnQpIF9fcmVhbF9fIHJhLCAoaW50KSBfX2ltYWdfXyByYSk7CisgIENIRUNLIChfX3JlYWxfXyByYSA9PSAxNSAmJiBfX2ltYWdfXyByYSA9PSAtMTApOworICBDSEVDSyAoZmZpX3ByZXBfY2xvc3VyZV9sb2MgKHBjbCwgJmNpZiwgY2xzX2NjLCBOVUxMLCBjb2RlKSA9PSBGRklfT0spOworICByYSA9ICgoY2MgKCopKGNjLCBpbnQpKSBjb2RlKSAoYSwgayk7CisgIHByaW50ZiAoImNsb3N1cmUgY2M6ICVkLCVkaVxuIiwgKGludCkgX19yZWFsX18gcmEsIChpbnQpIF9faW1hZ19fIHJhKTsKKyAgQ0hFQ0sgKF9fcmVhbF9fIHJhID09IDE1ICYmIF9faW1hZ19fIHJhID09IC0xMCk7CisKKyAgdHlwZXNbMF0gPSAmZmZpX3R5cGVfY29tcGxleF9zc2hvcnQ7CisgIHZhbHVlc1swXSA9ICZiOworICBDSEVDSyAoZmZpX3ByZXBfY2lmICgmY2lmLCBGRklfREVGQVVMVF9BQkksIDIsICZmZmlfdHlwZV9jb21wbGV4X3NzaG9ydCwKKwkJICAgICAgIHR5cGVzKSA9PSBGRklfT0spOworICBmZmlfY2FsbCAoJmNpZiwgRkZJX0ZOIChmX2NzKSwgJnJiLCB2YWx1ZXMpOworICBwcmludGYgKCJjczogJWQsJWRpXG4iLCAoaW50KSBfX3JlYWxfXyByYiwgKGludCkgX19pbWFnX18gcmIpOworICBDSEVDSyAoX19yZWFsX18gcmIgPT0gOTAwICYmIF9faW1hZ19fIHJiID09IC00MDMpOworICBDSEVDSyAoZmZpX3ByZXBfY2xvc3VyZV9sb2MgKHBjbCwgJmNpZiwgY2xzX2NzLCBOVUxMLCBjb2RlKSA9PSBGRklfT0spOworICByYiA9ICgoY3MgKCopKGNzLCBpbnQpKSBjb2RlKSAoYiwgayk7CisgIHByaW50ZiAoImNsb3N1cmUgY3M6ICVkLCVkaVxuIiwgKGludCkgX19yZWFsX18gcmIsIChpbnQpIF9faW1hZ19fIHJiKTsKKyAgQ0hFQ0sgKF9fcmVhbF9fIHJiID09IDkwMCAmJiBfX2ltYWdfXyByYiA9PSAtNDAzKTsKKworICBmb3IgKGkgPSAwOyBpIDwgODsgaSsrKQorICAgIHsKKyAgICAgIHR5cGVzW2ldID0gJmZmaV90eXBlX3NpbnQ7CisgICAgICB2YWx1ZXNbaV0gPSAmaW50c1tpXTsKKyAgICB9CisgIHR5cGVzWzhdID0gJmZmaV90eXBlX2NvbXBsZXhfc2NoYXI7CisgIHZhbHVlc1s4XSA9ICZhOworICB0eXBlc1s5XSA9ICZmZmlfdHlwZV9jb21wbGV4X3NzaG9ydDsKKyAgdmFsdWVzWzldID0gJmI7CisgIENIRUNLIChmZmlfcHJlcF9jaWYgKCZjaWYsIEZGSV9ERUZBVUxUX0FCSSwgMTAsICZmZmlfdHlwZV9jb21wbGV4X3NzaG9ydCwKKwkJICAgICAgIHR5cGVzKSA9PSBGRklfT0spOworICBmZmlfY2FsbCAoJmNpZiwgRkZJX0ZOIChmX3N0YWNrKSwgJnJiLCB2YWx1ZXMpOworICBwcmludGYgKCJzdGFjazogJWQsJWRpXG4iLCAoaW50KSBfX3JlYWxfXyByYiwgKGludCkgX19pbWFnX18gcmIpOworICBDSEVDSyAoX19yZWFsX18gcmIgPT0gMzE1ICYmIF9faW1hZ19fIHJiID09IC0zODEpOworICBDSEVDSyAoZmZpX3ByZXBfY2xvc3VyZV9sb2MgKHBjbCwgJmNpZiwgY2xzX3N0YWNrLCBOVUxMLCBjb2RlKSA9PSBGRklfT0spOworICByYiA9ICgoY3MgKCopKGludCwgaW50LCBpbnQsIGludCwgaW50LCBpbnQsIGludCwgaW50LCBjYywgY3MpKSBjb2RlKQorICAgICgxLCAyLCAzLCA0LCA1LCA2LCA3LCA4LCBhLCBiKTsKKyAgcHJpbnRmICgiY2xvc3VyZSBzdGFjazogJWQsJWRpXG4iLCAoaW50KSBfX3JlYWxfXyByYiwgKGludCkgX19pbWFnX18gcmIpOworICBDSEVDSyAoX19yZWFsX18gcmIgPT0gMzE1ICYmIF9faW1hZ19fIHJiID09IC0zODEpOworCisgIGZmaV9jbG9zdXJlX2ZyZWUgKHBjbCk7CisgIGV4aXQgKDApOworfQo=
+From 6452020c205cb88eca00a1865619e64860da5ed0 Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Tue, 20 Oct 2026 23:48:34 +0000
+Subject: [PATCH] testsuite: check integer complex types smaller than a
+ register
+
+complex_int.c defines a _Complex unsigned char type but only uses
+_Complex int, so nothing tests complex values that fit into a single
+register or stack slot.  Several targets pass and return those
+differently from the larger complex types, e.g. right-justified within
+the register.
+
+Add complex_int_small, which passes and returns _Complex signed char and
+_Complex short through ffi_call and through closures, both in registers
+and, after eight ints, on the stack.
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ testsuite/Makefile.am                        |   2 +-
+ testsuite/libffi.complex/complex_int_small.c | 157 +++++++++++++++++++
+ 2 files changed, 158 insertions(+), 1 deletion(-)
+ create mode 100644 testsuite/libffi.complex/complex_int_small.c
+
+--- a/testsuite/Makefile.am
++++ b/testsuite/Makefile.am
+@@ -83,7 +83,7 @@ EXTRA_DIST = config/default.exp emscript
+ 	libffi.complex/cls_complex_va_double.c libffi.complex/cls_complex_va_float.c libffi.complex/cls_complex_va_longdouble.c \
+ 	libffi.complex/complex.exp libffi.complex/complex.inc libffi.complex/complex_defs_double.inc \
+ 	libffi.complex/complex_defs_float.inc libffi.complex/complex_defs_longdouble.inc libffi.complex/complex_double.c \
+-	libffi.complex/complex_float.c libffi.complex/complex_i128.c libffi.complex/complex_int.c libffi.complex/complex_longdouble.c \
++	libffi.complex/complex_float.c libffi.complex/complex_i128.c libffi.complex/complex_int.c libffi.complex/complex_int_small.c libffi.complex/complex_longdouble.c \
+ 	libffi.complex/complex_longdouble_abi.c libffi.complex/complex_regs.inc libffi.complex/complex_regs_double.c \
+ 	libffi.complex/complex_regs_float.c libffi.complex/complex_regs_longdouble.c \
+ 	libffi.complex/ffitest.h libffi.complex/many_complex.inc libffi.complex/many_complex_double.c \
+--- /dev/null
++++ b/testsuite/libffi.complex/complex_int_small.c
+@@ -0,0 +1,157 @@
++/* Area:	ffi_call, closure_call
++   Purpose:	Check integer complex types smaller than a register.
++   Limitations:	none.
++   PR:		none.  */
++
++/* { dg-do run } */
++
++#include "ffitest.h"
++#include <complex.h>
++
++/* _Complex signed char and _Complex short are passed and returned in a
++   single register or stack slot on most targets, which for complex values
++   is a different code path from the larger types.  The last function
++   passes both after eight ints, so that they go to the stack on targets
++   with eight argument registers.  */
++
++#define FFI_COMPLEX_TYPEDEF(name, type, ffitype)	     \
++  static ffi_type *ffi_elements_complex_##name [2] = {	     \
++    (ffi_type *)(&ffitype), NULL			     \
++  };							     \
++  struct struct_align_complex_##name {			     \
++    char c;						     \
++    _Complex type x;					     \
++  };							     \
++  static ffi_type ffi_type_complex_##name = {		     \
++    sizeof(_Complex type),				     \
++    offsetof(struct struct_align_complex_##name, x),	     \
++    FFI_TYPE_COMPLEX,					     \
++    (ffi_type **)ffi_elements_complex_##name		     \
++  }
++
++FFI_COMPLEX_TYPEDEF(schar, signed char, ffi_type_schar);
++FFI_COMPLEX_TYPEDEF(sshort, short, ffi_type_sshort);
++
++typedef _Complex signed char cc;
++typedef _Complex short cs;
++
++static cc
++f_cc (cc a, int k)
++{
++  __real__ a = __real__ a * k;
++  __imag__ a = __imag__ a - k;
++  return a;
++}
++
++static cs
++f_cs (cs a, int k)
++{
++  __real__ a = __real__ a * k;
++  __imag__ a = __imag__ a - k;
++  return a;
++}
++
++static cs
++f_stack (int i1, int i2, int i3, int i4, int i5, int i6, int i7, int i8,
++	 cc a, cs b)
++{
++  __real__ b = __real__ b + __real__ a + i1 + i2 + i3 + i4;
++  __imag__ b = __imag__ b + __imag__ a + i5 + i6 + i7 + i8;
++  return b;
++}
++
++static void
++cls_cc (ffi_cif *cif __UNUSED__, void *resp, void **args,
++	void *userdata __UNUSED__)
++{
++  *(cc *) resp = f_cc (*(cc *) args[0], *(int *) args[1]);
++}
++
++static void
++cls_cs (ffi_cif *cif __UNUSED__, void *resp, void **args,
++	void *userdata __UNUSED__)
++{
++  *(cs *) resp = f_cs (*(cs *) args[0], *(int *) args[1]);
++}
++
++static void
++cls_stack (ffi_cif *cif __UNUSED__, void *resp, void **args,
++	   void *userdata __UNUSED__)
++{
++  *(cs *) resp = f_stack (*(int *) args[0], *(int *) args[1],
++			  *(int *) args[2], *(int *) args[3],
++			  *(int *) args[4], *(int *) args[5],
++			  *(int *) args[6], *(int *) args[7],
++			  *(cc *) args[8], *(cs *) args[9]);
++}
++
++int
++main (void)
++{
++  ffi_cif cif;
++  ffi_type *types[10];
++  void *values[10];
++  ffi_closure *pcl;
++  void *code;
++  int ints[8] = { 1, 2, 3, 4, 5, 6, 7, 8 };
++  cc a, ra;
++  cs b, rb;
++  int k = 3, i;
++
++  pcl = ffi_closure_alloc (sizeof (ffi_closure), &code);
++  CHECK (pcl != NULL);
++
++  __real__ a = 5;
++  __imag__ a = -7;
++  __real__ b = 300;
++  __imag__ b = -400;
++
++  types[0] = &ffi_type_complex_schar;
++  types[1] = &ffi_type_sint;
++  values[0] = &a;
++  values[1] = &k;
++  CHECK (ffi_prep_cif (&cif, FFI_DEFAULT_ABI, 2, &ffi_type_complex_schar,
++		       types) == FFI_OK);
++  ffi_call (&cif, FFI_FN (f_cc), &ra, values);
++  printf ("cc: %d,%di\n", (int) __real__ ra, (int) __imag__ ra);
++  CHECK (__real__ ra == 15 && __imag__ ra == -10);
++  CHECK (ffi_prep_closure_loc (pcl, &cif, cls_cc, NULL, code) == FFI_OK);
++  ra = ((cc (*)(cc, int)) code) (a, k);
++  printf ("closure cc: %d,%di\n", (int) __real__ ra, (int) __imag__ ra);
++  CHECK (__real__ ra == 15 && __imag__ ra == -10);
++
++  types[0] = &ffi_type_complex_sshort;
++  values[0] = &b;
++  CHECK (ffi_prep_cif (&cif, FFI_DEFAULT_ABI, 2, &ffi_type_complex_sshort,
++		       types) == FFI_OK);
++  ffi_call (&cif, FFI_FN (f_cs), &rb, values);
++  printf ("cs: %d,%di\n", (int) __real__ rb, (int) __imag__ rb);
++  CHECK (__real__ rb == 900 && __imag__ rb == -403);
++  CHECK (ffi_prep_closure_loc (pcl, &cif, cls_cs, NULL, code) == FFI_OK);
++  rb = ((cs (*)(cs, int)) code) (b, k);
++  printf ("closure cs: %d,%di\n", (int) __real__ rb, (int) __imag__ rb);
++  CHECK (__real__ rb == 900 && __imag__ rb == -403);
++
++  for (i = 0; i < 8; i++)
++    {
++      types[i] = &ffi_type_sint;
++      values[i] = &ints[i];
++    }
++  types[8] = &ffi_type_complex_schar;
++  values[8] = &a;
++  types[9] = &ffi_type_complex_sshort;
++  values[9] = &b;
++  CHECK (ffi_prep_cif (&cif, FFI_DEFAULT_ABI, 10, &ffi_type_complex_sshort,
++		       types) == FFI_OK);
++  ffi_call (&cif, FFI_FN (f_stack), &rb, values);
++  printf ("stack: %d,%di\n", (int) __real__ rb, (int) __imag__ rb);
++  CHECK (__real__ rb == 315 && __imag__ rb == -381);
++  CHECK (ffi_prep_closure_loc (pcl, &cif, cls_stack, NULL, code) == FFI_OK);
++  rb = ((cs (*)(int, int, int, int, int, int, int, int, cc, cs)) code)
++    (1, 2, 3, 4, 5, 6, 7, 8, a, b);
++  printf ("closure stack: %d,%di\n", (int) __real__ rb, (int) __imag__ rb);
++  CHECK (__real__ rb == 315 && __imag__ rb == -381);
++
++  ffi_closure_free (pcl);
++  exit (0);
++}

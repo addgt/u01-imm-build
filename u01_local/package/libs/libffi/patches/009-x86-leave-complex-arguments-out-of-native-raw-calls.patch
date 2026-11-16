@@ -1,1 +1,21 @@
-RnJvbSAxOThiOGVmNGM5NDk0MjE2NmJhNzQ3YjQ1ZWM2NjYxOWM3OWU4MjhhIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBBbnRob255IEdyZWVuIDxncmVlbkBtb3hpZWxvZ2ljLmNvbT4KRGF0ZTogVHVlLCAyNyBPY3QgMjAyNiAwNzo0NToyMiAtMDQwMApTdWJqZWN0OiBbUEFUQ0hdIHg4NjogbGVhdmUgY29tcGxleCBhcmd1bWVudHMgb3V0IG9mIG5hdGl2ZSByYXcgY2FsbHMKCi0tLQogc3JjL3g4Ni9mZmkuYyB8IDMgKy0tCiAxIGZpbGUgY2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDIgZGVsZXRpb25zKC0pCgotLS0gYS9zcmMveDg2L2ZmaS5jCisrKyBiL3NyYy94ODYvZmZpLmMKQEAgLTgwNCw4ICs4MDQsNyBAQCBmZmlfcmF3X2NhbGwoZmZpX2NpZiAqY2lmLCB2b2lkICgqZm4pKHZvCiAgICAgICBzaXplX3QgeiA9IHR5LT5zaXplOwogICAgICAgaW50IHQgPSB0eS0+dHlwZTsKIAotICAgICAgaWYgKHogPD0gRkZJX1NJWkVPRl9BUkcgJiYgdCAhPSBGRklfVFlQRV9TVFJVQ1QgJiYgdCAhPSBGRklfVFlQRV9DT01QTEVYCi0JICAmJiB0ICE9IEZGSV9UWVBFX0ZMT0FUKQorICAgICAgaWYgKHogPD0gRkZJX1NJWkVPRl9BUkcgJiYgdCAhPSBGRklfVFlQRV9TVFJVQ1QgJiYgdCAhPSBGRklfVFlQRV9GTE9BVCkKIAl7CiAJICBmZmlfYXJnIHZhbCA9IGV4dGVuZF9iYXNpY190eXBlIChhdmFsdWUsIHQpOwogCSAgZnJhbWUtPnJlZ3NbcGFiaS0+cmVnc1tuYXJnX3JlZysrXV0gPSB2YWw7Cg==
+From 198b8ef4c94942166ba747b45ec66619c79e828a Mon Sep 17 00:00:00 2001
+From: Anthony Green <green@moxielogic.com>
+Date: Tue, 27 Oct 2026 07:45:22 -0400
+Subject: [PATCH] x86: leave complex arguments out of native raw calls
+
+---
+ src/x86/ffi.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+--- a/src/x86/ffi.c
++++ b/src/x86/ffi.c
+@@ -804,8 +804,7 @@ ffi_raw_call(ffi_cif *cif, void (*fn)(vo
+       size_t z = ty->size;
+       int t = ty->type;
+ 
+-      if (z <= FFI_SIZEOF_ARG && t != FFI_TYPE_STRUCT && t != FFI_TYPE_COMPLEX
+-	  && t != FFI_TYPE_FLOAT)
++      if (z <= FFI_SIZEOF_ARG && t != FFI_TYPE_STRUCT && t != FFI_TYPE_FLOAT)
+ 	{
+ 	  ffi_arg val = extend_basic_type (avalue, t);
+ 	  frame->regs[pabi->regs[narg_reg++]] = val;

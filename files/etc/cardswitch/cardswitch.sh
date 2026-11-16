@@ -1,1 +1,47 @@
-IyEvYmluL3NoCmlmIFsgISAkMSBdCgp0aGVuCmVjaG8gIlJ1biB3aXRoIHRoZSBzbG90IHlvdSB3YW50IHRvIHN3aXRjaCB0byIKZXhpdAoKZWxzZQoKaWYgWyAkMSA9PSAxIF0KdGhlbgplY2hvIDEgPiAvc3lzL2NsYXNzL2xlZHMvc2ltOnNlbC9icmlnaHRuZXNzCmVjaG8gMCA+IC9zeXMvY2xhc3MvbGVkcy9zaW06ZW4vYnJpZ2h0bmVzcwplY2hvIDAgPiAvc3lzL2NsYXNzL2xlZHMvc2ltOnNlbDIvYnJpZ2h0bmVzcwplY2hvIDAgPiAvc3lzL2NsYXNzL2xlZHMvc2ltOmVuMi9icmlnaHRuZXNzCmZpCgppZiBbICQxID09IDIgXQp0aGVuCmVjaG8gMCA+IC9zeXMvY2xhc3MvbGVkcy9zaW06c2VsL2JyaWdodG5lc3MKZWNobyAxID4gL3N5cy9jbGFzcy9sZWRzL3NpbTplbi9icmlnaHRuZXNzCmVjaG8gMCA+IC9zeXMvY2xhc3MvbGVkcy9zaW06c2VsMi9icmlnaHRuZXNzCmVjaG8gMCA+IC9zeXMvY2xhc3MvbGVkcy9zaW06ZW4yL2JyaWdodG5lc3MKZmkKCmlmIFsgJDEgPT0gMyBdCnRoZW4KZWNobyAwID4gL3N5cy9jbGFzcy9sZWRzL3NpbTpzZWwvYnJpZ2h0bmVzcwplY2hvIDAgPiAvc3lzL2NsYXNzL2xlZHMvc2ltOmVuL2JyaWdodG5lc3MKZWNobyAxID4gL3N5cy9jbGFzcy9sZWRzL3NpbTpzZWwyL2JyaWdodG5lc3MKZWNobyAwID4gL3N5cy9jbGFzcy9sZWRzL3NpbTplbjIvYnJpZ2h0bmVzcwpmaQoKaWYgWyAkMSA9PSA0IF0KdGhlbgplY2hvIDAgPiAvc3lzL2NsYXNzL2xlZHMvc2ltOnNlbC9icmlnaHRuZXNzCmVjaG8gMCA+IC9zeXMvY2xhc3MvbGVkcy9zaW06ZW4vYnJpZ2h0bmVzcwplY2hvIDAgPiAvc3lzL2NsYXNzL2xlZHMvc2ltOnNlbDIvYnJpZ2h0bmVzcwplY2hvIDEgPiAvc3lzL2NsYXNzL2xlZHMvc2ltOmVuMi9icmlnaHRuZXNzCmZpCgpybW1vZCBxY29tLXE2djUtbXNzCm1vZHByb2JlIHFjb20tcTZ2NS1tc3MKc2VydmljZSBybXRmcyByZXN0YXJ0CnNlcnZpY2UgbW9kZW1tYW5hZ2VyIHJlc3RhcnQKCmZpCg==
+#!/bin/sh
+if [ ! $1 ]
+
+then
+echo "Run with the slot you want to switch to"
+exit
+
+else
+
+if [ $1 == 1 ]
+then
+echo 1 > /sys/class/leds/sim:sel/brightness
+echo 0 > /sys/class/leds/sim:en/brightness
+echo 0 > /sys/class/leds/sim:sel2/brightness
+echo 0 > /sys/class/leds/sim:en2/brightness
+fi
+
+if [ $1 == 2 ]
+then
+echo 0 > /sys/class/leds/sim:sel/brightness
+echo 1 > /sys/class/leds/sim:en/brightness
+echo 0 > /sys/class/leds/sim:sel2/brightness
+echo 0 > /sys/class/leds/sim:en2/brightness
+fi
+
+if [ $1 == 3 ]
+then
+echo 0 > /sys/class/leds/sim:sel/brightness
+echo 0 > /sys/class/leds/sim:en/brightness
+echo 1 > /sys/class/leds/sim:sel2/brightness
+echo 0 > /sys/class/leds/sim:en2/brightness
+fi
+
+if [ $1 == 4 ]
+then
+echo 0 > /sys/class/leds/sim:sel/brightness
+echo 0 > /sys/class/leds/sim:en/brightness
+echo 0 > /sys/class/leds/sim:sel2/brightness
+echo 1 > /sys/class/leds/sim:en2/brightness
+fi
+
+rmmod qcom-q6v5-mss
+modprobe qcom-q6v5-mss
+service rmtfs restart
+service modemmanager restart
+
+fi

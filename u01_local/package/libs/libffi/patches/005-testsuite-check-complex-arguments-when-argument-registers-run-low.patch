@@ -1,1 +1,229 @@
-RnJvbSBkZmY2YjE0MmNlZjAzZmJiYTc0NzM0NDQ5NmFiZWI1OTQxZTFmZTZiIE1vbiBTZXAgMTcgMDA6MDA6MDAgMjAwMQpGcm9tOiBEYW5pZWwgR29sbGUgPGRhbmllbEBtYWtyb3RvcGlhLm9yZz4KRGF0ZTogVHVlLCAyMCBPY3QgMjAyNiAyMjo1Nzo0OSArMDAwMApTdWJqZWN0OiBbUEFUQ0hdIHRlc3RzdWl0ZTogY2hlY2sgY29tcGxleCBhcmd1bWVudHMgd2hlbiBhcmd1bWVudCByZWdpc3RlcnMKIHJ1biBsb3cKClRoZSBjb21wbGV4IHRlc3RzIHBhc3MgYXQgbW9zdCBhIGZldyBjb21wbGV4IHZhbHVlcyBpbiBhIHJvdywgc28gdGhleSBuZXZlcgpyZWFjaCB0aGUgYXJndW1lbnQtcGFzc2luZyBydWxlcyB0aGF0IGFwcGx5IG9uY2UgcmVnaXN0ZXJzIHN0YXJ0IHRvIHJ1bgpvdXQuICBUaG9zZSBydWxlcyBkaWZmZXIgZnJvbSB0aGUgcGxhaW4gY2FzZXMgb24gc2V2ZXJhbCB0YXJnZXRzOgoKICAtIE9uIFJJU0MtViBhbmQgTG9vbmdBcmNoIGEgY29tcGxleCBmbG9hdCBpcyBwYXNzZWQgbGlrZSBhIHN0cnVjdCBvZiB0d28KICAgIHJlYWxzOiBpbiB0d28gRlBScyBpZiB0d28gYXJlIGZyZWUsIG90aGVyd2lzZSBpbiBpbnRlZ2VyIHJlZ2lzdGVycyBhcyBhCiAgICB3aG9sZS4gIEl0IGlzIG5ldmVyIHNwbGl0IGJldHdlZW4gYW4gRlBSIGFuZCBhIEdQUi4KICAtIE9uIDMyLWJpdCBQb3dlclBDIFN5c1YgYSB0d28td29yZCBjb21wbGV4IHZhbHVlIHRha2VzIGFuIGV2ZW4vb2RkIEdQUgogICAgcGFpciBsaWtlIGxvbmcgbG9uZywgYW5kIGEgbGFyZ2VyIG9uZSBlaXRoZXIgZml0cyBjb21wbGV0ZWx5IGludG8gdGhlCiAgICByZW1haW5pbmcgR1BScyBvciBnb2VzIHRvIHRoZSBzdGFjaywgd2hpY2ggYWxzbyBtb3ZlcyBldmVyeSBsYXRlcgogICAgYXJndW1lbnQgdG8gdGhlIHN0YWNrLgoKQWRkIGNvbXBsZXhfcmVnc197ZmxvYXQsZG91YmxlLGxvbmdkb3VibGV9LCB3aGljaCBwYXNzIGEgY29tcGxleCB2YWx1ZQphZnRlciBzZXZlbiBkb3VibGVzLCBhZnRlciBmaXZlIGludHMsIGFuZCBhZnRlciBlaWdodCBkb3VibGVzIGFuZCBlaWdodAppbnRzLCBmb2xsb3dlZCBieSBhbiBpbnQsIGFuZCBjaGVjayB0aGUgcmVzdWx0IGJvdGggdGhyb3VnaCBmZmlfY2FsbCBhbmQKdGhyb3VnaCBhIGNsb3N1cmUuCkFzc2lzdGVkLWJ5OiBMTE0KU2lnbmVkLW9mZi1ieTogRGFuaWVsIEdvbGxlIDxkYW5pZWxAbWFrcm90b3BpYS5vcmc+Ci0tLQogdGVzdHN1aXRlL01ha2VmaWxlLmFtICAgICAgICAgICAgICAgICAgICAgICAgIHwgICAzICstCiB0ZXN0c3VpdGUvbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzLmluYyAgICAgfCAxNDIgKysrKysrKysrKysrKysrKysrCiAuLi4vbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzX2RvdWJsZS5jICAgICAgfCAgIDkgKysKIHRlc3RzdWl0ZS9saWJmZmkuY29tcGxleC9jb21wbGV4X3JlZ3NfZmxvYXQuYyB8ICAgOSArKwogLi4uL2xpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVnc19sb25nZG91YmxlLmMgIHwgICA5ICsrCiA1IGZpbGVzIGNoYW5nZWQsIDE3MSBpbnNlcnRpb25zKCspLCAxIGRlbGV0aW9uKC0pCiBjcmVhdGUgbW9kZSAxMDA2NDQgdGVzdHN1aXRlL2xpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVncy5pbmMKIGNyZWF0ZSBtb2RlIDEwMDY0NCB0ZXN0c3VpdGUvbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzX2RvdWJsZS5jCiBjcmVhdGUgbW9kZSAxMDA2NDQgdGVzdHN1aXRlL2xpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVnc19mbG9hdC5jCiBjcmVhdGUgbW9kZSAxMDA2NDQgdGVzdHN1aXRlL2xpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVnc19sb25nZG91YmxlLmMKCi0tLSBhL3Rlc3RzdWl0ZS9NYWtlZmlsZS5hbQorKysgYi90ZXN0c3VpdGUvTWFrZWZpbGUuYW0KQEAgLTg0LDcgKzg0LDggQEAgRVhUUkFfRElTVCA9IGNvbmZpZy9kZWZhdWx0LmV4cCBlbXNjcmlwdAogCWxpYmZmaS5jb21wbGV4L2NvbXBsZXguZXhwIGxpYmZmaS5jb21wbGV4L2NvbXBsZXguaW5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfZGVmc19kb3VibGUuaW5jIFwKIAlsaWJmZmkuY29tcGxleC9jb21wbGV4X2RlZnNfZmxvYXQuaW5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfZGVmc19sb25nZG91YmxlLmluYyBsaWJmZmkuY29tcGxleC9jb21wbGV4X2RvdWJsZS5jIFwKIAlsaWJmZmkuY29tcGxleC9jb21wbGV4X2Zsb2F0LmMgbGliZmZpLmNvbXBsZXgvY29tcGxleF9pMTI4LmMgbGliZmZpLmNvbXBsZXgvY29tcGxleF9pbnQuYyBsaWJmZmkuY29tcGxleC9jb21wbGV4X2xvbmdkb3VibGUuYyBcCi0JbGliZmZpLmNvbXBsZXgvY29tcGxleF9sb25nZG91YmxlX2FiaS5jIFwKKwlsaWJmZmkuY29tcGxleC9jb21wbGV4X2xvbmdkb3VibGVfYWJpLmMgbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzLmluYyBsaWJmZmkuY29tcGxleC9jb21wbGV4X3JlZ3NfZG91YmxlLmMgXAorCWxpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVnc19mbG9hdC5jIGxpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVnc19sb25nZG91YmxlLmMgXAogCWxpYmZmaS5jb21wbGV4L2ZmaXRlc3QuaCBsaWJmZmkuY29tcGxleC9tYW55X2NvbXBsZXguaW5jIGxpYmZmaS5jb21wbGV4L21hbnlfY29tcGxleF9kb3VibGUuYyBcCiAJbGliZmZpLmNvbXBsZXgvbWFueV9jb21wbGV4X2Zsb2F0LmMgbGliZmZpLmNvbXBsZXgvbWFueV9jb21wbGV4X2xvbmdkb3VibGUuYyBsaWJmZmkuY29tcGxleC9yZXR1cm5fY29tcGxleC5pbmMgXAogCWxpYmZmaS5jb21wbGV4L3JldHVybl9jb21wbGV4MS5pbmMgbGliZmZpLmNvbXBsZXgvcmV0dXJuX2NvbXBsZXgxX2RvdWJsZS5jIGxpYmZmaS5jb21wbGV4L3JldHVybl9jb21wbGV4MV9mbG9hdC5jIFwKLS0tIC9kZXYvbnVsbAorKysgYi90ZXN0c3VpdGUvbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzLmluYwpAQCAtMCwwICsxLDE0MiBAQAorLyogLSotYy0qLSAqLworI2luY2x1ZGUgImZmaXRlc3QuaCIKKyNpbmNsdWRlIDxjb21wbGV4Lmg+CisKKy8qIEEgY29tcGxleCBhcmd1bWVudCB0aGF0IGFycml2ZXMgd2hlbiB0aGUgYXJndW1lbnQgcmVnaXN0ZXJzIGFyZSBuZWFybHkKKyAgIHVzZWQgdXAuICBTZXZlbiBkb3VibGVzIGxlYXZlIG9uZSBmbG9hdGluZy1wb2ludCBhcmd1bWVudCByZWdpc3RlciBvbgorICAgUklTQy1WIGFuZCBMb29uZ0FyY2gsIHNvIHRoZSBjb21wbGV4IHZhbHVlIGhhcyB0byBtb3ZlIHRvIGludGVnZXIKKyAgIHJlZ2lzdGVycyBhcyBhIHdob2xlLiAgRml2ZSBpbnRzIGxlYXZlIGFuIG9kZCBudW1iZXIgb2YgR1BScyBvbiAzMi1iaXQKKyAgIFBvd2VyUEMsIHdoZXJlIGEgdHdvLXdvcmQgY29tcGxleCBza2lwcyB0byB0aGUgbmV4dCBldmVuIHJlZ2lzdGVyIHBhaXIKKyAgIGFuZCBhIGxhcmdlciBvbmUgZ29lcyB0byB0aGUgc3RhY2ssIGZvbGxvd2VkIGJ5IGV2ZXJ5IGxhdGVyIGFyZ3VtZW50LgorICAgRWlnaHQgZG91YmxlcyBhbmQgZWlnaHQgaW50cyBwdXNoIHRoZSBjb21wbGV4IHZhbHVlIG9udG8gdGhlIHN0YWNrIG9uCisgICBldmVyeSB0YXJnZXQuICAqLworCit0eXBlZGVmIF9Db21wbGV4IFRfQ19UWVBFIEM7CisKK3N0YXRpYyBDCitmbl9kNyAoZG91YmxlIGQxLCBkb3VibGUgZDIsIGRvdWJsZSBkMywgZG91YmxlIGQ0LCBkb3VibGUgZDUsIGRvdWJsZSBkNiwKKyAgICAgICBkb3VibGUgZDcsIEMgYywgaW50IGspCit7CisgIHJldHVybiBjICogayArIChkMSArIGQyICsgZDMgKyBkNCArIGQ1ICsgZDYgKyBkNyk7Cit9CisKK3N0YXRpYyBDCitmbl9pNSAoaW50IGkxLCBpbnQgaTIsIGludCBpMywgaW50IGk0LCBpbnQgaTUsIEMgYywgaW50IGspCit7CisgIHJldHVybiBjICogayArIChpMSArIGkyICsgaTMgKyBpNCArIGk1KTsKK30KKworc3RhdGljIEMKK2ZuX2Q4aTggKGRvdWJsZSBkMSwgZG91YmxlIGQyLCBkb3VibGUgZDMsIGRvdWJsZSBkNCwgZG91YmxlIGQ1LCBkb3VibGUgZDYsCisJIGRvdWJsZSBkNywgZG91YmxlIGQ4LCBpbnQgaTEsIGludCBpMiwgaW50IGkzLCBpbnQgaTQsIGludCBpNSwgaW50IGk2LAorCSBpbnQgaTcsIGludCBpOCwgQyBjLCBpbnQgaykKK3sKKyAgcmV0dXJuIGMgKiBrICsgKGQxICsgZDIgKyBkMyArIGQ0ICsgZDUgKyBkNiArIGQ3ICsgZDgKKwkJICArIGkxICsgaTIgKyBpMyArIGk0ICsgaTUgKyBpNiArIGk3ICsgaTgpOworfQorCisvKiBTSEFQRVswXSBkb3VibGVzLCBTSEFQRVsxXSBpbnRzLCB0aGVuIHRoZSBjb21wbGV4IHZhbHVlIGFuZCBhbiBpbnQuICAqLworc3RhdGljIHZvaWQKK2Nsc19mbiAoZmZpX2NpZiAqY2lmIF9fVU5VU0VEX18sIHZvaWQgKnJlc3AsIHZvaWQgKiphcmdzLCB2b2lkICp1c2VyZGF0YSkKK3sKKyAgY29uc3QgaW50ICpzaGFwZSA9IChjb25zdCBpbnQgKikgdXNlcmRhdGE7CisgIFRfQ19UWVBFIHMgPSAwOworICBpbnQgaSwgbiA9IDA7CisKKyAgZm9yIChpID0gMDsgaSA8IHNoYXBlWzBdOyBpKyspCisgICAgcyArPSAqKGRvdWJsZSAqKSBhcmdzW24rK107CisgIGZvciAoaSA9IDA7IGkgPCBzaGFwZVsxXTsgaSsrKQorICAgIHMgKz0gKihpbnQgKikgYXJnc1tuKytdOworICAqKEMgKikgcmVzcCA9ICooQyAqKSBhcmdzW25dICogKihpbnQgKikgYXJnc1tuICsgMV0gKyBzOworfQorCitzdGF0aWMgdm9pZAorY2hlY2sgKGNvbnN0IGNoYXIgKm5hbWUsIEMgZ290LCBDIHdhbnQpCit7CisgIHByaW50ZiAoIiVzOiAlLjNmLCUuM2ZpICh3YW50ICUuM2YsJS4zZmkpXG4iLCBuYW1lLAorCSAgVF9DT05WIGNyZWFsIChnb3QpLCBUX0NPTlYgY2ltYWcgKGdvdCksCisJICBUX0NPTlYgY3JlYWwgKHdhbnQpLCBUX0NPTlYgY2ltYWcgKHdhbnQpKTsKKyAgQ0hFQ0sgKGNyZWFsIChnb3QpID09IGNyZWFsICh3YW50KSk7CisgIENIRUNLIChjaW1hZyAoZ290KSA9PSBjaW1hZyAod2FudCkpOworfQorCitzdGF0aWMgdm9pZAorcHJlcCAoZmZpX2NpZiAqY2lmLCBmZmlfdHlwZSAqKnR5cGVzLCB2b2lkICoqdmFsdWVzLCBpbnQgbmQsIGludCBuaSwKKyAgICAgIGRvdWJsZSAqZCwgaW50ICppLCBDICpjLCBpbnQgKmspCit7CisgIGludCBqLCBuID0gMDsKKworICBmb3IgKGogPSAwOyBqIDwgbmQ7IGorKywgbisrKQorICAgIHsKKyAgICAgIHR5cGVzW25dID0gJmZmaV90eXBlX2RvdWJsZTsKKyAgICAgIHZhbHVlc1tuXSA9ICZkW2pdOworICAgIH0KKyAgZm9yIChqID0gMDsgaiA8IG5pOyBqKyssIG4rKykKKyAgICB7CisgICAgICB0eXBlc1tuXSA9ICZmZmlfdHlwZV9zaW50OworICAgICAgdmFsdWVzW25dID0gJmlbal07CisgICAgfQorICB0eXBlc1tuXSA9ICZUX0ZGSV9UWVBFOworICB2YWx1ZXNbbisrXSA9IGM7CisgIHR5cGVzW25dID0gJmZmaV90eXBlX3NpbnQ7CisgIHZhbHVlc1tuKytdID0gazsKKyAgQ0hFQ0sgKGZmaV9wcmVwX2NpZiAoY2lmLCBGRklfREVGQVVMVF9BQkksIG4sICZUX0ZGSV9UWVBFLCB0eXBlcykgPT0gRkZJX09LKTsKK30KKworaW50CittYWluICh2b2lkKQoreworICBzdGF0aWMgY29uc3QgaW50IHNoYXBlX2Q3WzJdID0geyA3LCAwIH07CisgIHN0YXRpYyBjb25zdCBpbnQgc2hhcGVfaTVbMl0gPSB7IDAsIDUgfTsKKyAgc3RhdGljIGNvbnN0IGludCBzaGFwZV9kOGk4WzJdID0geyA4LCA4IH07CisgIGRvdWJsZSBkWzhdID0geyAxLjUsIDIuNSwgMy41LCA0LjUsIDUuNSwgNi41LCA3LjUsIDguNSB9OworICBpbnQgaVs4XSA9IHsgMTAsIDIwLCAzMCwgNDAsIDUwLCA2MCwgNzAsIDgwIH07CisgIEMgYyA9IDEuMjUgKyAyLjUgKiBJOworICBpbnQgayA9IDc3OworICBmZmlfdHlwZSAqdHlwZXNbMThdOworICB2b2lkICp2YWx1ZXNbMThdOworICBmZmlfY2lmIGNpZjsKKyAgZmZpX2Nsb3N1cmUgKnBjbDsKKyAgdm9pZCAqY29kZTsKKyAgQyByOworCisgIHBjbCA9IGZmaV9jbG9zdXJlX2FsbG9jIChzaXplb2YgKGZmaV9jbG9zdXJlKSwgJmNvZGUpOworICBDSEVDSyAocGNsICE9IE5VTEwpOworCisgIHByZXAgKCZjaWYsIHR5cGVzLCB2YWx1ZXMsIDcsIDAsIGQsIGksICZjLCAmayk7CisgIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZuX2Q3KSwgJnIsIHZhbHVlcyk7CisgIGNoZWNrICgiY2FsbCBkNyIsIHIsIGZuX2Q3IChkWzBdLCBkWzFdLCBkWzJdLCBkWzNdLCBkWzRdLCBkWzVdLCBkWzZdLCBjLCBrKSk7CisgIENIRUNLIChmZmlfcHJlcF9jbG9zdXJlX2xvYyAocGNsLCAmY2lmLCBjbHNfZm4sICh2b2lkICopIHNoYXBlX2Q3LCBjb2RlKQorCSA9PSBGRklfT0spOworICByID0gKChDICgqKShkb3VibGUsIGRvdWJsZSwgZG91YmxlLCBkb3VibGUsIGRvdWJsZSwgZG91YmxlLCBkb3VibGUsIEMsCisJICAgICAgaW50KSkgY29kZSkgKGRbMF0sIGRbMV0sIGRbMl0sIGRbM10sIGRbNF0sIGRbNV0sIGRbNl0sIGMsIGspOworICBjaGVjayAoImNsb3N1cmUgZDciLCByLAorCSBmbl9kNyAoZFswXSwgZFsxXSwgZFsyXSwgZFszXSwgZFs0XSwgZFs1XSwgZFs2XSwgYywgaykpOworCisgIHByZXAgKCZjaWYsIHR5cGVzLCB2YWx1ZXMsIDAsIDUsIGQsIGksICZjLCAmayk7CisgIGZmaV9jYWxsICgmY2lmLCBGRklfRk4gKGZuX2k1KSwgJnIsIHZhbHVlcyk7CisgIGNoZWNrICgiY2FsbCBpNSIsIHIsIGZuX2k1IChpWzBdLCBpWzFdLCBpWzJdLCBpWzNdLCBpWzRdLCBjLCBrKSk7CisgIENIRUNLIChmZmlfcHJlcF9jbG9zdXJlX2xvYyAocGNsLCAmY2lmLCBjbHNfZm4sICh2b2lkICopIHNoYXBlX2k1LCBjb2RlKQorCSA9PSBGRklfT0spOworICByID0gKChDICgqKShpbnQsIGludCwgaW50LCBpbnQsIGludCwgQywgaW50KSkgY29kZSkKKyAgICAoaVswXSwgaVsxXSwgaVsyXSwgaVszXSwgaVs0XSwgYywgayk7CisgIGNoZWNrICgiY2xvc3VyZSBpNSIsIHIsIGZuX2k1IChpWzBdLCBpWzFdLCBpWzJdLCBpWzNdLCBpWzRdLCBjLCBrKSk7CisKKyAgcHJlcCAoJmNpZiwgdHlwZXMsIHZhbHVlcywgOCwgOCwgZCwgaSwgJmMsICZrKTsKKyAgZmZpX2NhbGwgKCZjaWYsIEZGSV9GTiAoZm5fZDhpOCksICZyLCB2YWx1ZXMpOworICBjaGVjayAoImNhbGwgZDhpOCIsIHIsCisJIGZuX2Q4aTggKGRbMF0sIGRbMV0sIGRbMl0sIGRbM10sIGRbNF0sIGRbNV0sIGRbNl0sIGRbN10sCisJCSAgaVswXSwgaVsxXSwgaVsyXSwgaVszXSwgaVs0XSwgaVs1XSwgaVs2XSwgaVs3XSwgYywgaykpOworICBDSEVDSyAoZmZpX3ByZXBfY2xvc3VyZV9sb2MgKHBjbCwgJmNpZiwgY2xzX2ZuLCAodm9pZCAqKSBzaGFwZV9kOGk4LCBjb2RlKQorCSA9PSBGRklfT0spOworICByID0gKChDICgqKShkb3VibGUsIGRvdWJsZSwgZG91YmxlLCBkb3VibGUsIGRvdWJsZSwgZG91YmxlLCBkb3VibGUsIGRvdWJsZSwKKwkgICAgICBpbnQsIGludCwgaW50LCBpbnQsIGludCwgaW50LCBpbnQsIGludCwgQywgaW50KSkgY29kZSkKKyAgICAoZFswXSwgZFsxXSwgZFsyXSwgZFszXSwgZFs0XSwgZFs1XSwgZFs2XSwgZFs3XSwKKyAgICAgaVswXSwgaVsxXSwgaVsyXSwgaVszXSwgaVs0XSwgaVs1XSwgaVs2XSwgaVs3XSwgYywgayk7CisgIGNoZWNrICgiY2xvc3VyZSBkOGk4IiwgciwKKwkgZm5fZDhpOCAoZFswXSwgZFsxXSwgZFsyXSwgZFszXSwgZFs0XSwgZFs1XSwgZFs2XSwgZFs3XSwKKwkJICBpWzBdLCBpWzFdLCBpWzJdLCBpWzNdLCBpWzRdLCBpWzVdLCBpWzZdLCBpWzddLCBjLCBrKSk7CisKKyAgZmZpX2Nsb3N1cmVfZnJlZSAocGNsKTsKKyAgZXhpdCAoMCk7Cit9Ci0tLSAvZGV2L251bGwKKysrIGIvdGVzdHN1aXRlL2xpYmZmaS5jb21wbGV4L2NvbXBsZXhfcmVnc19kb3VibGUuYwpAQCAtMCwwICsxLDkgQEAKKy8qIEFyZWE6CWZmaV9jYWxsLCBjbG9zdXJlX2NhbGwKKyAgIFB1cnBvc2U6CUNoZWNrIGNvbXBsZXggYXJndW1lbnRzIGFmdGVyIHRoZSBhcmd1bWVudCByZWdpc3RlcnMgcnVuIGxvdy4KKyAgIExpbWl0YXRpb25zOglub25lLgorICAgUFI6CQlub25lLiAgKi8KKworLyogeyBkZy1kbyBydW4gfSAqLworCisjaW5jbHVkZSAiY29tcGxleF9kZWZzX2RvdWJsZS5pbmMiCisjaW5jbHVkZSAiY29tcGxleF9yZWdzLmluYyIKLS0tIC9kZXYvbnVsbAorKysgYi90ZXN0c3VpdGUvbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzX2Zsb2F0LmMKQEAgLTAsMCArMSw5IEBACisvKiBBcmVhOglmZmlfY2FsbCwgY2xvc3VyZV9jYWxsCisgICBQdXJwb3NlOglDaGVjayBjb21wbGV4IGFyZ3VtZW50cyBhZnRlciB0aGUgYXJndW1lbnQgcmVnaXN0ZXJzIHJ1biBsb3cuCisgICBMaW1pdGF0aW9uczoJbm9uZS4KKyAgIFBSOgkJbm9uZS4gICovCisKKy8qIHsgZGctZG8gcnVuIH0gKi8KKworI2luY2x1ZGUgImNvbXBsZXhfZGVmc19mbG9hdC5pbmMiCisjaW5jbHVkZSAiY29tcGxleF9yZWdzLmluYyIKLS0tIC9kZXYvbnVsbAorKysgYi90ZXN0c3VpdGUvbGliZmZpLmNvbXBsZXgvY29tcGxleF9yZWdzX2xvbmdkb3VibGUuYwpAQCAtMCwwICsxLDkgQEAKKy8qIEFyZWE6CWZmaV9jYWxsLCBjbG9zdXJlX2NhbGwKKyAgIFB1cnBvc2U6CUNoZWNrIGNvbXBsZXggYXJndW1lbnRzIGFmdGVyIHRoZSBhcmd1bWVudCByZWdpc3RlcnMgcnVuIGxvdy4KKyAgIExpbWl0YXRpb25zOglub25lLgorICAgUFI6CQlub25lLiAgKi8KKworLyogeyBkZy1kbyBydW4gfSAqLworCisjaW5jbHVkZSAiY29tcGxleF9kZWZzX2xvbmdkb3VibGUuaW5jIgorI2luY2x1ZGUgImNvbXBsZXhfcmVncy5pbmMiCg==
+From dff6b142cef03fbba747344496abeb5941e1fe6b Mon Sep 17 00:00:00 2001
+From: Daniel Golle <daniel@makrotopia.org>
+Date: Tue, 20 Oct 2026 22:57:49 +0000
+Subject: [PATCH] testsuite: check complex arguments when argument registers
+ run low
+
+The complex tests pass at most a few complex values in a row, so they never
+reach the argument-passing rules that apply once registers start to run
+out.  Those rules differ from the plain cases on several targets:
+
+  - On RISC-V and LoongArch a complex float is passed like a struct of two
+    reals: in two FPRs if two are free, otherwise in integer registers as a
+    whole.  It is never split between an FPR and a GPR.
+  - On 32-bit PowerPC SysV a two-word complex value takes an even/odd GPR
+    pair like long long, and a larger one either fits completely into the
+    remaining GPRs or goes to the stack, which also moves every later
+    argument to the stack.
+
+Add complex_regs_{float,double,longdouble}, which pass a complex value
+after seven doubles, after five ints, and after eight doubles and eight
+ints, followed by an int, and check the result both through ffi_call and
+through a closure.
+Assisted-by: LLM
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+---
+ testsuite/Makefile.am                         |   3 +-
+ testsuite/libffi.complex/complex_regs.inc     | 142 ++++++++++++++++++
+ .../libffi.complex/complex_regs_double.c      |   9 ++
+ testsuite/libffi.complex/complex_regs_float.c |   9 ++
+ .../libffi.complex/complex_regs_longdouble.c  |   9 ++
+ 5 files changed, 171 insertions(+), 1 deletion(-)
+ create mode 100644 testsuite/libffi.complex/complex_regs.inc
+ create mode 100644 testsuite/libffi.complex/complex_regs_double.c
+ create mode 100644 testsuite/libffi.complex/complex_regs_float.c
+ create mode 100644 testsuite/libffi.complex/complex_regs_longdouble.c
+
+--- a/testsuite/Makefile.am
++++ b/testsuite/Makefile.am
+@@ -84,7 +84,8 @@ EXTRA_DIST = config/default.exp emscript
+ 	libffi.complex/complex.exp libffi.complex/complex.inc libffi.complex/complex_defs_double.inc \
+ 	libffi.complex/complex_defs_float.inc libffi.complex/complex_defs_longdouble.inc libffi.complex/complex_double.c \
+ 	libffi.complex/complex_float.c libffi.complex/complex_i128.c libffi.complex/complex_int.c libffi.complex/complex_longdouble.c \
+-	libffi.complex/complex_longdouble_abi.c \
++	libffi.complex/complex_longdouble_abi.c libffi.complex/complex_regs.inc libffi.complex/complex_regs_double.c \
++	libffi.complex/complex_regs_float.c libffi.complex/complex_regs_longdouble.c \
+ 	libffi.complex/ffitest.h libffi.complex/many_complex.inc libffi.complex/many_complex_double.c \
+ 	libffi.complex/many_complex_float.c libffi.complex/many_complex_longdouble.c libffi.complex/return_complex.inc \
+ 	libffi.complex/return_complex1.inc libffi.complex/return_complex1_double.c libffi.complex/return_complex1_float.c \
+--- /dev/null
++++ b/testsuite/libffi.complex/complex_regs.inc
+@@ -0,0 +1,142 @@
++/* -*-c-*- */
++#include "ffitest.h"
++#include <complex.h>
++
++/* A complex argument that arrives when the argument registers are nearly
++   used up.  Seven doubles leave one floating-point argument register on
++   RISC-V and LoongArch, so the complex value has to move to integer
++   registers as a whole.  Five ints leave an odd number of GPRs on 32-bit
++   PowerPC, where a two-word complex skips to the next even register pair
++   and a larger one goes to the stack, followed by every later argument.
++   Eight doubles and eight ints push the complex value onto the stack on
++   every target.  */
++
++typedef _Complex T_C_TYPE C;
++
++static C
++fn_d7 (double d1, double d2, double d3, double d4, double d5, double d6,
++       double d7, C c, int k)
++{
++  return c * k + (d1 + d2 + d3 + d4 + d5 + d6 + d7);
++}
++
++static C
++fn_i5 (int i1, int i2, int i3, int i4, int i5, C c, int k)
++{
++  return c * k + (i1 + i2 + i3 + i4 + i5);
++}
++
++static C
++fn_d8i8 (double d1, double d2, double d3, double d4, double d5, double d6,
++	 double d7, double d8, int i1, int i2, int i3, int i4, int i5, int i6,
++	 int i7, int i8, C c, int k)
++{
++  return c * k + (d1 + d2 + d3 + d4 + d5 + d6 + d7 + d8
++		  + i1 + i2 + i3 + i4 + i5 + i6 + i7 + i8);
++}
++
++/* SHAPE[0] doubles, SHAPE[1] ints, then the complex value and an int.  */
++static void
++cls_fn (ffi_cif *cif __UNUSED__, void *resp, void **args, void *userdata)
++{
++  const int *shape = (const int *) userdata;
++  T_C_TYPE s = 0;
++  int i, n = 0;
++
++  for (i = 0; i < shape[0]; i++)
++    s += *(double *) args[n++];
++  for (i = 0; i < shape[1]; i++)
++    s += *(int *) args[n++];
++  *(C *) resp = *(C *) args[n] * *(int *) args[n + 1] + s;
++}
++
++static void
++check (const char *name, C got, C want)
++{
++  printf ("%s: %.3f,%.3fi (want %.3f,%.3fi)\n", name,
++	  T_CONV creal (got), T_CONV cimag (got),
++	  T_CONV creal (want), T_CONV cimag (want));
++  CHECK (creal (got) == creal (want));
++  CHECK (cimag (got) == cimag (want));
++}
++
++static void
++prep (ffi_cif *cif, ffi_type **types, void **values, int nd, int ni,
++      double *d, int *i, C *c, int *k)
++{
++  int j, n = 0;
++
++  for (j = 0; j < nd; j++, n++)
++    {
++      types[n] = &ffi_type_double;
++      values[n] = &d[j];
++    }
++  for (j = 0; j < ni; j++, n++)
++    {
++      types[n] = &ffi_type_sint;
++      values[n] = &i[j];
++    }
++  types[n] = &T_FFI_TYPE;
++  values[n++] = c;
++  types[n] = &ffi_type_sint;
++  values[n++] = k;
++  CHECK (ffi_prep_cif (cif, FFI_DEFAULT_ABI, n, &T_FFI_TYPE, types) == FFI_OK);
++}
++
++int
++main (void)
++{
++  static const int shape_d7[2] = { 7, 0 };
++  static const int shape_i5[2] = { 0, 5 };
++  static const int shape_d8i8[2] = { 8, 8 };
++  double d[8] = { 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5 };
++  int i[8] = { 10, 20, 30, 40, 50, 60, 70, 80 };
++  C c = 1.25 + 2.5 * I;
++  int k = 77;
++  ffi_type *types[18];
++  void *values[18];
++  ffi_cif cif;
++  ffi_closure *pcl;
++  void *code;
++  C r;
++
++  pcl = ffi_closure_alloc (sizeof (ffi_closure), &code);
++  CHECK (pcl != NULL);
++
++  prep (&cif, types, values, 7, 0, d, i, &c, &k);
++  ffi_call (&cif, FFI_FN (fn_d7), &r, values);
++  check ("call d7", r, fn_d7 (d[0], d[1], d[2], d[3], d[4], d[5], d[6], c, k));
++  CHECK (ffi_prep_closure_loc (pcl, &cif, cls_fn, (void *) shape_d7, code)
++	 == FFI_OK);
++  r = ((C (*)(double, double, double, double, double, double, double, C,
++	      int)) code) (d[0], d[1], d[2], d[3], d[4], d[5], d[6], c, k);
++  check ("closure d7", r,
++	 fn_d7 (d[0], d[1], d[2], d[3], d[4], d[5], d[6], c, k));
++
++  prep (&cif, types, values, 0, 5, d, i, &c, &k);
++  ffi_call (&cif, FFI_FN (fn_i5), &r, values);
++  check ("call i5", r, fn_i5 (i[0], i[1], i[2], i[3], i[4], c, k));
++  CHECK (ffi_prep_closure_loc (pcl, &cif, cls_fn, (void *) shape_i5, code)
++	 == FFI_OK);
++  r = ((C (*)(int, int, int, int, int, C, int)) code)
++    (i[0], i[1], i[2], i[3], i[4], c, k);
++  check ("closure i5", r, fn_i5 (i[0], i[1], i[2], i[3], i[4], c, k));
++
++  prep (&cif, types, values, 8, 8, d, i, &c, &k);
++  ffi_call (&cif, FFI_FN (fn_d8i8), &r, values);
++  check ("call d8i8", r,
++	 fn_d8i8 (d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
++		  i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7], c, k));
++  CHECK (ffi_prep_closure_loc (pcl, &cif, cls_fn, (void *) shape_d8i8, code)
++	 == FFI_OK);
++  r = ((C (*)(double, double, double, double, double, double, double, double,
++	      int, int, int, int, int, int, int, int, C, int)) code)
++    (d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
++     i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7], c, k);
++  check ("closure d8i8", r,
++	 fn_d8i8 (d[0], d[1], d[2], d[3], d[4], d[5], d[6], d[7],
++		  i[0], i[1], i[2], i[3], i[4], i[5], i[6], i[7], c, k));
++
++  ffi_closure_free (pcl);
++  exit (0);
++}
+--- /dev/null
++++ b/testsuite/libffi.complex/complex_regs_double.c
+@@ -0,0 +1,9 @@
++/* Area:	ffi_call, closure_call
++   Purpose:	Check complex arguments after the argument registers run low.
++   Limitations:	none.
++   PR:		none.  */
++
++/* { dg-do run } */
++
++#include "complex_defs_double.inc"
++#include "complex_regs.inc"
+--- /dev/null
++++ b/testsuite/libffi.complex/complex_regs_float.c
+@@ -0,0 +1,9 @@
++/* Area:	ffi_call, closure_call
++   Purpose:	Check complex arguments after the argument registers run low.
++   Limitations:	none.
++   PR:		none.  */
++
++/* { dg-do run } */
++
++#include "complex_defs_float.inc"
++#include "complex_regs.inc"
+--- /dev/null
++++ b/testsuite/libffi.complex/complex_regs_longdouble.c
+@@ -0,0 +1,9 @@
++/* Area:	ffi_call, closure_call
++   Purpose:	Check complex arguments after the argument registers run low.
++   Limitations:	none.
++   PR:		none.  */
++
++/* { dg-do run } */
++
++#include "complex_defs_longdouble.inc"
++#include "complex_regs.inc"

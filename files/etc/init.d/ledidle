@@ -1,1 +1,19 @@
-IyEvYmluL3NoIC9ldGMvcmMuY29tbW9uCiMgVTAxILC0vPzK2NK5o7ozILfW1tPDu7C0sLS8/LDRy/nT0LXGuMfD8KOoxcbX0yAvdG1wL2xlZHNfZGFyayC4+CBuZXRsZWQvYmF0bGVkIL+0o6kKU1RBUlQ9OTYKU1RPUD0xMApVU0VfUFJPQ0Q9MQoKc3RhcnRfc2VydmljZSgpIHsKICAgIHByb2NkX29wZW5faW5zdGFuY2UKICAgIHByb2NkX3NldF9wYXJhbSBjb21tYW5kIC91c3IvYmluL3B5dGhvbjMgL3Vzci9saWJleGVjL2xlZGlkbGUucHkKICAgIHByb2NkX3NldF9wYXJhbSByZXNwYXduCiAgICBwcm9jZF9zZXRfcGFyYW0gc3Rkb3V0IDEKICAgIHByb2NkX3NldF9wYXJhbSBzdGRlcnIgMQogICAgcHJvY2RfY2xvc2VfaW5zdGFuY2UKfQoKcmVsb2FkX3NlcnZpY2UoKSB7CiAgICBzdG9wCiAgICBzdGFydAp9Cg==
+#!/bin/sh /etc/rc.common
+# U01 按键守夜：3 分钟没按按键把所有灯盖灭（牌子 /tmp/leds_dark 给 netled/batled 看）
+START=96
+STOP=10
+USE_PROCD=1
+
+start_service() {
+    procd_open_instance
+    procd_set_param command /usr/bin/python3 /usr/libexec/ledidle.py
+    procd_set_param respawn
+    procd_set_param stdout 1
+    procd_set_param stderr 1
+    procd_close_instance
+}
+
+reload_service() {
+    stop
+    start
+}

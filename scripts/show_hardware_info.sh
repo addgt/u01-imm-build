@@ -1,1 +1,55 @@
-IyEvYmluL2Jhc2gKCmVjaG8gIkdpdEh1YiBSdW5uZXIg56Gs5Lu25L+h5oGv5qaC6KeIIgplY2hvICI9PT09PT09PT09PT09PT09PT09PT09PT09PSIKCiMgQ1BV5L+h5oGvCmVjaG8gLWUgIlxuXDAzM1sxOzM0bUNQVeS/oeaBrzpcMDMzWzBtIgpjcHVfbW9kZWw9JChncmVwICJtb2RlbCBuYW1lIiAvcHJvYy9jcHVpbmZvIHwgaGVhZCAtMSB8IGN1dCAtZDogLWYyIHwgc2VkICdzL14gKi8vJykKY3B1X2NvcmVzPSQoZ3JlcCAtYyAiXnByb2Nlc3NvciIgL3Byb2MvY3B1aW5mbykKY3B1X3RocmVhZHM9JChsc2NwdSAyPi9kZXYvbnVsbCB8IGdyZXAgIkNQVShzKToiIHwgaGVhZCAtMSB8IGF3ayAne3ByaW50ICQyfScgfHwgZWNobyAiJGNwdV9jb3JlcyIpCmVjaG8gIuWei+WPtzogJGNwdV9tb2RlbCIKZWNobyAi5qC45b+DL+e6v+eoizogJGNwdV9jb3Jlcy8kY3B1X3RocmVhZHMiCgojIOWGheWtmOS/oeaBrwplY2hvIC1lICJcblwwMzNbMTszNG3lhoXlrZjkv6Hmga86XDAzM1swbSIKbWVtX3RvdGFsPSQoZnJlZSAtaCB8IGdyZXAgTWVtOiB8IGF3ayAne3ByaW50ICQyfScpCm1lbV91c2VkPSQoZnJlZSAtaCB8IGdyZXAgTWVtOiB8IGF3ayAne3ByaW50ICQzfScpCnN3YXBfdG90YWw9JChmcmVlIC1oIHwgZ3JlcCBTd2FwOiB8IGF3ayAne3ByaW50ICQyfScpCmVjaG8gIueJqeeQhuWGheWtmDogJG1lbV90b3RhbCAo5bey55SoOiAkbWVtX3VzZWQpIgplY2hvICLomZrmi5/lhoXlrZg6ICRzd2FwX3RvdGFsIgoKIyDlrZjlgqjkv6Hmga8KZWNobyAtZSAiXG5cMDMzWzE7MzRt5a2Y5YKo5L+h5oGvOlwwMzNbMG0iCmRpc2tfdG90YWw9JChkZiAtaCAvIHwgYXdrICdOUj09MiB7cHJpbnQgJDJ9JykKZGlza191c2VkPSQoZGYgLWggLyB8IGF3ayAnTlI9PTIge3ByaW50ICQzfScpCmRpc2tfZnJlZT0kKGRmIC1oIC8gfCBhd2sgJ05SPT0yIHtwcmludCAkNH0nKQplY2hvICLmoLnliIbljLo6IOaAuyRkaXNrX3RvdGFsLCDlt7LnlKgkZGlza191c2VkLCDliankvZkkZGlza19mcmVlIgoKIyDns7vnu5/kv6Hmga8KZWNobyAtZSAiXG5cMDMzWzE7MzRt57O757uf5L+h5oGvOlwwMzNbMG0iCm9zX2luZm89JChsc2JfcmVsZWFzZSAtZCAyPi9kZXYvbnVsbCB8IGN1dCAtZjIgfHwgZWNobyAiVWJ1bnR1ICjlhbfkvZPniYjmnKzmnKrnn6UpIikKa2VybmVsX3ZlcnNpb249JCh1bmFtZSAtcikKYXJjaD0kKHVuYW1lIC1tKQplY2hvICLmk43kvZzns7vnu586ICRvc19pbmZvIgplY2hvICLlhoXmoLjniYjmnKw6ICRrZXJuZWxfdmVyc2lvbiIKZWNobyAi5p625p6EOiAkYXJjaCIKCiMgR2l0SHViIFJ1bm5lcuS/oeaBrwplY2hvIC1lICJcblwwMzNbMTszNG1SdW5uZXLkv6Hmga86XDAzM1swbSIKaWYgWyAtbiAiJHtSVU5ORVJfTkFNRX0iIF07IHRoZW4KICAgIGVjaG8gIlJ1bm5lcuWQjeensDogJFJVTk5FUl9OQU1FIgpmaQppZiBbIC1uICIke0dJVEhVQl9BQ1RJT05TfSIgXTsgdGhlbgogICAgZWNobyAi546v5aKDOiBHaXRIdWIgQWN0aW9ucyIKZmkKCiMg5oCn6IO95rWL6K+V77yI5Y+v6YCJ77yJCmVjaG8gLWUgIlxuXDAzM1sxOzM0beeugOWNleaAp+iDvea1i+ivlTpcMDMzWzBtIgpzdGFydF90aW1lPSQoZGF0ZSArJXMuJU4pCmZvciBpIGluIHsxLi4xMDAwfTsgZG8gOiA7IGRvbmUKZW5kX3RpbWU9JChkYXRlICslcy4lTikKZWNobyAi56m65b6q546v5rWL6K+VOiAkKGVjaG8gIiRlbmRfdGltZSAtICRzdGFydF90aW1lIiB8IGJjKSDnp5IiCgplY2hvIC1lICJcbj09PT09PT09PT09PT09PT09PT09PT09PT09IgplY2hvICLkv6Hmga/mlLbpm4blrozmiJAiCg==
+#!/bin/bash
+
+echo "GitHub Runner 硬件信息概览"
+echo "=========================="
+
+# CPU信息
+echo -e "\n\033[1;34mCPU信息:\033[0m"
+cpu_model=$(grep "model name" /proc/cpuinfo | head -1 | cut -d: -f2 | sed 's/^ *//')
+cpu_cores=$(grep -c "^processor" /proc/cpuinfo)
+cpu_threads=$(lscpu 2>/dev/null | grep "CPU(s):" | head -1 | awk '{print $2}' || echo "$cpu_cores")
+echo "型号: $cpu_model"
+echo "核心/线程: $cpu_cores/$cpu_threads"
+
+# 内存信息
+echo -e "\n\033[1;34m内存信息:\033[0m"
+mem_total=$(free -h | grep Mem: | awk '{print $2}')
+mem_used=$(free -h | grep Mem: | awk '{print $3}')
+swap_total=$(free -h | grep Swap: | awk '{print $2}')
+echo "物理内存: $mem_total (已用: $mem_used)"
+echo "虚拟内存: $swap_total"
+
+# 存储信息
+echo -e "\n\033[1;34m存储信息:\033[0m"
+disk_total=$(df -h / | awk 'NR==2 {print $2}')
+disk_used=$(df -h / | awk 'NR==2 {print $3}')
+disk_free=$(df -h / | awk 'NR==2 {print $4}')
+echo "根分区: 总$disk_total, 已用$disk_used, 剩余$disk_free"
+
+# 系统信息
+echo -e "\n\033[1;34m系统信息:\033[0m"
+os_info=$(lsb_release -d 2>/dev/null | cut -f2 || echo "Ubuntu (具体版本未知)")
+kernel_version=$(uname -r)
+arch=$(uname -m)
+echo "操作系统: $os_info"
+echo "内核版本: $kernel_version"
+echo "架构: $arch"
+
+# GitHub Runner信息
+echo -e "\n\033[1;34mRunner信息:\033[0m"
+if [ -n "${RUNNER_NAME}" ]; then
+    echo "Runner名称: $RUNNER_NAME"
+fi
+if [ -n "${GITHUB_ACTIONS}" ]; then
+    echo "环境: GitHub Actions"
+fi
+
+# 性能测试（可选）
+echo -e "\n\033[1;34m简单性能测试:\033[0m"
+start_time=$(date +%s.%N)
+for i in {1..1000}; do : ; done
+end_time=$(date +%s.%N)
+echo "空循环测试: $(echo "$end_time - $start_time" | bc) 秒"
+
+echo -e "\n=========================="
+echo "信息收集完成"

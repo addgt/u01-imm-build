@@ -1,1 +1,91 @@
-IwojIENvcHlyaWdodCAoQykgMjAwOS0yMDE2IE9wZW5XcnQub3JnCiMKIyBUaGlzIGlzIGZyZWUgc29mdHdhcmUsIGxpY2Vuc2VkIHVuZGVyIHRoZSBHTlUgR2VuZXJhbCBQdWJsaWMgTGljZW5zZSB2Mi4KIyBTZWUgL0xJQ0VOU0UgZm9yIG1vcmUgaW5mb3JtYXRpb24uCiMKCmluY2x1ZGUgJChUT1BESVIpL3J1bGVzLm1rCgpQS0dfTkFNRTo9bGliZmZpClBLR19WRVJTSU9OOj0zLjguMApQS0dfUkVMRUFTRTo9MQoKUEtHX1NPVVJDRTo9JChQS0dfTkFNRSktJChQS0dfVkVSU0lPTikudGFyLmd6ClBLR19TT1VSQ0VfVVJMOj1odHRwczovL2dpdGh1Yi5jb20vbGliZmZpL2xpYmZmaS9yZWxlYXNlcy9kb3dubG9hZC92JChQS0dfVkVSU0lPTikKUEtHX0hBU0g6PTdkYTNlMmQ5YTE3MWViMGEwMzhmNTkyZWNhZDNmZjJiYjI1NTBmMzQ5NmQ4N2IzYjI5YWQwY2Y0NDMwYzBkYjQKClBLR19MSUNFTlNFOj1NSVQKUEtHX0xJQ0VOU0VfRklMRVM6PUxJQ0VOU0UKUEtHX0NQRV9JRDo9Y3BlOi9hOmxpYmZmaV9wcm9qZWN0OmxpYmZmaQoKUEtHX0lOU1RBTEw6PTEKUEtHX0JVSUxEX1BBUkFMTEVMOj0xClBLR19CVUlMRF9GTEFHUzo9bm8tbWlwczE2CgppbmNsdWRlICQoSU5DTFVERV9ESVIpL3BhY2thZ2UubWsKaW5jbHVkZSAkKElOQ0xVREVfRElSKS9ob3N0LWJ1aWxkLm1rCgpkZWZpbmUgUGFja2FnZS9saWJmZmkKICBTRUNUSU9OOj1saWJzCiAgQ0FURUdPUlk6PUxpYnJhcmllcwogIFRJVExFOj1Gb3JlaWduIEZ1bmN0aW9uIEludGVyZmFjZSAoRkZJKSBsaWJyYXJ5CiAgVVJMOj1odHRwczovL3NvdXJjZXdhcmUub3JnL2xpYmZmaS8KICBNQUlOVEFJTkVSOj1QZXRlciBXYWduZXIgPHRyaXBvbGFyQGdteC5hdD4KZW5kZWYKCmRlZmluZSBQYWNrYWdlL2xpYmZmaS9kZXNjcmlwdGlvbgpUaGUgbGliZmZpIGxpYnJhcnkgcHJvdmlkZXMgYSBwb3J0YWJsZSwgaGlnaCBsZXZlbCBwcm9ncmFtbWluZyBpbnRlcmZhY2UgdG8KdmFyaW91cyBjYWxsaW5nIGNvbnZlbnRpb25zLiBUaGlzIGFsbG93cyBhIHByb2dyYW1tZXIgdG8gY2FsbCBhbnkgZnVuY3Rpb24Kc3BlY2lmaWVkIGJ5IGEgY2FsbCBpbnRlcmZhY2UgZGVzY3JpcHRpb24gYXQgcnVuLXRpbWUuCgpGRkkgc3RhbmRzIGZvciBGb3JlaWduIEZ1bmN0aW9uIEludGVyZmFjZS4gQSBmb3JlaWduIGZ1bmN0aW9uIGludGVyZmFjZSBpcyB0aGUKcG9wdWxhciBuYW1lIGZvciB0aGUgaW50ZXJmYWNlIHRoYXQgYWxsb3dzIGNvZGUgd3JpdHRlbiBpbiBvbmUgbGFuZ3VhZ2UgdG8gY2FsbApjb2RlIHdyaXR0ZW4gaW4gYW5vdGhlciBsYW5ndWFnZS4gVGhlIGxpYmZmaSBsaWJyYXJ5IHJlYWxseSBvbmx5IHByb3ZpZGVzIHRoZQpsb3dlc3QsIG1hY2hpbmUgZGVwZW5kZW50IGxheWVyIG9mIGEgZnVsbHkgZmVhdHVyZWQgZm9yZWlnbiBmdW5jdGlvbiBpbnRlcmZhY2UuCkEgbGF5ZXIgbXVzdCBleGlzdCBhYm92ZSBsaWJmZmkgdGhhdCBoYW5kbGVzIHR5cGUgY29udmVyc2lvbnMgZm9yIHZhbHVlcyBwYXNzZWQKYmV0d2VlbiB0aGUgdHdvIGxhbmd1YWdlcy4KZW5kZWYKCkhPU1RfQ09ORklHVVJFX0FSR1MgKz0gXAoJLS1kaXNhYmxlLXNoYXJlZCBcCgktLWRpc2FibGUtZG9jcyBcCgktLWRpc2FibGUtbXVsdGktb3MtZGlyZWN0b3J5IFwKCS0tZGlzYWJsZS1yYXctYXBpIFwKCS0tZGlzYWJsZS1zdHJ1Y3RzIFwKCS0td2l0aC1waWMKCkNPTkZJR1VSRV9BUkdTICs9IFwKCS0tZGlzYWJsZS1kb2NzIFwKCS0tZGlzYWJsZS1tdWx0aS1vcy1kaXJlY3RvcnkgXAoJLS1kaXNhYmxlLXJhdy1hcGkgXAoJLS1kaXNhYmxlLXN0cnVjdHMKCmRlZmluZSBCdWlsZC9JbnN0YWxsRGV2CgkkKElOU1RBTExfRElSKSAkKDEpL3Vzci9saWIvcGtnY29uZmlnCgkkKENQKSBcCgkJJChQS0dfSU5TVEFMTF9ESVIpL3Vzci9saWIvbGliZmZpLntzbyosYSxsYX0gXAoJCSQoMSkvdXNyL2xpYi8KCSQoQ1ApIFwKCQkkKFBLR19JTlNUQUxMX0RJUikvdXNyL2xpYi9wa2djb25maWcvKiBcCgkJJCgxKS91c3IvbGliL3BrZ2NvbmZpZy8KCSQoU0VEKSAncyxpbmNsdWRlZGlyPS4qLGluY2x1ZGVkaXI9JCQkJHtwcmVmaXh9L2luY2x1ZGUsJyAkKDEpL3Vzci9saWIvcGtnY29uZmlnL2xpYmZmaS5wYwoKCSQoSU5TVEFMTF9ESVIpICQoMSkvdXNyL2luY2x1ZGUKCSQoQ1ApIFwKCQkkKFBLR19JTlNUQUxMX0RJUikvdXNyL2luY2x1ZGUvKi5oIFwKCQkkKDEpL3Vzci9pbmNsdWRlLwoJJChDUCkgXAoJCSQoUEtHX0JVSUxEX0RJUikvJChHTlVfVEFSR0VUX05BTUUpKi9mZmljb25maWcuaCBcCgkJJCgxKS91c3IvaW5jbHVkZS8KZW5kZWYKCmRlZmluZSBQYWNrYWdlL2xpYmZmaS9pbnN0YWxsCgkkKElOU1RBTExfRElSKSAkKDEpL3Vzci9saWIKCSQoQ1ApIFwKCQkkKFBLR19JTlNUQUxMX0RJUikvdXNyL2xpYi9saWJmZmkuc28uKiBcCgkJJCgxKS91c3IvbGliLwplbmRlZgoKJChldmFsICQoY2FsbCBIb3N0QnVpbGQpKQokKGV2YWwgJChjYWxsIEJ1aWxkUGFja2FnZSxsaWJmZmkpKQo=
+#
+# Copyright (C) 2009-2016 OpenWrt.org
+#
+# This is free software, licensed under the GNU General Public License v2.
+# See /LICENSE for more information.
+#
+
+include $(TOPDIR)/rules.mk
+
+PKG_NAME:=libffi
+PKG_VERSION:=3.8.0
+PKG_RELEASE:=1
+
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
+PKG_SOURCE_URL:=https://github.com/libffi/libffi/releases/download/v$(PKG_VERSION)
+PKG_HASH:=7da3e2d9a171eb0a038f592ecad3ff2bb2550f3496d87b3b29ad0cf4430c0db4
+
+PKG_LICENSE:=MIT
+PKG_LICENSE_FILES:=LICENSE
+PKG_CPE_ID:=cpe:/a:libffi_project:libffi
+
+PKG_INSTALL:=1
+PKG_BUILD_PARALLEL:=1
+PKG_BUILD_FLAGS:=no-mips16
+
+include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/host-build.mk
+
+define Package/libffi
+  SECTION:=libs
+  CATEGORY:=Libraries
+  TITLE:=Foreign Function Interface (FFI) library
+  URL:=https://sourceware.org/libffi/
+  MAINTAINER:=Peter Wagner <tripolar@gmx.at>
+endef
+
+define Package/libffi/description
+The libffi library provides a portable, high level programming interface to
+various calling conventions. This allows a programmer to call any function
+specified by a call interface description at run-time.
+
+FFI stands for Foreign Function Interface. A foreign function interface is the
+popular name for the interface that allows code written in one language to call
+code written in another language. The libffi library really only provides the
+lowest, machine dependent layer of a fully featured foreign function interface.
+A layer must exist above libffi that handles type conversions for values passed
+between the two languages.
+endef
+
+HOST_CONFIGURE_ARGS += \
+	--disable-shared \
+	--disable-docs \
+	--disable-multi-os-directory \
+	--disable-raw-api \
+	--disable-structs \
+	--with-pic
+
+CONFIGURE_ARGS += \
+	--disable-docs \
+	--disable-multi-os-directory \
+	--disable-raw-api \
+	--disable-structs
+
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/lib/libffi.{so*,a,la} \
+		$(1)/usr/lib/
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/lib/pkgconfig/* \
+		$(1)/usr/lib/pkgconfig/
+	$(SED) 's,includedir=.*,includedir=$$$${prefix}/include,' $(1)/usr/lib/pkgconfig/libffi.pc
+
+	$(INSTALL_DIR) $(1)/usr/include
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/include/*.h \
+		$(1)/usr/include/
+	$(CP) \
+		$(PKG_BUILD_DIR)/$(GNU_TARGET_NAME)*/fficonfig.h \
+		$(1)/usr/include/
+endef
+
+define Package/libffi/install
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/lib/libffi.so.* \
+		$(1)/usr/lib/
+endef
+
+$(eval $(call HostBuild))
+$(eval $(call BuildPackage,libffi))
