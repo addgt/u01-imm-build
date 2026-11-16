@@ -1,1 +1,15 @@
-IyEvYmluL3NoCiMg6KaG55uW5bGC5oqK55So5oi35Lu25pS+6L+b5p2l5LqG77yM5L2G5p2D6ZmQ5L2N6Z2g5LiN5L2P77yM6L+Z6YeM57uf5LiA6KGlIGNobW9kIOW5tiBlbmFibGUg6Ieq5ZCv44CCCmZvciBmIGluIC91c3IvbGliZXhlYy91MDFzaW1kLnB5IC91c3IvbGliZXhlYy9uZXRsZWQucHkgL3Vzci9saWJleGVjL2xlZGlkbGUucHkgICAgICAgICAgL3Vzci9saWJleGVjL2JhdGxlZC5weSAvdXNyL2xpYmV4ZWMvY2hnX3JlZ3MucHk7IGRvCglbIC1mICIkZiIgXSAmJiBjaG1vZCA3NTUgIiRmIgpkb25lCmZvciBzIGluIHUwMXNpbSBsZWRpZGxlIG5ldGxlZCBiYXRsZWQ7IGRvCglbIC1mICIvZXRjL2luaXQuZC8kcyIgXSB8fCBjb250aW51ZQoJY2htb2QgNzU1ICIvZXRjL2luaXQuZC8kcyIKCS9ldGMvaW5pdC5kLyRzIGVuYWJsZQoJIyBlbmFibGUg5Y+q5piv5bu6IHJjLmQg6L2v6ZO+77yM6ICMIHVjaS1kZWZhdWx0cyDot5HlnKggYm9vdCDnmoQgZG9uZSDpmLbmrrXvvIjova/pk77ml6nlsLHor7vov4fkuobvvInvvIwKCSMg5LiNIHN0YXJ0IOeahOivneesrOS4gOasoeW8gOacuui/meWHoOS4quacjeWKoeaYr+atu+eahO+8jOW+l+etieesrOS6jOasoeW8gOacuuOAggoJL2V0Yy9pbml0LmQvJHMgc3RhcnQKZG9uZQpbIC1mIC9ldGMvdTAxc2ltLmNvbmYgXSB8fCBlY2hvICdzaW1fc2xvdD0wJyA+IC9ldGMvdTAxc2ltLmNvbmYKZXhpdCAwCg==
+#!/bin/sh
+# 覆盖层把用户件放进来了，但权限位靠不住，这里统一补 chmod 并 enable 自启。
+for f in /usr/libexec/u01simd.py /usr/libexec/netled.py /usr/libexec/ledidle.py          /usr/libexec/batled.py /usr/libexec/chg_regs.py /usr/libexec/u01band.py; do
+	[ -f "$f" ] && chmod 755 "$f"
+done
+for s in u01sim ledidle netled batled u01band; do
+	[ -f "/etc/init.d/$s" ] || continue
+	chmod 755 "/etc/init.d/$s"
+	/etc/init.d/$s enable
+	# enable 只是建 rc.d 软链，而 uci-defaults 跑在 boot 的 done 阶段（软链早就读过了），
+	# 不 start 的话第一次开机这几个服务是死的，得等第二次开机。
+	/etc/init.d/$s start
+done
+[ -f /etc/u01sim.conf ] || echo 'sim_slot=0' > /etc/u01sim.conf
+exit 0

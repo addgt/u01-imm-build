@@ -1,1 +1,345 @@
-IyEvYmluL2Jhc2gKIyBESVnohJrmnKwKIyBodHRwczovL2dpdGh1Yi5jb20vUDNURVJYL0FjdGlvbnMtT3BlbldydAojIOaWh+S7tuWQjTogZGl5LXBhcnQyLnNoCiMg5Yqf6IO96K+05piOOiBPcGVuV3J0IERJWeiEmuacrOesrDLpg6jliIbvvIjmm7TmlrBmZWVkc+S5i+WQju+8iQojIOeJiOadgzogKGMpIDIwMTktMjAyNCBQM1RFUlggPGh0dHBzOi8vcDN0ZXJ4LmNvbT4KIyDln7rkuo4gTUlUIOW8gOa6kOWNj+iuru+8jOivpuingSAvTElDRU5TRQoKIyDkv67mlLnpu5jorqRJUOWcsOWdgAojc2VkIC1pICdzLzE5Mi4xNjguMS4xLzE5Mi4xNjguMTAwLjEvZycgcGFja2FnZS9iYXNlLWZpbGVzL2ZpbGVzL2Jpbi9jb25maWdfZ2VuZXJhdGUKCgojIOS/ruaUuem7mOiupOS4u+mimOS4uiBhcmdvbu+8iOi3r+W+hOS4jeWtmOWcqOaXtui3s+i/h++8jOS4jeS4reaWree8luivke+8iQpzZWQgLWkgJ3MvbHVjaS10aGVtZS1ib290c3RyYXAvbHVjaS10aGVtZS1hcmdvbi9nJyBmZWVkcy9sdWNpL2NvbGxlY3Rpb25zL2x1Y2kvTWFrZWZpbGUgMj4vZGV2L251bGwgfHwgdHJ1ZQoKIyDlkK/nlKggSVB2NCDnrZbnlaXot6/nlLHvvIjnm7TmjqXlhpnlhaXlhoXmoLggcGxhdGZvcm0gY29uZmln77yM57uV6L+HIG1ha2UgZGVmY29uZmlnIOeahOS+nei1luajgOafpe+8iQojIENPTkZJR19LRVJORUxfSVBfQURWQU5DRURfUk9VVEVSIOWcqCBPcGVuV3J0IENvbmZpZy5pbiDkuK3ml6Dlr7nlupQgd3JhcHBlcu+8jOW/hemhu+eUqOatpOaWueW8jwojZm9yIGNmZyBpbiB0YXJnZXQvbGludXgvbXNtODl4eC9jb25maWctKjsgZG8KIyAgZ3JlcCAtcSAnQ09ORklHX0lQX0FEVkFOQ0VEX1JPVVRFUicgIiRjZmciIHx8IGVjaG8gJ0NPTkZJR19JUF9BRFZBTkNFRF9ST1VURVI9eScgPj4gIiRjZmciCiMgIGdyZXAgLXEgJ0NPTkZJR19JUF9NVUxUSVBMRV9UQUJMRVMnICIkY2ZnIiB8fCBlY2hvICdDT05GSUdfSVBfTVVMVElQTEVfVEFCTEVTPXknID4+ICIkY2ZnIgojZG9uZQoKCiMg5Li05pe25re75Yqg55qE5o+S5Lu2CiMgZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9sa2l1eXUvbHVjaS1hcHAtY3B1LXBlcmYgcGFja2FnZS9sdWNpLWFwcC1jcHUtcGVyZgojIGdpdCBjbG9uZSBodHRwczovL2dpdGh1Yi5jb20vbGtpdXl1L2x1Y2ktYXBwLWNwdS1zdGF0dXMgcGFja2FnZS9sdWNpLWFwcC1jcHUtc3RhdHVzCiMgZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9nU3BvdHgyZi9sdWNpLWFwcC1jcHUtc3RhdHVzLW1pbmkgcGFja2FnZS9sdWNpLWFwcC1jcHUtc3RhdHVzLW1pbmkKIyBnaXQgY2xvbmUgaHR0cHM6Ly9naXRodWIuY29tL2xraXV5dS9sdWNpLWFwcC10ZW1wLXN0YXR1cyBwYWNrYWdlL2x1Y2ktYXBwLXRlbXAtc3RhdHVzCiMgZ2l0IGNsb25lIGh0dHBzOi8vZ2l0aHViLmNvbS9sa2l1eXUvRGJ1c1Ntc0ZvcndhcmRDUGx1cyBwYWNrYWdlL0RidXNTbXNGb3J3YXJkQ1BsdXMKCiMgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiMgVTAxIOeUteaxoOacuumAgumFje+8iOaUueWMhe+8mmxraXV5dS9pbW1vcnRhbHdydCDnmoQgbXNtODl4eCB0YXJnZXTvvIxwcm9maWxlPXdmMu+8iQojCiMgMSkg55S16YeP5p2l5rqQ77ya5omT5byAIFBNODkxNiBCTVMtVk3vvIjnlLXljovlvI/nlLXph4/orqHvvIxkcml2ZXJzL3Bvd2VyL3N1cHBseS9wbTg5MTZfYm1zX3ZtLmPvvIkKIyAgICAtIOS4iua4uCBwbTg5MTYuZHRzaSDnmoQgcG04OTE2X2NoYXJnZXIgLyBwbTg5MTZfYm1zIOmDveWGmeatuyBzdGF0dXM9ImRpc2FibGVkIu+8jAojICAgICAg5LiUIGNvbmZpZy02LjE4IOmHjOS4pOS4qumpseWKqOespuWPt+agueacrOayoeWHuueOsCA9PiDnjrDlnKggL3N5cy9jbGFzcy9wb3dlcl9zdXBwbHkg5piv56m655qE44CCCiMgICAgLSDlhYXnlLXlv4XpobvkuIDotbflvIDvvJrlrp7mtYsgQ0hHX0NUUkw9MHg5MO+8iGJpdDcgQ0hHX0VOIOW3sue7j+aYryAx77yJ44CBVVNCSU5fVkFMSUQ9MeOAgQojICAgICAg55S15rGg5Zyo5L2N44CB5rip5bqmIE9L77yM5L2GIElCQVRfTUFYIOWBnOWcqCBQTUlDIOS4iueUtem7mOiupCAweDAwID0gOTAgbUHvvIwKIyAgICAgIOaPkiA1MDAgbUEg5Y+j5pe257O757uf6LSf6L295YWo5ZCD5o6JIOKHkiDlh4DmlL7nlLXvvIhWU1lTIDEzIOWIhumSnyAzODky4oaSMzgzMSBtVu+8ieOAggojICAgICAg6L+Z5Liq5YaF5qC45rKh5pyJ5Lu75L2V5Luj56CB5Y675oqs5a6D77yIY29uZmlnLTYuMTgg6YeM6L+eIENIQVJHRVJfUE04OTE2X0xCQyDpg73msqHlh7rnjrDvvInvvIwKIyAgICAgIOiAjOeUqOaIt+aAgeS4ieadoeWGmemAmumBk+WFqOiiq+mFjee9ruWwgeatu++8iHJlZ21hcCBkZWJ1Z2ZzIOeahCByZWdpc3RlcnMvYWNjZXNzIOmDveaYryAwNDAw44CBCiMgICAgICAjIENPTkZJR19ERVZNRU0gaXMgbm90IHNldOOAgXNwbWkg5bmz5Y+w6K6+5aSH5rKh5pyJIHJlc291cmNlMO+8ieKHkiDlj6rog73ph43nvJblhoXmoLjmiZPlvIAgbGJj44CCCiMgICAgLSBsYmMg55qEIHByb2JlIOimgeaKoiB1c2JfdmJ1cyDov5nmnaEgU1BNSSDkuK3mlq3nur/vvIgweDEz77yJ77yM5pys5py6546w5Zyo55SxCiMgICAgICBwbTg5MTZfdXNiaW4gKHVzYi1kZXRlY3RAMTMwMCkg5Y2g552A77yM5omA5Lul5byA5YWF55S15b+F6aG75ZCM5pe25oqK5a6DIGRpc2FibGXvvIwKIyAgICAgIOWQpuWImeWQjuazqOWGjOeahOmCo+S4qiAtRUJVU1nvvIzlhYXnlLXlkoznlLXph4/kuIDotbfmsqHjgIIKIyAgICAtIOKaoO+4jyDku6Pku7fvvIjlrp7mtYvliLDvvInvvJrnjrDliLcgcm9vdGZzIOeahCAvZXRjL2hvdHBsdWctZ2NyZWJvb3QuanNvbiDnm6/nmoTlsLHmmK8KIyAgICAgIHVzYi1kZXRlY3Qg6YKj5LiqIGV4dGNvbjAg55qEICJVU0I9MCLvvIjmi5Tnur/vvInkuovku7bvvIzmnaHku7bmiJDnq4vlsLEgL2V0Yy9pbml0LmQvZ2MgcmVzdGFydO+8mwojICAgICAg6L+Z5Y+wIGdjLmNvbmZpZy5tb2RlPWdhZGdldOOAgVVEQyByb2xlPWdhZGdldOOAgVM5MGdjIOiHquWQryDih5Ig6L+Z6ZKp5a2Q5piv5rS755qE44CCCiMgICAgICDlhbPmjokgdXNiaW4g5ZCOIGV4dGNvbjAg5raI5aSx77yM6ZKp5a2Q5LiN5YaN6Kem5Y+R44CCVVNCIOWcqC/kuI3lnKjov5nku7bkuovmnKzouqvmlLnnlLEKIyAgICAgIHBtODkxNi1sYmMg55qEIGV4dGNvbiDmiqXvvIjlkIzkuIDkuKogRVhUQ09OX1VTQu+8ie+8jOS9hiBERVZQQVRIL05BTUUg5Y+Y5LqG77yMCiMgICAgICDmiYDku6XliLflpb3lkI7opoHmjIkgL3N5cy9jbGFzcy9leHRjb24vKi97bmFtZSxzdGF0ZX0g5a6e5rWL5oqK6YKj5Lu9IGpzb24g5pS55oyH6L+H5Y6744CCCiMgICAgLSBCTVMtVk0g55qEIHByb2JlIOS8muiwgyBwb3dlcl9zdXBwbHlfZ2V0X2JhdHRlcnlfaW5mbygp77yM5a6D5Zyo6IqC54K55LiK5om+CiMgICAgICAibW9uaXRvcmVkLWJhdHRlcnkiIC0+IGNvbXBhdGlibGU9InNpbXBsZS1iYXR0ZXJ5Iu+8jOaJvuS4jeWIsOWwsSAtRU5PREVWIOebtOaOpemAgOWHuu+8jAojICAgICAg5omA5Lul5b+F6aG76L+e55S15rGg5o+P6L+w6IqC54K55LiA6LW36KGl77yM5ZCm5YiZ6amx5Yqo5qC55pys5LiN57uR44CB55m95byA44CCCiMgICAgLSDov5nkuKrpqbHliqjlj6rlr7zlh7ogdm9sdGFnZV9ub3cgLyB2b2x0YWdlX29jdiAvIHN0YXR1cyAvIGhlYWx0aO+8jOayoeaciSBjYXBhY2l0ee+8jAojICAgICAg5omA5Lul55S16YeP5pivIueUteWOi+afpeihqCLmnaXnmoTvvIzkuI3mmK/lupPku5HorqHvvIjmj5LnnYAgVVNCIOaXtiBWQkFUIOmhtuWcqOWFheeUteWOi++8jOS8muaYvuekuua7oeagvO+8ieOAggojCiMgMikgRFRT77yaUkdCIOeBr+aNouaIkCBVMDEg5a6e6ISa5L2N77yINzIvNzEvNzPvvIzlkoznjrDlnKjliLfov5vljrvnmoQgYm9vdF91MDEuaW1nIOS4gOiHtO+8ie+8jAojICAgIOWGjeihpSA0IOagvOeUtemHj+eBryBiYXQ6MS4uYmF0OjTvvIjohJogMC85MS8xLzEwMCA9IOWOn+WOgiBEVEIg55qEIGJhdDEvYmF0bDIvYmF0bDMvYmF0bDTvvInvvIwKIyAgICDlubbmiorov5kgNCDkuKrohJrliqDov5sgJmdwaW9fbGVkc19kZWZhdWx0IOeahCBwaW5z77yM5ZCm5YiZIHBpbmN0cmwg5LiN5YiH5Yqf6IO944CCCiMKIyAzKSDnlKjmiLfmgIHmlofku7botbDku5PlupPpobblsYIgZmlsZXMvIOimhuebluWxgu+8iOS4jei1sCBwYWNrYWdlL2Jhc2UtZmlsZXMvZmlsZXPvvInvvJoKIyAgICDkuIrmuLggaW5jbHVkZS9pbWFnZS5tayDph4zmnIkgYCQoY2FsbCBwcmVwYXJlX3Jvb3RmcywkKG1rZnNfY3VyX3RhcmdldF9kaXIpLCQoVE9QRElSKS9maWxlcylgCiMgICAg4oeSIFRPUERJUihmaWxlcykg5omN5piv6ZWc5YOP5ZCD55qE55uu5b2V44CCd29ya2Zsb3cg5YWI55SoIGBjcCAtciBmaWxlcyBvcGVud3J0L2ZpbGVzYCDmiorlroPlu7rlh7rmnaXvvIjnlJ/mlYjvvInvvIwKIyAgICDpmo/lkI4gYG12IGZpbGVzIG9wZW53cnQvZmlsZXNgIOaKiuS7k+W6k+aguemCo+S7veaQrOepuuOAgeWcqCBvcGVud3J0L2ZpbGVzL2ZpbGVzLyDnlZnkuIDlnajph43lpI3lnoPlnL4KIyAgICDvvIjmnKzohJrmnKzkvJrpobrmiYvliKDmjonvvInjgILih5Ig5oOz5pS5IC9ldGMg5bCx5b6A5LuT5bqTIGZpbGVzLyDph4zmlL7vvIzkvYYqKuiHquajgOimgeaMiSBvcGVud3J0L2ZpbGVzIOmqjCoq44CCCiMKIyA0KSBEVFMg5piv5ZOq5LiA5Lu977yadGFyZ2V0L2xpbnV4L21zbTg5eHgvaW1hZ2UvbXNtODkxNi5tayDph4wgb3BlbnN0aWNrLXdmMiDlhpnmrbsKIyAgICBERVZJQ0VfRFRTIDo9IG1zbTg5MTYteGlueHVuLXdmMiArIERFVklDRV9EVFNfRElSIDo9IC4uL2R0c++8jAojICAgIERldmljZS9EZWZhdWx0IOaYryBLRVJORUwgPSBrZXJuZWwtYmluIHwgZ3ppcCB8IGFwcGVuZC1kdGLvvIxib290LmltZyA9IGFwcGVuZC1rZXJuZWx8YWJvb3QtaW1nCiMgICAgPT4g6L+95Yqg5YiwIGR0cy9tc204OTE2LXhpbnh1bi13ZjIuZHRzIOacq+WwvueahOS4nOilv+WwseaYr+WIt+i/m+WOu+eahCBEVELvvIhkdHMvTWFrZWZpbGUg6YKj5Lu9CiMgICAg5YaF5qC4IGR0Yi15IOa4heWNleayoeaciSB3ZjLvvIzliKvooqvlroPor6/lr7zvvIznvJbor5HnlLEgT3BlbldydCDnmoQgRGV2aWNlIOinhOWImeWBmu+8ieOAggojCiMg5L6d6LWW5bey5qC45a+577yaY29uZmlnLTYuMTgg6YeMIE1GRF9TUE1JX1BNSUM9eeOAgVBPV0VSX1NVUFBMWT1544CBRVhUQ09OPXnjgIFJSU89ee+8mwojICAgICAgICAgICAgIOWtkOebruaghyBtc204OTE2IOWPquaciSB0YXJnZXQubWvvvIjmsqHmnInoh6rlt7HnmoQgY29uZmlnLTYuMTjvvIk9PiDmlLkgdGFyZ2V0IOe6p+mCo+S7veWwseWkn+OAggojID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQpVMDFfTUFSSz0iVTAxIChiYXR0ZXJ5IHN0aWNrKSBvdmVycmlkZXMiCgojIOWGheaguOmFjee9rueJh+auteeahOWQjeWtl+W/hemhu+i3n+edgOS4iua4uOi1sO+8jOS4jeiDveWGmeatu++8mgojICAgbGtpdXl1L2ltbW9ydGFsd3J0IOS4iua4uOmUgSA3ZmU1ODNkOSA9PiBLRVJORUxfUEFUQ0hWRVI6PTYuMTLvvIzpgqPmo7XmoJHph4zjgJDmsqHmnInjgJFjb25maWctNi4xOO+8mwojICAgbWFzdGVyIEhFQUQgMDVkM2NmMmEgICAgICAgICAgICAgPT4gS0VSTkVMX1BBVENIVkVSOj02LjE477yM5pyJIGNvbmZpZy02LjE4ICsgcGF0Y2hlcy02LjE444CCCiMgICDlhpnmrbsgY29uZmlnLTYuMTgg55qE5ZCO5p6c77ya55So6ZSB5a6aIGhhc2gg57yW5pe26L+Z5paH5Lu25LiN5a2Y5Zyo77yMZWNobyA+PiDkvJrlh63nqbrpgKDkuIDkuKrmsqHkurror7vnmoTniYfmrrXvvIwKIyAgIOiHquajgOi/mOeFp+agtyLpgJrov4ci77yM562J5LqO55m9562J5LiA5Liq5Y2K5bCP5pe244CC5omA5Lul5YWI6Kej5p6Q44CB5YaN6KaB5rGC5a6D5bey5a2Y5Zyo77yM57y65bCx55u05o6l5YGc44CCCktWPSQoc2VkIC1uICdzL15LRVJORUxfUEFUQ0hWRVI6PVtbOnNwYWNlOl1dKlwoWzAtOS5dWzAtOS5dKlwpLiovXDEvcCcgdGFyZ2V0L2xpbnV4L21zbTg5eHgvTWFrZWZpbGUgfCBoZWFkIC0xKQpDRkc9dGFyZ2V0L2xpbnV4L21zbTg5eHgvY29uZmlnLSRLVgpEVFM9dGFyZ2V0L2xpbnV4L21zbTg5eHgvZHRzL21zbTg5MTYteGlueHVuLXdmMi5kdHMKZm9yIGYgaW4gIiRDRkciICIkRFRTIjsgZG8KCVsgLWYgIiRmIiBdIHx8IHsgZWNobyAiISEgS0VSTkVMX1BBVENIVkVSPSRLVu+8jOS9hiAkZiDkuI3lrZjlnKjvvIjlkIznm67lvZXmnInvvJokKGxzIHRhcmdldC9saW51eC9tc204OXh4L2NvbmZpZy0qIDI+L2Rldi9udWxsIHwgdHIgJ1xuJyAnICcp77yJIjsgZXhpdCAxOyB9CmRvbmUKZWNobyAiPT0gVTAx77yaS0VSTkVMX1BBVENIVkVSPSRLVu+8jOWGheaguOeJh+autSA9ICRDRkcgPT0iCgpmb3Igc3ltIGluIENPTkZJR19CQVRURVJZX1BNODkxNl9CTVNfVk0gQ09ORklHX0NIQVJHRVJfUE04OTE2X0xCQzsgZG8KCWdyZXAgLXEgIl4ke3N5bX09eSIgJENGRyB8fCBlY2hvICIke3N5bX09eSIgPj4gJENGRwpkb25lCiMg5rOo5oSP77ya6L+Z5Lik5Liq5piv5YaF5qC45YaF5bu656ym5Y+377yM5LiN5pivIENPTkZJR19QQUNLQUdFXyrvvIzlvoAgT3BlbldydCDnmoQgLmNvbmZpZyDph4zov73liqDmsqHmnInmhI/kuYkKI++8iOWug+S7rOayoeaciSBjb25maWcvQ29uZmlnLWtlcm5lbC5pbiDph4znmoQgQ09ORklHX0tFUk5FTF8qIOWMheijhe+8ie+8jOeJh+auteaWh+S7tuaJjeaYr+WUr+S4gOWFpeWPo+OAggoKaWYgISBncmVwIC1xICIkVTAxX01BUksiICREVFM7IHRoZW4KY2F0ID4+ICREVFMgPDwnRFRTRU9GJwoKLyogLS0tLSBVMDEgKGJhdHRlcnkgc3RpY2spIG92ZXJyaWRlcywgaW5qZWN0ZWQgYnkgZGl5LXBhcnQyLnNoIC0tLS0gKi8KLyogcHJvZHVjdGlvbiBwaW5zOiA0Z190eXBlPTcyIC0+IHJlZC9wb3dlciwgNGdfMT03MSAtPiBncmVlbi93YW4sIHdpZmlzdGF0dXM9NzMgLT4gYmx1ZS93bGFuICovCiZsZWRfciB7IGdwaW9zID0gPCZ0bG1tIDcyIEdQSU9fQUNUSVZFX0hJR0g+OyB9OwombGVkX2cgeyBncGlvcyA9IDwmdGxtbSA3MSBHUElPX0FDVElWRV9ISUdIPjsgfTsKJmxlZF9iIHsgZ3Bpb3MgPSA8JnRsbW0gNzMgR1BJT19BQ1RJVkVfSElHSD47IH07CgovKiBiYXR0ZXJ5IGJhcnM6IGJhdDE9MCwgYmF0bDM9MSwgYmF0bDI9OTEsIGJhdGw0PTEwMCAoYWxsIGZvdXIgaWRsZSBpbiB0aGUgc3RvY2sgYnVpbGQpICovCiZsZWRzIHsKCWJhdDEgeyBsYWJlbCA9ICJiYXQ6MSI7IGdwaW9zID0gPCZ0bG1tIDAgR1BJT19BQ1RJVkVfSElHSD47ICAgZGVmYXVsdC1zdGF0ZSA9ICJvZmYiOyB9OwoJYmF0MiB7IGxhYmVsID0gImJhdDoyIjsgZ3Bpb3MgPSA8JnRsbW0gOTEgR1BJT19BQ1RJVkVfSElHSD47ICBkZWZhdWx0LXN0YXRlID0gIm9mZiI7IH07CgliYXQzIHsgbGFiZWwgPSAiYmF0OjMiOyBncGlvcyA9IDwmdGxtbSAxIEdQSU9fQUNUSVZFX0hJR0g+OyAgIGRlZmF1bHQtc3RhdGUgPSAib2ZmIjsgfTsKCWJhdDQgeyBsYWJlbCA9ICJiYXQ6NCI7IGdwaW9zID0gPCZ0bG1tIDEwMCBHUElPX0FDVElWRV9ISUdIPjsgZGVmYXVsdC1zdGF0ZSA9ICJvZmYiOyB9Owp9OwoKJmdwaW9fbGVkc19kZWZhdWx0IHsKCXBpbnMgPSAiZ3BpbzAiLCAiZ3BpbzEiLCAiZ3BpbzEyIiwgImdwaW8yMiIsICJncGlvMzEiLCAiZ3BpbzM4IiwKCSAgICAgICAiZ3BpbzcxIiwgImdwaW83MiIsICJncGlvNzMiLCAiZ3BpbzkxIiwgImdwaW85NyIsICJncGlvOTgiLCAiZ3BpbzEwMCIsICJncGlvMTA4IjsKfTsKCi8gewoJdTAxX2JhdDogYmF0dGVyeSB7CgkJY29tcGF0aWJsZSA9ICJzaW1wbGUtYmF0dGVyeSI7CgkJdGVjaG5vbG9neSA9ICJsaS1pb24iOwoJCXZvbHRhZ2UtbWluLWRlc2lnbi1taWNyb3ZvbHQgPSA8MzQwMDAwMD47CgkJdm9sdGFnZS1tYXgtZGVzaWduLW1pY3Jvdm9sdCA9IDw0MjAwMDAwPjsKCX07Cn07CgomcG04OTE2X2JtcyB7CglzdGF0dXMgPSAib2theSI7Cgltb25pdG9yZWQtYmF0dGVyeSA9IDwmdTAxX2JhdD47Cn07CkRUU0VPRgpmaQoKIyDlhYXnlLXljZXni6zkuIDmrrXvvJrogIEgZm9yayDlt7Lnu4/ms6jlhaXov4fkuIrpnaLpgqPlnZfvvIhMRUQv55S16YeP54Gv77yJ77yM5Y+q57y66L+Z5Liq77yM6YeN6LeR5Lmf5b6X6KGl5LiKCmlmICEgZ3JlcCAtcSAnJnBtODkxNl9jaGFyZ2VyJyAkRFRTOyB0aGVuCmNhdCA+PiAkRFRTIDw8J0NIR0VPRicKCi8qIElCQVRfTUFYIHNpdHMgYXQgdGhlIFBNSUMgcG93ZXItb24gZGVmYXVsdCAoOTAgbUEpIHVudGlsIGNoYXJnZXIgY29kZSByYWlzZXMgaXQuCiAqIHVzYl92YnVzIGlzIG9uZSBTUE1JIGxpbmU6IHBtODkxNl91c2JpbiBob2xkcyBpdCB0b2RheSwgc28gdGhlIGNoYXJnZXIgbXVzdCB0YWtlIGl0LiAqLwomcG04OTE2X2NoYXJnZXIgewoJc3RhdHVzID0gIm9rYXkiOwoJcWNvbSxmYXN0LWNoYXJnZS1zYWZlLXZvbHRhZ2UgPSA8NDIwMDAwMD47CglxY29tLGZhc3QtY2hhcmdlLXNhZmUtY3VycmVudCA9IDw3MDAwMDA+OwoJbW9uaXRvcmVkLWJhdHRlcnkgPSA8JnUwMV9iYXQ+Owp9OwoKJnBtODkxNl91c2JpbiB7CglzdGF0dXMgPSAiZGlzYWJsZWQiOwp9OwpDSEdFT0YKZmkKCiMg55So5oi35oCB77yIdTAxc2ltZC9uZXRsZWQvbGVkaWRsZS9iYXRsZWQvY2hnX3JlZ3MgKyDlm5vkuKogaW5pdC5kICsgL2V0Yy91MDFzaW0uY29uZgojICsgZXRjL3VjaS1kZWZhdWx0cy85OS11MDEtbGFtcHPvvInkuI3nlLHmnKzohJrmnKwgY3Ag5a6J6KOF77yM6LWw5LuT5bqT6aG25bGCIGZpbGVzLyDopobnm5blsYLjgIIKIyDopobnm5blsYLnoa7lrp7nlJ/mlYjvvJrkuIrmuLggaW5jbHVkZS9pbWFnZS5tayDph4zmnIkgJChjYWxsIHByZXBhcmVfcm9vdGZzLCQobWtmc19jdXJfdGFyZ2V0X2RpciksJChUT1BESVIpL2ZpbGVzKeOAggojCiMg4pqg77iPIOS9hiLku5PlupPmoLnpgqPku70gZmlsZXMvIuWcqOacrOatpeaJp+ihjOaXtuW3sue7j+S4jeWtmOWcqOS6hiDigJTigJQgd29ya2Zsb3cg6aG65bqP5pivCiMgICAgICBzdGVwICIgZmlsZXMiICAgICAgICAgICAgICAgICA6IGNwIC1yIGZpbGVzIG9wZW53cnQvZmlsZXMgICAgICAgIO+8iOW7uuebruW9le+8jOi/meS7veaJjeeul+aVsO+8iQojICAgICAgc3RlcCAiTG9hZCBjdXN0b20gY29uZmlndXJhdGlvbiI6IFsgLWUgZmlsZXMgXSAmJiBtdiBmaWxlcyBvcGVud3J0L2ZpbGVzCiMgICAg56ys5LqM5qyh5piv5b6A5bey5a2Y5Zyo55uu5b2V6YeM5oyqIOKHkiDlj5jmiJAgb3BlbndydC9maWxlcy9maWxlcy8g55qE6YeN5aSN5Z6D5Zy+77yM5LuT5bqT5qC5IGZpbGVzLyDooqvmkKznqbrjgIIKIyAgICAxMS0xNiDpgqPmrKHnvJbor5HlsLHmmK/lnKjov5nph4zoh6rmo4DlpLHotKXpgIDlh7rnmoTvvIjlvZPml7bljYHpobnlhajljrvmib7ku5PlupPmoLkg4oeSIOWFqOepuiDih5IgZXhpdCAx77yJ44CCCiMgICAg5omA5Lul6KaB6aqM5bCx6aqMICQoVE9QRElSKS9maWxlc++8iOacrOatpSBDV0Qg5bCx5pivIG9wZW53cnQg5qC577yJ77yM5a6D5omN5piv6ZWc5YOP55yf5q2j5ZCD55qE6YKj5LiA5Lu944CCCk9WTD1maWxlcwppZiBbICEgLXMgIiRPVkwvdXNyL2xpYmV4ZWMvYmF0bGVkLnB5IiBdOyB0aGVuCglmb3IgYyBpbiAiJEdJVEhVQl9XT1JLU1BBQ0UvZmlsZXMiICIkKGRpcm5hbWUgLS0gIiQwIikvZmlsZXMiOyBkbwoJCVsgLXMgIiRjL3Vzci9saWJleGVjL2JhdGxlZC5weSIgXSAmJiB7IE9WTD0iJGMiOyBicmVhazsgfQoJZG9uZQpmaQpbIC1zICIkT1ZML3Vzci9saWJleGVjL2JhdGxlZC5weSIgXSB8fCBPVkw9IiIKZWNobyAiPT0gVTAx77ya6KaG55uW5bGC6JC954K5ID0gJHtPVkw6LeayoeaJvuWIsO+8iOS4i+mdouS8muaKpee8uu+8iX0gPT0iCiMg5riF5o6JIG12IOmAoOWHuuadpeeahOmHjeWkjeWJr+acrO+8jOWQpuWImeWug+S7pSAvZmlsZXMvIOeZveWNoOmVnOWDj+e6piAxMDBLQgppZiBbIC1uICIkT1ZMIiBdICYmIFsgLXMgIiRPVkwvZmlsZXMvdXNyL2xpYmV4ZWMvYmF0bGVkLnB5IiBdOyB0aGVuCglybSAtcmYgIiRPVkwvZmlsZXMiICYmIGVjaG8gIj09IFUwMe+8muW3sua4heaOiSBtdiDpgKDmiJDnmoTph43lpI3lia/mnKwgJE9WTC9maWxlcy8gPT0iCmZpCiMg6L+Z6YeM5Yi75oSP5LiN5YaN5b6AIHJjLmxvY2FsIOWhniBiYXRsZWQuc2jvvJrlm5vmoLznga/lj6rnlZkgaW5pdC5kL2JhdGxlZCDkuIDkuKrkuLvkurrvvIwKIyDkuKTku73lkIzml7bot5HkvJrmiqLlkIzkuIDnu4QgYmF0OjEuLjTvvIzosIHmnIDlkI7lhpnosIHor7TkuobnrpfvvIzmoLzmlbDkvJrkubHot7PjgIIKCiMgLS0tLSA1KSDooaUgZm9yayDnvLrnmoQgbGliZmZp77yIcnVuICMyIOWwseaYr+atu+WcqOi/meS4iumdou+8jOe8luWIsCA5NSDliIbpkp/miY3pnLLlh7rmnaXvvIktLS0tCiMg5a6Y5pa5IGltbW9ydGFsd3J0IOaciSBwYWNrYWdlL2xpYnMvbGliZmZp77yMbGtpdXl1IOmCo+S7vSBmb3JrIOayoeacie+8iHBhY2thZ2UvbGlicyDph4zmlbDlvpflh7rmnaXvvInvvJsKIyDogIwgcGFja2FnZXMg5rqQ6YeM55qEIGdsaWIyIDIuODguMSDlt7Lnu4/mioogZ29iamVjdC9naW8g5a2Q5YyF5YaZ5oiQIERFUEVORFMgKz0gK2xpYmZmae+8jAojIE1vZGVtTWFuYWdlciDlj4jlv4XpobsgZ2xpYjIg4oeSIOagkemHjOayoeaciSBsaWJmZmnvvIxnbGliMiDnmoQgaXBrIOWwseaJk+WMheS4jeWHuuadpe+8mgojICAgUGFja2FnZSBnbGliMi1nb2JqZWN0IGlzIG1pc3NpbmcgZGVwZW5kZW5jaWVzIGZvciB0aGUgZm9sbG93aW5nIGxpYnJhcmllczogbGliZmZpLnNvLjgKIyAgIEVSUk9SOiBwYWNrYWdlL2ZlZWRzL3BhY2thZ2VzL2dsaWIyIGZhaWxlZCB0byBidWlsZC4KIyDku5PlupPph4zluKbkuIDku73lkozlrpjmlrnlkIzniYjnmoTvvIhpbW1vcnRhbHdydEBhNGJhODI0MO+8jGxpYmZmaSAzLjguMCArIOWumOaWuSAyMiDkuKogcGF0Y2jvvInvvIznvLrmiY3ooaXvvIzkuI3opobnm5bjgIIKUkVQT19ESVI9IiQoY2QgLS0gIiQoZGlybmFtZSAtLSAiJDAiKSIgMj4vZGV2L251bGwgJiYgcHdkKSIKaWYgWyAtZSBwYWNrYWdlL2xpYnMvbGliZmZpL01ha2VmaWxlIF07IHRoZW4KCWVjaG8gIj09IFUwMe+8muagkemHjOW3sue7j+aciSBwYWNrYWdlL2xpYnMvbGliZmZp77yIZm9yayDlkIzmraXov4fkuobvvInvvIzkuI3opobnm5YgPT0iCmVsaWYgWyAtZSAiJFJFUE9fRElSL3UwMV9sb2NhbC9wYWNrYWdlL2xpYnMvbGliZmZpL01ha2VmaWxlIiBdOyB0aGVuCglta2RpciAtcCBwYWNrYWdlL2xpYnMKCWNwIC1hICIkUkVQT19ESVIvdTAxX2xvY2FsL3BhY2thZ2UvbGlicy9saWJmZmkiIHBhY2thZ2UvbGlicy8KCWVjaG8gIj09IFUwMe+8muW3suihpSBwYWNrYWdlL2xpYnMvbGliZmZp77yIZ2xpYjIg4oaSIE1vZGVtTWFuYWdlciDnmoTnoazkvp3otZbvvIk9PSIKZWxzZQoJZWNobyAiISEg5LuT5bqT6YeM5rKh5bimIHUwMV9sb2NhbC9wYWNrYWdlL2xpYnMvbGliZmZp77yMbGliZmZpIOihpeS4jeS4iu+8iOS4i+mdouiHquajgOS8muWBnO+8iSIKZmkKZ3JlcCAtcSAnXkNPTkZJR19QQUNLQUdFX2xpYmZmaT15JyAuY29uZmlnIDI+L2Rldi9udWxsIHx8IGVjaG8gJ0NPTkZJR19QQUNLQUdFX2xpYmZmaT15JyA+PiAuY29uZmlnCgojIC0tLS0gNikg6KGlIG1jb3B577ya6LCD5Yi26Kej6LCD5Zmo5Zu65Lu25YyF6Z2g5a6D5YiH5Ye65p2lIC0tLS0KIyBmZWVkcy9vcGVuc3RpY2svZmlybXdhcmUvcWNvbS1maXJtd2FyZSDnmoQgQnVpbGQvQ29tcGlsZSDmmK8gbWNvcHnvvIhtdG9vbHPvvInku44KIyBvcGVuc3RpY2std2YyLW1vZGVtLmJpbiDph4zlj5YgOjppbWFnZS9tYmEubWJuIDo6aW1hZ2UvbW9kZW0uKiA6OmltYWdlL3djbnNzLirvvIwKIyDogIwgd29ya2Zsb3cg6KOF55qE6YKj5Liq5L6d6LWW5riF5Y2V77yIeHV4aW4xOTU1L2RlcGVuZF91YnVudHUyMjA0X29wZW53cnTvvIw5MyDpobnvvInph4zmsqHmnIkgbXRvb2xz44CCCiMg57y65a6DIOKHkiAgbW9kZW0g5Zu65Lu25YyF5oql6ZSZIOKHkiDlj4jnmb3nrYnkuIDmrKHjgILov5nph4znjrDoo4XvvIzoo4XkuI3kuIrlsLHnm7TmjqXlgZzjgIIKaWYgISBjb21tYW5kIC12IG1jb3B5ID4vZGV2L251bGwgMj4mMTsgdGhlbgoJZWNobyAiPT0gVTAx77yacnVubmVyIOS4iuayoeaciSBtY29wee+8jOWwneivleihpeijhSBtdG9vbHMgPT0iCglzdWRvIC1FIGFwdC1nZXQgLXkgaW5zdGFsbCBtdG9vbHMgPi90bXAvdTAxX210b29scy5sb2cgMj4mMSB8fCB0YWlsIC01IC90bXAvdTAxX210b29scy5sb2cKCWNvbW1hbmQgLXYgbWNvcHkgPi9kZXYvbnVsbCAyPiYxICYmIGVjaG8gIj09IFUwMe+8mm1jb3B5IOW3suWwseS9jSAkKGNvbW1hbmQgLXYgbWNvcHkpID09IgpmaQoKIyAtLS0tIDcpIOWQiOaOiSBuZXRmaWx0ZXIg6YKj5a+55oqi5ZCM5LiA5LiqIC5rbyDnmoTljIXvvIhydW4gIzQg5q275Zug77yJLS0tLQojIOmUgeWumuagkSBwYWNrYWdlL2tlcm5lbC9saW51eC9tb2R1bGVzL25ldGZpbHRlci5tayDph4zlkIzml7bmnInvvJoKIyAgIEtlcm5lbFBhY2thZ2UvaXB0YWJsZXMgIEhJRERFTiwgREVQRU5EUzo9QCFMSU5VWF82XzEyLAojICAgICAgICAgICAgICAgICAgICAgICAgICAgRklMRVMgPSBuZXQvaXB2NC9uZXRmaWx0ZXIvaXBfdGFibGVzLmtvICsgbmV0L25ldGZpbHRlci94X3RhYmxlcy5rbwojICAgS2VybmVsUGFja2FnZS9uZi1pcHQgICAgREVQRU5EUzo9KyFMSU5VWF82XzEyOmttb2QtaXB0YWJsZXMsCiMgICAgICAgICAgICAgICAgICAgICAgICAgICBGSUxFUyA9ICQoTkZfSVBULW0pID0g5LiK6Z2i5ZCM5Lik5LiqIC5rb++8iGluY2x1ZGUvbmV0ZmlsdGVyLm1rOjMyLTMz77yJCiMg5YaF5qC45pivIDYuMTjvvIjkuI3mmK8gNi4xMu+8ieKHkiDkuKTkuKrljIXpg73ov5sgcm9vdGZzIOKHkiBvcGtnIOWcqCBwYWNrYWdlL2luc3RhbGwg5Yik5pWw5o2u5paH5Lu25Yay56qB77yaCiMgICBjaGVja19kYXRhX2ZpbGVfY2xhc2hlczogUGFja2FnZSBrbW9kLW5mLWlwdCB3YW50cyB0byBpbnN0YWxsIGZpbGUgLi4uL2lwX3RhYmxlcy5rbwojICAgQ2Fubm90IGluc3RhbGwgcGFja2FnZSBrbW9kLW5mLWlwdCAvIGttb2QtbmYtaXB0NiAvIGttb2QtaXB0LWNvcmUgLyBrbW9kLW5mdC1jb21wYXQKIyAgIHBhY2thZ2UvTWFrZWZpbGU6MTAwOiBwYWNrYWdlL2luc3RhbGwgRXJyb3IgMjU1ICAgICDihpAgOTYg5YiG6ZKf5omN6LWw5Yiw6L+Z5LiA5q2lCiMg5LiK5ri4IG1hc3RlciDlt7Lnu4/msqHmnIkgS2VybmVsUGFja2FnZS9pcHRhYmxlc++8jOaUueaKiuS4ieS4qiAqX0xFR0FDWSDnmoQgS0NPTkZJRyDnm7TmjqXmjILov5sKIyBuZi1pcHQgLyBuZi1pcHQ2IC8gZWJ0YWJsZXPvvIgua28g5b2SIG5mLWlwdCDkuIDlrrbmiZPvvInjgILov5nph4znhacgbWFzdGVyIOeahOWBmuazleWQiOS4gO+8jAojIOihpeS4geeUqCB0X2RlcC9ta19uZnBhdGNoLnB5IOS7jumUgeWumiBoYXNoIOeahOecn+WunuaWh+S7tueUn+aIkO+8jOacrOWcsCBwYXRjaCAtcDEg5b6A6L+U6aqM6L+H44CCCk5GTUs9cGFja2FnZS9rZXJuZWwvbGludXgvbW9kdWxlcy9uZXRmaWx0ZXIubWsKTkZQQVRDSD0iJFJFUE9fRElSL3UwMV9sb2NhbC9wYXRjaGVzL25ldGZpbHRlci1pcHQtY2xhc2gucGF0Y2giCmlmICEgZ3JlcCAtcSAnXmRlZmluZSBLZXJuZWxQYWNrYWdlL2lwdGFibGVzJCcgJE5GTUsgMj4vZGV2L251bGw7IHRoZW4KCWVjaG8gIj09IFUwMe+8mm5ldGZpbHRlciDlt7Lnu4/mmK/kuI3ph43lpI3miZPljIXnmoTpgqPniYjvvIhmb3JrIOWQjOatpei/h+S6hu+8ie+8jOi3s+i/hyA9PSIKZWxpZiBbICEgLWYgIiRORlBBVENIIiBdOyB0aGVuCgllY2hvICIhISDku5PlupPph4zmsqHluKYgdTAxX2xvY2FsL3BhdGNoZXMvbmV0ZmlsdGVyLWlwdC1jbGFzaC5wYXRjaO+8jOWQiOS4gOihpeS4geaJk+S4jeS4iiIKZWxpZiAhIGNvbW1hbmQgLXYgcGF0Y2ggPi9kZXYvbnVsbCAyPiYxOyB0aGVuCgllY2hvICIhISBydW5uZXIg5LiK5rKh5pyJIHBhdGNoKDEpIgplbHNlCglpZiBwYXRjaCAtcDEgLU4gLS1kcnktcnVuIDwgIiRORlBBVENIIiA+L3RtcC91MDFfbmYubG9nIDI+JjEgJiYKCSAgIHBhdGNoIC1wMSAtTiA8ICIkTkZQQVRDSCIgPj4vdG1wL3UwMV9uZi5sb2cgMj4mMTsgdGhlbgoJCWVjaG8gIj09IFUwMe+8muW3suaJkyBuZXRmaWx0ZXIg5ZCI5LiA6KGl5LiB77yIaXBfdGFibGVzLmtvL3hfdGFibGVzLmtvIOWPqueVmSBrbW9kLW5mLWlwdCDkuIDkuKrmiLfkuLvvvIk9PSIKCWVsc2UKCQllY2hvICIhISBuZXRmaWx0ZXIg6KGl5LiB6K+V5omTL+ato+aJk+Wksei0pe+8jOagkeWSjOmUgeWumiBoYXNoIOWvueS4jeS4iuWPt++8jOWwvumDqO+8miIKCQl0YWlsIC0yMCAvdG1wL3UwMV9uZi5sb2cKCWZpCgkjIOiwgei/mOW8leeUqOiiq+WIoOaOieeahOWMheWQje+8jOesrCAxIOWIhumSn+WwseivtOWHuuadpe+8jOWIq+etiSA5NiDliIbpkp/lkI4gb3BrZyDmiqUi5L6d6LWW5ruh6Laz5LiN5LqGIgoJdTAxX3JlZj0kKGdyZXAgLXJsIC0taW5jbHVkZT1NYWtlZmlsZSAtLWluY2x1ZGU9JyoubWsnICdrbW9kLWlwdGFibGVzJyBwYWNrYWdlIGZlZWRzIDI+L2Rldi9udWxsIHwgaGVhZCAtMTAgfHwgdHJ1ZSkKCVsgLW4gIiR1MDFfcmVmIiBdICYmIGVjaG8gIjo6d2FybmluZzo65omT5a6M6KGl5LiB5LuN5pyJ5paH5Lu25byV55SoIGttb2QtaXB0YWJsZXPvvJokKGVjaG8gJHUwMV9yZWYgfCB0ciAnXG4nICcgJykiCmZpCgojIC0tLS0gOCkg5L+u5LiK5ri45Lik5Liq6amx5Yqo55qE57G75Z6L5Yik5a6a77yI5pys5qyh5Yi35py65ZCOIGRtZXNnIOWunua1i+eahOWksei0peeCue+8iS0tLS0KIyDliLfov5vljrvnmoQgNi4xOC4zNSDot5HotbfmnaXlkI7vvIxsYmMg5ZKMIGJtcy12bSDpg73lj6rotbDliLAgcHJvYmUg56ys5LiA5q2l5bCxIC1FTk9ERVbvvJoKIyAgIHBtODkxNi1ibXMtdm0gMjAwZjAwMC5zcG1pOnBtaWNAMDpiYXR0ZXJ5QDQwMDA6IGVycm9yIC1FTk9ERVY6IERldmljZSByZXBvcnRlZCB3cm9uZyB0eXBlOiAweEZGRkYwMjBECiMgICBwbTg5MTYtbGJjICAgIDIwMGYwMDAuc3BtaTpwbWljQDA6Y2hhcmdlckAxMDAwOiBlcnJvciAtRU5PREVWOiBEZXZpY2UgcmVwb3J0ZWQgd3JvbmcgdHlwZTogMHhGRkZGMTUwMgojIOS9jiAxNiDkvY0gUE04OTE2X0JNU19WTV9UWVBFPTB4MDIwRCAvIFBNODkxNl9MQkNfQ0hHUl9UWVBFPTB4MTUwMiDkuIDmqKHkuIDmoLfvvIzpq5ggMTYg5L2N6YO95pivIDB4RkZGRuOAggojIOS4pOWkhOmDveWGmeaIkO+8mgojICAgdW5zaWduZWQgaW50IHRtcDsKIyAgIHJlZ21hcF9idWxrX3JlYWQobWFwLCByZWcgKyBQTTg5MTZfUEVSUEhfVFlQRSwgJnRtcCwgMik7ICAgLy8gU1BNSSB2YWxfYml0cz04IOKHkiDlj6rloavkvY4gMiDlrZfoioIKIyBjb3VudD0yIOWPquWGmee8k+WGsuWMuuWJjSAyIOWtl+iKgu+8jGB1bnNpZ25lZCBpbnRgIOeahOmrmOWNiuaIquaYr+ayoeWIneWni+WMlueahOagiOWeg+WcvuWwseebtOaOpeWPguS4jiAhPSDmr5TovoMKIyDih5Ig5Yik5a6a5Zyo5Lu75L2VIFBNODkxNiDkuIrpg73mgZLlgYfvvIzot5/mnKzmnLrnoazku7blpb3lnY/ml6DlhbPvvIjlkIzkuIDku73mlofku7bnmoQgRklGTyDor7vmlbDnlKjnmoTlsLHmmK8gdTE2IOaVsOe7hO+8ieOAggojIEJNUy1WTSDnmoQgT0NWIOS5n+eUqOS6huWQjOS4gOS4quWGmeazle+8iGxhc3Rfb2N2ID0gdG1wICogMzAw77yJ77yM5Lya5oqK5Z6D5Zy+6auY5L2N5LmY6L+b55S15Y6L6YeM77yM5LiA5bm25o2iIHUxNuOAggojIOihpeS4geWfuue6vyA9IGdyZWdraC9saW51eEB2Ni4xOC4zNSDnmoTkuKTkuKrmlofku7bljp/mlofvvIzmnKzlnLAgcGF0Y2ggLXAxIOW+gOi/lOmqjOi/h+aJjeaPkOS6pOOAggojIOebruW9leWQjei3n+edgCBLRVJORUxfUEFUQ0hWRVIg6LWw77yI5Yir5YaZ5q27IHBhdGNoZXMtNi4xOO+8ie+8m+WGheaguOeJh+auteS8muWcqCBwcmVwYXJlIOmYtuauteaMieaWh+S7tuWQjeaOkuW6j+aJk+S4iuOAggpLUEQ9dGFyZ2V0L2xpbnV4L21zbTg5eHgvcGF0Y2hlcy0kS1YKS1BQQVRDSF9TUkM9IiRSRVBPX0RJUi91MDFfbG9jYWwvcGF0Y2hlcy9wbTg5MTYtY2hhcmdlci10eXBlLWNoZWNrLnBhdGNoIgpta2RpciAtcCAkS1BECmlmIFsgLWYgIiRLUEQvOTAwLXBtODkxNi1jaGFyZ2VyLXR5cGUtY2hlY2sucGF0Y2giIF07IHRoZW4KCWVjaG8gIj09IFUwMe+8mnBhdGNoZXMtJEtWIOmHjOW3sue7j+aciSA5MDAtcG04OTE2LWNoYXJnZXItdHlwZS1jaGVjay5wYXRjaO+8iGZvcmsg5ZCM5q2l6L+H77yf77yJ77yM5LiN6KaG55uWID09IgplbGlmIFsgLWYgIiRLUFBBVENIX1NSQyIgXTsgdGhlbgoJY3AgIiRLUFBBVENIX1NSQyIgIiRLUEQvOTAwLXBtODkxNi1jaGFyZ2VyLXR5cGUtY2hlY2sucGF0Y2giCgllY2hvICI9PSBVMDHvvJrlt7LmiornsbvlnovliKTlrprooaXkuIHmlL7ov5sgJEtQRC85MDAtcG04OTE2LWNoYXJnZXItdHlwZS1jaGVjay5wYXRjaCA9PSIKZWxzZQoJZWNobyAiISEg5LuT5bqT6YeM5rKh5bimIHUwMV9sb2NhbC9wYXRjaGVzL3BtODkxNi1jaGFyZ2VyLXR5cGUtY2hlY2sucGF0Y2jvvIxsYmMvYm1zLXZtIOi/mOaYr+S8miAtRU5PREVWIgpmaQoKIyDms6jlhaXoh6rmo4DvvJrlk6rkuIDpobnmsqHokL3kuIrlsLHnm7TmjqXnu4jmraLvvIzliKvoirHkuIDkuKrljYrlsI/ml7bnvJbkuIDniYjot5/kuIrkuIDniYjkuIDmoLfnmoTlm7rku7YKdTAxX2ZhaWw9MApncmVwIC1xICdeQ09ORklHX0JBVFRFUllfUE04OTE2X0JNU19WTT15JyAkQ0ZHICAgICAgICAgICAgICAgICAgICAgICB8fCB7IGVjaG8gIiEhIEJNUy1WTSDmsqHov5sgJENGRyI7IHUwMV9mYWlsPTE7IH0KZ3JlcCAtcSAnXkNPTkZJR19DSEFSR0VSX1BNODkxNl9MQkM9eScgJENGRyAgICAgICAgICAgICAgICAgICAgICAgICAgIHx8IHsgZWNobyAiISEgQ0hBUkdFUl9QTTg5MTZfTEJDIOayoei/myAkQ0ZHIjsgdTAxX2ZhaWw9MTsgfQpncmVwIC1xICJERVZJQ0VfRFRTIDo9IG1zbTg5MTYteGlueHVuLXdmMiIgdGFyZ2V0L2xpbnV4L21zbTg5eHgvaW1hZ2UvbXNtODkxNi5tayB8fCBlY2hvICIhISDorablkYrvvJrkuIrmuLggZGV2aWNlIOinhOWImeayoeeZu+iusCB3ZjIg55qEIERUU++8jCREVFMg5Y+v6IO95LiN5Y+C5LiO57yW6K+RIgpncmVwIC1xICIkVTAxX01BUksiICREVFMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8fCB7IGVjaG8gIiEhIERUUyDmsqHmiZPov5sgd2YyIjsgdTAxX2ZhaWw9MTsgfQpncmVwIC1xICcmcG04OTE2X2NoYXJnZXInICREVFMgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8fCB7IGVjaG8gIiEhIOWFheeUteWdl+ayoei/myAkRFRTIjsgdTAxX2ZhaWw9MTsgfQpncmVwIC1xICcmcG04OTE2X3VzYmluJyAkRFRTICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8fCB7IGVjaG8gIiEhIOayoeaKiiBwbTg5MTZfdXNiaW4g5YWz5o6J77yMdXNiX3ZidXMg5Lit5pat57q/5Lya5pKe6L2mKC1FQlVTWSkiOyB1MDFfZmFpbD0xOyB9CmdyZXAgLXEgJ3UwMV9iYXQ6JyAkRFRTICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHx8IHsgZWNobyAiISEgJERUUyDph4zmsqHmnIkgdTAxX2JhdO+8jOWFheeUteWZqOW8leeUqOeahCBiYXR0ZXJ5IOiKgueCueS4jeWtmOWcqCI7IHUwMV9mYWlsPTE7IH0KIyDnlKjmiLfku7botbAgZmlsZXMvIOimhuebluWxgu+8jOi/memHjOmqjOeahOaYryLplZzlg4/kvJrlkIPliLDnmoTpgqPkuIDku70i6YeM5Y2B5Lu26b2Q5YWoCiMg77yI6aaW5ZCv55SxIGV0Yy91Y2ktZGVmYXVsdHMvOTktdTAxLWxhbXBzIOihpSBjaG1vZCArIGVuYWJsZe+8jGdpdCDluKbov4fmnaXnmoTmnYPpmZDkvY3kuI3lj6/pnaDvvIkKZm9yIGYgaW4gdXNyL2xpYmV4ZWMvdTAxc2ltZC5weSB1c3IvbGliZXhlYy9uZXRsZWQucHkgdXNyL2xpYmV4ZWMvbGVkaWRsZS5weSBcCiAgICAgICAgIHVzci9saWJleGVjL2JhdGxlZC5weSB1c3IvbGliZXhlYy9jaGdfcmVncy5weSBcCiAgICAgICAgIGV0Yy9pbml0LmQvdTAxc2ltIGV0Yy9pbml0LmQvbmV0bGVkIGV0Yy9pbml0LmQvbGVkaWRsZSBcCiAgICAgICAgIGV0Yy9pbml0LmQvYmF0bGVkIGV0Yy91Y2ktZGVmYXVsdHMvOTktdTAxLWxhbXBzOyBkbwoJWyAtbiAiJE9WTCIgXSAmJiBbIC1zICIkT1ZMLyRmIiBdIHx8IHsgZWNobyAiISEg6KaG55uW5bGC57y65paH5Lu2ICRmIChPVkw9JHtPVkw6LeaXoH0pIjsgdTAxX2ZhaWw9MTsgfQpkb25lCmdyZXAgLXEgJ15DT05GSUdfUEFDS0FHRV9weXRob24zPXknIC5jb25maWcgMj4vZGV2L251bGwgXAoJfHwgZWNobyAiISEg6K2m5ZGK77yaLmNvbmZpZyDph4wgcHl0aG9uMyDmsqHlvIDvvIznlKjmiLfmgIHmnI3liqHlhajpg73otbfkuI3mnaXvvIjlupTmlLkgY29uZmlnL3dmMi5jb25maWfvvIkiClsgLWUgcGFja2FnZS9saWJzL2xpYmZmaS9NYWtlZmlsZSBdIHx8IHsgZWNobyAiISEgcGFja2FnZS9saWJzL2xpYmZmaSDkuI3lnKjmoJHph4zvvIxnbGliMiDmiZPkuI3lh7ogaXBrIjsgdTAxX2ZhaWw9MTsgfQpjb21tYW5kIC12IG1jb3B5ID4vZGV2L251bGwgMj4mMSAgICB8fCB7IGVjaG8gIiEhIOayoeaciSBtY29wee+8jHFjb20tZmlybXdhcmUg5YiH5LiN5Ye6IG1iYS5tYm4vbW9kZW0uKiI7IHUwMV9mYWlsPTE7IH0KWyAtZiAiJE5GTUsiIF0gfHwgeyBlY2hvICIhISAkTkZNSyDkuI3lnKjmoJHph4zvvIjplIHlrpogaGFzaCDlj5jkuobvvJ/ot6/lvoTmib7kuI3liLDvvIkiOyB1MDFfZmFpbD0xOyB9CmdyZXAgLXEgJ15kZWZpbmUgS2VybmVsUGFja2FnZS9pcHRhYmxlcyQnICRORk1LIDI+L2Rldi9udWxsIFwKCSYmIHsgZWNobyAiISEgbmV0ZmlsdGVyIOWQiOS4gOihpeS4geayoeeUn+aViO+8jGttb2QtaXB0YWJsZXMg6L+Y5Zyo5ZKMIGttb2QtbmYtaXB0IOaKoiBpcF90YWJsZXMua28iOyB1MDFfZmFpbD0xOyB9ClsgLWYgIiRLUEQvOTAwLXBtODkxNi1jaGFyZ2VyLXR5cGUtY2hlY2sucGF0Y2giIF0gXAoJfHwgeyBlY2hvICIhISAkS1BELzkwMC1wbTg5MTYtY2hhcmdlci10eXBlLWNoZWNrLnBhdGNoIOS4jeWcqOS9je+8jGxiYy9ibXMtdm0g5LuN5LyaIHdyb25nIHR5cGUiOyB1MDFfZmFpbD0xOyB9CmlmIFsgIiR1MDFfZmFpbCIgIT0gMCBdOyB0aGVuCgllY2hvICI9PSBVMDEg5rOo5YWl6Ieq5qOA5aSx6LSl77yM57uI5q2i57yW6K+RID09IgoJbHMgLWwgIiRPVkwvZXRjLyIgMj4mMSB8IHNlZCAncy9eLyAgIC8nCglleGl0IDEKZmkKZWNobyAiPT0gVTAxIOazqOWFpeiHquajgOmAmui/h++8mkJNUy1WTSArIExCQyDlhYXnlLUgKyBiYXQ6MS4uNCArIOimhuebluWxgueUqOaIt+S7tum9kOWFqCArIGxpYmZmaS9tY29weSDlsLHkvY0gKyBuZXRmaWx0ZXIg5bey5ZCI5LiAID09IgoKIyAtLS0tIDcpIOS+nei1lue8uuWPo+S9k+ajgO+8iOWPquaKpe+8jOS4jeaLpu+8iS0tLS0KIyBwcmVwYXJlLXRtcGluZm8g5omr5YWo6YOoIE1ha2VmaWxlIOaXtuS8muaKiiLmn5DljIXkvp3otZbkuIDkuKrmlbTmo7XmoJHpg73kuI3lrZjlnKjnmoTljIXlkI0i5omT5oiQCiMgICBXQVJOSU5HOiBNYWtlZmlsZSAncGFja2FnZS9mZWVkcy9wYWNrYWdlcy9nbGliMi9NYWtlZmlsZScgaGFzIGEgZGVwZW5kZW5jeSBvbiAnbGliZmZpJywgd2hpY2ggZG9lcyBub3QgZXhpc3QKIyDkuIrmrKHov5nooYzlnKjnvJbor5HlvIDlpLTlsLHljbDlh7rmnaXkuobvvIjml6Xlv5cgTDI077yJ77yM5Y206KaB562J5YiwIDk1IOWIhumSn+WQjueahOaJk+WMhemYtuauteaJjeWPmOaIkOecn+mUmeivr+OAggojIOi/memHjOaKiuWug+aPkOWJjeaJk+WHuuadpeW9k+e6v+e0ouOAguazqOaEj+S4jeiDveaLv+adpeW9k+mXqOanm++8mmJ1c3lib3jihpJsaWJwYW0vbGlidGlycGPjgIFweXRob24z4oaSbGliZmZpCiMg6YO95piv5p2h5Lu25L6d6LWW77yI5rKh55yf6YCJ5LiK6YKj5p2h5omp5bGV5bCx5rC46L+c5LiN56Kw77yJ77yM5oyJ5ZCN5a2X5oum5Lya5oqK5aW956uv56uv55qE5p6E5bu66K+v5p2A44CCCiMg55yf5q2j5Lya5oum5LiL5p2l55qE5piv5LiK6Z2i6YKj5p2h56Gs5qOA5p+l77yIbGliZmZpIOW/hemhu+W3sue7j+WcqOagkemHjO+8iSsgd29ya2Zsb3cg6YeM55qEIuWFs+mUrumTvuWFiOe8liLjgIIKZWNobyAiPT0gVTAx77ya5L6d6LWW57y65Y+j5L2T5qOAID09Igp1MDFfc2Nhbj0vdG1wL3UwMV9zY2FuLmxvZwptYWtlIHByZXBhcmUtdG1waW5mbyA+IiR1MDFfc2NhbiIgMj4mMSB8fCBtYWtlIHByZXJlcSA+PiIkdTAxX3NjYW4iIDI+JjEgfHwgdHJ1ZQppZiBncmVwIC1xICJ3aGljaCBkb2VzIG5vdCBleGlzdCIgIiR1MDFfc2NhbiIgMj4vZGV2L251bGw7IHRoZW4KCWVjaG8gIiAgIO+8iOS4i+mdoui/meS6m+aYr1wi5qCR6YeM5rKh5pyJ6L+Z5Liq5YyF5ZCNXCLvvIzooqvpgInkuK3nmoTljIXmoIfkuoYgU1RBUu+8jOWPquW9k+e6v+e0ou+8iSIKCXUwMV9yZT0iTWFrZWZpbGUgJyhbXiddKyknIGhhcyBhIChidWlsZCApP2RlcGVuZGVuY3kgb24gJyhbXiddKyknLCB3aGljaCBkb2VzIG5vdCBleGlzdCIKCXdoaWxlIElGUz0gcmVhZCAtciBsaW5lOyBkbwoJCVtbICIkbGluZSIgPX4gJHUwMV9yZSBdXSB8fCBjb250aW51ZQoJCXNyYz0iJHtCQVNIX1JFTUFUQ0hbMV19IjsgZGVwPSIke0JBU0hfUkVNQVRDSFszXX0iCgkJcGtnPSIke3NyYyUvKn0iOyBwa2c9IiR7cGtnIyMqL30iCgkJaWYgZ3JlcCAtcUUgIl5DT05GSUdfKFBBQ0tBR0V8REVGQVVMVClfJHtwa2d9PXkiIC5jb25maWcgMj4vZGV2L251bGw7IHRoZW4KCQkJZWNobyAiICDimIUgJHBrZyDpnIDopoEgJGRlcO+8iCRwa2cg5bey6KKr6YCJ5Lit77yM5p2h5Lu25L6d6LWW5Lmf5Lya6L+Z5qC35pi+56S677yM5Yir55u05o6l5b2T5pWF6Zqc77yJIgoJCWZpCglkb25lIDwgIiR1MDFfc2NhbiIKZWxzZQoJZWNobyAiICAg5rKh5pyJ5omr5Ye65L6d6LWW57y65Y+jIgpmaQo=
+#!/bin/bash
+# DIY脚本
+# https://github.com/P3TERX/Actions-OpenWrt
+# 文件名: diy-part2.sh
+# 功能说明: OpenWrt DIY脚本第2部分（更新feeds之后）
+# 版权: (c) 2019-2024 P3TERX <https://p3terx.com>
+# 基于 MIT 开源协议，详见 /LICENSE
+
+# 修改默认IP地址
+#sed -i 's/192.168.1.1/192.168.100.1/g' package/base-files/files/bin/config_generate
+
+
+# 修改默认主题为 argon（路径不存在时跳过，不中断编译）
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile 2>/dev/null || true
+
+# 启用 IPv4 策略路由（直接写入内核 platform config，绕过 make defconfig 的依赖检查）
+# CONFIG_KERNEL_IP_ADVANCED_ROUTER 在 OpenWrt Config.in 中无对应 wrapper，必须用此方式
+#for cfg in target/linux/msm89xx/config-*; do
+#  grep -q 'CONFIG_IP_ADVANCED_ROUTER' "$cfg" || echo 'CONFIG_IP_ADVANCED_ROUTER=y' >> "$cfg"
+#  grep -q 'CONFIG_IP_MULTIPLE_TABLES' "$cfg" || echo 'CONFIG_IP_MULTIPLE_TABLES=y' >> "$cfg"
+#done
+
+
+# 临时添加的插件
+# git clone https://github.com/lkiuyu/luci-app-cpu-perf package/luci-app-cpu-perf
+# git clone https://github.com/lkiuyu/luci-app-cpu-status package/luci-app-cpu-status
+# git clone https://github.com/gSpotx2f/luci-app-cpu-status-mini package/luci-app-cpu-status-mini
+# git clone https://github.com/lkiuyu/luci-app-temp-status package/luci-app-temp-status
+# git clone https://github.com/lkiuyu/DbusSmsForwardCPlus package/DbusSmsForwardCPlus
+
+# ============================================================
+# U01 电池机适配（改包：lkiuyu/immortalwrt 的 msm89xx target，profile=wf2）
+#
+# 1) 电量来源：打开 PM8916 BMS-VM（电压式电量计，drivers/power/supply/pm8916_bms_vm.c）
+#    - 上游 pm8916.dtsi 的 pm8916_charger / pm8916_bms 都写死 status="disabled"，
+#      且 config-6.18 里两个驱动符号根本没出现 => 现在 /sys/class/power_supply 是空的。
+#    - 充电必须一起开：实测 CHG_CTRL=0x90（bit7 CHG_EN 已经是 1）、USBIN_VALID=1、
+#      电池在位、温度 OK，但 IBAT_MAX 停在 PMIC 上电默认 0x00 = 90 mA，
+#      插 500 mA 口时系统负载全吃掉 ⇒ 净放电（VSYS 13 分钟 3892→3831 mV）。
+#      这个内核没有任何代码去抬它（config-6.18 里连 CHARGER_PM8916_LBC 都没出现），
+#      而用户态三条写通道全被配置封死（regmap debugfs 的 registers/access 都是 0400、
+#      # CONFIG_DEVMEM is not set、spmi 平台设备没有 resource0）⇒ 只能重编内核打开 lbc。
+#    - lbc 的 probe 要抢 usb_vbus 这条 SPMI 中断线（0x13），本机现在由
+#      pm8916_usbin (usb-detect@1300) 占着，所以开充电必须同时把它 disable，
+#      否则后注册的那个 -EBUSY，充电和电量一起没。
+#    - ⚠️ 代价（实测到）：现刷 rootfs 的 /etc/hotplug-gcreboot.json 盯的就是
+#      usb-detect 那个 extcon0 的 "USB=0"（拔线）事件，条件成立就 /etc/init.d/gc restart；
+#      这台 gc.config.mode=gadget、UDC role=gadget、S90gc 自启 ⇒ 这钩子是活的。
+#      关掉 usbin 后 extcon0 消失，钩子不再触发。USB 在/不在这件事本身改由
+#      pm8916-lbc 的 extcon 报（同一个 EXTCON_USB），但 DEVPATH/NAME 变了，
+#      所以刷好后要按 /sys/class/extcon/*/{name,state} 实测把那份 json 改指过去。
+#    - BMS-VM 的 probe 会调 power_supply_get_battery_info()，它在节点上找
+#      "monitored-battery" -> compatible="simple-battery"，找不到就 -ENODEV 直接退出，
+#      所以必须连电池描述节点一起补，否则驱动根本不绑、白开。
+#    - 这个驱动只导出 voltage_now / voltage_ocv / status / health，没有 capacity，
+#      所以电量是"电压查表"来的，不是库仑计（插着 USB 时 VBAT 顶在充电压，会显示满格）。
+#
+# 2) DTS：RGB 灯换成 U01 实脚位（72/71/73，和现在刷进去的 boot_u01.img 一致），
+#    再补 4 格电量灯 bat:1..bat:4（脚 0/91/1/100 = 原厂 DTB 的 bat1/batl2/batl3/batl4），
+#    并把这 4 个脚加进 &gpio_leds_default 的 pins，否则 pinctrl 不切功能。
+#
+# 3) 用户态文件走仓库顶层 files/ 覆盖层（不走 package/base-files/files）：
+#    上游 include/image.mk 里有 `$(call prepare_rootfs,$(mkfs_cur_target_dir),$(TOPDIR)/files)`
+#    ⇒ TOPDIR(files) 才是镜像吃的目录。workflow 先用 `cp -r files openwrt/files` 把它建出来（生效），
+#    随后 `mv files openwrt/files` 把仓库根那份搬空、在 openwrt/files/files/ 留一坨重复垃圾
+#    （本脚本会顺手删掉）。⇒ 想改 /etc 就往仓库 files/ 里放，但**自检要按 openwrt/files 验**。
+#
+# 4) DTS 是哪一份：target/linux/msm89xx/image/msm8916.mk 里 openstick-wf2 写死
+#    DEVICE_DTS := msm8916-xinxun-wf2 + DEVICE_DTS_DIR := ../dts，
+#    Device/Default 是 KERNEL = kernel-bin | gzip | append-dtb，boot.img = append-kernel|aboot-img
+#    => 追加到 dts/msm8916-xinxun-wf2.dts 末尾的东西就是刷进去的 DTB（dts/Makefile 那份
+#    内核 dtb-y 清单没有 wf2，别被它误导，编译由 OpenWrt 的 Device 规则做）。
+#
+# 依赖已核对：config-6.18 里 MFD_SPMI_PMIC=y、POWER_SUPPLY=y、EXTCON=y、IIO=y；
+#             子目标 msm8916 只有 target.mk（没有自己的 config-6.18）=> 改 target 级那份就够。
+# ============================================================
+U01_MARK="U01 (battery stick) overrides"
+
+# 内核配置片段的名字必须跟着上游走，不能写死：
+#   lkiuyu/immortalwrt 上游锁 7fe583d9 => KERNEL_PATCHVER:=6.12，那棵树里【没有】config-6.18；
+#   master HEAD 05d3cf2a             => KERNEL_PATCHVER:=6.18，有 config-6.18 + patches-6.18。
+#   写死 config-6.18 的后果：用锁定 hash 编时这文件不存在，echo >> 会凭空造一个没人读的片段，
+#   自检还照样"通过"，等于白等一个半小时。所以先解析、再要求它已存在，缺就直接停。
+KV=$(sed -n 's/^KERNEL_PATCHVER:=[[:space:]]*\([0-9.][0-9.]*\).*/\1/p' target/linux/msm89xx/Makefile | head -1)
+CFG=target/linux/msm89xx/config-$KV
+DTS=target/linux/msm89xx/dts/msm8916-xinxun-wf2.dts
+for f in "$CFG" "$DTS"; do
+	[ -f "$f" ] || { echo "!! KERNEL_PATCHVER=$KV，但 $f 不存在（同目录有：$(ls target/linux/msm89xx/config-* 2>/dev/null | tr '\n' ' ')）"; exit 1; }
+done
+echo "== U01：KERNEL_PATCHVER=$KV，内核片段 = $CFG =="
+
+for sym in CONFIG_BATTERY_PM8916_BMS_VM CONFIG_CHARGER_PM8916_LBC; do
+	grep -q "^${sym}=y" $CFG || echo "${sym}=y" >> $CFG
+done
+# 注意：这两个是内核内建符号，不是 CONFIG_PACKAGE_*，往 OpenWrt 的 .config 里追加没有意义
+#（它们没有 config/Config-kernel.in 里的 CONFIG_KERNEL_* 包装），片段文件才是唯一入口。
+
+if ! grep -q "$U01_MARK" $DTS; then
+cat >> $DTS <<'DTSEOF'
+
+/* ---- U01 (battery stick) overrides, injected by diy-part2.sh ---- */
+/* production pins: 4g_type=72 -> red/power, 4g_1=71 -> green/wan, wifistatus=73 -> blue/wlan */
+&led_r { gpios = <&tlmm 72 GPIO_ACTIVE_HIGH>; };
+&led_g { gpios = <&tlmm 71 GPIO_ACTIVE_HIGH>; };
+&led_b { gpios = <&tlmm 73 GPIO_ACTIVE_HIGH>; };
+
+/* battery bars: bat1=0, batl3=1, batl2=91, batl4=100 (all four idle in the stock build) */
+&leds {
+	bat1 { label = "bat:1"; gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;   default-state = "off"; };
+	bat2 { label = "bat:2"; gpios = <&tlmm 91 GPIO_ACTIVE_HIGH>;  default-state = "off"; };
+	bat3 { label = "bat:3"; gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;   default-state = "off"; };
+	bat4 { label = "bat:4"; gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>; default-state = "off"; };
+};
+
+&gpio_leds_default {
+	pins = "gpio0", "gpio1", "gpio12", "gpio22", "gpio31", "gpio38",
+	       "gpio71", "gpio72", "gpio73", "gpio91", "gpio97", "gpio98", "gpio100", "gpio108";
+};
+
+/ {
+	u01_bat: battery {
+		compatible = "simple-battery";
+		technology = "li-ion";
+		voltage-min-design-microvolt = <3400000>;
+		voltage-max-design-microvolt = <4200000>;
+	};
+};
+
+&pm8916_bms {
+	status = "okay";
+	monitored-battery = <&u01_bat>;
+};
+DTSEOF
+fi
+
+# 充电单独一段：老 fork 已经注入过上面那块（LED/电量灯），只缺这个，重跑也得补上
+if ! grep -q '&pm8916_charger' $DTS; then
+cat >> $DTS <<'CHGEOF'
+
+/* IBAT_MAX sits at the PMIC power-on default (90 mA) until charger code raises it.
+ * usb_vbus is one SPMI line: pm8916_usbin holds it today, so the charger must take it. */
+&pm8916_charger {
+	status = "okay";
+	qcom,fast-charge-safe-voltage = <4200000>;
+	qcom,fast-charge-safe-current = <700000>;
+	monitored-battery = <&u01_bat>;
+};
+
+&pm8916_usbin {
+	status = "disabled";
+};
+CHGEOF
+fi
+
+# 用户态（u01simd/netled/ledidle/batled/chg_regs + 四个 init.d + /etc/u01sim.conf
+# + etc/uci-defaults/99-u01-lamps）不由本脚本 cp 安装，走仓库顶层 files/ 覆盖层。
+# 覆盖层确实生效：上游 include/image.mk 里有 $(call prepare_rootfs,$(mkfs_cur_target_dir),$(TOPDIR)/files)。
+#
+# ⚠️ 但"仓库根那份 files/"在本步执行时已经不存在了 —— workflow 顺序是
+#      step " files"                 : cp -r files openwrt/files        （建目录，这份才算数）
+#      step "Load custom configuration": [ -e files ] && mv files openwrt/files
+#    第二次是往已存在目录里挪 ⇒ 变成 openwrt/files/files/ 的重复垃圾，仓库根 files/ 被搬空。
+#    11-16 那次编译就是在这里自检失败退出的（当时十项全去找仓库根 ⇒ 全空 ⇒ exit 1）。
+#    所以要验就验 $(TOPDIR)/files（本步 CWD 就是 openwrt 根），它才是镜像真正吃的那一份。
+OVL=files
+if [ ! -s "$OVL/usr/libexec/batled.py" ]; then
+	for c in "$GITHUB_WORKSPACE/files" "$(dirname -- "$0")/files"; do
+		[ -s "$c/usr/libexec/batled.py" ] && { OVL="$c"; break; }
+	done
+fi
+[ -s "$OVL/usr/libexec/batled.py" ] || OVL=""
+echo "== U01：覆盖层落点 = ${OVL:-没找到（下面会报缺）} =="
+# 清掉 mv 造出来的重复副本，否则它以 /files/ 白占镜像约 100KB
+if [ -n "$OVL" ] && [ -s "$OVL/files/usr/libexec/batled.py" ]; then
+	rm -rf "$OVL/files" && echo "== U01：已清掉 mv 造成的重复副本 $OVL/files/ =="
+fi
+# 这里刻意不再往 rc.local 塞 batled.sh：四格灯只留 init.d/batled 一个主人，
+# 两份同时跑会抢同一组 bat:1..4，谁最后写谁说了算，格数会乱跳。
+
+# ---- 5) 补 fork 缺的 libffi（run #2 就是死在这上面，编到 95 分钟才露出来）----
+# 官方 immortalwrt 有 package/libs/libffi，lkiuyu 那份 fork 没有（package/libs 里数得出来）；
+# 而 packages 源里的 glib2 2.88.1 已经把 gobject/gio 子包写成 DEPENDS += +libffi，
+# ModemManager 又必须 glib2 ⇒ 树里没有 libffi，glib2 的 ipk 就打包不出来：
+#   Package glib2-gobject is missing dependencies for the following libraries: libffi.so.8
+#   ERROR: package/feeds/packages/glib2 failed to build.
+# 仓库里带一份和官方同版的（immortalwrt@a4ba8240，libffi 3.8.0 + 官方 22 个 patch），缺才补，不覆盖。
+REPO_DIR="$(cd -- "$(dirname -- "$0")" 2>/dev/null && pwd)"
+if [ -e package/libs/libffi/Makefile ]; then
+	echo "== U01：树里已经有 package/libs/libffi（fork 同步过了），不覆盖 =="
+elif [ -e "$REPO_DIR/u01_local/package/libs/libffi/Makefile" ]; then
+	mkdir -p package/libs
+	cp -a "$REPO_DIR/u01_local/package/libs/libffi" package/libs/
+	echo "== U01：已补 package/libs/libffi（glib2 → ModemManager 的硬依赖）=="
+else
+	echo "!! 仓库里没带 u01_local/package/libs/libffi，libffi 补不上（下面自检会停）"
+fi
+grep -q '^CONFIG_PACKAGE_libffi=y' .config 2>/dev/null || echo 'CONFIG_PACKAGE_libffi=y' >> .config
+
+# ---- 6) 补 mcopy：调制解调器固件包靠它切出来 ----
+# feeds/openstick/firmware/qcom-firmware 的 Build/Compile 是 mcopy（mtools）从
+# openstick-wf2-modem.bin 里取 ::image/mba.mbn ::image/modem.* ::image/wcnss.*，
+# 而 workflow 装的那个依赖清单（xuxin1955/depend_ubuntu2204_openwrt，93 项）里没有 mtools。
+# 缺它 ⇒  modem 固件包报错 ⇒ 又白等一次。这里现装，装不上就直接停。
+if ! command -v mcopy >/dev/null 2>&1; then
+	echo "== U01：runner 上没有 mcopy，尝试补装 mtools =="
+	sudo -E apt-get -y install mtools >/tmp/u01_mtools.log 2>&1 || tail -5 /tmp/u01_mtools.log
+	command -v mcopy >/dev/null 2>&1 && echo "== U01：mcopy 已就位 $(command -v mcopy) =="
+fi
+
+# ---- 7) 合掉 netfilter 那对抢同一个 .ko 的包（run #4 死因）----
+# 锁定树 package/kernel/linux/modules/netfilter.mk 里同时有：
+#   KernelPackage/iptables  HIDDEN, DEPENDS:=@!LINUX_6_12,
+#                           FILES = net/ipv4/netfilter/ip_tables.ko + net/netfilter/x_tables.ko
+#   KernelPackage/nf-ipt    DEPENDS:=+!LINUX_6_12:kmod-iptables,
+#                           FILES = $(NF_IPT-m) = 上面同两个 .ko（include/netfilter.mk:32-33）
+# 内核是 6.18（不是 6.12）⇒ 两个包都进 rootfs ⇒ opkg 在 package/install 判数据文件冲突：
+#   check_data_file_clashes: Package kmod-nf-ipt wants to install file .../ip_tables.ko
+#   Cannot install package kmod-nf-ipt / kmod-nf-ipt6 / kmod-ipt-core / kmod-nft-compat
+#   package/Makefile:100: package/install Error 255     ← 96 分钟才走到这一步
+# 上游 master 已经没有 KernelPackage/iptables，改把三个 *_LEGACY 的 KCONFIG 直接挂进
+# nf-ipt / nf-ipt6 / ebtables（.ko 归 nf-ipt 一家打）。这里照 master 的做法合一，
+# 补丁用 t_dep/mk_nfpatch.py 从锁定 hash 的真实文件生成，本地 patch -p1 往返验过。
+NFMK=package/kernel/linux/modules/netfilter.mk
+NFPATCH="$REPO_DIR/u01_local/patches/netfilter-ipt-clash.patch"
+if ! grep -q '^define KernelPackage/iptables$' $NFMK 2>/dev/null; then
+	echo "== U01：netfilter 已经是不重复打包的那版（fork 同步过了），跳过 =="
+elif [ ! -f "$NFPATCH" ]; then
+	echo "!! 仓库里没带 u01_local/patches/netfilter-ipt-clash.patch，合一补丁打不上"
+elif ! command -v patch >/dev/null 2>&1; then
+	echo "!! runner 上没有 patch(1)"
+else
+	if patch -p1 -N --dry-run < "$NFPATCH" >/tmp/u01_nf.log 2>&1 &&
+	   patch -p1 -N < "$NFPATCH" >>/tmp/u01_nf.log 2>&1; then
+		echo "== U01：已打 netfilter 合一补丁（ip_tables.ko/x_tables.ko 只留 kmod-nf-ipt 一个户主）=="
+	else
+		echo "!! netfilter 补丁试打/正打失败，树和锁定 hash 对不上号，尾部："
+		tail -20 /tmp/u01_nf.log
+	fi
+	# 谁还引用被删掉的包名，第 1 分钟就说出来，别等 96 分钟后 opkg 报"依赖满足不了"
+	u01_ref=$(grep -rl --include=Makefile --include='*.mk' 'kmod-iptables' package feeds 2>/dev/null | head -10 || true)
+	[ -n "$u01_ref" ] && echo "::warning::打完补丁仍有文件引用 kmod-iptables：$(echo $u01_ref | tr '\n' ' ')"
+fi
+
+# ---- 8) 修上游两个驱动的类型判定（本次刷机后 dmesg 实测的失败点）----
+# 刷进去的 6.18.35 跑起来后，lbc 和 bms-vm 都只走到 probe 第一步就 -ENODEV：
+#   pm8916-bms-vm 200f000.spmi:pmic@0:battery@4000: error -ENODEV: Device reported wrong type: 0xFFFF020D
+#   pm8916-lbc    200f000.spmi:pmic@0:charger@1000: error -ENODEV: Device reported wrong type: 0xFFFF1502
+# 低 16 位 PM8916_BMS_VM_TYPE=0x020D / PM8916_LBC_CHGR_TYPE=0x1502 一模一样，高 16 位都是 0xFFFF。
+# 两处都写成：
+#   unsigned int tmp;
+#   regmap_bulk_read(map, reg + PM8916_PERPH_TYPE, &tmp, 2);   // SPMI val_bits=8 ⇒ 只填低 2 字节
+# count=2 只写缓冲区前 2 字节，`unsigned int` 的高半截是没初始化的栈垃圾就直接参与 != 比较
+# ⇒ 判定在任何 PM8916 上都恒假，跟本机硬件好坏无关（同一份文件的 FIFO 读数用的就是 u16 数组）。
+# BMS-VM 的 OCV 也用了同一个写法（last_ocv = tmp * 300），会把垃圾高位乘进电压里，一并换 u16。
+# 补丁基线 = gregkh/linux@v6.18.35 的两个文件原文，本地 patch -p1 往返验过才提交。
+# 目录名跟着 KERNEL_PATCHVER 走（别写死 patches-6.18）；内核片段会在 prepare 阶段按文件名排序打上。
+KPD=target/linux/msm89xx/patches-$KV
+KPPATCH_SRC="$REPO_DIR/u01_local/patches/pm8916-charger-type-check.patch"
+mkdir -p $KPD
+if [ -f "$KPD/900-pm8916-charger-type-check.patch" ]; then
+	echo "== U01：patches-$KV 里已经有 900-pm8916-charger-type-check.patch（fork 同步过？），不覆盖 =="
+elif [ -f "$KPPATCH_SRC" ]; then
+	cp "$KPPATCH_SRC" "$KPD/900-pm8916-charger-type-check.patch"
+	echo "== U01：已把类型判定补丁放进 $KPD/900-pm8916-charger-type-check.patch =="
+else
+	echo "!! 仓库里没带 u01_local/patches/pm8916-charger-type-check.patch，lbc/bms-vm 还是会 -ENODEV"
+fi
+
+# 注入自检：哪一项没落上就直接终止，别花一个半小时编一版跟上一版一样的固件
+u01_fail=0
+grep -q '^CONFIG_BATTERY_PM8916_BMS_VM=y' $CFG                       || { echo "!! BMS-VM 没进 $CFG"; u01_fail=1; }
+grep -q '^CONFIG_CHARGER_PM8916_LBC=y' $CFG                           || { echo "!! CHARGER_PM8916_LBC 没进 $CFG"; u01_fail=1; }
+grep -q "DEVICE_DTS := msm8916-xinxun-wf2" target/linux/msm89xx/image/msm8916.mk || echo "!! 警告：上游 device 规则没登记 wf2 的 DTS，$DTS 可能不参与编译"
+grep -q "$U01_MARK" $DTS                                             || { echo "!! DTS 没打进 wf2"; u01_fail=1; }
+grep -q '&pm8916_charger' $DTS                                       || { echo "!! 充电块没进 $DTS"; u01_fail=1; }
+grep -q '&pm8916_usbin' $DTS                                         || { echo "!! 没把 pm8916_usbin 关掉，usb_vbus 中断线会撞车(-EBUSY)"; u01_fail=1; }
+grep -q 'u01_bat:' $DTS                                              || { echo "!! $DTS 里没有 u01_bat，充电器引用的 battery 节点不存在"; u01_fail=1; }
+# 用户件走 files/ 覆盖层，这里验的是"镜像会吃到的那一份"里齐全
+# （首启由 etc/uci-defaults/99-u01-* 补 chmod + enable，git 带过来的权限位不可靠）
+for f in usr/libexec/u01simd.py usr/libexec/netled.py usr/libexec/ledidle.py \
+         usr/libexec/batled.py usr/libexec/chg_regs.py usr/libexec/u01band.py \
+         etc/init.d/u01sim etc/init.d/netled etc/init.d/ledidle \
+         etc/init.d/batled etc/init.d/u01band \
+         etc/u01band.conf \
+         etc/uci-defaults/99-u01-lamps etc/uci-defaults/99-u01-rndis \
+         etc/uci-defaults/99-u01-ssh etc/dropbear/authorized_keys; do
+	[ -n "$OVL" ] && [ -s "$OVL/$f" ] || { echo "!! 覆盖层缺文件 $f (OVL=${OVL:-无})"; u01_fail=1; }
+done
+# 基带固件：qcom-firmware 那个包切出来的是 WF2 的 mba.mbn/modem.*，这颗 U01 的 MPSS
+# 认不了它（dmesg: MPSS authentication failed: -19，基带整个起不来、无 wwan0）。
+# 覆盖层必须带本机自己的原厂固件盖住它，判据用 mba.mbn/modem.mdt 的 md5。
+FWMD5_70=70ed2caf230b570da59b97e9ed36a582	# mba.mbn
+FWMD5_AB=ab584c412654613237df7b98f107cb1e	# modem.mdt
+for pair in "mba.mbn $FWMD5_70" "modem.mdt $FWMD5_AB"; do
+	set -- $pair
+	f="$OVL/lib/firmware/$1"; want="$2"
+	if [ ! -s "$f" ]; then
+		echo "!! 覆盖层缺 lib/firmware/$1（不盖住 WF2 的话刷完基带就死）"; u01_fail=1
+	else
+		got=$(md5sum "$f" | cut -d" " -f1)
+		[ "$got" = "$want" ] || { echo "!! 覆盖层 lib/firmware/$1 md5=$got 应为 $want"; u01_fail=1; }
+	fi
+done
+nfw=$(ls "$OVL/lib/firmware" 2>/dev/null | grep -c -E '^(mba\.mbn|modem\.(b[0-9]+|mdt))$')
+[ "$nfw" = 22 ] || { echo "!! 覆盖层 lib/firmware 只有 $nfw 个 mba/modem 文件，应为 22（少一个 PIL 就认证不过）"; u01_fail=1; }
+grep -q '^CONFIG_PACKAGE_python3=y' .config 2>/dev/null \
+	|| echo "!! 警告：.config 里 python3 没开，用户态服务全都起不来（应改 config/wf2.config）"
+[ -e package/libs/libffi/Makefile ] || { echo "!! package/libs/libffi 不在树里，glib2 打不出 ipk"; u01_fail=1; }
+command -v mcopy >/dev/null 2>&1    || { echo "!! 没有 mcopy，qcom-firmware 切不出 mba.mbn/modem.*"; u01_fail=1; }
+[ -f "$NFMK" ] || { echo "!! $NFMK 不在树里（锁定 hash 变了？路径找不到）"; u01_fail=1; }
+grep -q '^define KernelPackage/iptables$' $NFMK 2>/dev/null \
+	&& { echo "!! netfilter 合一补丁没生效，kmod-iptables 还在和 kmod-nf-ipt 抢 ip_tables.ko"; u01_fail=1; }
+[ -f "$KPD/900-pm8916-charger-type-check.patch" ] \
+	|| { echo "!! $KPD/900-pm8916-charger-type-check.patch 不在位，lbc/bms-vm 仍会 wrong type"; u01_fail=1; }
+if [ "$u01_fail" != 0 ]; then
+	echo "== U01 注入自检失败，终止编译 =="
+	ls -l "$OVL/etc/" 2>&1 | sed 's/^/   /'
+	exit 1
+fi
+echo "== U01 注入自检通过：BMS-VM + LBC 充电 + bat:1..4 + 覆盖层用户件齐全（含频段锁）+ 本机原厂基带固件 22 件 + libffi/mcopy 就位 + netfilter 已合一 =="
+
+# ---- 7) 依赖缺口体检（只报，不拦）----
+# prepare-tmpinfo 扫全部 Makefile 时会把"某包依赖一个整棵树都不存在的包名"打成
+#   WARNING: Makefile 'package/feeds/packages/glib2/Makefile' has a dependency on 'libffi', which does not exist
+# 上次这行在编译开头就印出来了（日志 L24），却要等到 95 分钟后的打包阶段才变成真错误。
+# 这里把它提前打出来当线索。注意不能拿来当门槛：busybox→libpam/libtirpc、python3→libffi
+# 都是条件依赖（没真选上那条扩展就永远不碰），按名字拦会把好端端的构建误杀。
+# 真正会拦下来的是上面那条硬检查（libffi 必须已经在树里）+ workflow 里的"关键链先编"。
+echo "== U01：依赖缺口体检 =="
+u01_scan=/tmp/u01_scan.log
+make prepare-tmpinfo >"$u01_scan" 2>&1 || make prereq >>"$u01_scan" 2>&1 || true
+if grep -q "which does not exist" "$u01_scan" 2>/dev/null; then
+	echo "   （下面这些是\"树里没有这个包名\"，被选中的包标了 STAR，只当线索）"
+	u01_re="Makefile '([^']+)' has a (build )?dependency on '([^']+)', which does not exist"
+	while IFS= read -r line; do
+		[[ "$line" =~ $u01_re ]] || continue
+		src="${BASH_REMATCH[1]}"; dep="${BASH_REMATCH[3]}"
+		pkg="${src%/*}"; pkg="${pkg##*/}"
+		if grep -qE "^CONFIG_(PACKAGE|DEFAULT)_${pkg}=y" .config 2>/dev/null; then
+			echo "  ★ $pkg 需要 $dep（$pkg 已被选中，条件依赖也会这样显示，别直接当故障）"
+		fi
+	done < "$u01_scan"
+else
+	echo "   没有扫出依赖缺口"
+fi

@@ -1,0 +1,5 @@
+#!/bin/sh
+# 这颗 dropbear 只读 /etc/dropbear/authorized_keys（~/.ssh 里那颗没用），
+# 而且 git 带过来的权限位不可靠，600 要在这里补一次。
+[ -s /etc/dropbear/authorized_keys ] && chmod 600 /etc/dropbear/authorized_keys
+exit 0

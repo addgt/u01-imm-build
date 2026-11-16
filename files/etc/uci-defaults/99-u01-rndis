@@ -1,0 +1,11 @@
+#!/bin/sh
+# 出厂镜像里 gc.config.rndis 默认是 1，U01 直连电脑时这根线会和 pm8916_usbin 的中断撞车，
+# 而我们只用 adb + 设备自己的热点，所以首启时关掉。
+# 只在当前值确实是 1 时才动；其他值（含这个键不存在）一律保持原样。
+[ -f /etc/config/gc ] || exit 0
+if [ x"$(uci -q get gc.config.rndis)" = x"1" ]; then
+	uci set gc.config.rndis='0'
+	uci commit gc
+	echo "== U01：gc.config.rndis 1 -> 0"
+fi
+exit 0
