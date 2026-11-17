@@ -1,0 +1,110 @@
+--- a/drivers/power/supply/pm8916_lbc.c
++++ b/drivers/power/supply/pm8916_lbc.c
+@@ -44,6 +44,26 @@
+ #define PM8916_LBC_CHGR_CHG_EN BIT(7)
+ #define PM8916_LBC_CHGR_PSTG_EN BIT(5)
+ 
++/* Gates that the vendor driver (drivers/power/qpnp-linear-charger.c on CAF trees)
++ * programs on every boot but this driver never touches, so the PMIC power-on
++ * defaults keep the charge path inhibited. Values taken from the stock android
++ * DTB for this SoC: qcom,vinmin-mv = <4470>. */
++#define PM8916_LBC_CHGR_VIN_MIN 0x47
++#define PM8916_LBC_VIN_MIN_BASE_MV 4200
++#define PM8916_LBC_VIN_MIN_STEP_MV 27
++#define PM8916_LBC_VIN_MIN_MAX_MV 5037
++#define PM8916_LBC_VIN_MIN_DEFAULT_MV 4470
++#define PM8916_LBC_CHGR_CHG_FAILED 0x4a
++#define PM8916_LBC_CHG_FAILED_CLR BIT(7)
++#define PM8916_LBC_CHGR_IBATTERM_EN 0x5b
++#define PM8916_LBC_IBAT_TERM_EN_MASK BIT(3)
++#define PM8916_LBC_CHGR_CHG_WDOG_EN 0x65
++#define PM8916_LBC_CHGR_COMP_OVR1 0xee
++#define PM8916_LBC_VBAT_DET_OVR_MASK GENMASK(1, 0)
++#define PM8916_LBC_VBAT_DET_OVR_FORCE_LOW 0x2
++#define PM8916_LBC_CHGR_SEC_ACCESS 0xd0
++#define PM8916_LBC_SEC_ACCESS_KEY 0xa5
++
+ #define PM8916_LBC_CHGR_MIN_CURRENT 90000
+ #define PM8916_LBC_CHGR_MAX_CURRENT 1440000
+ 
+@@ -66,6 +86,7 @@
+ 	unsigned int charge_voltage_safe;
+ 	unsigned int charge_current_max;
+ 	unsigned int charge_current_safe;
++	unsigned int vin_min_mv;
+ };
+ 
+ static const unsigned int pm8916_lbc_charger_cable[] = {
+@@ -113,6 +134,52 @@
+ 	if (ret)
+ 		goto error;
+ 
++	/* Block scope: probe_dt() returns early (caller only logs it) when the DT is
++	 * incomplete, which leaves vin_min_mv at 0 and underflows the subtraction
++	 * below into the highest VIN_MIN step. */
++	{
++		unsigned int mv = chg->vin_min_mv;
++
++		if (mv < PM8916_LBC_VIN_MIN_BASE_MV || mv > PM8916_LBC_VIN_MIN_MAX_MV)
++			mv = PM8916_LBC_VIN_MIN_DEFAULT_MV;
++
++		ret = regmap_write(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_VIN_MIN,
++				   (mv - PM8916_LBC_VIN_MIN_BASE_MV) /
++				   PM8916_LBC_VIN_MIN_STEP_MV);
++		if (ret)
++			goto error;
++	}
++
++	/* A latched CHG_FAILED keeps the path off even after CHG_CTRL is rewritten. */
++	ret = regmap_write(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_CHG_FAILED,
++			   PM8916_LBC_CHG_FAILED_CLR);
++	if (ret)
++		goto error;
++
++	/* No end-of-charge comparator: this driver has no EOC/TAPER handling, and with
++	 * the comparator left on the PMIC stops charging on its own criteria. */
++	ret = regmap_update_bits(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_IBATTERM_EN,
++				 PM8916_LBC_IBAT_TERM_EN_MASK, 0);
++	if (ret)
++		goto error;
++
++	ret = regmap_write(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_CHG_WDOG_EN, 0x00);
++	if (ret)
++		goto error;
++
++	/* Force the VBAT_DET comparator low so a cell already above its threshold
++	 * (3.8 V with a 3.7 V comparator) does not inhibit charging. Secure register. */
++	ret = regmap_write(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_SEC_ACCESS,
++			   PM8916_LBC_SEC_ACCESS_KEY);
++	if (ret)
++		goto error;
++
++	ret = regmap_update_bits(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_COMP_OVR1,
++				 PM8916_LBC_VBAT_DET_OVR_MASK,
++				 PM8916_LBC_VBAT_DET_OVR_FORCE_LOW);
++	if (ret)
++		goto error;
++
+ 	return ret;
+ 
+ error:
+@@ -236,7 +303,18 @@
+ 	if (ret)
+ 		return ret;
+ 
+-	return ret;
++	/* Optional override, same property name the vendor driver reads. */
++	if (device_property_read_u32(dev, "qcom,vinmin-mv", &chg->vin_min_mv))
++		chg->vin_min_mv = PM8916_LBC_VIN_MIN_DEFAULT_MV;
++
++	if (chg->vin_min_mv < PM8916_LBC_VIN_MIN_BASE_MV ||
++	    chg->vin_min_mv > PM8916_LBC_VIN_MIN_MAX_MV) {
++		dev_warn(dev, "qcom,vinmin-mv %u out of range, using %u\n",
++			 chg->vin_min_mv, PM8916_LBC_VIN_MIN_DEFAULT_MV);
++		chg->vin_min_mv = PM8916_LBC_VIN_MIN_DEFAULT_MV;
++	}
++
++	return 0;
+ }
+ 
+ static const struct power_supply_desc pm8916_lbc_charger_psy_desc = {

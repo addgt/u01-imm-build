@@ -103,6 +103,33 @@ done
 # config/wf2.config 里那句 "# CONFIG_KERNEL_DEBUG_FS is not set" 也必须翻成 =y，
 # 否则 include/kernel-build.mk 把 CONFIG_KERNEL_* 去掉前缀喂进内核 .config 时会把它按回 not set。
 
+# ---- 7b) 第 7 跑：内核侧补门 ----
+# 上游 drivers/power/supply/pm8916_lbc.c 只写 VDD_MAX/VDD_SAFE/IBAT_MAX/IBAT_SAFE/
+# TCHG_MAX_EN/CHG_CTRL 这六个寄存器；CAF 原厂 qpnp-linear-charger.c 每次开机还要写
+# VIN_MIN(0x47)、清 CHG_FAILED(0x4A bit7)、关 IBATTERM EOC(0x5B bit3)、
+# 关 CHG_WDOG_EN(0x65)、把 VBAT_DET 比较器 override 成低(0xEE bits1:0=2，
+# 安全寄存器：先往 0xD0 写 0xA5)。这几道门里任何一道关着，CHG_EN=1 也只是
+# "软件以为在充"，电进不了电池——实测 VSYS 一直贴着 VBAT+0.11 V 从不往 4.2 V 抬、
+# 加四核负载时 USBIN 不降(4.865→4.868)而 VBAT 掉 70 mV，正是这个形状。
+# VIN_MIN 用原厂安卓 DTB 里 charger status=okay 那颗（MSM8916 MTP）的 qcom,vinmin-mv=4470；
+# 那棵树还给了 vddmax/vddsafe=4350、ibatsafe=1000mA、tchg=360min、chg-term=90mA、
+# max-voltage=4.35V——我们的 VDD_MAX 仍走 simple-battery 的 4.20V，比原厂更保守，不动。
+# 补丁不是手写：本地 make_lbc_patch.py 以 api.github.com 下的 gregkh/linux v6.18.35
+# 原文为基底做"锚点必须命中一次"的精确替换后 diff 生成，并用 patch --batch -p1 回放自证；
+# 又和已有的 900-pm8916-charger-type-check.patch 按 CI 顺序（文件名排序）串打验过，
+# 两个补丁的 hunk 行段不重叠（它动 256/278-305/358，本补丁动 44/66/113/236）。
+KPGB="$REPO_DIR/u01_local/patches/pm8916-lbc-gates.patch"
+KPD=target/linux/msm89xx/patches-$KV
+mkdir -p $KPD
+if [ -f "$KPD/910-pm8916-lbc-gates.patch" ]; then
+	echo "== U01：patches-$KV 里已经有 910-pm8916-lbc-gates.patch（fork 同步过？），不覆盖 =="
+elif [ -f "$KPGB" ]; then
+	cp "$KPGB" "$KPD/910-pm8916-lbc-gates.patch"
+	echo "== U01：已把补门补丁放进 $KPD/910-pm8916-lbc-gates.patch =="
+else
+	echo "!! 仓库里没带 u01_local/patches/pm8916-lbc-gates.patch，四道门仍靠 PMIC 上电默认值"
+fi
+
 if ! grep -q "$U01_MARK" $DTS; then
 cat >> $DTS <<'DTSEOF'
 
@@ -293,6 +320,8 @@ fi
 # 注入自检：哪一项没落上就直接终止，别花一个半小时编一版跟上一版一样的固件
 u01_fail=0
 grep -q '^CONFIG_BATTERY_PM8916_BMS_VM=y' $CFG                       || { echo "!! BMS-VM 没进 $CFG"; u01_fail=1; }
+[ -f "$KPD/910-pm8916-lbc-gates.patch" ]                             || { echo "!! $KPD/910-pm8916-lbc-gates.patch 不在位，VIN_MIN/CHG_FAILED/IBATTERM/WDOG/VBAT_DET 没人配"; u01_fail=1; }
+grep -q "PM8916_LBC_CHGR_VIN_MIN" "$KPD/910-pm8916-lbc-gates.patch"  || { echo "!! 补门补丁里没有 VIN_MIN 那笔写，八成复制错了文件"; u01_fail=1; }
 grep -q '^CONFIG_CHARGER_PM8916_LBC=y' $CFG                           || { echo "!! CHARGER_PM8916_LBC 没进 $CFG"; u01_fail=1; }
 grep -q '^CONFIG_DEBUG_FS=y' $CFG                                     || { echo "!! DEBUG_FS 没进 $CFG，刷完还是读不到 PMIC 寄存器"; u01_fail=1; }
 grep -q "DEVICE_DTS := msm8916-xinxun-wf2" target/linux/msm89xx/image/msm8916.mk || echo "!! 警告：上游 device 规则没登记 wf2 的 DTS，$DTS 可能不参与编译"
