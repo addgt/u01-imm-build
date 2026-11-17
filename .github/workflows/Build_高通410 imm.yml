@@ -257,11 +257,15 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
 
     - name: 查看 openwrt 目录
-      run: ls -la openwrt/
-      
-           ls -l .config
-      
-           ls -la openwrt/.config
+      run: |
+        # 作者原来写的是裸 `ls -l .config`，而 job 的 working-directory=/mnt，
+        # .config 实际在 openwrt/ 下（Load custom configuration 把它 mv 过去了），
+        # 所以这一句必然 exit 2 —— 第 4 跑就是死在这儿，make 压根没开始。
+        # 这一段只是打日志，全部加 || true，不许再把编译带走。
+        ls -la openwrt/ | tail -30 || true
+        ls -la openwrt/.config || true
+        echo "   .config 里的包行 $(grep -c '^CONFIG_PACKAGE_' openwrt/.config || true) 条"
+        grep -E '^CONFIG_(TARGET_ROOTFS_PARTSIZE|TARGET_IMAGES|MODULES)$' openwrt/.config || true
 
  
     - name: 自动上传最新源码生成.config编译配置
@@ -433,15 +437,29 @@ jobs:
           ls -la
           exit 1
         fi
-        cp "$BOOT_IMG" flash_package/boot.img.gz
-        cp "$SYSTEM_IMG" flash_package/system.img.gz
-        # 解压供刷机脚本使用
-        gzip -dk flash_package/boot.img.gz
-        gzip -dk flash_package/system.img.gz
-        rm flash_package/boot.img.gz flash_package/system.img.gz
-        cp -r $GITHUB_WORKSPACE/刷机脚本/. flash_package/
-        # 确保 bat 文件是 CRLF 换行（Windows 兼容）
-        unix2dos flash_package/*.bat 2>/dev/null || sed -i 's/\r//' flash_package/*.bat && sed -i 's/$/\r/' flash_package/*.bat
+        # 上一版把镜像先改名成 *.gz 再无条件 gzip -dk —— 万一 target 输出的是裸镜像
+        # （不是 gzip）这句直接 exit 1，又是死在最后一步。改成先验 gzip 魔数，两种都能落盘。
+        place() {  # $1=源文件 $2=刷机包里的名字
+          if gzip -t "$1" 2>/dev/null; then
+            echo "   $1 确是 gzip，解成 $2"; gzip -dkc "$1" > "flash_package/$2"
+          else
+            echo "   $1 不是 gzip，直接拷成 $2"; cp "$1" "flash_package/$2"
+          fi
+        }
+        place "$BOOT_IMG"   boot.img
+        place "$SYSTEM_IMG" rootfs.img
+        # 上一版这里直接 cp $GITHUB_WORKSPACE/刷机脚本/. —— 仓库里【根本没有这个目录】，
+        # cp 失败在 bash -e 下就是 exit 1，等于编译满 90 分钟后死在最后一步打包，
+        # 一个产物都拿不到。所以：目录不存在就跳过，绝不拦路。
+        if [ -d "$GITHUB_WORKSPACE/刷机脚本" ]; then
+          cp -r "$GITHUB_WORKSPACE/刷机脚本/." flash_package/
+        else
+          echo "::warning::仓库里没有 刷机脚本/ 目录，刷机包只含镜像"
+        fi
+        # 确保 bat 文件是 CRLF 换行（Windows 兼容）；没有 .bat 时这句原来会把整步打死
+        if ls flash_package/*.bat >/dev/null 2>&1; then
+          unix2dos flash_package/*.bat 2>/dev/null || { sed -i 's/\r//' flash_package/*.bat && sed -i 's/$/\r/' flash_package/*.bat; }
+        fi
         ZIP_NAME="OpenWrt_${PROFILE}${{ env.FILE_DATE }}_刷机包.zip"
         cd flash_package && zip -r "../$ZIP_NAME" . && cd ..
 
