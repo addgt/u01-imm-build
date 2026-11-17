@@ -1,0 +1,39 @@
+[
+	[
+		"case",
+		"ACTION",
+		{
+			"change": [
+				[
+					"if",
+					[
+						"and",
+						[
+							"has",
+							"SUBSYSTEM"
+						],
+						[
+							"eq",
+							"SUBSYSTEM",
+							"extcon"
+						],
+						[
+							"has",
+							"STATE"
+						],
+						[
+							"regex",
+							"STATE",
+							"^USB=0"
+						]
+					],
+					[
+						"exec",
+						"/sbin/hotplug-call",
+						"gcrestart"
+					]
+				]
+			]
+		}
+	]
+]                                                                                                                                 

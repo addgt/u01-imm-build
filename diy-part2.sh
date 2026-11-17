@@ -89,11 +89,19 @@ for f in "$CFG" "$DTS"; do
 done
 echo "== U01：KERNEL_PATCHVER=$KV，内核片段 = $CFG =="
 
-for sym in CONFIG_BATTERY_PM8916_BMS_VM CONFIG_CHARGER_PM8916_LBC; do
+for sym in CONFIG_BATTERY_PM8916_BMS_VM CONFIG_CHARGER_PM8916_LBC CONFIG_DEBUG_FS; do
 	grep -q "^${sym}=y" $CFG || echo "${sym}=y" >> $CFG
 done
-# 注意：这两个是内核内建符号，不是 CONFIG_PACKAGE_*，往 OpenWrt 的 .config 里追加没有意义
+# CONFIG_DEBUG_FS 是这版新加的：内核没编 debugfs 时 /sys/kernel/debug 连挂载都挂不上
+# （实测 mount: unknown filesystem type 'debugfs'），于是 regmap debugfs 那条唯一能
+# **只读** PMIC 寄存器的通道整个不存在，CHG_CTRL/CHG_STATUS/VDD_MAX 到底落没落上
+# 全凭猜。开了之后 /sys/kernel/debug/regmap/<spmi pmic>/registers 是 0400，只读不写，
+# 够用来做"驱动写了什么、硬件回什么"的对账，不引入新的写风险。
+# 注意：这几个是内核内建符号，不是 CONFIG_PACKAGE_*，往 OpenWrt 的 .config 里追加没有意义
 #（它们没有 config/Config-kernel.in 里的 CONFIG_KERNEL_* 包装），片段文件才是唯一入口。
+# 唯一例外就是 DEBUG_FS：它确实有 CONFIG_KERNEL_DEBUG_FS 包装，所以除了片段，
+# config/wf2.config 里那句 "# CONFIG_KERNEL_DEBUG_FS is not set" 也必须翻成 =y，
+# 否则 include/kernel-build.mk 把 CONFIG_KERNEL_* 去掉前缀喂进内核 .config 时会把它按回 not set。
 
 if ! grep -q "$U01_MARK" $DTS; then
 cat >> $DTS <<'DTSEOF'
@@ -152,8 +160,24 @@ cat >> $DTS <<'CHGEOF'
 CHGEOF
 fi
 
+# 机型名（LuCI 首页"型号"那一栏 = /tmp/sysinfo/model = /proc/device-tree/model，
+# 由 /lib/preinit/02_sysinfo 从 DTB 抄过去，用户态改不住，只能改 DTB）。
+# 上游那份 dts 写的是作者板子的名字（ufi-wf2 4G Modem Stick），这里在同一节点里再赋一次
+# 覆盖掉——dtc 的语义是"同一节点里后写的同名属性顶掉先写的"，所以追加在文件末尾就够。
+U01_MODEL="U01 4G Modem Stick"
+if ! grep -q "model = \"$U01_MODEL\"" $DTS; then
+cat >> $DTS <<MODEOF
+
+/* later assignment in the same node overrides the one from the base dts */
+/ {
+	model = "$U01_MODEL";
+};
+MODEOF
+fi
+
 # 用户态（u01simd/netled/ledidle/batled/chg_regs + 四个 init.d + /etc/u01sim.conf
-# + etc/uci-defaults/99-u01-lamps）不由本脚本 cp 安装，走仓库顶层 files/ 覆盖层。
+# + etc/uci-defaults/99-u01-lamps + etc/hotplug-gcreboot.json）不由本脚本 cp 安装，
+# 走仓库顶层 files/ 覆盖层。
 # 覆盖层确实生效：上游 include/image.mk 里有 $(call prepare_rootfs,$(mkfs_cur_target_dir),$(TOPDIR)/files)。
 #
 # ⚠️ 但"仓库根那份 files/"在本步执行时已经不存在了 —— workflow 顺序是
@@ -270,11 +294,13 @@ fi
 u01_fail=0
 grep -q '^CONFIG_BATTERY_PM8916_BMS_VM=y' $CFG                       || { echo "!! BMS-VM 没进 $CFG"; u01_fail=1; }
 grep -q '^CONFIG_CHARGER_PM8916_LBC=y' $CFG                           || { echo "!! CHARGER_PM8916_LBC 没进 $CFG"; u01_fail=1; }
+grep -q '^CONFIG_DEBUG_FS=y' $CFG                                     || { echo "!! DEBUG_FS 没进 $CFG，刷完还是读不到 PMIC 寄存器"; u01_fail=1; }
 grep -q "DEVICE_DTS := msm8916-xinxun-wf2" target/linux/msm89xx/image/msm8916.mk || echo "!! 警告：上游 device 规则没登记 wf2 的 DTS，$DTS 可能不参与编译"
 grep -q "$U01_MARK" $DTS                                             || { echo "!! DTS 没打进 wf2"; u01_fail=1; }
 grep -q '&pm8916_charger' $DTS                                       || { echo "!! 充电块没进 $DTS"; u01_fail=1; }
 grep -q '&pm8916_usbin' $DTS                                         || { echo "!! 没把 pm8916_usbin 关掉，usb_vbus 中断线会撞车(-EBUSY)"; u01_fail=1; }
 grep -q 'u01_bat:' $DTS                                              || { echo "!! $DTS 里没有 u01_bat，充电器引用的 battery 节点不存在"; u01_fail=1; }
+grep -q "model = \"$U01_MODEL\"" $DTS                                || { echo "!! 机型名没覆盖进 $DTS，首页还会显示 ufi-wf2 4G Modem Stick"; u01_fail=1; }
 # 用户件走 files/ 覆盖层，这里验的是"镜像会吃到的那一份"里齐全
 # （首启由 etc/uci-defaults/99-u01-* 补 chmod + enable，git 带过来的权限位不可靠）
 for f in usr/libexec/u01simd.py usr/libexec/netled.py usr/libexec/ledidle.py \
@@ -282,10 +308,20 @@ for f in usr/libexec/u01simd.py usr/libexec/netled.py usr/libexec/ledidle.py \
          etc/init.d/u01sim etc/init.d/netled etc/init.d/ledidle \
          etc/init.d/batled etc/init.d/u01band \
          etc/u01band.conf \
+         etc/hotplug-gcreboot.json \
          etc/uci-defaults/99-u01-lamps etc/uci-defaults/99-u01-rndis \
          etc/uci-defaults/99-u01-ssh etc/dropbear/authorized_keys; do
 	[ -n "$OVL" ] && [ -s "$OVL/$f" ] || { echo "!! 覆盖层缺文件 $f (OVL=${OVL:-无})"; u01_fail=1; }
 done
+# 两份覆盖件的内容也要当场验，光"文件在"不够：
+#  - batled 必须是有 LedBars 后端的那版：DTB 的 leds-gpio 已经把四个脚请求走了，
+#    裸 GPIO_V2_GET_LINE 必 EBUSY，上一版开机就是这样崩循环 6 次的。
+#  - 拔线钩子不能再盯 usb-detect：那颗 usb-detect@1300 已经被上面 disable 掉，
+#    extcon0 不存在，钩子条件恒假 = 白烘。
+[ -n "$OVL" ] && grep -q 'class LedBars' "$OVL/usr/libexec/batled.py" \
+	|| { echo "!! 覆盖层的 batled.py 还是没有 LedBars 后端的那版（裸 GPIO 会 EBUSY 崩循环）"; u01_fail=1; }
+[ -n "$OVL" ] && grep -q 'usb-detect' "$OVL/etc/hotplug-gcreboot.json" \
+	&& { echo "!! 覆盖层的 hotplug-gcreboot.json 还写着 usb-detect，得改指 pm8916-lbc 那颗 extcon"; u01_fail=1; }
 # 基带固件：qcom-firmware 那个包切出来的是 WF2 的 mba.mbn/modem.*，这颗 U01 的 MPSS
 # 认不了它（dmesg: MPSS authentication failed: -19，基带整个起不来、无 wwan0）。
 # 覆盖层必须带本机自己的原厂固件盖住它，判据用 mba.mbn/modem.mdt 的 md5。
@@ -317,7 +353,7 @@ if [ "$u01_fail" != 0 ]; then
 	ls -l "$OVL/etc/" 2>&1 | sed 's/^/   /'
 	exit 1
 fi
-echo "== U01 注入自检通过：BMS-VM + LBC 充电 + bat:1..4 + 覆盖层用户件齐全（含频段锁）+ 本机原厂基带固件 22 件 + libffi/mcopy 就位 + netfilter 已合一 =="
+echo "== U01 注入自检通过：BMS-VM + LBC 充电 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + 覆盖层用户件齐全（含拔线钩子/频段锁）+ 本机原厂基带固件 22 件 + libffi/mcopy 就位 + netfilter 已合一 =="
 
 # ---- 7) 依赖缺口体检（只报，不拦）----
 # prepare-tmpinfo 扫全部 Makefile 时会把"某包依赖一个整棵树都不存在的包名"打成

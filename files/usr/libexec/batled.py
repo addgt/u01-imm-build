@@ -1,17 +1,19 @@
 #!/usr/bin/env python3
-"""U01 battery-bar LEDs driven straight from the GPIO cdev (ABI v2).
+"""U01 battery-bar LEDs: four production bars (bar1..bar4) driven from userspace
+and refilled from the PM8916 VADC VSYS channel.
 
-The running ImmortalWrt build has no battery driver and no bat:x LED nodes, but
-/dev/gpiochip* is there with CONFIG_GPIO_CDEV=y, so the four production battery
-bars (gpio 0 / 91 / 1 / 100, taken from the stock DTB) can be driven from user
-space and refilled from the PM8916 VADC VSYS channel.
-
+Two backends, picked at startup, because the two firmwares this runs on differ:
+  * leds class (bat:1..bat:4 under /sys/class/leds) -- route-B builds: the wf2
+    DTB's `leds` node lets the kernel claim gpio 0/91/1/100, so grabbing them
+    through /dev/gpiochip* fails with EBUSY.
+  * gpio cdev (ABI v2) -- older builds whose DTB has no bat:x nodes.
 Layouts and ioctl numbers are read off include/uapi/linux/gpio.h at tag v6.18:
 magic 0xB4, gpiochip_info = 68 bytes (no base field), gpio_v2_line_request = 592.
 """
 import ctypes, os, struct, sys, time
 
 BAR_PINS = [0, 91, 1, 100]              # bar1..bar4, stock-DTB order
+BAR_LEDS = ["bat:%d" % i for i in range(1, 5)]
 POLL = 15                               # seconds between reads
 MV = [(4050, 4), (3850, 3), (3650, 2), (3400, 1)]
 HYST = 40                               # 升档要再多涨这么多 mV，防阈值附近跳格
@@ -58,6 +60,26 @@ def chip_for(pin):
         if c[4] > pin and (best is None or c[4] > best[4]):
             best = c
     return best
+
+
+class LedBars:
+    """走内核 LED 类：leds-gpio 已经按 DTB 把这四个脚请求走了，裸 GPIO 只能拿到 EBUSY。
+    极性、上下电都由 DTB 里的 LED 核心处理，这里只管 0/1。"""
+
+    path = "leds " + "/".join(BAR_LEDS)
+
+    def show(self, n):
+        on = [1 if i <= n else 0 for i in range(1, 5)]
+        for name, v in zip(BAR_LEDS, on):
+            try:
+                with open("/sys/class/leds/%s/brightness" % name, "w") as f:
+                    f.write("%d" % v)
+            except OSError as e:
+                raise SystemExit("写 %s/brightness 失败：%s" % (name, e))
+        return on
+
+    def close(self):
+        pass
 
 
 class Bars:
@@ -164,9 +186,11 @@ def is_dark():
 
 
 def main():
-    b = Bars()
-    print("chip=%s label=%s (%s, %d lines) pins=%s INVERT=%d"
-          % (b.chip, b.label, b.path, b.lines, BAR_PINS, INVERT))
+    if all(os.path.exists("/sys/class/leds/%s/brightness" % n) for n in BAR_LEDS):
+        b = LedBars()
+    else:
+        b = Bars()
+    print("backend=%s %s" % (type(b).__name__, b.path))
     log("启动 pid=%d 阈值=%s 迟滞=%d" % (os.getpid(), MV, HYST))
     if "--test" in sys.argv:
         for n in range(5):
