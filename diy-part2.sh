@@ -130,7 +130,7 @@ cat >> $DTS <<'DTSEOF'
 		compatible = "simple-battery";
 		technology = "li-ion";
 		voltage-min-design-microvolt = <3400000>;
-		voltage-max-design-microvolt = <4350000>;
+		voltage-max-design-microvolt = <4200000>;
 	};
 };
 
@@ -149,7 +149,7 @@ cat >> $DTS <<'CHGEOF'
  * usb_vbus is one SPMI line: pm8916_usbin holds it today, so the charger must take it. */
 &pm8916_charger {
 	status = "okay";
-	qcom,fast-charge-safe-voltage = <4350000>;
+	qcom,fast-charge-safe-voltage = <4200000>;
 	qcom,fast-charge-safe-current = <700000>;
 	monitored-battery = <&u01_bat>;
 };
@@ -310,7 +310,7 @@ fi
 # 没人写、charge_current_safe 停 0、IBAT_MAX 被 clamp 到 90mA 地板，
 # charge_voltage_max 还会跟 0 做 clamp 出现下溢。现在按原厂值兜底
 # （vddsafe 4350mV / ibatsafe 1000mA / ibatmax 500mA / max-voltage 4.35V）。
-# 我们覆盖层注进 $DTS 的那几行今天是够的（4350mV/700mA/monitored-battery），
+# 我们覆盖层注进 $DTS 的那几行今天是够的（4200mV/700mA/monitored-battery），
 # 兜底是给 fork 同步、dts 改动、monitored-battery 缺失（那样 probe 直接 -ENOENT）留的。
 # 实测形状：VSYS 一直贴着 VBAT-0.11V 从不往 4.2V 抬、加四核负载时 USBIN 不降
 # (4.865→4.868) 而 VBAT 掉 70mV——"软件以为在充、电没进电池"就是这么个曲线。
@@ -333,6 +333,43 @@ else
 	echo "!! 仓库里没带 u01_local/patches/pm8916-lbc-gates.patch，门和兜底都仍靠 PMIC 上电默认值"
 fi
 
+# ---- 7c) 第 11 跑：bam-dmux 不做电源塌陷（"读卡却一个字节不上网"的根因） ----
+# 现象（本机实测）：卡读得到、驻网正常（CHN-UNICOM 46001 / LTE）、bearer 已连、
+# IPv4+网关+DNS 都发给 netifd 了，可 wwan0 死：
+#   ip link set wwan0 up -> EINVAL，carrier_up_count=0，RX/TX 全 0 字节，
+#   没有默认路由，ping 直接 "Network unreachable"。
+# 链路：wwan0 由 qcom_bam_dmux 在 modem 通告通道时才 register_netdev 创建；
+# ndo_open -> bam_dmux_submit_skb -> pm_runtime_get_sync()。而本机这版原厂 MPSS
+# 不回 power-collapse 的 pc-ack（开机日志 "Timed out waiting for remote side to
+# suspend" 就是它），于是 runtime_suspend 里那句 reinit_completion(&pc_ack_completion)
+# 之后的任何一次 runtime_resume，三处 BAM_DMUX_REMOTE_TIMEOUT(2s) 等待全超时，
+# 或 !dmux->rx 直接 -ENXIO —— PM core 把设备永久 latch 进 RPM_ERROR
+# （sysfs runtime_status=error，重启前解不开）。
+# 用户态判死：echo on > power/control 不但解不开，还会在 MPSS 还没起来时抢先做
+# 一次必失败的 resume，同样 latch；手动 stop/start remoteproc 更糟（modem 断电后
+# 再也不通告 bam-dmux 通道，wwan0 直接消失，只能重启）。所以只能内核侧断掉这条路。
+# 补丁基线 = api.github.com 下的 gregkh/linux@v6.18.35 该文件原文，本地
+# make_bam_patch.py 按函数整体切块生成 + patch --batch -p1 往返逐字节自证，
+# 和 900/910 两颗不重叠（那两颗动 drivers/power/supply，这颗动 drivers/net/wwan）。
+# 改法：
+#   runtime_suspend -> 只 dev_dbg，永不 pc_vote(false)，也就不再 reinit_completion；
+#   runtime_resume  -> 照常 pc_vote(true)，但不再等 ack、不等 pc_state；缺 rx 时
+#                      用 bam_dmux_power_on()+bam_dmux_pc_ack() 原地重建；
+#                      TX 申请失败不再反手调 suspend（那会把刚建好的 RX 拆掉）。
+# 代价：数据通路一直保持功耗投票，省不下基带侧那点电——这台是插电实验台，
+# 换来的是"网能通"。验收看 ip link set wwan0 up 能否成功 + carrier/RX 计数是否动。
+KPCB="$REPO_DIR/u01_local/patches/pm8916-bam-dmux-pc.patch"
+KPD=target/linux/msm89xx/patches-$KV
+mkdir -p $KPD
+if [ -f "$KPD/911-pm8916-bam-dmux-pc.patch" ]; then
+	echo "== U01：patches-$KV 里已经有 911-pm8916-bam-dmux-pc.patch（fork 同步过？），不覆盖 =="
+elif [ -f "$KPCB" ]; then
+	cp "$KPCB" "$KPD/911-pm8916-bam-dmux-pc.patch"
+	echo "== U01：已把 bam-dmux 不塌陷补丁放进 $KPD/911-pm8916-bam-dmux-pc.patch =="
+else
+	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dmux-pc.patch，wwan0 还会被 RPM_ERROR 卡死"
+fi
+
 # 注入自检：哪一项没落上就直接终止，别花一个半小时编一版跟上一版一样的固件
 u01_fail=0
 grep -q '^CONFIG_BATTERY_PM8916_BMS_VM=y' $CFG                       || { echo "!! BMS-VM 没进 $CFG"; u01_fail=1; }
@@ -343,6 +380,28 @@ for g in PM8916_LBC_CHGR_VIN_MIN PM8916_LBC_BAT_IF_BPD_CTRL PM8916_LBC_MISC_BOOT
 		|| { echo "!! 补门补丁里没有 $g 那笔，八成复制错了文件或是旧版"; u01_fail=1; }
 done
 grep -q "charge gates:" "$KPD/910-pm8916-lbc-gates.patch"             || { echo "!! 补丁里没有 dmesg 回读，刷完没法一眼看门开没开"; u01_fail=1; }
+# bam-dmux：只验 + 行（- 行是要拆掉的老代码，命中它反而说明没拆），三笔改动各验一条
+[ -f "$KPD/911-pm8916-bam-dmux-pc.patch" ]                             || { echo "!! $KPD/911-pm8916-bam-dmux-pc.patch 不在位，读卡没网那个死 latch 还在"; u01_fail=1; }
+grep -q '^--- a/drivers/net/wwan/qcom_bam_dmux.c' "$KPD/911-pm8916-bam-dmux-pc.patch" \
+	|| { echo "!! 911 补丁动的不是 drivers/net/wwan/qcom_bam_dmux.c，文件拿错了"; u01_fail=1; }
+for g in 'power collapse not used' 'bam_dmux_power_on(dmux)' 'bam_dmux_pc_ack(dmux)'; do
+	grep -Fq "$g" "$KPD/911-pm8916-bam-dmux-pc.patch" \
+		|| { echo "!! bam-dmux 补丁缺 $g 这一笔，多半是复制错了文件或版本不对"; u01_fail=1; }
+done
+# 这两条验的是"老代码必须已经拆掉"。用 if 而不是 A && { }：set -e 下 grep 没命中
+# 会让整条语句返回非 0，脚本提前退出，门还没跑完就没了结论。
+if grep -Eq '^\+.*wait_for_completion_timeout|^\+.*wait_event_timeout' "$KPD/911-pm8916-bam-dmux-pc.patch"; then
+	echo "!! bam-dmux 补丁还在等 pc-ack/pc_state（原厂 MPSS 不回），resume 必超时 latch RPM_ERROR"; u01_fail=1
+fi
+if grep -Eq '^\+.*bam_dmux_pc_vote\(dmux, false\)|^\+.*bam_dmux_runtime_suspend\(dev\)' "$KPD/911-pm8916-bam-dmux-pc.patch"; then
+	echo "!! bam-dmux 补丁还留着往下投票/反手调 suspend，RX 会被拆掉"; u01_fail=1
+fi
+# 数据网卡就是这颗模块编出来的（wwan0 由它在通道通告时创建）；没开的话补丁白打。
+# 这里只警告不终止：.config 这时可能还没生成，硬失败会误杀。
+grep -Eq '^CONFIG_QCOM_BAM_DMUX=[ym]' .config 2>/dev/null \
+	|| echo "!! 警告：.config 里 QCOM_BAM_DMUX 没 =y/=m，设备上根本不会有 wwan0"
+grep -q '^CONFIG_QCOM_SMP2P=y' .config 2>/dev/null \
+	|| echo "!! 警告：QCOM_SMP2P 没开，pc/pc-ack 中断通道不存在"
 grep -q '^CONFIG_CHARGER_PM8916_LBC=y' $CFG                           || { echo "!! CHARGER_PM8916_LBC 没进 $CFG"; u01_fail=1; }
 grep -q '^CONFIG_DEBUG_FS=y' $CFG                                     || { echo "!! DEBUG_FS 没进 $CFG，刷完还是读不到 PMIC 寄存器"; u01_fail=1; }
 grep -q "DEVICE_DTS := msm8916-xinxun-wf2" target/linux/msm89xx/image/msm8916.mk || echo "!! 警告：上游 device 规则没登记 wf2 的 DTS，$DTS 可能不参与编译"

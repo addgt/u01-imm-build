@@ -70,12 +70,24 @@ def apply_band(idx, band):
 
 
 def main():
-    band = read_conf()
-    if band is None:
-        log("配置里没有 lte= ，不改频段（保持全开）")
-        return
-    log("目标：只允许 LTE B%d" % band)
+    # 这里绝不能一"没配频段"就 return：etc/init.d/u01band 用的是
+    # respawn 3600 5 0（间隔 5 秒、次数不限），进程一退出 procd 就再 fork 一次，
+    # 于是开机起每 5 秒白起一个 python、同一句话刷满 /tmp/u01band.log。
+    # 改成常驻轮询还有个附带好处：改了 conf 不用 restart 服务就能跟上。
+    # 默认 conf 是注释掉的（不锁），所以后台 mmconfig 那页锁频段时这里不会抢着下发；
+    # 只有你手写 lte= 之后才由本服务负责"重启后重下发"。
+    last = "init"
     while True:
+        band = read_conf()
+        if band is None:
+            if last != "none":
+                log("配置里没有 lte= ，不改频段（保持全开）")
+                last = "none"
+            time.sleep(POLL)
+            continue
+        if last != band:
+            log("目标：只允许 LTE B%d" % band)
+            last = band
         idx = modem_index()
         if idx is None:
             log("还没认到 modem，%d 秒后重试" % POLL)

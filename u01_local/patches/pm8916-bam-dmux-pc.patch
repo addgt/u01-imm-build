@@ -1,0 +1,72 @@
+--- a/drivers/net/wwan/qcom_bam_dmux.c	2026-11-18 20:42:53.560433700 +0800
++++ b/drivers/net/wwan/qcom_bam_dmux.c	2026-11-18 20:42:53.560433700 +0800
+@@ -708,10 +708,16 @@
+ 
+ static int bam_dmux_runtime_suspend(struct device *dev)
+ {
+-	struct bam_dmux *dmux = dev_get_drvdata(dev);
+-
+-	dev_dbg(dev, "runtime suspend\n");
+-	bam_dmux_pc_vote(dmux, false);
++	/* U01/PM8916: this MPSS build does not complete the pc/pc-ack power
++	 * collapse handshake, and bam_dmux_pc_irq() derives its state by toggling
++	 * rather than sampling the line, so a suspend here can tear the RX path
++	 * down for good.  The next resume then fails and the PM core latches this
++	 * device in RPM_ERROR, which leaves wwan0 un-openable for the rest of the
++	 * boot: "ip link set wwan0 up" -> EINVAL, carrier never comes up and not
++	 * a single byte moves even though the modem registered and dialled a PDN.
++	 * Stay voted and the data path simply remains powered.
++	 */
++	dev_dbg(dev, "runtime suspend (power collapse not used)\n");
+ 
+ 	return 0;
+ }
+@@ -722,32 +728,17 @@
+ 
+ 	dev_dbg(dev, "runtime resume\n");
+ 
+-	/* Wait until previous power down was acked */
+-	if (!wait_for_completion_timeout(&dmux->pc_ack_completion,
+-					 BAM_DMUX_REMOTE_TIMEOUT))
+-		return -ETIMEDOUT;
+-
+-	/* Vote for power state */
++	/* U01/PM8916: vote for power, but never block on an ack this modem does
++	 * not send, and rebuild the RX path here instead of failing - returning
++	 * an error latches RPM_ERROR and kills the data path until the next
++	 * reboot (see bam_dmux_runtime_suspend).
++	 */
+ 	bam_dmux_pc_vote(dmux, true);
+ 
+-	/* Wait for ack */
+-	if (!wait_for_completion_timeout(&dmux->pc_ack_completion,
+-					 BAM_DMUX_REMOTE_TIMEOUT)) {
+-		bam_dmux_pc_vote(dmux, false);
+-		return -ETIMEDOUT;
+-	}
+-
+-	/* Wait until we're up */
+-	if (!wait_event_timeout(dmux->pc_wait, dmux->pc_state,
+-				BAM_DMUX_REMOTE_TIMEOUT)) {
+-		bam_dmux_pc_vote(dmux, false);
+-		return -ETIMEDOUT;
+-	}
+-
+-	/* Ensure that we actually initialized successfully */
+ 	if (!dmux->rx) {
+-		bam_dmux_pc_vote(dmux, false);
+-		return -ENXIO;
++		if (!bam_dmux_power_on(dmux))
++			return -ENXIO;
++		bam_dmux_pc_ack(dmux);
+ 	}
+ 
+ 	/* Request TX channel if necessary */
+@@ -758,7 +749,6 @@
+ 	if (IS_ERR(dmux->tx)) {
+ 		dev_err(dev, "Failed to request TX DMA channel: %pe\n", dmux->tx);
+ 		dmux->tx = NULL;
+-		bam_dmux_runtime_suspend(dev);
+ 		return -ENXIO;
+ 	}
+ 
