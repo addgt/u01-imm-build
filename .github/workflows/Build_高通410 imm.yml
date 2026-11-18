@@ -157,6 +157,15 @@ jobs:
     - name:  files
       run: cp -r files openwrt/files
 
+    - name: Cache dl 源码下载目录
+      continue-on-error: true
+      uses: actions/cache@v4
+      with:
+        path: /mnt/openwrt/dl
+        key: dl-${{ github.run_id }}
+        restore-keys: |
+          dl-
+
     - name: Load custom feeds
       run: |
         [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
