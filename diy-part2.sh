@@ -103,33 +103,6 @@ done
 # config/wf2.config 里那句 "# CONFIG_KERNEL_DEBUG_FS is not set" 也必须翻成 =y，
 # 否则 include/kernel-build.mk 把 CONFIG_KERNEL_* 去掉前缀喂进内核 .config 时会把它按回 not set。
 
-# ---- 7b) 第 7 跑：内核侧补门 ----
-# 上游 drivers/power/supply/pm8916_lbc.c 只写 VDD_MAX/VDD_SAFE/IBAT_MAX/IBAT_SAFE/
-# TCHG_MAX_EN/CHG_CTRL 这六个寄存器；CAF 原厂 qpnp-linear-charger.c 每次开机还要写
-# VIN_MIN(0x47)、清 CHG_FAILED(0x4A bit7)、关 IBATTERM EOC(0x5B bit3)、
-# 关 CHG_WDOG_EN(0x65)、把 VBAT_DET 比较器 override 成低(0xEE bits1:0=2，
-# 安全寄存器：先往 0xD0 写 0xA5)。这几道门里任何一道关着，CHG_EN=1 也只是
-# "软件以为在充"，电进不了电池——实测 VSYS 一直贴着 VBAT+0.11 V 从不往 4.2 V 抬、
-# 加四核负载时 USBIN 不降(4.865→4.868)而 VBAT 掉 70 mV，正是这个形状。
-# VIN_MIN 用原厂安卓 DTB 里 charger status=okay 那颗（MSM8916 MTP）的 qcom,vinmin-mv=4470；
-# 那棵树还给了 vddmax/vddsafe=4350、ibatsafe=1000mA、tchg=360min、chg-term=90mA、
-# max-voltage=4.35V——我们的 VDD_MAX 仍走 simple-battery 的 4.20V，比原厂更保守，不动。
-# 补丁不是手写：本地 make_lbc_patch.py 以 api.github.com 下的 gregkh/linux v6.18.35
-# 原文为基底做"锚点必须命中一次"的精确替换后 diff 生成，并用 patch --batch -p1 回放自证；
-# 又和已有的 900-pm8916-charger-type-check.patch 按 CI 顺序（文件名排序）串打验过，
-# 两个补丁的 hunk 行段不重叠（它动 256/278-305/358，本补丁动 44/66/113/236）。
-KPGB="$REPO_DIR/u01_local/patches/pm8916-lbc-gates.patch"
-KPD=target/linux/msm89xx/patches-$KV
-mkdir -p $KPD
-if [ -f "$KPD/910-pm8916-lbc-gates.patch" ]; then
-	echo "== U01：patches-$KV 里已经有 910-pm8916-lbc-gates.patch（fork 同步过？），不覆盖 =="
-elif [ -f "$KPGB" ]; then
-	cp "$KPGB" "$KPD/910-pm8916-lbc-gates.patch"
-	echo "== U01：已把补门补丁放进 $KPD/910-pm8916-lbc-gates.patch =="
-else
-	echo "!! 仓库里没带 u01_local/patches/pm8916-lbc-gates.patch，四道门仍靠 PMIC 上电默认值"
-fi
-
 if ! grep -q "$U01_MARK" $DTS; then
 cat >> $DTS <<'DTSEOF'
 
@@ -317,11 +290,59 @@ else
 	echo "!! 仓库里没带 u01_local/patches/pm8916-charger-type-check.patch，lbc/bms-vm 还是会 -ENODEV"
 fi
 
+# ---- 7b) 第 7 跑：内核侧补门（PMIC 门 + DT 缺属性兜底），一次全带上 ----
+# 上游 drivers/power/supply/pm8916_lbc.c 只写 VDD_MAX/VDD_SAFE/IBAT_MAX/IBAT_SAFE/
+# TCHG_MAX_EN/CHG_CTRL 这六个寄存器；CAF 原厂 qpnp-linear-charger.c 每次开机还要写：
+#   CHGR(0x1000)：VIN_MIN(0x47)=4470mV、清 CHG_FAILED(0x4A bit7) 闩、关 IBATTERM
+#                 EOC(0x5B bit3)、关 CHG_WDOG_EN(0x65)、把 VBAT_DET 比较器 override
+#                 成低(0xEE bits1:0=2；安全寄存器，先往 0xD0 写 0xA5)
+#   BAT_IF(0x1200)：BPD_CTRL(0x48) bits1:0 选"热敏检测"——原厂 DTB 没有 qcom,bpd-detection，
+#                 CAF 走 default 分支 = BATT_THM_EN；选成 BID 或干脆关掉，PMIC 判
+#                 "没电池"，通路不开；VREF_BAT_THM_CTRL(0x4A)=0xC0 把热敏基准强制常开
+#   CHG_USB(0x1300)：ENUM_T_STOP(0x4E)=0，别留枚举超时
+#   MISC(0x1600)：BOOT_DONE(0x42)=0x80——这颗不写，PMIC 一直按"开机阶段"的约束压着
+#                 VDD/IBAT，CHGR 配成什么都不算数（原厂安卓是 LK 写的，我们这版没人写）
+# 这四个外围基址就是原厂安卓 DTB 那颗的 chgr@1000/bat-if@1200/usb-chgpth@1300/
+# chg-misc@1600，和作者 dtsi 里 pm8916_charger 的 reg 四个值逐字一致，所以补丁直接用
+# chg->reg[LBC_BAT_IF/LBC_USB/LBC_MISC]，不自己加偏移。
+# 还有一类不是"门"而是"DT 缺属性就整个不配"：probe_dt() 读不到
+# qcom,fast-charge-safe-voltage/-current 就 return -EINVAL，于是 VDD_SAFE/IBAT_SAFE
+# 没人写、charge_current_safe 停 0、IBAT_MAX 被 clamp 到 90mA 地板，
+# charge_voltage_max 还会跟 0 做 clamp 出现下溢。现在按原厂值兜底
+# （vddsafe 4350mV / ibatsafe 1000mA / ibatmax 500mA / max-voltage 4.35V）。
+# 我们覆盖层注进 $DTS 的那几行今天是够的（4200mV/700mA/monitored-battery），
+# 兜底是给 fork 同步、dts 改动、monitored-battery 缺失（那样 probe 直接 -ENOENT）留的。
+# 实测形状：VSYS 一直贴着 VBAT-0.11V 从不往 4.2V 抬、加四核负载时 USBIN 不降
+# (4.865→4.868) 而 VBAT 掉 70mV——"软件以为在充、电没进电池"就是这么个曲线。
+# 补丁不是手写：本地 make_lbc_patch.py 以 api.github.com 下的 gregkh/linux v6.18.35
+# 原文为基底做"锚点必须命中一次"的精确替换后 diff 生成，patch --batch -p1 回放自证，
+# 和上面那颗 900-pm8916-charger-type-check.patch 按 CI 文件名顺序串打验过（不留 .rej），
+# 再过"宏全有定义 / 无裸 min() / 括号配对"的静态自检——本机没有交叉编译器，
+# 编译期才会炸的东西必须在这里先炸，不然白等两小时。
+# 刷完验收就看 dmesg 里 "charge gates:" 那一行：VDD_MAX/IBAT_MAX/VIN_MIN/CHG_CTRL/
+# CHG_STATUS/CHG_FAILED/BAT_PRES/TEMP_OK 一次读全，不用再依赖 regmap debugfs。
+KPGB="$REPO_DIR/u01_local/patches/pm8916-lbc-gates.patch"
+KPD=target/linux/msm89xx/patches-$KV
+mkdir -p $KPD
+if [ -f "$KPD/910-pm8916-lbc-gates.patch" ]; then
+	echo "== U01：patches-$KV 里已经有 910-pm8916-lbc-gates.patch（fork 同步过？），不覆盖 =="
+elif [ -f "$KPGB" ]; then
+	cp "$KPGB" "$KPD/910-pm8916-lbc-gates.patch"
+	echo "== U01：已把补门补丁放进 $KPD/910-pm8916-lbc-gates.patch =="
+else
+	echo "!! 仓库里没带 u01_local/patches/pm8916-lbc-gates.patch，门和兜底都仍靠 PMIC 上电默认值"
+fi
+
 # 注入自检：哪一项没落上就直接终止，别花一个半小时编一版跟上一版一样的固件
 u01_fail=0
 grep -q '^CONFIG_BATTERY_PM8916_BMS_VM=y' $CFG                       || { echo "!! BMS-VM 没进 $CFG"; u01_fail=1; }
-[ -f "$KPD/910-pm8916-lbc-gates.patch" ]                             || { echo "!! $KPD/910-pm8916-lbc-gates.patch 不在位，VIN_MIN/CHG_FAILED/IBATTERM/WDOG/VBAT_DET 没人配"; u01_fail=1; }
-grep -q "PM8916_LBC_CHGR_VIN_MIN" "$KPD/910-pm8916-lbc-gates.patch"  || { echo "!! 补门补丁里没有 VIN_MIN 那笔写，八成复制错了文件"; u01_fail=1; }
+[ -f "$KPD/910-pm8916-lbc-gates.patch" ]                             || { echo "!! $KPD/910-pm8916-lbc-gates.patch 不在位，PMIC 门和 DT 兜底都没人配"; u01_fail=1; }
+for g in PM8916_LBC_CHGR_VIN_MIN PM8916_LBC_BAT_IF_BPD_CTRL PM8916_LBC_MISC_BOOT_DONE \
+         PM8916_LBC_USB_ENUM_T_STOP PM8916_LBC_CURRENT_MAX_DEFAULT; do
+	grep -q "$g" "$KPD/910-pm8916-lbc-gates.patch" \
+		|| { echo "!! 补门补丁里没有 $g 那笔，八成复制错了文件或是旧版"; u01_fail=1; }
+done
+grep -q "charge gates:" "$KPD/910-pm8916-lbc-gates.patch"             || { echo "!! 补丁里没有 dmesg 回读，刷完没法一眼看门开没开"; u01_fail=1; }
 grep -q '^CONFIG_CHARGER_PM8916_LBC=y' $CFG                           || { echo "!! CHARGER_PM8916_LBC 没进 $CFG"; u01_fail=1; }
 grep -q '^CONFIG_DEBUG_FS=y' $CFG                                     || { echo "!! DEBUG_FS 没进 $CFG，刷完还是读不到 PMIC 寄存器"; u01_fail=1; }
 grep -q "DEVICE_DTS := msm8916-xinxun-wf2" target/linux/msm89xx/image/msm8916.mk || echo "!! 警告：上游 device 规则没登记 wf2 的 DTS，$DTS 可能不参与编译"
@@ -382,7 +403,7 @@ if [ "$u01_fail" != 0 ]; then
 	ls -l "$OVL/etc/" 2>&1 | sed 's/^/   /'
 	exit 1
 fi
-echo "== U01 注入自检通过：BMS-VM + LBC 充电 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + 覆盖层用户件齐全（含拔线钩子/频段锁）+ 本机原厂基带固件 22 件 + libffi/mcopy 就位 + netfilter 已合一 =="
+echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + 覆盖层用户件齐全（含拔线钩子/频段锁）+ 本机原厂基带固件 22 件 + libffi/mcopy 就位 + netfilter 已合一 =="
 
 # ---- 7) 依赖缺口体检（只报，不拦）----
 # prepare-tmpinfo 扫全部 Makefile 时会把"某包依赖一个整棵树都不存在的包名"打成

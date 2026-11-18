@@ -1,18 +1,17 @@
 --- a/drivers/power/supply/pm8916_lbc.c
 +++ b/drivers/power/supply/pm8916_lbc.c
-@@ -44,6 +44,26 @@
+@@ -44,6 +44,49 @@
  #define PM8916_LBC_CHGR_CHG_EN BIT(7)
  #define PM8916_LBC_CHGR_PSTG_EN BIT(5)
  
-+/* Gates that the vendor driver (drivers/power/qpnp-linear-charger.c on CAF trees)
++/* Gates the vendor driver (drivers/power/qpnp-linear-charger.c on CAF trees)
 + * programs on every boot but this driver never touches, so the PMIC power-on
-+ * defaults keep the charge path inhibited. Values taken from the stock android
-+ * DTB for this SoC: qcom,vinmin-mv = <4470>. */
++ * defaults keep the charge path inhibited.
++ */
 +#define PM8916_LBC_CHGR_VIN_MIN 0x47
 +#define PM8916_LBC_VIN_MIN_BASE_MV 4200
 +#define PM8916_LBC_VIN_MIN_STEP_MV 27
 +#define PM8916_LBC_VIN_MIN_MAX_MV 5037
-+#define PM8916_LBC_VIN_MIN_DEFAULT_MV 4470
 +#define PM8916_LBC_CHGR_CHG_FAILED 0x4a
 +#define PM8916_LBC_CHG_FAILED_CLR BIT(7)
 +#define PM8916_LBC_CHGR_IBATTERM_EN 0x5b
@@ -24,10 +23,34 @@
 +#define PM8916_LBC_CHGR_SEC_ACCESS 0xd0
 +#define PM8916_LBC_SEC_ACCESS_KEY 0xa5
 +
++#define PM8916_LBC_BAT_IF_PRES_STATUS 0x08
++#define PM8916_LBC_BAT_IF_TEMP_STATUS 0x09
++#define PM8916_LBC_BAT_IF_BPD_CTRL 0x48
++#define PM8916_LBC_BPD_SEL_MASK GENMASK(1, 0)
++#define PM8916_LBC_BPD_THM_EN BIT(1)
++#define PM8916_LBC_BAT_IF_VREF_CTRL 0x4a
++#define PM8916_LBC_VREF_BAT_THM_FORCE_ON 0xc0
++
++#define PM8916_LBC_USB_ENUM_T_STOP 0x4e
++
++#define PM8916_LBC_MISC_BOOT_DONE 0x42
++#define PM8916_LBC_MISC_BOOT_DONE_VAL BIT(7)
++
++/* qcom,vddsafe-mv = <4350>, qcom,ibatsafe-ma = <1000>,
++ * qcom,ibatmax-cool-ma = qcom,ibatmax-warm-ma = <500>,
++ * max-voltage-uv = <4350000>, qcom,vinmin-mv = <4470> -- all from the stock
++ * android DTB for this SoC, used where this board's DT leaves the property out.
++ */
++#define PM8916_LBC_VOLTAGE_SAFE_DEFAULT 4350000
++#define PM8916_LBC_VOLTAGE_MAX_DEFAULT 4350000
++#define PM8916_LBC_CURRENT_SAFE_DEFAULT 1000000
++#define PM8916_LBC_CURRENT_MAX_DEFAULT 500000
++#define PM8916_LBC_VIN_MIN_DEFAULT_MV 4470
++
  #define PM8916_LBC_CHGR_MIN_CURRENT 90000
  #define PM8916_LBC_CHGR_MAX_CURRENT 1440000
  
-@@ -66,6 +86,7 @@
+@@ -66,6 +109,7 @@
  	unsigned int charge_voltage_safe;
  	unsigned int charge_current_max;
  	unsigned int charge_current_safe;
@@ -35,7 +58,46 @@
  };
  
  static const unsigned int pm8916_lbc_charger_cable[] = {
-@@ -113,6 +134,52 @@
+@@ -80,11 +124,38 @@
+ 	LBC_MISC,
+ };
+ 
++static void pm8916_lbc_charger_log_state(struct pm8916_lbc_charger *chg)
++{
++	unsigned int vdd = 0, ibat = 0, vin = 0, ctrl = 0;
++	unsigned int st = 0, fail = 0, pres = 0, temp = 0;
++
++	regmap_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_VDD_MAX, &vdd);
++	regmap_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_IBAT_MAX, &ibat);
++	regmap_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_VIN_MIN, &vin);
++	regmap_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_CHG_CTRL, &ctrl);
++	regmap_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_CHG_STATUS, &st);
++	regmap_read(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_CHG_FAILED, &fail);
++	regmap_read(chg->regmap, chg->reg[LBC_BAT_IF] + PM8916_LBC_BAT_IF_PRES_STATUS, &pres);
++	regmap_read(chg->regmap, chg->reg[LBC_BAT_IF] + PM8916_LBC_BAT_IF_TEMP_STATUS, &temp);
++
++	dev_info(chg->dev, "charge gates: VDD_MAX=0x%02x IBAT_MAX=0x%02x VIN_MIN=0x%02x CHG_CTRL=0x%02x CHG_STATUS=0x%02x CHG_FAILED=0x%02x BAT_PRES=0x%02x TEMP_OK=0x%02x\n",
++		 vdd, ibat, vin, ctrl, st, fail, pres, temp);
++}
++
+ static int pm8916_lbc_charger_configure(struct pm8916_lbc_charger *chg)
+ {
+ 	int ret = 0;
+ 	unsigned int tmp;
+ 
++	/* Without a usable battery profile this ends up clamped down to 4.0V, and
++	 * with charge_voltage_safe unset the subtraction below underflows.
++	 */
++	if (chg->charge_voltage_max < PM8916_LBC_CHGR_MIN_VOLTAGE) {
++		dev_warn(chg->dev, "charge voltage max %u uV unusable, using %u\n",
++			 chg->charge_voltage_max, PM8916_LBC_VOLTAGE_MAX_DEFAULT);
++		chg->charge_voltage_max = PM8916_LBC_VOLTAGE_MAX_DEFAULT;
++	}
++
+ 	chg->charge_voltage_max = clamp_t(u32, chg->charge_voltage_max,
+ 					  PM8916_LBC_CHGR_MIN_VOLTAGE, chg->charge_voltage_safe);
+ 
+@@ -113,6 +184,82 @@
  	if (ret)
  		goto error;
  
@@ -73,7 +135,7 @@
 +		goto error;
 +
 +	/* Force the VBAT_DET comparator low so a cell already above its threshold
-+	 * (3.8 V with a 3.7 V comparator) does not inhibit charging. Secure register. */
++	 * does not inhibit charging. Secure register. */
 +	ret = regmap_write(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_SEC_ACCESS,
 +			   PM8916_LBC_SEC_ACCESS_KEY);
 +	if (ret)
@@ -85,10 +147,101 @@
 +	if (ret)
 +		goto error;
 +
++	/* BAT_IF: the stock DTB leaves qcom,bpd-detection unset, so the vendor driver
++	 * selects thermistor-based presence. On BID, or with detection off, the PMIC
++	 * decides the cell is absent and keeps the charge path disabled.
++	 */
++	ret = regmap_update_bits(chg->regmap, chg->reg[LBC_BAT_IF] + PM8916_LBC_BAT_IF_BPD_CTRL,
++				 PM8916_LBC_BPD_SEL_MASK, PM8916_LBC_BPD_THM_EN);
++	if (ret)
++		goto error;
++
++	ret = regmap_write(chg->regmap, chg->reg[LBC_BAT_IF] + PM8916_LBC_BAT_IF_VREF_CTRL,
++			   PM8916_LBC_VREF_BAT_THM_FORCE_ON);
++	if (ret)
++		goto error;
++
++	/* CHG_USB: with the enumeration stop timer running and no D+/D- handshake to
++	 * stop it, the input current limit stays at its default. */
++	ret = regmap_write(chg->regmap, chg->reg[LBC_USB] + PM8916_LBC_USB_ENUM_T_STOP, 0x00);
++	if (ret)
++		goto error;
++
++	/* MISC: release the PMIC boot constraints. Until BOOT_DONE the PMIC applies
++	 * its own boot-time VDD/IBAT limits and ignores what CHGR was told. Written
++	 * last so our configuration is already in place when those limits drop. */
++	ret = regmap_write(chg->regmap, chg->reg[LBC_MISC] + PM8916_LBC_MISC_BOOT_DONE,
++			   PM8916_LBC_MISC_BOOT_DONE_VAL);
++	if (ret)
++		goto error;
++
++	pm8916_lbc_charger_log_state(chg);
++
  	return ret;
  
  error:
-@@ -236,7 +303,18 @@
+@@ -200,11 +347,21 @@
+ 	int ret = 0;
+ 	unsigned int tmp;
+ 
+-	ret = device_property_read_u32(dev, "qcom,fast-charge-safe-voltage", &chg->charge_voltage_safe);
+-	if (ret)
+-		return ret;
+-	if (chg->charge_voltage_safe < PM8916_LBC_CHGR_MIN_VOLTAGE)
+-		return -EINVAL;
++	/* Returning an error here would abort probe_dt() and leave VDD_SAFE,
++	 * IBAT_SAFE and VIN_MIN unprogrammed, so fall back to the stock profile.
++	 */
++	if (device_property_read_u32(dev, "qcom,fast-charge-safe-voltage",
++				     &chg->charge_voltage_safe)) {
++		dev_info(dev, "no qcom,fast-charge-safe-voltage, using %u uV\n",
++			 PM8916_LBC_VOLTAGE_SAFE_DEFAULT);
++		chg->charge_voltage_safe = PM8916_LBC_VOLTAGE_SAFE_DEFAULT;
++	}
++
++	if (chg->charge_voltage_safe < PM8916_LBC_CHGR_MIN_VOLTAGE) {
++		dev_warn(dev, "qcom,fast-charge-safe-voltage %u too low, using %u\n",
++			 chg->charge_voltage_safe, PM8916_LBC_VOLTAGE_SAFE_DEFAULT);
++		chg->charge_voltage_safe = PM8916_LBC_VOLTAGE_SAFE_DEFAULT;
++	}
+ 
+ 	chg->charge_voltage_safe = clamp_t(u32, chg->charge_voltage_safe,
+ 					PM8916_LBC_CHGR_MIN_VOLTAGE, PM8916_LBC_CHGR_MAX_VOLTAGE);
+@@ -215,16 +372,27 @@
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = device_property_read_u32(dev, "qcom,fast-charge-safe-current", &chg->charge_current_safe);
+-	if (ret)
+-		return ret;
+-	if (chg->charge_current_safe < PM8916_LBC_CHGR_MIN_CURRENT)
+-		return -EINVAL;
++	if (device_property_read_u32(dev, "qcom,fast-charge-safe-current",
++				     &chg->charge_current_safe)) {
++		dev_info(dev, "no qcom,fast-charge-safe-current, using %u uA\n",
++			 PM8916_LBC_CURRENT_SAFE_DEFAULT);
++		chg->charge_current_safe = PM8916_LBC_CURRENT_SAFE_DEFAULT;
++	}
++
++	if (chg->charge_current_safe < PM8916_LBC_CHGR_MIN_CURRENT) {
++		dev_warn(dev, "qcom,fast-charge-safe-current %u too low, using %u\n",
++			 chg->charge_current_safe, PM8916_LBC_CURRENT_SAFE_DEFAULT);
++		chg->charge_current_safe = PM8916_LBC_CURRENT_SAFE_DEFAULT;
++	}
+ 
+ 	chg->charge_current_safe = clamp_t(u32, chg->charge_current_safe,
+ 					PM8916_LBC_CHGR_MIN_CURRENT, PM8916_LBC_CHGR_MAX_CURRENT);
+ 
+-	chg->charge_current_max = chg->charge_current_safe;
++	/* The stock profile limits IBAT_MAX to 500mA, well below the 1A safety
++	 * ceiling that this driver used to write there directly.
++	 */
++	chg->charge_current_max = min_t(u32, chg->charge_current_safe,
++					PM8916_LBC_CURRENT_MAX_DEFAULT);
+ 
+ 	tmp = chg->charge_current_safe / PM8916_LBC_CHGR_MIN_CURRENT - 1;
+ 	ret = regmap_write(chg->regmap, chg->reg[LBC_CHGR] + PM8916_LBC_CHGR_IBAT_SAFE, tmp);
+@@ -236,7 +404,18 @@
  	if (ret)
  		return ret;
  
@@ -108,3 +261,23 @@
  }
  
  static const struct power_supply_desc pm8916_lbc_charger_psy_desc = {
+@@ -320,8 +499,17 @@
+ 		return dev_err_probe(dev, PTR_ERR(chg->charger), "Unable to register charger\n");
+ 
+ 	ret = power_supply_get_battery_info(chg->charger, &chg->info);
+-	if (ret)
+-		return dev_err_probe(dev, ret, "Unable to get battery info\n");
++	if (ret) {
++		struct power_supply_battery_info *info;
++
++		dev_warn(dev, "no battery info (%pe), using stock charging target\n",
++			 ERR_PTR(ret));
++		info = devm_kzalloc(dev, sizeof(*info), GFP_KERNEL);
++		if (!info)
++			return -ENOMEM;
++		info->voltage_max_design_uv = PM8916_LBC_VOLTAGE_MAX_DEFAULT;
++		chg->info = info;
++	}
+ 
+ 	irq = platform_get_irq_byname(pdev, "usb_vbus");
+ 	if (irq < 0)
