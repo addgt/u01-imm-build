@@ -22,6 +22,11 @@ def find_blobs(data):
 
     只认 magic 会吃进假头（老 boot 里就有一处 0xD00DFEED 后面跟的不是设备树），
     所以再加一条：off_struct 处第一个 token 必须是 FDT_BEGIN_NODE(1)。
+
+    ⚠️ 不能拿"偏移是否 4 字节对齐"当过滤器：arm 的 zImage 段是 gzip 流后面直接 cat
+    上 dtb，gzip 流长度是任意值，于是 DTB 基址常常只 2 字节对齐（2026-11-17 第 5 跑
+    的 boot.img 就是这样：真树落在 off%4==2 的位置，被老写法跳掉 ⇒ 门假红）。
+    对齐性不靠偏移保证，靠 load_blob 截出来复制一份再解析。
     """
     out = []
     pos = 0
@@ -30,8 +35,6 @@ def find_blobs(data):
         if i < 0:
             return out
         pos = i + 4
-        if i % 4:            # DTB 必然 4 字节对齐，不对齐的就是撞巧的字节
-            continue
         if i + 40 > len(data):
             continue
         mg, size, off_struct, off_str, off_rsv, ver, lver, _, sz_str, sz_struct = \
@@ -47,6 +50,15 @@ def find_blobs(data):
             print("  跳过假头：偏移 %#x 处 magic 对但 struct 首 token=%d（应为 1）" % (i, first))
             continue
         out.append((i, size, ver, lver, off_struct, off_str))
+
+
+def load_blob(data, base, size):
+    """把这段 DTB 原样截出来，让它的基址就是缓冲区开头。
+
+    DTB 内部所有偏移都相对自身基址；原地按 4 字节步进读而基址只 2 字节对齐时，
+    整个结构块会挪偏 2 字节，token 全认错。截一份出来，base=0 天然对齐。
+    """
+    return data[base:base + size]
 
 
 def parse(data, base, size):
@@ -219,7 +231,7 @@ if __name__ == "__main__":
     keys = [k.lower() for k in argv[1:]]
     bad = 0
     for base, size, *_ in blobs:
-        nodes = parse(data, base, size)
+        nodes = parse(load_blob(data, base, size), 0, size)
         print("\n== DTB @ %#x 共 %d 个节点 ==" % (base, len(nodes)))
         if check:
             for ok, msg in check_charging(nodes):
