@@ -130,7 +130,7 @@ cat >> $DTS <<'DTSEOF'
 		compatible = "simple-battery";
 		technology = "li-ion";
 		voltage-min-design-microvolt = <3400000>;
-		voltage-max-design-microvolt = <4200000>;
+		voltage-max-design-microvolt = <4350000>;
 	};
 };
 
@@ -149,7 +149,7 @@ cat >> $DTS <<'CHGEOF'
  * usb_vbus is one SPMI line: pm8916_usbin holds it today, so the charger must take it. */
 &pm8916_charger {
 	status = "okay";
-	qcom,fast-charge-safe-voltage = <4200000>;
+	qcom,fast-charge-safe-voltage = <4350000>;
 	qcom,fast-charge-safe-current = <700000>;
 	monitored-battery = <&u01_bat>;
 };
@@ -310,7 +310,7 @@ fi
 # 没人写、charge_current_safe 停 0、IBAT_MAX 被 clamp 到 90mA 地板，
 # charge_voltage_max 还会跟 0 做 clamp 出现下溢。现在按原厂值兜底
 # （vddsafe 4350mV / ibatsafe 1000mA / ibatmax 500mA / max-voltage 4.35V）。
-# 我们覆盖层注进 $DTS 的那几行今天是够的（4200mV/700mA/monitored-battery），
+# 我们覆盖层注进 $DTS 的那几行今天是够的（4350mV/700mA/monitored-battery），
 # 兜底是给 fork 同步、dts 改动、monitored-battery 缺失（那样 probe 直接 -ENOENT）留的。
 # 实测形状：VSYS 一直贴着 VBAT-0.11V 从不往 4.2V 抬、加四核负载时 USBIN 不降
 # (4.865→4.868) 而 VBAT 掉 70mV——"软件以为在充、电没进电池"就是这么个曲线。

@@ -247,6 +247,33 @@ jobs:
       run: |
        cd openwrt
        make defconfig
+
+    - name: U01 功能清单核对
+      run: |
+        cd openwrt
+        WL="$GITHUB_WORKSPACE/u01_local/feat_pkgs.txt"
+        [ -f "$WL" ] || { echo "!! 仓库里没有 u01_local/feat_pkgs.txt，功能清单没法核对"; exit 1; }
+        echo "== 需求来源：别人那版 rootfs 里比我们多的功能，共 $(grep -vc '^$' "$WL") 颗 =="
+        ok=0; miss=""
+        while read -r p; do
+          [ -z "$p" ] && continue
+          if grep -qx "CONFIG_PACKAGE_$p=y" .config; then
+            ok=$((ok + 1))
+          else
+            miss="$miss $p"
+          fi
+        done < "$WL"
+        n_total=$(grep -c '^CONFIG_PACKAGE_' .config)
+        echo "== defconfig 之后：清单里活下来 $ok 颗；.config 总包行 $n_total 条 =="
+        if [ -n "$miss" ]; then
+          echo "-- 这些没活下来（树里没这颗 / 依赖不满足被夹掉），后台会缺对应功能 --"
+          for m in $miss; do echo "   MISS $m"; done
+        fi
+        grep -E '^CONFIG_TARGET_ROOTFS_PARTSIZE=' .config || echo "!! .config 里没有 ROOTFS_PARTSIZE"
+        if [ "$ok" = "0" ]; then
+          echo "!! 清单里一颗都没落地——等于上一版，别编了"; exit 1
+        fi
+        echo "== 功能核对通过：$ok 颗已进入 .config，缺 $(echo $miss | wc -w) 颗（缺的清单在上面，产物到手再逐个验）=="
        
     - name: Download package
       id: package
@@ -392,6 +419,23 @@ jobs:
           else
             "$PY" "$GITHUB_WORKSPACE/u01_local/fdtpeek.py" "$B" --check --dtb "$DTB" || fail=1
           fi
+        fi
+        echo "== 4) 功能落地核对：看的不是配置，是 rootfs 暂存树里真长出来的 /etc/init.d =="
+        RB=$(ls -1d build_dir/target-*/root-* 2>/dev/null | head -1)
+        if [ -z "$RB" ] || [ ! -d "$RB/etc/init.d" ]; then
+          echo "!! 找不到 rootfs 暂存树的 /etc/init.d，功能落地没法证明"; fail=1
+        else
+          echo "   暂存树 = $RB  服务数 $(ls -1 $RB/etc/init.d | wc -l)（上一版 r9 是 42）"
+          ff=0
+          while read -r s; do
+            [ -z "$s" ] && continue
+            if [ -e "$RB/etc/init.d/$s" ]; then
+              ff=$((ff + 1))
+            else
+              echo "   缺服务 $s"
+            fi
+          done < "$GITHUB_WORKSPACE/u01_local/feat_svcs.txt"
+          echo "   别人版独有的服务在本版 rootfs 里出现 $ff / $(grep -vc '^$' $GITHUB_WORKSPACE/u01_local/feat_svcs.txt) 条"
         fi
         if [ "$fail" != 0 ]; then
           echo "!! U01 产物校验没过：这一版就算刷进去也不满足需求（不充电 / 灯不对 / 镜像缺），停住不发 release"
