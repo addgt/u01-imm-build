@@ -5,8 +5,6 @@ luci-app-tailscale
 tailscale
 luci-app-zerotier
 zerotier
-luci-app-frpc
-frpc
 sing-box
 xray-core
 naiveproxy
@@ -29,10 +27,6 @@ aria2
 webui-aria2
 luci-app-transmission
 transmission
-luci-app-filebrowser
-filebrowser
-luci-app-openlist2
-openlist2
 luci-app-openlist
 openlist
 luci-app-dockerman
@@ -70,7 +64,6 @@ luci-app-gc
 lpac
 luci-proto-wireguard
 luci-i18n-openclash-zh-cn
-luci-i18n-filebrowser-zh-cn
 luci-i18n-dockerman-zh-cn
 luci-i18n-ttyd-zh-cn
 luci-i18n-cpu-perf-zh-cn

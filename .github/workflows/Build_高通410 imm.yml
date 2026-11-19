@@ -284,6 +284,19 @@ jobs:
         fi
         echo "== 功能核对通过：$ok 颗已进入 .config，缺 $(echo $miss | wc -w) 颗（缺的清单在上面，产物到手再逐个验）=="
        
+    - name: U01 host 依赖闸门（谁把 Node.js 拖进来就当场点名）
+      run: |
+        # 第 12 跑死在这：filebrowser 顶层无条件 PKG_BUILD_DEPENDS := golang/host node/host，
+        # 于是 host 侧要从零编 Node/V8，日志里 build_dir/hostpkg/node-v22.23.4 一直编到
+        # GitHub 砍 job（单 job 硬顶 6h，timeout-minutes 抬不了）还没完，而那天其余全部包
+        # 加起来才 26 分钟。这种坑从 .config 上看不见（CONFIG_PACKAGE_node 明明是 not set），
+        # 只能扫 feed 的 Makefile，所以放到 defconfig 之后、动手编译之前，几分钟出结果。
+        cd openwrt
+        if ! python3 "$GITHUB_WORKSPACE/u01_local/check_host_deps.py" .; then
+          echo "!! 上面点名的这些，连同它们的 luci-app-* / luci-i18n-* 一起从 config/wf2.config 关掉再重跑"
+          exit 1
+        fi
+
     - name: Download package
       id: package
       run: |
