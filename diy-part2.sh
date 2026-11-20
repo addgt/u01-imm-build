@@ -94,6 +94,13 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 #         Memory: 372360K/524288K available  ⇒ RAM = 0x80000000..0xA0000000，这 2 MB 正好贴顶；
 #         cma: Reserved 16 MiB at 0x9e600000 ⇒ CMA 到 0x9f600000 就停，够不着；
 #         OF: reserved mem 最高的一条是 wcnss 0x8e200000..0x8e7fffff，其余全在 0x86~0x8d。
+#    e. u01pstore 开机归档：上面那块是 RAM 里的环形缓冲，下一次 panic 就把上一次的盖掉，
+#       而这台 12~15 分钟复位一次 ⇒ 只看 /sys/fs/pstore 等于永远只能拿到"最近一次"。
+#       挂载不用管：base-files 的 etc/init.d/boot 里已有
+#       `grep -q pstore /proc/filesystems && mount -t pstore pstore /sys/fs/pstore`
+#       （锁定树 05d3cf2a 那份就有），所以这个服务只做"复制走 + 删原记录 + 记一行
+#       bootlog"。bootlog 的 crashed=0/1/nodir 才是判据：复位过而 crashed=0，就说明
+#       这条路（panic→pstore）根本不适用于这次复位，得换方向查。
 #
 # 依赖已核对：config-6.18 里 MFD_SPMI_PMIC=y、POWER_SUPPLY=y、EXTCON=y、IIO=y；
 #             子目标 msm8916 只有 target.mk（没有自己的 config-6.18）=> 改 target 级那份就够。
@@ -485,10 +492,12 @@ for f in usr/libexec/u01simd.py usr/libexec/netled.py usr/libexec/ledidle.py \
          usr/libexec/u01netmond.sh \
          etc/init.d/u01sim etc/init.d/netled etc/init.d/ledidle \
          etc/init.d/batled etc/init.d/u01band etc/init.d/u01netmond \
+         etc/init.d/u01pstore \
          etc/u01band.conf \
          etc/hotplug-gcreboot.json \
          etc/uci-defaults/99-u01-lamps etc/uci-defaults/99-u01-rndis \
          etc/uci-defaults/99-u01-ssh etc/uci-defaults/99-u01-net \
+         etc/uci-defaults/99-u01-pstore \
          etc/init.d/qmi-modem-410-init etc/init.d/qmi_auto_activate \
          etc/dropbear/authorized_keys; do
 	[ -n "$OVL" ] && [ -s "$OVL/$f" ] || { echo "!! 覆盖层缺文件 $f (OVL=${OVL:-无})"; u01_fail=1; }
@@ -519,6 +528,27 @@ grep -q 'read -r iface dest gw flags refcnt use metric mask rest' "$OVL/usr/libe
 # 只 enable 的话第一次开机这服务是死的。
 grep -qE '/etc/init.d/\$s start' "$OVL/etc/uci-defaults/99-u01-net" 2>/dev/null \
 	|| { echo "!! 99-u01-net 只 enable 没 start，第一次开机看门狗不跑"; u01_fail=1; }
+# 崩溃日志这条链：ramoops 有节点还不够，开机不归档就等于"下一次 panic 把它盖掉"。
+grep -qE '>>[[:space:]]*/root/pstore/bootlog\.txt' "$OVL/etc/init.d/u01pstore" 2>/dev/null \
+	|| { echo "!! u01pstore 不往 bootlog.txt 记那行 crashed=…：只有归档目录判不出'这次复位是不是 panic'"; u01_fail=1; }
+grep -qE '/etc/init.d/\$s start' "$OVL/etc/uci-defaults/99-u01-pstore" 2>/dev/null \
+	|| { echo "!! 99-u01-pstore 只 enable 没 start，第一次开机既不归档也没有 bootlog 第一行"; u01_fail=1; }
+# ramoops 三个 size 加起来不能超过 reg 那 2 MB：超了内核只会 pr_info 一句
+# "ramoops: memory size is too small" 然后整个 pstore 没有——DT 烘了等于没烘。
+if [ -f $DTS ]; then
+	u01_sum=0
+	for u01_kv in $(sed -n '/ramoops@/,/};/p' $DTS |
+			sed -n 's/^[[:space:]]*\(console\|record\|pmsg\|ftrace\|dmesg\)-size[[:space:]]*=[[:space:]]*<\(0x[0-9a-fA-F]*\)>;.*/\1=\2/p'); do
+		u01_v=$(( ${u01_kv#*=} ))
+		u01_sum=$((u01_sum + u01_v))
+	done
+	if [ "$u01_sum" -gt 0 ] 2>/dev/null && [ "$u01_sum" -le 2097152 ] 2>/dev/null; then
+		echo "== U01：ramoops 三个 size 合计 $u01_sum B，落在 2 MB 窗口内 =="
+	else
+		echo "!! ramoops 的 console/record/pmsg-size 合计 $u01_sum B，超过 2 MB 窗口（内核会整块放弃 pstore）"
+		u01_fail=1
+	fi
+fi
 # u01simd 的 MPSS 重启要带上"当前没有 wwan 默认路由"这道闸，否则它会主动把数据会话打死
 grep -q 'default_via_wwan' "$OVL/usr/libexec/u01simd.py" 2>/dev/null \
 	|| { echo "!! u01simd.py 还是老逻辑（读不出就重启 MPSS，最多 3 次再来一轮），会把蜂窝打死"; u01_fail=1; }
@@ -627,7 +657,7 @@ if [ "$u01_fail" != 0 ]; then
 	ls -l "$OVL/etc/" 2>&1 | sed 's/^/   /'
 	exit 1
 fi
-echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ 充电压 4.35 V×2 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + ramoops + 覆盖层用户件齐全（拔线钩子/频段锁/网卡看门狗/两颗 qmi 空壳）+ 本机原厂基带固件 22 件 + 原厂 WCNSS 9 件 + libffi/mcopy 就位 + netfilter 已合一 =="
+echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ 充电压 4.35 V×2 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + ramoops（cell 数已和 dtsi 兄弟对过、三个 size 在窗口内）+ 崩溃日志开机归档 + 覆盖层用户件齐全（拔线钩子/频段锁/网卡看门狗/两颗 qmi 空壳）+ 本机原厂基带固件 22 件 + 原厂 WCNSS 9 件 + libffi/mcopy 就位 + netfilter 已合一 =="
 
 # ---- 7) 依赖缺口体检（只报，不拦）----
 # prepare-tmpinfo 扫全部 Makefile 时会把"某包依赖一个整棵树都不存在的包名"打成

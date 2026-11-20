@@ -1,0 +1,11 @@
+#!/bin/sh
+# 首启：把崩溃日志归档服务装上电。
+# enable 只建 rc.d 软链，而 uci-defaults 跑在 boot 的 done 阶段（软链早读过了），
+# 所以还要 start 一次——这一次也把 bootlog.txt 的第一行写出来，开机次数从第一次就有账。
+s=u01pstore
+if [ -f "/etc/init.d/$s" ]; then
+	chmod 755 "/etc/init.d/$s"
+	/etc/init.d/$s enable
+	/etc/init.d/$s start
+fi
+exit 0

@@ -1,0 +1,43 @@
+#!/bin/sh /etc/rc.common
+# 崩溃日志归档（第 14 跑新增，配合烘进 DT 的 ramoops 用）。
+#
+# 为什么只能开机跑一次、不能常驻：ramoops 就是 RAM 里 2 MB 的环形缓冲，下一次 panic 会把
+# 上一次的 console-ramoops 直接盖掉；而这台机器 12~15 分钟就复位一次，等于"证据活不过一次
+# 重启"。开机时 /etc/init.d/boot（START=10，里面已有 grep -q pstore /proc/filesystems &&
+# mount -t pstore pstore /sys/fs/pstore）负责挂载，这里做四件事：
+#   1) 把 /sys/fs/pstore/* 复制进 /root/pstore/boot<序号>/ 然后删掉原记录——删了才保证
+#      "下次开机还看到东西 = 真的又崩了一次"，而不是每次重复归档同一份。
+#   2) 往 /root/pstore/bootlog.txt 记一行 boot=<序号> crashed=<1/0/nodir> records=<条数>。
+#      这行才是关键判据：复位过而 crashed=0 ⇒ 不是 panic（看门狗/硬复位/掉电），ramoops
+#      对它无效，得换方向查；crashed=nodir ⇒ 连挂载点都没有，先解决挂载；
+#      crashed=1 ⇒ 崩前最后的打印就在 boot<序号>/console-ramoops-0 里。
+#   3) crashed 是什么状态都要记这一行：光数开机次数就能量出复位节奏。
+#   4) 只留最近 5 次目录，rootfs 空间有限，别让日志本身变成第二个问题。
+# 序号用自增计数文件，不用 wall clock：这颗没 RTC 兜底，开机时刻不可信。
+START=98
+
+start() {
+	mkdir -p /root/pstore 2>/dev/null || return 0
+	seq=$(cut -d' ' -f1 /root/pstore/seq 2>/dev/null)
+	seq=$(( ${seq:-0} + 1 ))
+	n=0
+	if [ -d /sys/fs/pstore ]; then
+		grep -qs ' /sys/fs/pstore ' /proc/mounts || mount -t pstore pstore /sys/fs/pstore 2>/dev/null
+		for f in /sys/fs/pstore/*; do
+			[ -f "$f" ] || continue
+			mkdir -p "/root/pstore/boot$seq"
+			if cp "$f" "/root/pstore/boot$seq/" 2>/dev/null; then
+				rm -f "$f"
+				n=$((n + 1))
+			fi
+		done
+		if [ "$n" -gt 0 ]; then crashed=1; else crashed=0; fi
+	else
+		crashed=nodir
+	fi
+	echo "$seq" > /root/pstore/seq
+	echo "boot=$seq crashed=$crashed records=$n" >> /root/pstore/bootlog.txt
+	if [ "$seq" -gt 5 ]; then
+		rm -rf "/root/pstore/boot$((seq - 5))"
+	fi
+}
