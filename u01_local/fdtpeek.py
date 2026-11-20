@@ -131,7 +131,7 @@ def check_charging(nodes):
 
     只认这些：label 名和 DTS 文件名都不会出现在编译出的 DTB 里，status 也不是明文，
     所以拿字符串去 grep 二进制只能自证个寂寞（run#5 我就是这么把绿的判成红的）。
-    固定 6 条：节点缺失也照样出条目（判红），这样下游能断言"6 项全绿"而条目数目不会随输入变。
+    条目数固定（节点缺失也照样出条目判红），这样下游能断言"全绿"而条目数不会随输入变。
     """
     by_ph = {}
     for p, pr in nodes:
@@ -167,6 +167,33 @@ def check_charging(nodes):
         st = s(ud[0][1].get("status"))
         out.append((st == "disabled", "让出 usb_vbus %s status=%s（要 disabled，否则和 LBC 抢 vbus）"
                     % (ud[0][0], st or "缺省")))
+    # —— 第 14 跑加的两条硬账：编译期的 grep 只证"我改了 dts"，这里证"产物那棵树里真是这个值"。
+    # 充电电压必须两处同时 4.35 V：pm8916_lbc.c 先用 charge_voltage_safe 夹 charge_voltage_max
+    # 再编 VDD_MAX，只改电池节点会被 charger 那边的 4.20 V 夹回去（r13 实测 VBAT 4.30 V＞4.20 V
+    # ⇒ 充电环根本不启动）。
+    # ⚠️ 这两个属性都挂在【lbc 节点】上：产物里那个节点叫 charger@1000，但 compatible 是
+    #    qcom,pm8916-lbc（驱动 of_match 就写这一条，device_property_read_u32 读的也是它的 of_node）；
+    #    按 qcom,pm8916-charger 去找会找到另一颗节点，结果假红（第 15 跑验货时就踩过）。
+    nd = dict(nodes)
+    sv = u32(lbc[0][1].get("qcom,fast-charge-safe-voltage")) if lbc else None
+    bat = nd.get(by_ph.get(u32(lbc[0][1].get("monitored-battery")))) if lbc else None
+    if bat is None:
+        hit = by_compat(nodes, "simple-battery")
+        bat = hit[0][1] if hit else {}
+    vmax = u32(bat.get("voltage-max-design-microvolt"))
+    out.append((sv == 4350000 and vmax == 4350000,
+                "充电电压 4.35 V 两处都在产物树里：lbc 节点 qcom,fast-charge-safe-voltage=%s，"
+                "电池 voltage-max-design-microvolt=%s（任一处是 4200000 就等于不充电）" % (sv, vmax)))
+    # ramoops：这台机器每 12~15 分钟自己重启一次，没这段保留内存，pstore 就是空的，
+    # "重启"这件事完全没有证据。reg 必须是 4 cell（reserved-memory 的 #address-cells=2）：
+    # [addr 高, addr 低, size 高, size 低] —— 要比的是第 1、3 格，不是最后两格。
+    ro = by_compat(nodes, "ramoops")
+    reg = ro[0][1].get("reg") if ro else None
+    cell = list(struct.unpack(">%dI" % (len(reg) // 4), reg)) if reg and len(reg) % 4 == 0 else []
+    good = (len(cell) == 4 and cell[0] == 0 and cell[1] == 0x9fe00000
+            and cell[2] == 0 and cell[3] == 0x200000)
+    out.append((good, "崩溃日志 ramoops 落在 0x9fe00000+2MB（4 cell：高半格都得是 0），实际 reg=%s"
+                % (" ".join("%#x" % c for c in cell) if cell else "没有这个节点")))
     return out
 
 
