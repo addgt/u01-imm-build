@@ -71,6 +71,30 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 #    => 追加到 dts/msm8916-xinxun-wf2.dts 末尾的东西就是刷进去的 DTB（dts/Makefile 那份
 #    内核 dtb-y 清单没有 wf2，别被它误导，编译由 OpenWrt 的 Device 规则做）。
 #
+# 5) 蜂窝（第 14 跑新烘的三件）：
+#    a. WCNSS/Pronto 固件盖回本机原厂九件。镜像的 mba/modem 已逐个 md5 对上原厂，但
+#       /lib/firmware/wcnss.* 还是 WF2 那套 —— QMI_CSI 的服务端在 WCNSS、客户端在 MPSS，
+#       原厂 MPSS 配别人家 Pronto 的结果是每次开机 T+24 必炸
+#       coex_interface.c:530:MCS_CXM assertion（dmesg 里 remoteproc crash #1）。
+#       已核对原厂九个和 WF2 九个同名（mdt/b00/b01/b02/b04/b06/b09/b10/b11），盖完不留混代文件。
+#       ⚠️ 代价：热点/Wi-Fi 用的是这颗 Pronto，刷完要实测 AP 起不起得来；起不来就把这九件
+#       退回 WF2 版重编（adb 走 USB，不受影响）。
+#    b. 两颗原厂 qmi 服务在覆盖层里换成空壳（同名文件覆盖，已用 files/etc/rc.local 的 md5
+#       逐字节证实覆盖层确实能盖住包装进去的同一份文件）。qmi-modem-410-init 开机 25 秒
+#       无条件 repower SIM：emm-detached → QMI error 37 UimUninitialized → netifd 拆会话并
+#       disable modem → MM 重编号 Modem/0→/1 → 之后 ifstatus modem 恒 up=false 且不自愈。
+#       手动 `ifup modem` 约 20~25 秒恢复（这台机上三次独立复现，含 MPSS 自己崩的那次）。
+#    c. u01netmond 就是把这个 remedy 常驻化：只在"没有走 wwan 的 IPv4 默认路由 + 接口既没
+#       up 也没 pending"时才 ifup 一次，开机头 90 秒不动，两次动作隔 120 秒。
+#    d. ramoops 烘进 DT：/proc/config.gz 里 PSTORE/PSTORE_CONSOLE/PSTORE_RAM 早就 =y，
+#       只缺节点。周期重启的成因到现在没抓到现行（panic 后 /proc/sys/kernel/panic=3 直接
+#       复位，logring 全丢），刷完第一次复现就能从 /sys/fs/pstore/console-ramoops-0 看到
+#       复位前最后的控制台输出。槽位选 512 MB 那条 bank 的最顶端 0x9fe00000 2 MB + no-map，
+#       这是拿本机 r13 的真 dmesg 量的，不是猜的：
+#         Memory: 372360K/524288K available  ⇒ RAM = 0x80000000..0xA0000000，这 2 MB 正好贴顶；
+#         cma: Reserved 16 MiB at 0x9e600000 ⇒ CMA 到 0x9f600000 就停，够不着；
+#         OF: reserved mem 最高的一条是 wcnss 0x8e200000..0x8e7fffff，其余全在 0x86~0x8d。
+#
 # 依赖已核对：config-6.18 里 MFD_SPMI_PMIC=y、POWER_SUPPLY=y、EXTCON=y、IIO=y；
 #             子目标 msm8916 只有 target.mk（没有自己的 config-6.18）=> 改 target 级那份就够。
 # ============================================================
@@ -130,7 +154,11 @@ cat >> $DTS <<'DTSEOF'
 		compatible = "simple-battery";
 		technology = "li-ion";
 		voltage-min-design-microvolt = <3400000>;
-		voltage-max-design-microvolt = <4200000>;
+		/* 4.35 V，不是 4.20 V：原厂关机档案 qcom,qrd-4v2-2200mah-data 里
+		 * qcom,max-voltage-uv=4350000，而实测 VBAT 静置 4.303~4.307 V。
+		 * pm8916_lbc.c 把 charge_voltage_max 夹到 charge_voltage_safe 之后才编 VDD_MAX，
+		 * 4.20 V → 0x08，永远低于电池现压 ⇒ 充电环根本不启动。两处必须一起改。 */
+		voltage-max-design-microvolt = <4350000>;
 	};
 };
 
@@ -149,7 +177,9 @@ cat >> $DTS <<'CHGEOF'
  * usb_vbus is one SPMI line: pm8916_usbin holds it today, so the charger must take it. */
 &pm8916_charger {
 	status = "okay";
-	qcom,fast-charge-safe-voltage = <4200000>;
+	/* 和上面 u01_bat 的 4.35 V 配对：lbc 先用这个 safe 值夹 charge_voltage_max，
+	 * 只改电池节点会被这里夹回 4.20 V，VDD_MAX 还是 0x08。 */
+	qcom,fast-charge-safe-voltage = <4350000>;
 	qcom,fast-charge-safe-current = <700000>;
 	monitored-battery = <&u01_bat>;
 };
@@ -158,6 +188,35 @@ cat >> $DTS <<'CHGEOF'
 	status = "disabled";
 };
 CHGEOF
+fi
+
+# 崩溃日志通道（第 14 跑新增）：这台机器每 12~15 分钟自己重启一次，而
+# /proc/sys/kernel/panic=3 ⇒ panic 的打印还没来得及出控制台就复位了，pstore 里空的，
+# 于是"重启"这件事完全没有证据。/proc/config.gz 里 PSTORE / PSTORE_RAM / PSTORE_CONSOLE /
+# PSTORE_PMSG 全都已经是 y，唯一缺的是 DT 里那段保留内存，所以纯 DTS 就能补上。
+# 落点：本机 r13 的真 dmesg 量的 —— Memory: 372360K/524288K ⇒ RAM 就是 0x80000000+0x20000000，
+# cma: Reserved 16 MiB at 0x9e600000（到 0x9f600000 停），OF: reserved mem 最高一条到
+# 0x8e7fffff，所以取最顶 2 MB（0x9fe00000..0xA0000000）并 no-map，谁也不压。
+# 刷好后 /sys/fs/pstore/console-ramoops-0 = 上次复位前最后的控制台输出。
+if ! grep -q 'compatible = "ramoops"' $DTS; then
+cat >> $DTS <<'RMEOF'
+
+/* last-resort crash log: 2 MB at the very top of the 512 MB bank.
+ * reg is 4 cells because msm8916.dtsi's reserved-memory sets #address-cells/#size-cells
+ * = <2> (siblings write <0x0 0x86000000 0x0 0x300000>); a 2-cell reg here is a dtc error. */
+/ {
+	reserved-memory {
+		ramoops@9fe00000 {
+			compatible = "ramoops";
+			reg = <0x0 0x9fe00000 0x0 0x200000>;
+			record-size = <0x20000>;
+			console-size = <0x100000>;
+			pmsg-size = <0x20000>;
+			no-map;
+		};
+	};
+};
+RMEOF
 fi
 
 # 机型名（LuCI 首页"型号"那一栏 = /tmp/sysinfo/model = /proc/device-tree/model，
@@ -310,7 +369,7 @@ fi
 # 没人写、charge_current_safe 停 0、IBAT_MAX 被 clamp 到 90mA 地板，
 # charge_voltage_max 还会跟 0 做 clamp 出现下溢。现在按原厂值兜底
 # （vddsafe 4350mV / ibatsafe 1000mA / ibatmax 500mA / max-voltage 4.35V）。
-# 我们覆盖层注进 $DTS 的那几行今天是够的（4200mV/700mA/monitored-battery），
+# 我们覆盖层注进 $DTS 的那几行今天是够的（4350mV/700mA/monitored-battery），
 # 兜底是给 fork 同步、dts 改动、monitored-battery 缺失（那样 probe 直接 -ENOENT）留的。
 # 实测形状：VSYS 一直贴着 VBAT-0.11V 从不往 4.2V 抬、加四核负载时 USBIN 不降
 # (4.865→4.868) 而 VBAT 掉 70mV——"软件以为在充、电没进电池"就是这么个曲线。
@@ -409,17 +468,29 @@ grep -q "$U01_MARK" $DTS                                             || { echo "
 grep -q '&pm8916_charger' $DTS                                       || { echo "!! 充电块没进 $DTS"; u01_fail=1; }
 grep -q '&pm8916_usbin' $DTS                                         || { echo "!! 没把 pm8916_usbin 关掉，usb_vbus 中断线会撞车(-EBUSY)"; u01_fail=1; }
 grep -q 'u01_bat:' $DTS                                              || { echo "!! $DTS 里没有 u01_bat，充电器引用的 battery 节点不存在"; u01_fail=1; }
+# 充电压：上一版两个 4.20 V 让充电环根本不启动（实测 VBAT 静置 4.303~4.307 V，
+# VDD_MAX 夹在 0x08 恒低于现压）。原厂关机档案 qcom,qrd-4v2-2200mah-data 写的是
+# qcom,max-voltage-uv=4350000，所以这两处必须同时是 4.35 V，少改一处都会被另一处夹回。
+grep -q 'voltage-max-design-microvolt = <4350000>' $DTS               || { echo "!! u01_bat 的 voltage-max 不是 4350000，充电环起不来"; u01_fail=1; }
+grep -q 'fast-charge-safe-voltage = <4350000>' $DTS                   || { echo "!! pm8916_charger 的 safe-voltage 不是 4350000，会被夹回 4.20 V"; u01_fail=1; }
+# 只看我们注入的那一段（文件末尾到 U01_MARK），基线 dts 里本来就有 4200000，那是被覆盖的旧值，不算错
+if sed -n "/$U01_MARK/,\$p" $DTS | grep -q '4200000'; then
+	echo "!! 注入段里还留着 4200000，两处电压没改干净"; u01_fail=1
+fi
 grep -q "model = \"$U01_MODEL\"" $DTS                                || { echo "!! 机型名没覆盖进 $DTS，首页还会显示 ufi-wf2 4G Modem Stick"; u01_fail=1; }
 # 用户件走 files/ 覆盖层，这里验的是"镜像会吃到的那一份"里齐全
 # （首启由 etc/uci-defaults/99-u01-* 补 chmod + enable，git 带过来的权限位不可靠）
 for f in usr/libexec/u01simd.py usr/libexec/netled.py usr/libexec/ledidle.py \
          usr/libexec/batled.py usr/libexec/chg_regs.py usr/libexec/u01band.py \
+         usr/libexec/u01netmond.sh \
          etc/init.d/u01sim etc/init.d/netled etc/init.d/ledidle \
-         etc/init.d/batled etc/init.d/u01band \
+         etc/init.d/batled etc/init.d/u01band etc/init.d/u01netmond \
          etc/u01band.conf \
          etc/hotplug-gcreboot.json \
          etc/uci-defaults/99-u01-lamps etc/uci-defaults/99-u01-rndis \
-         etc/uci-defaults/99-u01-ssh etc/dropbear/authorized_keys; do
+         etc/uci-defaults/99-u01-ssh etc/uci-defaults/99-u01-net \
+         etc/init.d/qmi-modem-410-init etc/init.d/qmi_auto_activate \
+         etc/dropbear/authorized_keys; do
 	[ -n "$OVL" ] && [ -s "$OVL/$f" ] || { echo "!! 覆盖层缺文件 $f (OVL=${OVL:-无})"; u01_fail=1; }
 done
 # 两份覆盖件的内容也要当场验，光"文件在"不够：
@@ -431,6 +502,26 @@ done
 	|| { echo "!! 覆盖层的 batled.py 还是没有 LedBars 后端的那版（裸 GPIO 会 EBUSY 崩循环）"; u01_fail=1; }
 [ -n "$OVL" ] && grep -q 'usb-detect' "$OVL/etc/hotplug-gcreboot.json" \
 	&& { echo "!! 覆盖层的 hotplug-gcreboot.json 还写着 usb-detect，得改指 pm8916-lbc 那颗 extcon"; u01_fail=1; }
+# 两颗原厂 qmi 服务必须是"空壳"。只看不像空壳的东西，注释里写着那些关键词是故意的
+# （要说清原版干了什么），所以先把注释行剥掉再判。
+if grep -vE '^[[:space:]]*#' "$OVL/etc/init.d/qmi-modem-410-init" 2>/dev/null | grep -qE 'procd_open_instance|uim-sim-power|/usr/bin/qmi'; then
+	echo "!! 覆盖层的 qmi-modem-410-init 不是空壳：开机 25 秒那一脚 repower 会把刚建好的数据会话打死"; u01_fail=1
+fi
+if grep -vE '^[[:space:]]*#' "$OVL/etc/init.d/qmi_auto_activate" 2>/dev/null | grep -qE 'procd_open_instance|inhibit|/usr/bin/qmi'; then
+	echo "!! 覆盖层的 qmi_auto_activate 不是空壳：respawn 常驻挂 monitor+inhibit，和 ModemManager 抢同一根 QMI 控制口"; u01_fail=1
+fi
+# 看门狗对 /proc/net/route 的解析：ash 的 read 会把"剩余全部字段"塞进最后一个变量，
+# 少一个 rest 时 mask 会变成 "00000000 0 0 0"，判据恒假 —— 服务在跑但永远不动作，等于没烘。
+# （这不是假想：本地写完就是这样，是真设备上拿三个样本跑出来的。）
+grep -q 'read -r iface dest gw flags refcnt use metric mask rest' "$OVL/usr/libexec/u01netmond.sh" 2>/dev/null \
+	|| { echo "!! u01netmond.sh 的 route 解析少了 rest 字段，默认路由判据恒假"; u01_fail=1; }
+# 首启脚本必须 enable 之后还 start：uci-defaults 跑在 boot 的 done 阶段，rc.d 软链早读过了，
+# 只 enable 的话第一次开机这服务是死的。
+grep -qE '/etc/init.d/\$s start' "$OVL/etc/uci-defaults/99-u01-net" 2>/dev/null \
+	|| { echo "!! 99-u01-net 只 enable 没 start，第一次开机看门狗不跑"; u01_fail=1; }
+# u01simd 的 MPSS 重启要带上"当前没有 wwan 默认路由"这道闸，否则它会主动把数据会话打死
+grep -q 'default_via_wwan' "$OVL/usr/libexec/u01simd.py" 2>/dev/null \
+	|| { echo "!! u01simd.py 还是老逻辑（读不出就重启 MPSS，最多 3 次再来一轮），会把蜂窝打死"; u01_fail=1; }
 # 基带固件：qcom-firmware 那个包切出来的是 WF2 的 mba.mbn/modem.*，这颗 U01 的 MPSS
 # 认不了它（dmesg: MPSS authentication failed: -19，基带整个起不来、无 wwan0）。
 # 覆盖层必须带本机自己的原厂固件盖住它，判据用 mba.mbn/modem.mdt 的 md5。
@@ -448,6 +539,80 @@ for pair in "mba.mbn $FWMD5_70" "modem.mdt $FWMD5_AB"; do
 done
 nfw=$(ls "$OVL/lib/firmware" 2>/dev/null | grep -c -E '^(mba\.mbn|modem\.(b[0-9]+|mdt))$')
 [ "$nfw" = 22 ] || { echo "!! 覆盖层 lib/firmware 只有 $nfw 个 mba/modem 文件，应为 22（少一个 PIL 就认证不过）"; u01_fail=1; }
+# WCNSS（Pronto）固件：第 13 跑刷机后每次开机 T+22~24 必炸
+#   qcom-q6v5-mss: fatal error received: coex_interface.c:530:MCS_CXM assertion
+#                  QMI_CSI_CB_NO_ERR == req_cb_retval fail
+# QMI_CSI 的服务端在 WCNSS 里、客户端在 MPSS 里。镜像的 mba/modem 已逐个 md5 对上本机原厂，
+# 但 /lib/firmware/wcnss.* 九个全是 WF2 那套（wcnss.mdt 41d715d8 ≠ 原厂 62bb56b2，
+# wcnss.b06 差 51 万字节），等于原厂 MPSS 配别人家 Pronto。这里把原厂九个也盖进去。
+# 原厂九个和 WF2 九个同名（mdt/b00/b01/b02/b04/b06/b09/b10/b11），盖完不会留混代文件。
+FWMD5_WC=62bb56b2bfd0a1aa1ef57ec44b51a396	# wcnss.mdt
+for pair in "wcnss.mdt $FWMD5_WC"; do
+	set -- $pair
+	f="$OVL/lib/firmware/$1"; want="$2"
+	if [ ! -s "$f" ]; then
+		echo "!! 覆盖层缺 lib/firmware/$1（不盖住 WF2 的 wcnss，coex 断言每boot必炸）"; u01_fail=1
+	else
+		got=$(md5sum "$f" | cut -d" " -f1)
+		[ "$got" = "$want" ] || { echo "!! 覆盖层 lib/firmware/$1 md5=$got 应为 $want"; u01_fail=1; }
+	fi
+done
+nwc=$(ls "$OVL/lib/firmware" 2>/dev/null | grep -c -E '^wcnss\.(b[0-9]+|mdt)$')
+[ "$nwc" = 9 ] || { echo "!! 覆盖层 lib/firmware 只有 $nwc 个 wcnss 文件，应为 9（少一个 PIL 分段就加载失败，WiFi 整个没了）"; u01_fail=1; }
+grep -q 'compatible = "ramoops"' $DTS \
+	|| { echo "!! ramoops 那块没进 $DTS，周期重启还是抓不到最后打印"; u01_fail=1; }
+# ramoops 的 reg 必须和 reserved-memory 里的兄弟节点同宽。真凭据在 $DTS 自己的 include 链上：
+# msm8916-xinxun-wf2.dts → msm8916-mifi.dtsi → msm8916-pm8916.dtsi → msm8916.dtsi，
+# 最后那份 reserved-memory 写 #address-cells=<2> + #size-cells=<2>（tz@86500000 =
+# <0x0 0x86500000 0x0 0x180000>）⇒ 只能是 4 cell；写成 2 cell dtc 当场报错，四个小时白等。
+# 上一版这条门是拿"和 heredoc 一模一样的字面"去 grep，改坏字面就两边一起通过（沙箱反例抓的正是它），
+# 现在改成数真树里兄弟节点的 cell，来源和 heredoc 不同，改任何一边都会露。
+u01_reg_cells() { # u01_reg_cells <块起始样式> <文件>：该块里第一个 reg 的 cell 数（数不到给 0）
+	sed -n "/$1/,/};/p" "$2" 2>/dev/null |
+		sed -n 's/^[[:space:]]*reg[[:space:]]*=[[:space:]]*<\(.*\)>[[:space:]]*;.*$/\1/p' |
+		head -1 | wc -w
+}
+u01_ddir=$(dirname $DTS)
+u01_chain=" $DTS "
+u01_lvl=$DTS
+u01_hop=0
+while [ $u01_hop -lt 6 ]; do
+	u01_hop=$((u01_hop + 1))
+	u01_next=""
+	for u01_f in $u01_lvl; do
+		for u01_i in $(sed -n 's/^[[:space:]]*#include[[:space:]]*"\([^"]*\.dtsi\)"[[:space:]]*$/\1/p' "$u01_f" 2>/dev/null); do
+			u01_p="$u01_ddir/$u01_i"
+			[ -f "$u01_p" ] || continue
+			case "$u01_chain" in *" $u01_p "*) continue ;; esac
+			u01_chain="$u01_chain$u01_p "
+			u01_next="$u01_next $u01_p"
+		done
+	done
+	u01_lvl=$u01_next
+	[ -n "$u01_lvl" ] || break
+done
+u01_sib=0
+u01_sibsrc=""
+for u01_f in $u01_chain; do
+	# $DTS 自己跳过：它那份 reserved-memory 就是本次注入写进去的，拿它当对照等于自己证自己。
+	[ "$u01_f" = "$DTS" ] && continue
+	u01_n=$(u01_reg_cells 'reserved-memory[[:space:]]*{' "$u01_f")
+	if [ "$u01_n" -gt 0 ] 2>/dev/null; then u01_sib=$u01_n; u01_sibsrc=$u01_f; break; fi
+done
+u01_me=$(u01_reg_cells 'ramoops@[0-9a-fA-F]*' $DTS)
+if [ "$u01_sib" -gt 0 ] 2>/dev/null && [ "$u01_me" -gt 0 ] 2>/dev/null; then
+	if [ "$u01_me" = "$u01_sib" ]; then
+		echo "== U01：ramoops 的 reg 是 $u01_me cell，和 $u01_sibsrc 里 reserved-memory 兄弟一致 =="
+	else
+		echo "!! ramoops 的 reg 是 $u01_me cell，$u01_sibsrc 的 reserved-memory 兄弟是 $u01_sib cell ⇒ dtc 会报错"
+		u01_fail=1
+	fi
+else
+	# include 链上没数到兄弟节点（树换了结构、dtsi 不在 target/linux/msm89xx/dts）：退回字面，
+	# 4 cell 这条是照 msm8916.dtsi@05d3cf2a 定下来的，别让它静默跳过。
+	grep -q 'reg = <0x0 0x9fe00000 0x0 0x200000>' $DTS \
+		|| { echo "!! ramoops 的 reg 不是 4 cell 形式（且 include 链里数不到兄弟可比），dtc 会报错"; u01_fail=1; }
+fi
 grep -q '^CONFIG_PACKAGE_python3=y' .config 2>/dev/null \
 	|| echo "!! 警告：.config 里 python3 没开，用户态服务全都起不来（应改 config/wf2.config）"
 [ -e package/libs/libffi/Makefile ] || { echo "!! package/libs/libffi 不在树里，glib2 打不出 ipk"; u01_fail=1; }
@@ -462,7 +627,7 @@ if [ "$u01_fail" != 0 ]; then
 	ls -l "$OVL/etc/" 2>&1 | sed 's/^/   /'
 	exit 1
 fi
-echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + 覆盖层用户件齐全（含拔线钩子/频段锁）+ 本机原厂基带固件 22 件 + libffi/mcopy 就位 + netfilter 已合一 =="
+echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ 充电压 4.35 V×2 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + ramoops + 覆盖层用户件齐全（拔线钩子/频段锁/网卡看门狗/两颗 qmi 空壳）+ 本机原厂基带固件 22 件 + 原厂 WCNSS 9 件 + libffi/mcopy 就位 + netfilter 已合一 =="
 
 # ---- 7) 依赖缺口体检（只报，不拦）----
 # prepare-tmpinfo 扫全部 Makefile 时会把"某包依赖一个整棵树都不存在的包名"打成

@@ -1,10 +1,18 @@
 #!/usr/bin/env python3
 """U01 读卡常驻：开机按配置把 SIM 选择脚拉成"卡槽"或"内置卡"那一档并一直占住，
-卡读不出来就重启一次 MPSS 让 modem 重新给卡上电。
+卡读不出来时**有节制地**重启 MPSS 让 modem 重新给卡上电。
 
 为什么必须常驻：这台 WF2 的 DTB 把 sim_en/sel 指向了错误的控制器和脚位，内核侧不会驱动；
 而 /sys/class/gpio 没开，只能用 cdev ABI v2 申请 line —— line 的持有者一退出脚就掉回默认电平，
 所以要做成常驻进程（跟 batled 一个套路）。
+
+为什么重启要有节制（第 14 跑改的）：stop/start remoteproc0 是整机级代价——
+实测这颗 MPSS 本来就会自己崩（同一 boot 里 T+24 coex 断言、T+925 lte_ml1 timer 断言），
+每崩一次内核都会把 wwan0qmi0/at0/at1 拆了重挂，ModemManager 换对象编号，netifd 那段
+拿到旧对象，蜂窝数据当场死且不会自愈（要 ifup modem 才回来）。老逻辑"读不出就重启、
+最多连做 3 次、做完清零再来一轮"正好是这个的最凶发起者，而且它在数据会话还好的时候也照做。
+现在加三道闸：连续 3 次**明确**读不出（AT 口没结果不算）+ 当前没有走 wwan 的默认路由 +
+距上次重启至少 1800 秒。
 
 脚位用的是原厂安卓 DTB 里 /soc/gpio_leds 那组（SimSwitchThread 写的就是它们）：
   gpio119 = esim1_en = 托盘卡槽，gpio14 = esim2_en = 原机内置卡。两根互斥，只拉高要读的那根。
@@ -17,6 +25,8 @@ import ctypes, os, select, struct, subprocess, sys, time
 
 CONF = "/etc/u01sim.conf"
 DEFAULT_SLOT = 1
+FAILS_MAX = 3        # 连续几次"明确读不出"才允许动 MPSS
+COOL = 1800          # 两次 MPSS 重启之间至少隔 30 分钟
 PIN_TRAY = 119      # esim1_en -> slot 0
 PIN_BUILTIN = 14    # esim2_en -> slot 1
 PINS = [PIN_TRAY, PIN_BUILTIN]
@@ -152,6 +162,22 @@ def at_once(cmd, wait=3.0):
     return txt or None
 
 
+def default_via_wwan(path="/proc/net/route"):
+    """IPv4 默认路由当前是否走 wwan*（和 /usr/libexec/u01netmond.sh 同一判据）。
+    只要会话还在，就绝不动 MPSS——重启一次数据当场死，值不回这个险。读不到一律当"没有"。"""
+    try:
+        with open(path) as f:
+            for ln in f:
+                p = ln.split()
+                # 字段：Iface Destination Gateway Flags RefCnt Use Metric Mask ...
+                if len(p) >= 8 and p[1] == "00000000" and p[7] == "00000000":
+                    if p[0].startswith("wwan"):
+                        return True
+    except OSError:
+        pass
+    return False
+
+
 def wait_ready(sec):
     """轮询 AT+CPIN?。READY 返回 True；只有 modem 明确回了"卡不在/未初始化"才返回 False。
     AT 口没应答（多半被 ModemManager/sigmo 占着）时不判失败，一直等到超时。"""
@@ -196,27 +222,35 @@ def main():
         log("结果: %s" % at_once("AT+CPIN?", 6))
         return
 
-    restarts = 0
+    fails = 0
     last = None
+    last_restart = -COOL - 1        # 让第一次允许动手
     while True:
-        r = wait_ready(20 if restarts == 0 else 10)
+        r = wait_ready(20 if fails == 0 else 10)
         if r != last:
             log("状态 -> %s" % {True: "读卡正常", False: "读卡失败", None: "AT 口没结果"}[r])
             last = r
         if r is True:
-            restarts = 0
+            fails = 0
         elif r is None:
-            pass                      # AT 口被占，什么都不做，下轮再看
-        elif restarts < 3:
-            restarts += 1
-            log("卡明确不可用，第 %d 次重启 MPSS 重新给卡上电" % restarts)
-            rproc("stop")
-            time.sleep(4)
-            rproc("start")
-            time.sleep(12)
+            pass                      # AT 口被占，既不判失败也不动手
         else:
-            log("三次重启都读不出，只保持脚位")
-            restarts = 0              # 再等一轮，别彻底放弃
+            fails += 1
+            now = time.time()
+            if fails < FAILS_MAX:
+                log("读卡失败 %d/%d 次，先攒着不动" % (fails, FAILS_MAX))
+            elif default_via_wwan():
+                log("读卡连着失败 %d 次，但默认路由还在 wwan 上（数据会话没断），不动 MPSS" % fails)
+            elif now - last_restart < COOL:
+                log("读卡连着失败 %d 次，但离上次 MPSS 重启不到 %d 秒，先不动" % (fails, COOL))
+            else:
+                log("连续 %d 次明确读不出 + 没有 wwan 默认路由 + 已过冷却 -> 重启 MPSS 重新给卡上电" % fails)
+                fails = 0
+                last_restart = now
+                rproc("stop")
+                time.sleep(4)
+                rproc("start")
+                time.sleep(12)
         time.sleep(30)
 
 

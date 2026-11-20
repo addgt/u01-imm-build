@@ -1,0 +1,25 @@
+#!/bin/sh /etc/rc.common
+# U01：覆盖层把镜像自带的这颗服务换成了空壳，开机什么都不做。
+#
+# 原版（真正的活在 /usr/bin/qmi-modem-410-init，那个文件我没动）在 start_service 里
+# `sleep 25` 之后无条件执行 repower_sim()：
+#   qmicli -d /dev/wwan0qmi0 -p --uim-sim-power-off=1 ; power-on ; --uim-reset
+# 第 13 跑镜像上两次独立开机的实测链条：
+#   [cm] emm-detached → connection #1 finished: duration 36s
+#   → QMI protocol error (37): 'UimUninitialized'
+#   → netifd 拆掉会话并把 modem 置 disabled
+#   → ModemManager 重新编号 Modem/0 -> Modem/1，"couldn't find modem"
+#   → 之后 ifstatus modem 恒 up=false（MM_INVALID_ALLOWED_MODES_LIST），不自愈；
+#     手动 `ifup modem` 约 20~25 秒才恢复。
+# 也就是说：开机 25 秒这一脚直接把刚建好的数据会话打死，而且打死之后没人再管。
+#
+# 它另外还剩一件事是有用的——AT+CPMS="ME","ME","ME"（把短信默认存储设成 ME），
+# 但那和上网无关；要用的话单独加一行，不能让它带着 repower 自启。
+# 注：机型关键词是 "uz801|jz02v10|gexing-sp970|ufi-wf2"，本机 DT model 是
+# "U01 4G Modem Stick"，所以 APN 重置/激活那几个分支本来就没跑过——死的只有 repower。
+
+START=99
+STOP=10
+
+start() { return 0; }
+stop() { return 0; }

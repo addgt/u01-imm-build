@@ -1,0 +1,26 @@
+#!/bin/sh
+# 首启：把自愈看门狗装上电，并把 netifd 的 modem 段配成运行时验过的那组值。
+# 两颗原厂 qmi 服务（qmi-modem-410-init / qmi_auto_activate）不用在这里 disable：
+# 它们在覆盖层里已经被换成空壳（files/etc/init.d/ 同名文件），软链还在但 start 直接返回 0。
+
+for f in /usr/libexec/u01netmond.sh; do
+	[ -f "$f" ] && chmod 755 "$f"
+done
+for s in u01netmond; do
+	[ -f "/etc/init.d/$s" ] || continue
+	chmod 755 "/etc/init.d/$s"
+	/etc/init.d/$s enable
+	# enable 只建 rc.d 软链，而 uci-defaults 跑在 boot 的 done 阶段（软链早就读过了），
+	# 不 start 的话第一次开机这个看门狗是死的，得等第二次开机。
+	/etc/init.d/$s start
+done
+
+# retry=5 / auto=1 是第 13 跑镜像上运行时改过并 uci commit 的那组值，那次开机 T+25
+# 就自动连上了（默认值下出现过 "couldn't find modem" 之后再也不试）。
+# 这里只在确实有 modem 这个段时才动，别把别的机型的 network 配置改坏。
+if uci -q get network.modem.proto >/dev/null 2>&1; then
+	[ x"$(uci -q get network.modem.retry)" = x"5" ] || uci set network.modem.retry='5'
+	[ x"$(uci -q get network.modem.auto)" = x"1" ] || uci set network.modem.auto='1'
+	uci commit network
+fi
+exit 0

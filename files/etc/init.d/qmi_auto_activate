@@ -1,0 +1,22 @@
+#!/bin/sh /etc/rc.common
+# U01：覆盖层把镜像自带的这颗服务换成了空壳，开机什么都不做。
+#
+# 原版用 procd `respawn` 常驻跑 /usr/bin/qmi_auto_activate，干两件事：
+#   1) mmcli --inhibit-device（按住 ModemManager，不让它自己重配 modem）
+#   2) qmicli -d /dev/wwan0qmi0 -p --uim-monitor-refresh-all-status（挂着 UIM 状态监控）
+# 两个都是"进程退出就再拉起来"的死循环，等于长期占着同一根 /dev/wwan0qmi0 控制口，
+# 而这根口是 ModemManager 自己的。
+#
+# 说明白代价：第 13 跑镜像 T+925 那次 MPSS 崩溃（lte_ml1_common_timer.c:390）不是它引起的，
+# 是 dmesg 里 modem 侧先 assert、内核把 wwan 端口拆了重挂，它跟着掉线
+# （logread: "port 'wwan0qmi0' no longer controllable, reprobing"、
+#  qmi_auto_activate: "Cannot read from istream: connection broken"）。
+# 但在 MM 崩溃恢复、重建 modem 对象的这段时间里，多一个挂着 monitor + inhibit 的客户端
+# 只会添乱，而且它自己 respawn 回来之后并不会替 netifd 把会话连上——纯粹是风险没有收益。
+# 数据会话的正主是 netifd 的 modemmanager 段，QMI/UIM 的操作都由 MM 统一做。
+
+START=98
+STOP=10
+
+start() { return 0; }
+stop() { return 0; }
