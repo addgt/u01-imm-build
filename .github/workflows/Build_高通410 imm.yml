@@ -161,7 +161,12 @@ jobs:
       continue-on-error: true
       uses: actions/cache@v4
       with:
-        path: /mnt/openwrt/dl
+        # go-mod-cache 不入库：第 14 跑就是死在这颗缓存上——跨跑复用时它可能在写盘途中被
+        # 存走，于是同一模块版本里混进两份内容，Go 包要到编完 toolchain 才炸（202 分钟以后）。
+        # 源码 tarball 照旧缓存，Go 模块每跑现下，几分钟的事。
+        path: |
+          /mnt/openwrt/dl
+          !/mnt/openwrt/dl/go-mod-cache
         key: dl-${{ github.run_id }}
         restore-keys: |
           dl-
@@ -381,6 +386,25 @@ jobs:
         done
         echo "== 早检查到此为止（这一段永不失败），下面进主编译 =="
 
+
+    - name: U01 Go 包预检（把第 14 跑那种雷从 202 分钟挪到 40 分钟）
+      timeout-minutes: 90
+      run: |
+        # 第 14 跑 235 分钟里前 202 分钟白烧，最后死在 dl/go-mod-cache 里一份混了版本的
+        # kardianos/service 上（librespeed-go / ddns-go）。这道预检只单独编选中的 Go 包：
+        # 失败先清模块缓存重编一次（那就是缓存脏，功能一颗不少），清完还不过的才剔，
+        # 而且只剔 package/feeds/ 下的、连同它的 luci 前端；核心包挂了/剔超 12 颗/被依赖
+        # 拉回来 → 判红。预检自己没跑成一律不拦（exit 2），别为一根保险丝停整轮。
+        cd openwrt
+        rc=0
+        python3 "$GITHUB_WORKSPACE/u01_local/go_preflight.py" . || rc=$?
+        if [ "$rc" -ge 2 ]; then
+          echo "::warning::Go 预检自己没跑成（rc=$rc，原文见 openwrt/u01_go_preflight.log），不拦，直接进主编译"
+        elif [ "$rc" != 0 ]; then
+          echo "!! Go 预检判红，理由在上面那段里；这一轮不用等到底了"
+          exit 1
+        fi
+        echo "== 进主编译 =="
 
     - name: Compile the firmware
       id: compile
