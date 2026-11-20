@@ -33,7 +33,9 @@ import sys
 JOBS = os.environ.get("U01_JOBS") or str(os.cpu_count() or 4)
 MAKE = shlex.split(os.environ.get("U01_MAKE") or "make")
 FEAT_MAX_DROP = 12
-GO_MARK = re.compile(r"\$\(call GoBinary|GoPackage/Build|golang-version-check")
+GO_MARK = re.compile(r"GO_PKG\s*:?=|golang-package\.mk|\$\(call GoBinary")
+# feed 里 Go 包的真写法是 GO_PKG:=… + include ../../lang/golang/golang-package.mk（第 15 跑就是
+# 被这一条教的：只认 $(call GoBinary 会扫到 0 颗，预检变成空跑）。wf2 自带那些包用 GoBinary。
 BUILD_PKG = re.compile(r"BuildPackage\s*,\s*([A-Za-z0-9._+-]+)")
 PKG_NAME = re.compile(r"^PKG_NAME\s*:?=\s*(\S+)", re.M)
 DEPENDS = re.compile(r"^[ \t]*(?:PKG_)?DEPENDS\s*([+:?]?=)\s*(.*)$", re.M)
