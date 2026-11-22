@@ -436,6 +436,27 @@ else
 	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dmux-pc.patch，wwan0 还会被 RPM_ERROR 卡死"
 fi
 
+# ---- 912：modem 重启后把 bam-dmux 的数据面重建起来 ------------------------
+# 911 只解决"别把 RX 拆掉"，解决不了"modem 换了实例"：两条环的描述符都是对着
+# 上一个 MPSS 武装的。实测拆干净会话再 reload，wwan0 能 up、能配上 IP，
+# ping 依然 3/3 全丢、dmesg 里 dmux 一行都不多——RX 环静默失灵，比报错更难查。
+# 另一条路（会话还活着时 reload）则是 TX 环游标卡死，ndo_open 恒 -EAGAIN。
+# 这颗把两件事都交给 remoteproc 的 subdev 钩子：stop（在 q6v5_stop 断电之前）
+# 冲 TX 环、拆 RX 环、把 remote_channels 清零并 detach 网卡；prepare（在 MBA
+# 点火之前）按冷启动同序重建，通道由 modem 重新发 CMD_OPEN 开回来。
+# 顺带两处：pc 中断改成采样真实电平（重启期间这条线跳不止一次，取反推导会反），
+# bam_dmux_power_on() 做成幂等（钩子和 modem 自己的上电请求都会调它）。
+# 和 911 同一颗文件，串打顺序 911 -> 912，本地 make_bam_ssr_patch.py 已逐字节自证。
+KPSB="$REPO_DIR/u01_local/patches/pm8916-bam-dmux-ssr.patch"
+if [ -f "$KPD/912-pm8916-bam-dmux-ssr.patch" ]; then
+	echo "== U01：patches-$KV 里已经有 912-pm8916-bam-dmux-ssr.patch（fork 同步过？），不覆盖 =="
+elif [ -f "$KPSB" ]; then
+	cp "$KPSB" "$KPD/912-pm8916-bam-dmux-ssr.patch"
+	echo "== U01：已把 bam-dmux 重启重建补丁放进 $KPD/912-pm8916-bam-dmux-ssr.patch =="
+else
+	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dmux-ssr.patch，modem 重启后数据面还是死的"
+fi
+
 # 注入自检：哪一项没落上就直接终止，别花一个半小时编一版跟上一版一样的固件
 u01_fail=0
 grep -q '^CONFIG_BATTERY_PM8916_BMS_VM=y' $CFG                       || { echo "!! BMS-VM 没进 $CFG"; u01_fail=1; }
@@ -468,6 +489,67 @@ grep -Eq '^CONFIG_QCOM_BAM_DMUX=[ym]' .config 2>/dev/null \
 	|| echo "!! 警告：.config 里 QCOM_BAM_DMUX 没 =y/=m，设备上根本不会有 wwan0"
 grep -q '^CONFIG_QCOM_SMP2P=y' .config 2>/dev/null \
 	|| echo "!! 警告：QCOM_SMP2P 没开，pc/pc-ack 中断通道不存在"
+# 912 只验 + 行；- 行是老代码，命中反而说明没拆干净。
+[ -f "$KPD/912-pm8916-bam-dmux-ssr.patch" ]                             || { echo "!! $KPD/912-pm8916-bam-dmux-ssr.patch 不在位，modem 一重启 wwan0 就又成死数据面"; u01_fail=1; }
+grep -q '^--- a/drivers/net/wwan/qcom_bam_dmux.c' "$KPD/912-pm8916-bam-dmux-ssr.patch" \
+	|| { echo "!! 912 补丁动的不是 drivers/net/wwan/qcom_bam_dmux.c，文件拿错了"; u01_fail=1; }
+for g in 'rproc_add_subdev' 'bam_dmux_subdev_prepare' 'bam_dmux_subdev_stop' \
+		 'bam_dmux_tx_flush' 'bam_dmux_rx_rearm' 'IRQCHIP_STATE_LINE_LEVEL' 'restart_pending'; do
+	grep -Fq "$g" "$KPD/912-pm8916-bam-dmux-ssr.patch" \
+		|| { echo "!! 912 补丁缺 $g 这一笔，多半是复制错了文件或版本不对"; u01_fail=1; }
+done
+if grep -Eq '^\+.*(wait_for_completion_timeout|wait_event_timeout)' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 补丁把 pc-ack 等待又带回来了（原厂 MPSS 不回），resume 必超时 latch RPM_ERROR"; u01_fail=1
+fi
+if grep -Eq '^\+.*bam_dmux_pc_vote\(dmux, false\)' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 补丁还留着往下投票，RX 会被 modem 侧掉电拆走"; u01_fail=1
+fi
+# 实测：重启后的 MPSS 不会自己补 CMD_OPEN，只会应答 ndo_open 发的那条。一 detach，
+# ip link set wwan0 up 就变 ENETDOWN，等于把唯一能开通道的路也堵死——不许出现在 912 里。
+if grep -Eq '^\+.*netif_device_detach' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 补丁把网卡 detach 了，重启后 wwan0 会卡在 ENETDOWN 打不开"; u01_fail=1
+fi
+# 设备侧实测过两条硬禁忌，写进内核就是雷：unbind 活着的 bam-dmux（MSS 断电态）
+# = 整机硬复位；拿内核符号地址喂 devmem（高通 VA != PA）= 当场 panic。
+if grep -Eq '^\+.*(device_release_driver|driver_detach|of_platform_device_destroy)' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 补丁里出现了拆设备的那类调用，先停下来核一遍"; u01_fail=1
+fi
+# u01mpssd：点火服务必须"先拆会话再断电"，顺序反了就是把活会话留在 MSS 电源下。
+[ -n "$OVL" ] && [ -s "$OVL/usr/libexec/u01mpssd.sh" ] \
+	|| { echo "!! 覆盖层缺 usr/libexec/u01mpssd.sh，900 秒死线没人管"; u01_fail=1; }
+if [ -n "$OVL" ] && [ -s "$OVL/usr/libexec/u01mpssd.sh" ]; then
+	u01_ms="$OVL/usr/libexec/u01mpssd.sh"
+	u01_a=$(grep -n -F 'service u01netmond stop' "$u01_ms" | head -1 | cut -d: -f1)
+	u01_b=$(grep -n -F 'service modemmanager stop' "$u01_ms" | head -1 | cut -d: -f1)
+	u01_c=$(grep -n -F 'ifdown "$INTF"' "$u01_ms" | head -1 | cut -d: -f1)
+	u01_d=$(grep -n -F 'echo stop > "$RPROC"' "$u01_ms" | head -1 | cut -d: -f1)
+	u01_e=$(grep -n -F 'echo start > "$RPROC"' "$u01_ms" | head -1 | cut -d: -f1)
+	if [ -n "$u01_a" ] && [ -n "$u01_b" ] && [ -n "$u01_c" ] && [ -n "$u01_d" ] && [ -n "$u01_e" ] &&
+	   [ "$u01_a" -lt "$u01_b" ] && [ "$u01_b" -lt "$u01_c" ] &&
+	   [ "$u01_c" -lt "$u01_d" ] && [ "$u01_d" -lt "$u01_e" ]; then
+		echo "== U01：u01mpssd 是 停netmond($u01_a)->停MM($u01_b)->ifdown($u01_c)->断电($u01_d)->点火($u01_e) =="
+	else
+		echo "!! u01mpssd 的拆会话->断电->点火 顺序不对($u01_a/$u01_b/$u01_c/$u01_d/$u01_e)：必须先拆会话再给 MSS 断电"; u01_fail=1
+	fi
+	for g in 'mba_anchor()' 'echo disabled > "$RECOV"' 'HORIZON=900' '--status'; do
+		grep -qF -- "$g" "$u01_ms" || { echo "!! u01mpssd.sh 里没有 $g"; u01_fail=1; }
+	done
+	# 实测：崩溃自愈重点 MBA 时只打 "MBA booted"，不打 "Booting fw image mba.mbn"。
+	# 锚点要是取后者，自愈之后读到的是旧时间，死线一路往前赶，服务变成每轮立刻断电。
+	grep -qF 'grep -a "MBA booted"' "$u01_ms" \
+		|| { echo "!! u01mpssd.sh 的 MBA 锚点没锚在 \"MBA booted\" 上，自愈之后计时会读到旧锚点"; u01_fail=1; }
+	# 这台 BusyBox 没有 bc（算术只走 $(( )) 和 awk），写了 bc 服务就是起来报错
+	if grep -Eq '(^|[^[:alnum:]_])bc([[:space:]]|$)' "$u01_ms"; then
+		echo "!! u01mpssd.sh 用了 bc，这台 BusyBox 没有它"; u01_fail=1
+	fi
+	# 崩溃路径不能出现在这里：unbind 会把 wwan0 直接变没（实测只能重启找回）
+	if grep -Eq 'unbind|rmmod' "$u01_ms"; then
+		echo "!! u01mpssd.sh 里有 unbind/rmmod，那条路实测是整机硬复位"; u01_fail=1
+	fi
+fi
+grep -q 'u01mpssd' "$OVL/etc/uci-defaults/99-u01-net" 2>/dev/null \
+	|| { echo "!! 99-u01-net 没把 u01mpssd enable+start，第一次开机没人做定点点火"; u01_fail=1; }
+
 grep -q '^CONFIG_CHARGER_PM8916_LBC=y' $CFG                           || { echo "!! CHARGER_PM8916_LBC 没进 $CFG"; u01_fail=1; }
 grep -q '^CONFIG_DEBUG_FS=y' $CFG                                     || { echo "!! DEBUG_FS 没进 $CFG，刷完还是读不到 PMIC 寄存器"; u01_fail=1; }
 grep -q "DEVICE_DTS := msm8916-xinxun-wf2" target/linux/msm89xx/image/msm8916.mk || echo "!! 警告：上游 device 规则没登记 wf2 的 DTS，$DTS 可能不参与编译"
@@ -490,8 +572,10 @@ grep -q "model = \"$U01_MODEL\"" $DTS                                || { echo "
 for f in usr/libexec/u01simd.py usr/libexec/netled.py usr/libexec/ledidle.py \
          usr/libexec/batled.py usr/libexec/chg_regs.py usr/libexec/u01band.py \
          usr/libexec/u01netmond.sh \
+         usr/libexec/u01mpssd.sh \
          etc/init.d/u01sim etc/init.d/netled etc/init.d/ledidle \
          etc/init.d/batled etc/init.d/u01band etc/init.d/u01netmond \
+         etc/init.d/u01mpssd \
          etc/init.d/u01pstore \
          etc/u01band.conf \
          etc/hotplug-gcreboot.json \

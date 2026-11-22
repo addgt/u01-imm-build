@@ -3,10 +3,10 @@
 # 两颗原厂 qmi 服务（qmi-modem-410-init / qmi_auto_activate）不用在这里 disable：
 # 它们在覆盖层里已经被换成空壳（files/etc/init.d/ 同名文件），软链还在但 start 直接返回 0。
 
-for f in /usr/libexec/u01netmond.sh; do
+for f in /usr/libexec/u01netmond.sh /usr/libexec/u01mpssd.sh; do
 	[ -f "$f" ] && chmod 755 "$f"
 done
-for s in u01netmond; do
+for s in u01netmond u01mpssd; do
 	[ -f "/etc/init.d/$s" ] || continue
 	chmod 755 "/etc/init.d/$s"
 	/etc/init.d/$s enable
