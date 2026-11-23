@@ -22,6 +22,14 @@ librespeed-go / ddns-go 两颗 Go 附加包上——日志是
 
 用法：python3 go_preflight.py <openwrt 目录>
 退出：0 通过或已安全剔除；1 判红（值得为它停一轮）；2 预检没跑成，按老样子直接编
+
+⚠️ 第 16 跑就是死在这一步的判读上：预检在 T+32 分钟直接编 Go 包，make 顺带把
+package/libs/toolchain 拉进来编，而那会儿 staging_dir/toolchain-*/lib/libgcc_s.so.* 根本还不存在
+（cp: cannot stat ... ⇒ Error 1）。它不是"核心包编不过"，是【工具链还没装】这个先后顺序问题，
+可当时按包名一判就成了红，整轮 32 分钟白烧，912 那颗补丁也跟着没产出。所以这里改成：
+先把交叉工具链按上游自己的顺序装好（make toolchain/install —— 这个目标不是我编的，
+include/toplevel.mk 里 `prepare_kernel_conf: .config toolchain/install FORCE` 就依赖它），
+再编 Go 包；并且只有"挂在预检对象自己身上"才允许判红，挂在依赖包上一律 exit 2 让路。
 """
 import os
 import re
@@ -33,6 +41,10 @@ import sys
 JOBS = os.environ.get("U01_JOBS") or str(os.cpu_count() or 4)
 MAKE = shlex.split(os.environ.get("U01_MAKE") or "make")
 FEAT_MAX_DROP = 12
+# 交叉工具链的预装目标。上游 include/toplevel.mk:155 那行 prepare_kernel_conf 就依赖它，
+# toolchain/Makefile 里 $(curdir)/install: $(curdir)/compile —— 不是我自己编出来的名字；
+# 装完 staging_dir/toolchain-*/lib/libgcc_s.so.* 才有东西可 cp。
+TOOLCHAIN_PRE = "toolchain/install"
 GO_MARK = re.compile(r"GO_PKG\s*:?=|golang-package\.mk|\$\(call GoBinary")
 # feed 里 Go 包的真写法是 GO_PKG:=… + include ../../lang/golang/golang-package.mk（第 15 跑就是
 # 被这一条教的：只认 $(call GoBinary 会扫到 0 颗，预检变成空跑）。wf2 自带那些包用 GoBinary。
@@ -161,6 +173,19 @@ def main():
     log = os.path.join(root, "u01_go_preflight.log")
     if os.path.exists(log):
         os.remove(log)
+
+    # 预检第一步先把交叉工具链装进 staging_dir：Go 包全吃它，不装的话 make 顺带编
+    # package/libs/toolchain 时 cp 不到 libgcc_s.so.*，十几颗包一起挂在依赖上，
+    # 预检就什么都判不出来了（run#16 的 32 分钟白烧）。
+    print("== 预检第一步：%s（%d 颗 Go 包都吃它）==" % (TOOLCHAIN_PRE, len(gos)))
+    rc0, off0 = run(MAKE + ["-j" + JOBS, TOOLCHAIN_PRE], root, log)
+    if rc0 != 0:
+        print("!! 预检没跑成：%s 自己退出 %d —— 这是工具链/环境的事，不是 Go 包的事，"
+              "主编译会按自己的顺序再编它" % (TOOLCHAIN_PRE, rc0))
+        print(tail(after(log, off0), 15))
+        print("== 判不了就不拦，按老样子直接编 ==")
+        return 2
+
     targets = ["%s/compile" % rel for rel, _ in gos]
     rc, off = run(MAKE + ["-j" + JOBS, "-k"] + targets, root, log)
     if rc == 0:
@@ -168,12 +193,25 @@ def main():
         return 0
 
     out = after(log, off)
-    failed = sorted(set(ERR_DIR.findall(out)))
-    if not failed:
+    hit = sorted(set(ERR_DIR.findall(out)))
+    # 只有"挂在预检对象自己身上"才允许往下判：依赖包（toolchain、target/linux 之类）挂掉
+    # 说的是环境顺序，不是 Go 包的问题——第 16 跑就是把 package/libs/toolchain 当成了核心包判红。
+    testee = set(rel for rel, _ in gos)
+    failed = [d for d in hit if d in testee]
+    other = [d for d in hit if d not in testee]
+    if other:
+        print("-- 挂掉但不是预检对象的依赖包（主编译按自己的顺序编，这里不替它判红）：%s --"
+              % " ".join(other))
+    if not hit:
         # make 自己的问题（用法错、目标写错、被信号打断），不是包的问题——别为这道保险丝停整轮
         print("!! 预检没跑成：make 退出 %d，但日志里一条 ERROR: package/xxx failed to build 都没有" % rc)
         print("   头 12 行：")
         print("\n".join("      " + l for l in out.splitlines()[:12]))
+        print("== 判不了就不拦，按老样子直接编 ==")
+        return 2
+    if not failed:
+        print("!! 预检没跑成：挂的全是依赖包，%d 颗 Go 包一颗都没轮到，判不了" % len(gos))
+        print(tail(out, 15))
         print("== 判不了就不拦，按老样子直接编 ==")
         return 2
 
