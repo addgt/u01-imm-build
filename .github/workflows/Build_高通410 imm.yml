@@ -307,8 +307,29 @@ jobs:
       run: |
         cd openwrt
         make download -j4 V=s
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
+        # ⚠️ 这两句原本是上游/packaging 的 `find dl -size -1024c -exec rm -f {} \;`，本意是丢掉
+        #    下坏的 distfile（错误页、半截包都只有几十 B，且都平铺在 dl/ 顶层）。但它没限深度，
+        #    于是递归进了 dl/go-mod-cache：Go 模块缓存里有【大量合法的小 .go】——
+        #    x/sys/unix 的 endian_little.go、race0.go 都只有几十字节。
+        #    第 18 跑的日志里它点名删掉 53446 个 go-mod-cache 文件，2 小时后主编译就报
+        #        x/sys@v0.49.0/unix: undefined: isBigEndian   ← endian_big.go/endian_little.go 被删
+        #        x/sys@v0.49.0/unix: undefined: raceenabled   ← race.go/race0.go 被删
+        #        x/sys@v0.49.0/unix: undefined: Syscall / RawSyscall
+        #        x/crypto@v0.58.0/bcrypt: undefined: base64Encode
+        #    第 14 跑那句 kardianos/service 的 s.execPath、第 17 跑"判红"的四颗 Go 包，是同一把刀。
+        #    为什么只有 r15 成过：r15 跑这一步时 dl 里还没有 go-mod-cache（没缓存可恢复），无东西可删；
+        #    r15 成功后把填好的 go-mod-cache 连同 dl 一起存进了 actions/cache（key dl-44771152496，
+        #    那句 `!/mnt/openwrt/dl/go-mod-cache` 排除实际没挡住），此后每一跑都恢复出这个胖缓存，
+        #    再被这一步自己掏空。加 -maxdepth 1 -type f 就只清顶层 distfile，绝不进模块缓存。
+        N0=$(find dl/go-mod-cache -type f 2>/dev/null | wc -l)
+        find dl -maxdepth 1 -type f -size -1024c -exec ls -l {} \;
+        find dl -maxdepth 1 -type f -size -1024c -exec rm -f {} \;
+        # 当场抽查：这一步绝不能动模块缓存。动了就在这一分钟出声，别再让它埋在 2 小时后的 undefined 里。
+        N1=$(find dl/go-mod-cache -type f 2>/dev/null | wc -l)
+        if [ "$N0" != "$N1" ]; then
+          echo "::warning::模块缓存文件数 $N0 -> $N1，被这一步删掉 $((N0 - N1)) 个 —— 这一轮的 Go 包会成串报 undefined"
+        fi
+        echo "   dl 顶层 $(ls -1 dl 2>/dev/null | wc -l) 项 / 模块缓存 $N1 个文件（清理前后 $N0 -> $N1）"
 
     - name: 查看 openwrt 目录
       run: |
