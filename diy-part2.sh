@@ -436,16 +436,12 @@ else
 	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dmux-pc.patch，wwan0 还会被 RPM_ERROR 卡死"
 fi
 
-# ---- 912：modem 重启后把 bam-dmux 的数据面重建起来 ------------------------
+# ---- 912b：MSS 断电期间 bam-dmux 完全惰性，上电后才重建数据面 -----------
 # 911 只解决"别把 RX 拆掉"，解决不了"modem 换了实例"：两条环的描述符都是对着
-# 上一个 MPSS 武装的。实测拆干净会话再 reload，wwan0 能 up、能配上 IP，
-# ping 依然 3/3 全丢、dmesg 里 dmux 一行都不多——RX 环静默失灵，比报错更难查。
-# 另一条路（会话还活着时 reload）则是 TX 环游标卡死，ndo_open 恒 -EAGAIN。
-# 这颗把两件事都交给 remoteproc 的 subdev 钩子：stop（在 q6v5_stop 断电之前）
-# 冲 TX 环、拆 RX 环、把 remote_channels 清零并 detach 网卡；prepare（在 MBA
-# 点火之前）按冷启动同序重建，通道由 modem 重新发 CMD_OPEN 开回来。
-# 顺带两处：pc 中断改成采样真实电平（重启期间这条线跳不止一次，取反推导会反），
-# bam_dmux_power_on() 做成幂等（钩子和 modem 自己的上电请求都会调它）。
+# 上一个 MPSS 武装的。912b 给驱动加 dead 总闸：xmit、wakeup、runtime resume、
+# RX 回收在断电期一律不进 DMA；stop(crashed=true) 连环都不碰，prepare 只恢复
+# pc IRQ。旧描述符的 terminate/free 也延后到 pc 抬线、BAM 确实上电之后，避免
+# 旧环被二次 issue。网卡保持 attached，重启后的 MPSS 只应答 ndo_open 的 CMD_OPEN。
 # 和 911 同一颗文件，串打顺序 911 -> 912，本地 make_bam_ssr_patch.py 已逐字节自证。
 KPSB="$REPO_DIR/u01_local/patches/pm8916-bam-dmux-ssr.patch"
 if [ -f "$KPD/912-pm8916-bam-dmux-ssr.patch" ]; then
@@ -494,7 +490,9 @@ grep -q '^CONFIG_QCOM_SMP2P=y' .config 2>/dev/null \
 grep -q '^--- a/drivers/net/wwan/qcom_bam_dmux.c' "$KPD/912-pm8916-bam-dmux-ssr.patch" \
 	|| { echo "!! 912 补丁动的不是 drivers/net/wwan/qcom_bam_dmux.c，文件拿错了"; u01_fail=1; }
 for g in 'rproc_add_subdev' 'bam_dmux_subdev_prepare' 'bam_dmux_subdev_stop' \
-		 'bam_dmux_tx_flush' 'bam_dmux_rx_rearm' 'IRQCHIP_STATE_LINE_LEVEL' 'restart_pending'; do
+		 'bam_dmux_tx_flush' 'bam_dmux_rx_rearm' 'bam_dmux_rearm' \
+		 'bam_dmux_pc_is_up' 'bool dead;' 'IRQCHIP_STATE_LINE_LEVEL' \
+		 'IRQF_NO_AUTOEN' 'restart_pending'; do
 	grep -Fq "$g" "$KPD/912-pm8916-bam-dmux-ssr.patch" \
 		|| { echo "!! 912 补丁缺 $g 这一笔，多半是复制错了文件或版本不对"; u01_fail=1; }
 done
@@ -531,7 +529,8 @@ if [ -n "$OVL" ] && [ -s "$OVL/usr/libexec/u01mpssd.sh" ]; then
 	else
 		echo "!! u01mpssd 的拆会话->断电->点火 顺序不对($u01_a/$u01_b/$u01_c/$u01_d/$u01_e)：必须先拆会话再给 MSS 断电"; u01_fail=1
 	fi
-	for g in 'mba_anchor()' 'echo disabled > "$RECOV"' 'HORIZON=900' '--status'; do
+	for g in 'mba_anchor()' 'echo disabled > "$RECOV"' 'echo recover > "$RECOV"' \
+	         'wait_running()' 'wait_interface_up()' 'HORIZON=900' '--status'; do
 		grep -qF -- "$g" "$u01_ms" || { echo "!! u01mpssd.sh 里没有 $g"; u01_fail=1; }
 	done
 	# 实测：崩溃自愈重点 MBA 时只打 "MBA booted"，不打 "Booting fw image mba.mbn"。

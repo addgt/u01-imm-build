@@ -9,11 +9,12 @@
 #
 # 所以不能等它断言。在断言前主动把会话拆干净，再 stop/start remoteproc0，
 # 计时器跟着新的 MBA 重新起算；实测每 reload 一次续 900 秒，AP 安然无恙。
-# 内核侧另有一颗 912-pm8916-bam-dmux-ssr.patch 负责重启后把 TX/RX 两条环重建，
-# 两边合起来才是"数据面能活过 modem 重启"。
+# 内核侧 912b 在 MSS 断电期间关掉 bam-dmux 总闸，prepare 不再碰 BAM；
+# 等新实例上电、pc 线抬起来后才重建 TX/RX。这里负责拆装用户态会话。
 #
 # 拆会话的顺序不能换（netmond 先把 ifup 抢掉 → MM 放掉 bearer → ifdown 关通道
-# → 才轮到断电）；反过来先 stop 就是把活会话留在 MSS 电源下，正是要避的那件事。
+# → 才轮到断电）。crashed 是电源已经没了，必须先走 recovery=recover；普通
+# stop/start 对 crashed 无效（stop 回 EINVAL，start 会因 power 仍为 1 空返回）。
 RPROC=/sys/class/remoteproc/remoteproc0/state
 RECOV=/sys/class/remoteproc/remoteproc0/recovery
 LOG=/tmp/log/u01mpssd.log
@@ -49,10 +50,41 @@ STOPREQ=0
 on_term() { STOPREQ=1; }
 trap on_term TERM INT
 
-cycle() {
-	local why="$1" fire="$2"
+wait_running() {
+	local tries=0 old_anchor="$1" state anchor
 
-	say "cycle($why) deadline=$fire：先拆会话"
+	while [ "$tries" -lt 40 ]; do
+		state=$(rproc_state)
+		anchor=$(mba_anchor)
+		if [ "$state" = "running" ] && [ -n "$anchor" ] && [ "$anchor" != "$old_anchor" ]; then
+			return 0
+		fi
+		sleep 1
+		tries=$((tries + 1))
+	done
+	say "  等新 MBA 超时：state=$(rproc_state) anchor=$(mba_anchor) old=$old_anchor"
+	return 1
+}
+
+wait_interface_up() {
+	local tries=0 up
+
+	while [ "$tries" -lt 30 ]; do
+		up=$(ubus call network.interface.modem status 2>/dev/null |
+			jsonfilter -e '@.up' 2>/dev/null)
+		[ "$up" = "true" ] && return 0
+		sleep 2
+		tries=$((tries + 1))
+	done
+	say "  modem 接口 60s 未 up"
+	return 1
+}
+
+cycle() {
+	local why="$1" state old_anchor
+
+	old_anchor=$(mba_anchor)
+	say "cycle($why) deadline=$2：先拆会话"
 	service u01netmond stop >/dev/null 2>&1
 	sleep 2
 	service modemmanager stop >/dev/null 2>&1
@@ -60,20 +92,33 @@ cycle() {
 	ifdown "$INTF" >/dev/null 2>&1
 	sleep 3
 
-	say "  stop remoteproc（会话已拆，state=$(rproc_state)）"
-	echo stop > "$RPROC" 2>/dev/null
-	sleep 8
+	state=$(rproc_state)
+	if [ "$state" = "crashed" ]; then
+		say "  crashed -> recovery=recover"
+		echo recover > "$RECOV" 2>/dev/null
+	else
+		say "  stop remoteproc（会话已拆，state=$state）"
+		echo stop > "$RPROC" 2>/dev/null
+		sleep 8
+		say "  start remoteproc"
+		echo start > "$RPROC" 2>/dev/null
+	fi
 
-	say "  start remoteproc"
-	echo start > "$RPROC" 2>/dev/null
-	sleep 30
+	if ! wait_running "$old_anchor"; then
+		say "  点火未确认，暂不重装会话"
+		return 1
+	fi
 
-	# 内核 912 已经在 MBA 点火前把两条环重建好了，这里只把会话装回去。
-	say "  重装会话 state=$(rproc_state)"
+	# 912b 已在新实例上电后重建两条环，这里只把会话装回去并等 netifd 真 up。
+	say "  重装会话 state=$(rproc_state) mba=$(mba_anchor)"
 	service modemmanager start >/dev/null 2>&1
 	sleep 12
 	ifup "$INTF" >/dev/null 2>&1
-	sleep 20
+	if wait_interface_up; then
+		say "  modem 接口已 up"
+	else
+		say "  modem 接口未 up，交给 netmond 继续重试"
+	fi
 	service u01netmond start >/dev/null 2>&1
 	say "  本轮点火完成，下一轮锚点=$(mba_anchor)"
 }

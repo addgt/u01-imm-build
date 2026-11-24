@@ -19,7 +19,7 @@
  #include <linux/wait.h>
  #include <linux/workqueue.h>
  #include <net/pkt_sched.h>
-@@ -86,6 +89,11 @@
+@@ -86,6 +89,12 @@
  	DECLARE_BITMAP(remote_channels, BAM_DMUX_NUM_CH);
  	struct work_struct register_netdev_work;
  	struct net_device *netdevs[BAM_DMUX_NUM_CH];
@@ -28,10 +28,76 @@
 +	struct device *rdev;
 +	struct rproc_subdev subdev;
 +	bool restart_pending;
++	bool dead;
  };
  
  struct bam_dmux_netdev {
-@@ -622,6 +630,12 @@
+@@ -93,6 +102,9 @@
+ 	u8 ch;
+ };
+ 
++static bool bam_dmux_pc_is_up(struct bam_dmux *dmux);
++static bool bam_dmux_rearm(struct bam_dmux *dmux);
++
+ static void bam_dmux_pc_vote(struct bam_dmux *dmux, bool enable)
+ {
+ 	reinit_completion(&dmux->pc_ack_completion);
+@@ -235,6 +247,21 @@
+ 	struct sk_buff *skb;
+ 	int ret;
+ 
++	/* Nothing may touch the BAM while the MSS domain is down: a register
++	 * access out there with the power gone hangs the bus and the watchdog
++	 * resets the whole AP. Arm here instead, the first time a channel is
++	 * actually wanted.
++	 */
++	if (dmux->dead) {
++		if (cmd == BAM_DMUX_CMD_CLOSE)
++			return 0;
++		bam_dmux_pc_vote(dmux, true);
++		if (!bam_dmux_pc_is_up(dmux))
++			return -EIO;
++		if (!bam_dmux_rearm(dmux))
++			return -EIO;
++	}
++
+ 	skb = alloc_skb(sizeof(*hdr), GFP_KERNEL);
+ 	if (!skb)
+ 		return -ENOMEM;
+@@ -339,6 +366,11 @@
+ 	struct bam_dmux_skb_dma *skb_dma;
+ 	int active, ret;
+ 
++	if (dmux->dead) {
++		dev_kfree_skb_any(skb);
++		return NETDEV_TX_OK;
++	}
++
+ 	skb_dma = bam_dmux_tx_queue(dmux, skb);
+ 	if (!skb_dma)
+ 		return NETDEV_TX_BUSY;
+@@ -380,6 +412,11 @@
+ 	unsigned long pending;
+ 	int ret, i;
+ 
++	if (dmux->dead) {
++		atomic_long_set(&dmux->tx_deferred_skb, 0);
++		return;
++	}
++
+ 	ret = pm_runtime_resume_and_get(dmux->dev);
+ 	if (ret < 0) {
+ 		dev_err(dmux->dev, "Failed to resume: %d\n", ret);
+@@ -609,7 +646,7 @@
+ 	}
+ 
+ out:
+-	if (bam_dmux_skb_dma_queue_rx(skb_dma, GFP_ATOMIC))
++	if (!dmux->dead && bam_dmux_skb_dma_queue_rx(skb_dma, GFP_ATOMIC))
+ 		dma_async_issue_pending(dmux->rx);
+ }
+ 
+@@ -622,6 +659,12 @@
  	};
  	int i;
  
@@ -44,7 +110,7 @@
  	dmux->rx = dma_request_chan(dev, "rx");
  	if (IS_ERR(dmux->rx)) {
  		dev_err(dev, "Failed to request RX DMA channel: %pe\n", dmux->rx);
-@@ -676,7 +690,14 @@
+@@ -676,21 +719,26 @@
  static irqreturn_t bam_dmux_pc_irq(int irq, void *data)
  {
  	struct bam_dmux *dmux = data;
@@ -60,7 +126,41 @@
  
  	dev_dbg(dmux->dev, "pc: %u\n", new_state);
  
-@@ -755,6 +776,167 @@
+ 	if (new_state) {
+-		if (bam_dmux_power_on(dmux))
+-			bam_dmux_pc_ack(dmux);
+-		else
++		if (!bam_dmux_rearm(dmux))
+ 			bam_dmux_power_off(dmux);
+ 	} else {
+-		bam_dmux_power_off(dmux);
++		dmux->dead = true;
+ 		bam_dmux_pc_ack(dmux);
+ 	}
+ 
+-	dmux->pc_state = new_state;
++	dmux->pc_state = new_state && !dmux->dead;
+ 	wake_up_all(&dmux->pc_wait);
+ 
+ 	return IRQ_HANDLED;
+@@ -728,6 +776,16 @@
+ 
+ 	dev_dbg(dev, "runtime resume\n");
+ 
++	/* Inert while the remote is down: this path reaches the BAM through
++	 * dma_request_chan(), and the BAM lives inside the MSS power domain.
++	 * Accessing it there hangs the bus and the watchdog resets the AP.
++	 * Return success anyway - a failure latches RPM_ERROR for the whole
++	 * boot (see bam_dmux_runtime_suspend). bam_dmux_send_cmd() arms the
++	 * rings on demand once the remote is really up again.
++	 */
++	if (dmux->dead)
++		return 0;
++
+ 	/* U01/PM8916: vote for power, but never block on an ack this modem does
+ 	 * not send, and rebuild the RX path here instead of failing - returning
+ 	 * an error latches RPM_ERROR and kills the data path until the next
+@@ -755,6 +813,221 @@
  	return 0;
  }
  
@@ -73,14 +173,13 @@
 + * returns -EAGAIN for the rest of the boot) and RX silently delivers
 + * nothing, without a single error in the log.
 + *
-+ * Rebuild them across a restart in the same order as a cold boot - quiesce
-+ * before the remote is powered off, arm again before MBA is started. Only
-+ * the rings are re-armed: the channels belong to the BAM, which is on the
-+ * AP side and survives a MPSS restart. And the netdevs stay attached,
-+ * because a restarted modem does not open its channels by itself - it only
-+ * answers the BAM_DMUX_CMD_OPEN that ndo_open sends - so detaching would
-+ * turn "un-openable because TX is stuck" into "un-openable because of
-+ * ENETDOWN" and fix nothing.
++ * The rings are still torn down before the remote loses power, but rebuilt
++ * only once it is powered again - never in prepare(), which rproc runs while
++ * the block has no power at all, and that is what reset the machine. The
++ * netdevs stay attached, because a restarted modem does not open its
++ * channels by itself - it only answers the BAM_DMUX_CMD_OPEN that ndo_open
++ * sends - so detaching would turn "un-openable because TX is stuck" into
++ * "un-openable because of ENETDOWN" and fix nothing.
 + */
 +static void bam_dmux_tx_flush(struct bam_dmux *dmux)
 +{
@@ -136,25 +235,49 @@
 +	return true;
 +}
 +
-+static int bam_dmux_subdev_prepare(struct rproc_subdev *subdev)
++/* The BAM lives in the MSS power domain, so no BAM register may be read or
++ * written while the remote is down: the access does not time out, it hangs the
++ * bus, and the PON watchdog resets the AP without an oops or a ramoops record.
++ * The pc line comes out of SMEM instead, so it stays readable either way and
++ * can be asked directly whether the block is powered right now.
++ */
++static bool bam_dmux_pc_is_up(struct bam_dmux *dmux)
 +{
-+	struct bam_dmux *dmux = container_of(subdev, struct bam_dmux, subdev);
++	bool level;
 +
-+	if (!dmux->restart_pending)
-+		return 0;
-+	dmux->restart_pending = false;
++	if (irq_get_irqchip_state(dmux->pc_irq, IRQCHIP_STATE_LINE_LEVEL, &level))
++		return dmux->pc_state;
 +
-+	bam_dmux_pc_vote(dmux, true);
++	return level;
++}
++
++/* Hand the rings back to the new modem instance. Callers must have established
++ * that the BAM is powered; this is what clears ->dead, so nothing may reach the
++ * engine through here before that condition holds.
++ */
++static bool bam_dmux_rearm(struct bam_dmux *dmux)
++{
++	if (!dmux->dead)
++		return true;
++
++	/* A crash leaves the old descriptors linked in the DMA driver. They
++	 * cannot be terminated while the BAM has no power; do it now, before
++	 * queuing anything new, or the old ring would be issued a second time.
++	 */
++	bam_dmux_tx_flush(dmux);
 +
 +	if (dmux->rx) {
++		dmaengine_terminate_sync(dmux->rx);
++		bam_dmux_free_skbs(dmux->rx_skbs, DMA_FROM_DEVICE);
 +		if (!bam_dmux_rx_rearm(dmux))
-+			return 0;
++			return false;
 +	} else if (!bam_dmux_power_on(dmux)) {
 +		dev_err(dmux->dev, "Failed to re-arm RX after modem restart\n");
-+		return 0;
-+	} else {
-+		bam_dmux_pc_ack(dmux);
++		return false;
 +	}
++
++	/* A restarted remote waits on this ack just like the first one did. */
++	bam_dmux_pc_ack(dmux);
 +
 +	/* The pc-ack path drops the TX channel on the way down and nothing
 +	 * else picks it back up: the device never becomes runtime-suspended
@@ -165,10 +288,29 @@
 +		if (IS_ERR(dmux->tx)) {
 +			dev_err(dmux->dev, "Failed to get TX channel: %pe\n", dmux->tx);
 +			dmux->tx = NULL;
++			return false;
 +		}
 +	}
 +
++	dmux->dead = false;
++	dmux->pc_state = true;
 +	bam_dmux_tx_wake_queues(dmux);
++	dev_info(dmux->dev, "BAM armed, remote is up\n");
++
++	return true;
++}
++
++static int bam_dmux_subdev_prepare(struct rproc_subdev *subdev)
++{
++	struct bam_dmux *dmux = container_of(subdev, struct bam_dmux, subdev);
++
++	/* rproc runs this before the remote is powered, so arming here is what
++	 * used to reset the machine. Re-enabling the pc interrupt is all it
++	 * takes: the new instance signals power through it, and the first
++	 * ndo_open after that asks the line directly as a fallback.
++	 */
++	if (dmux->restart_pending)
++		enable_irq(dmux->pc_irq);
 +
 +	/* Never fail here: an error would abort the modem boot for no reason. */
 +	return 0;
@@ -178,12 +320,24 @@
 +{
 +	struct bam_dmux *dmux = container_of(subdev, struct bam_dmux, subdev);
 +
++	/* Close the door first: from here on the engine is about to lose
++	 * power, and any caller that still reaches it takes the AP down with
++	 * it. Crashed means the collapse already happened, so not even the
++	 * rings may be touched; rearm() terminates and frees them only after
++	 * the new instance has powered the BAM back up.
++	 */
++	dmux->dead = true;
++	disable_irq(dmux->pc_irq);
 +	cancel_work_sync(&dmux->tx_wakeup_work);
-+	bam_dmux_tx_flush(dmux);
++	dev_info(dmux->dev, "Modem going down: BAM access gated\n");
 +
-+	if (dmux->rx)
-+		dmaengine_terminate_sync(dmux->rx);
-+	bam_dmux_free_skbs(dmux->rx_skbs, DMA_FROM_DEVICE);
++	if (!crashed) {
++		bam_dmux_tx_flush(dmux);
++
++		if (dmux->rx)
++			dmaengine_terminate_sync(dmux->rx);
++		bam_dmux_free_skbs(dmux->rx_skbs, DMA_FROM_DEVICE);
++	}
 +
 +	/* Nothing is open until the remote says so, after a restart. */
 +	bitmap_zero(dmux->remote_channels, BAM_DMUX_NUM_CH);
@@ -228,16 +382,31 @@
  static int bam_dmux_probe(struct platform_device *pdev)
  {
  	struct device *dev = &pdev->dev;
-@@ -833,6 +1015,8 @@
+@@ -816,7 +1089,7 @@
+ 		goto err_disable_pm;
+ 
+ 	ret = devm_request_threaded_irq(dev, dmux->pc_irq, NULL, bam_dmux_pc_irq,
+-					IRQF_ONESHOT, NULL, dmux);
++					IRQF_ONESHOT | IRQF_NO_AUTOEN, NULL, dmux);
+ 	if (ret)
+ 		goto err_disable_pm;
+ 
+@@ -833,6 +1106,14 @@
  			bam_dmux_power_off(dmux);
  	}
  
++	/* Otherwise the block is not powered yet and the pc interrupt is what
++	 * announces it; stay inert until then, exactly like after a restart.
++	 */
++	dmux->dead = !dmux->pc_state;
++
 +	bam_dmux_attach_modem(dmux);
++	enable_irq(dmux->pc_irq);
 +
  	return 0;
  
  err_disable_pm:
-@@ -848,6 +1032,14 @@
+@@ -848,6 +1129,14 @@
  	LIST_HEAD(list);
  	int i;
  
