@@ -1,14 +1,24 @@
 --- a/drivers/net/wwan/qcom_bam_dmux.c
 +++ b/drivers/net/wwan/qcom_bam_dmux.c
-@@ -5,6 +5,7 @@
+@@ -1,303 +1,422 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+  * Qualcomm BAM-DMUX WWAN network driver
+  * Copyright (c) 2020, Stephan Gerhold <stephan@gerhold.net>
   */
  
  #include <linux/atomic.h>
 +#include <linux/bitmap.h>
++#include <linux/delay.h>
++#include <linux/mutex.h>
  #include <linux/bitops.h>
  #include <linux/completion.h>
  #include <linux/dma-mapping.h>
-@@ -16,8 +17,10 @@
+ #include <linux/dmaengine.h>
+ #include <linux/if_arp.h>
+ #include <linux/interrupt.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/module.h>
  #include <linux/netdevice.h>
  #include <linux/platform_device.h>
  #include <linux/pm_runtime.h>
@@ -19,98 +29,1032 @@
  #include <linux/wait.h>
  #include <linux/workqueue.h>
  #include <net/pkt_sched.h>
-@@ -86,6 +89,12 @@
+ 
+ #define BAM_DMUX_BUFFER_SIZE		SZ_2K
+ #define BAM_DMUX_HDR_SIZE		sizeof(struct bam_dmux_hdr)
+ #define BAM_DMUX_MAX_DATA_SIZE		(BAM_DMUX_BUFFER_SIZE - BAM_DMUX_HDR_SIZE)
++#define BAM_DMUX_MAX_MTU		(BAM_DMUX_MAX_DATA_SIZE - sizeof(u32))
+ #define BAM_DMUX_NUM_SKB		32
+ 
+ #define BAM_DMUX_HDR_MAGIC		0x33fc
+ 
+ #define BAM_DMUX_AUTOSUSPEND_DELAY	1000
+ #define BAM_DMUX_REMOTE_TIMEOUT		msecs_to_jiffies(2000)
++#define BAM_DMUX_REOPEN_DELAY		msecs_to_jiffies(100)
+ 
+ enum {
+ 	BAM_DMUX_CMD_DATA,
+ 	BAM_DMUX_CMD_OPEN,
+ 	BAM_DMUX_CMD_CLOSE,
+ };
+ 
+ enum {
+ 	BAM_DMUX_CH_DATA_0,
+ 	BAM_DMUX_CH_DATA_1,
+ 	BAM_DMUX_CH_DATA_2,
+ 	BAM_DMUX_CH_DATA_3,
+ 	BAM_DMUX_CH_DATA_4,
+ 	BAM_DMUX_CH_DATA_5,
+ 	BAM_DMUX_CH_DATA_6,
+ 	BAM_DMUX_CH_DATA_7,
+ 	BAM_DMUX_NUM_CH
+ };
+ 
+ struct bam_dmux_hdr {
+ 	u16 magic;
+ 	u8 signal;
+ 	u8 cmd;
+ 	u8 pad;
+ 	u8 ch;
+ 	u16 len;
+ };
+ 
+ struct bam_dmux_skb_dma {
+ 	struct bam_dmux *dmux;
+ 	struct sk_buff *skb;
+ 	dma_addr_t addr;
++	bool pm_ref;
+ };
+ 
+ struct bam_dmux {
+ 	struct device *dev;
+ 
+ 	int pc_irq;
+ 	bool pc_state, pc_ack_state;
+ 	struct qcom_smem_state *pc, *pc_ack;
+ 	u32 pc_mask, pc_ack_mask;
+ 	wait_queue_head_t pc_wait;
+ 	struct completion pc_ack_completion;
+ 
+ 	struct dma_chan *rx, *tx;
+ 	struct bam_dmux_skb_dma rx_skbs[BAM_DMUX_NUM_SKB];
+ 	struct bam_dmux_skb_dma tx_skbs[BAM_DMUX_NUM_SKB];
+ 	spinlock_t tx_lock; /* Protect tx_skbs, tx_next_skb */
++	spinlock_t rx_lock;
++	spinlock_t state_lock;
++	bool rx_stopped;
+ 	unsigned int tx_next_skb;
+ 	atomic_long_t tx_deferred_skb;
+-	struct work_struct tx_wakeup_work;
++	struct delayed_work tx_wakeup_work;
++	struct delayed_work rx_refill_work;
++	DECLARE_BITMAP(rx_refill_pending, BAM_DMUX_NUM_SKB);
+ 
  	DECLARE_BITMAP(remote_channels, BAM_DMUX_NUM_CH);
- 	struct work_struct register_netdev_work;
+-	struct work_struct register_netdev_work;
++	struct delayed_work register_netdev_work;
  	struct net_device *netdevs[BAM_DMUX_NUM_CH];
 +
 +	struct rproc *rproc;
 +	struct device *rdev;
 +	struct rproc_subdev subdev;
++	struct delayed_work reopen_work;
++	struct mutex rearm_lock;
++	DECLARE_BITMAP(replay_channels, BAM_DMUX_NUM_CH);
 +	bool restart_pending;
 +	bool dead;
++	bool replay_pending;
  };
  
  struct bam_dmux_netdev {
-@@ -93,6 +102,9 @@
+ 	struct bam_dmux *dmux;
  	u8 ch;
  };
- 
-+static bool bam_dmux_pc_is_up(struct bam_dmux *dmux);
-+static bool bam_dmux_rearm(struct bam_dmux *dmux);
 +
++static void bam_dmux_gate(struct bam_dmux *dmux, bool sync_reopen);
++static void bam_dmux_power_off(struct bam_dmux *dmux);
++static void bam_dmux_drop_skbs(struct bam_dmux *dmux);
++static bool bam_dmux_pc_is_up(struct bam_dmux *dmux);
++static bool bam_dmux_can_touch(struct bam_dmux *dmux);
++static bool bam_dmux_rearm(struct bam_dmux *dmux);
++static int bam_dmux_send_cmd_locked(struct bam_dmux_netdev *bndev, u8 cmd);
+ 
  static void bam_dmux_pc_vote(struct bam_dmux *dmux, bool enable)
  {
  	reinit_completion(&dmux->pc_ack_completion);
-@@ -235,6 +247,21 @@
+ 	qcom_smem_state_update_bits(dmux->pc, dmux->pc_mask,
+ 				    enable ? dmux->pc_mask : 0);
+ }
+ 
+ static void bam_dmux_pc_ack(struct bam_dmux *dmux)
+ {
+ 	qcom_smem_state_update_bits(dmux->pc_ack, dmux->pc_ack_mask,
+ 				    dmux->pc_ack_state ? 0 : dmux->pc_ack_mask);
+ 	dmux->pc_ack_state = !dmux->pc_ack_state;
+ }
+ 
+ static bool bam_dmux_skb_dma_map(struct bam_dmux_skb_dma *skb_dma,
+ 				 enum dma_data_direction dir)
+ {
+ 	struct device *dev = skb_dma->dmux->dev;
+ 
+ 	skb_dma->addr = dma_map_single(dev, skb_dma->skb->data, skb_dma->skb->len, dir);
+ 	if (dma_mapping_error(dev, skb_dma->addr)) {
+ 		dev_err(dev, "Failed to DMA map buffer\n");
+ 		skb_dma->addr = 0;
+ 		return false;
+ 	}
+ 
+ 	return true;
+ }
+ 
+ static void bam_dmux_skb_dma_unmap(struct bam_dmux_skb_dma *skb_dma,
+ 				   enum dma_data_direction dir)
+ {
+ 	dma_unmap_single(skb_dma->dmux->dev, skb_dma->addr, skb_dma->skb->len, dir);
+ 	skb_dma->addr = 0;
+ }
+ 
++static bool bam_dmux_channel_is_open(struct bam_dmux *dmux, u8 ch)
++{
++	unsigned long flags;
++	bool open;
++
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	open = test_bit(ch, dmux->remote_channels);
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++	return open;
++}
++
+ static void bam_dmux_tx_wake_queues(struct bam_dmux *dmux)
+ {
+ 	int i;
+ 
+ 	dev_dbg(dmux->dev, "wake queues\n");
+ 
+ 	for (i = 0; i < BAM_DMUX_NUM_CH; ++i) {
+ 		struct net_device *netdev = dmux->netdevs[i];
+ 
+-		if (netdev && netif_running(netdev))
++		if (netdev && netif_running(netdev) &&
++		    bam_dmux_channel_is_open(dmux, i))
+ 			netif_wake_queue(netdev);
+ 	}
++}
++
++static void bam_dmux_finish_replay(struct bam_dmux *dmux)
++{
++	unsigned long flags;
++	bool finished;
++
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	finished = !READ_ONCE(dmux->dead) && READ_ONCE(dmux->replay_pending) &&
++		   bitmap_empty(dmux->replay_channels, BAM_DMUX_NUM_CH);
++	if (finished)
++		WRITE_ONCE(dmux->replay_pending, false);
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++
++	if (!finished)
++		return;
++
++	spin_lock_irqsave(&dmux->tx_lock, flags);
++	if (!READ_ONCE(dmux->dead) && !READ_ONCE(dmux->replay_pending))
++		bam_dmux_tx_wake_queues(dmux);
++	spin_unlock_irqrestore(&dmux->tx_lock, flags);
+ }
+ 
+ static void bam_dmux_tx_stop_queues(struct bam_dmux *dmux)
+ {
+ 	int i;
+ 
+ 	dev_dbg(dmux->dev, "stop queues\n");
+ 
+ 	for (i = 0; i < BAM_DMUX_NUM_CH; ++i) {
+ 		struct net_device *netdev = dmux->netdevs[i];
+ 
+ 		if (netdev)
+ 			netif_stop_queue(netdev);
+ 	}
+ }
+ 
+ static void bam_dmux_tx_done(struct bam_dmux_skb_dma *skb_dma)
+ {
+ 	struct bam_dmux *dmux = skb_dma->dmux;
+ 	unsigned long flags;
+ 
+-	pm_runtime_mark_last_busy(dmux->dev);
+-	pm_runtime_put_autosuspend(dmux->dev);
++	if (skb_dma->pm_ref) {
++		pm_runtime_mark_last_busy(dmux->dev);
++		pm_runtime_put_autosuspend(dmux->dev);
++		skb_dma->pm_ref = false;
++	}
+ 
+ 	if (skb_dma->addr)
+ 		bam_dmux_skb_dma_unmap(skb_dma, DMA_TO_DEVICE);
+ 
+ 	spin_lock_irqsave(&dmux->tx_lock, flags);
+ 	skb_dma->skb = NULL;
+-	if (skb_dma == &dmux->tx_skbs[dmux->tx_next_skb % BAM_DMUX_NUM_SKB])
++	if (!READ_ONCE(dmux->dead) && !READ_ONCE(dmux->replay_pending) &&
++	    skb_dma == &dmux->tx_skbs[dmux->tx_next_skb % BAM_DMUX_NUM_SKB])
+ 		bam_dmux_tx_wake_queues(dmux);
+ 	spin_unlock_irqrestore(&dmux->tx_lock, flags);
+ }
+ 
+ static void bam_dmux_tx_callback(void *data)
+ {
+ 	struct bam_dmux_skb_dma *skb_dma = data;
+ 	struct sk_buff *skb = skb_dma->skb;
+ 
+ 	bam_dmux_tx_done(skb_dma);
+ 	dev_consume_skb_any(skb);
+ }
+ 
+ static bool bam_dmux_skb_dma_submit_tx(struct bam_dmux_skb_dma *skb_dma)
+ {
+ 	struct bam_dmux *dmux = skb_dma->dmux;
+ 	struct dma_async_tx_descriptor *desc;
+ 
+ 	desc = dmaengine_prep_slave_single(dmux->tx, skb_dma->addr,
+ 					   skb_dma->skb->len, DMA_MEM_TO_DEV,
+ 					   DMA_PREP_INTERRUPT);
+ 	if (!desc) {
+ 		dev_err(dmux->dev, "Failed to prepare TX DMA buffer\n");
+ 		return false;
+ 	}
+ 
+ 	desc->callback = bam_dmux_tx_callback;
+ 	desc->callback_param = skb_dma;
+ 	desc->cookie = dmaengine_submit(desc);
++	if (dma_submit_error(desc->cookie)) {
++		dev_err(dmux->dev, "Failed to submit TX DMA buffer\n");
++		return false;
++	}
+ 	return true;
+ }
+ 
+ static struct bam_dmux_skb_dma *
+ bam_dmux_tx_queue(struct bam_dmux *dmux, struct sk_buff *skb)
+ {
+ 	struct bam_dmux_skb_dma *skb_dma;
+ 	unsigned long flags;
+ 
+ 	spin_lock_irqsave(&dmux->tx_lock, flags);
+ 
+ 	skb_dma = &dmux->tx_skbs[dmux->tx_next_skb % BAM_DMUX_NUM_SKB];
+ 	if (skb_dma->skb) {
+ 		bam_dmux_tx_stop_queues(dmux);
+ 		spin_unlock_irqrestore(&dmux->tx_lock, flags);
+ 		return NULL;
+ 	}
+ 	skb_dma->skb = skb;
+ 
+ 	dmux->tx_next_skb++;
+ 	if (dmux->tx_skbs[dmux->tx_next_skb % BAM_DMUX_NUM_SKB].skb)
+ 		bam_dmux_tx_stop_queues(dmux);
+ 
+ 	spin_unlock_irqrestore(&dmux->tx_lock, flags);
+ 	return skb_dma;
+ }
+ 
+-static int bam_dmux_send_cmd(struct bam_dmux_netdev *bndev, u8 cmd)
++static int bam_dmux_send_cmd_locked(struct bam_dmux_netdev *bndev, u8 cmd)
+ {
+ 	struct bam_dmux *dmux = bndev->dmux;
+ 	struct bam_dmux_skb_dma *skb_dma;
+ 	struct bam_dmux_hdr *hdr;
  	struct sk_buff *skb;
  	int ret;
  
-+	/* Nothing may touch the BAM while the MSS domain is down: a register
-+	 * access out there with the power gone hangs the bus and the watchdog
-+	 * resets the whole AP. Arm here instead, the first time a channel is
-+	 * actually wanted.
-+	 */
-+	if (dmux->dead) {
++	if (!bam_dmux_can_touch(dmux)) {
 +		if (cmd == BAM_DMUX_CMD_CLOSE)
 +			return 0;
-+		bam_dmux_pc_vote(dmux, true);
-+		if (!bam_dmux_pc_is_up(dmux))
-+			return -EIO;
-+		if (!bam_dmux_rearm(dmux))
-+			return -EIO;
++		if (!READ_ONCE(dmux->restart_pending) && bam_dmux_pc_is_up(dmux))
++			schedule_delayed_work(&dmux->reopen_work,
++					      BAM_DMUX_REOPEN_DELAY);
++		return -EAGAIN;
 +	}
++	if (READ_ONCE(dmux->replay_pending) && cmd != BAM_DMUX_CMD_OPEN)
++		return cmd == BAM_DMUX_CMD_CLOSE ? 0 : -EAGAIN;
++
++	if (!dmux->tx) {
++		dmux->tx = dma_request_chan(dmux->dev, "tx");
++		if (IS_ERR(dmux->tx)) {
++			dev_err(dmux->dev, "Failed to request TX DMA channel: %pe\n",
++				dmux->tx);
++			dmux->tx = NULL;
++			return -ENXIO;
++		}
++	}
++	if (!bam_dmux_can_touch(dmux))
++		return -EAGAIN;
 +
  	skb = alloc_skb(sizeof(*hdr), GFP_KERNEL);
  	if (!skb)
  		return -ENOMEM;
-@@ -339,6 +366,11 @@
+ 
+ 	hdr = skb_put_zero(skb, sizeof(*hdr));
+ 	hdr->magic = BAM_DMUX_HDR_MAGIC;
+ 	hdr->cmd = cmd;
+ 	hdr->ch = bndev->ch;
+ 
+ 	skb_dma = bam_dmux_tx_queue(dmux, skb);
+ 	if (!skb_dma) {
+ 		ret = -EAGAIN;
+ 		goto free_skb;
+ 	}
+ 
+ 	ret = pm_runtime_get_sync(dmux->dev);
+-	if (ret < 0)
++	if (ret < 0) {
++		pm_runtime_put_noidle(dmux->dev);
+ 		goto tx_fail;
++	}
++	skb_dma->pm_ref = true;
++
++	if (!bam_dmux_can_touch(dmux) ||
++	    (READ_ONCE(dmux->replay_pending) && cmd != BAM_DMUX_CMD_OPEN)) {
++		ret = -EAGAIN;
++		goto tx_fail;
++	}
+ 
+ 	if (!bam_dmux_skb_dma_map(skb_dma, DMA_TO_DEVICE)) {
+ 		ret = -ENOMEM;
++		goto tx_fail;
++	}
++
++	if (!bam_dmux_can_touch(dmux)) {
++		ret = -EAGAIN;
+ 		goto tx_fail;
+ 	}
+ 
+ 	if (!bam_dmux_skb_dma_submit_tx(skb_dma)) {
+ 		ret = -EIO;
+ 		goto tx_fail;
+ 	}
+ 
+ 	dma_async_issue_pending(dmux->tx);
+ 	return 0;
+ 
+ tx_fail:
+ 	bam_dmux_tx_done(skb_dma);
+ free_skb:
+ 	dev_kfree_skb(skb);
++	return ret;
++}
++
++static int bam_dmux_send_cmd(struct bam_dmux_netdev *bndev, u8 cmd)
++{
++	int ret;
++
++	mutex_lock(&bndev->dmux->rearm_lock);
++	ret = bam_dmux_send_cmd_locked(bndev, cmd);
++	mutex_unlock(&bndev->dmux->rearm_lock);
+ 	return ret;
+ }
+ 
+ static int bam_dmux_netdev_open(struct net_device *netdev)
+ {
+ 	struct bam_dmux_netdev *bndev = netdev_priv(netdev);
+ 	int ret;
+ 
+ 	ret = bam_dmux_send_cmd(bndev, BAM_DMUX_CMD_OPEN);
+ 	if (ret)
+ 		return ret;
+ 
+ 	netif_start_queue(netdev);
+ 	return 0;
+ }
+ 
+ static int bam_dmux_netdev_stop(struct net_device *netdev)
+ {
+ 	struct bam_dmux_netdev *bndev = netdev_priv(netdev);
+ 
+ 	netif_stop_queue(netdev);
+ 	bam_dmux_send_cmd(bndev, BAM_DMUX_CMD_CLOSE);
+ 	return 0;
+ }
+ 
+ static unsigned int needed_room(unsigned int avail, unsigned int needed)
+ {
+ 	if (avail >= needed)
+ 		return 0;
+ 	return needed - avail;
+@@ -312,589 +431,1200 @@
+ 	struct bam_dmux_hdr *hdr;
+ 	int ret;
+ 
+ 	if (head || tail || skb_cloned(skb)) {
+ 		ret = pskb_expand_head(skb, head, tail, GFP_ATOMIC);
+ 		if (ret)
+ 			return ret;
+ 	}
+ 
+ 	hdr = skb_push(skb, sizeof(*hdr));
+ 	hdr->magic = BAM_DMUX_HDR_MAGIC;
+ 	hdr->signal = 0;
+ 	hdr->cmd = BAM_DMUX_CMD_DATA;
+ 	hdr->pad = pad;
+ 	hdr->ch = bndev->ch;
+ 	hdr->len = skb->len - sizeof(*hdr);
+ 	if (pad)
+ 		skb_put_zero(skb, pad);
+ 
+ 	return 0;
+ }
+ 
+ static netdev_tx_t bam_dmux_netdev_start_xmit(struct sk_buff *skb,
+ 					      struct net_device *netdev)
+ {
+ 	struct bam_dmux_netdev *bndev = netdev_priv(netdev);
+ 	struct bam_dmux *dmux = bndev->dmux;
  	struct bam_dmux_skb_dma *skb_dma;
  	int active, ret;
  
-+	if (dmux->dead) {
-+		dev_kfree_skb_any(skb);
-+		return NETDEV_TX_OK;
-+	}
++	if (!mutex_trylock(&dmux->rearm_lock))
++		return NETDEV_TX_BUSY;
++	if (!bam_dmux_can_touch(dmux) || READ_ONCE(dmux->replay_pending) ||
++	    !bam_dmux_channel_is_open(dmux, bndev->ch))
++		goto drop_unlocked;
 +
  	skb_dma = bam_dmux_tx_queue(dmux, skb);
- 	if (!skb_dma)
+-	if (!skb_dma)
++	if (!skb_dma) {
++		mutex_unlock(&dmux->rearm_lock);
  		return NETDEV_TX_BUSY;
-@@ -380,6 +412,11 @@
++	}
+ 
+ 	active = pm_runtime_get(dmux->dev);
+ 	if (active < 0 && active != -EINPROGRESS)
+ 		goto drop;
++	skb_dma->pm_ref = true;
+ 
+ 	ret = bam_dmux_tx_prepare_skb(bndev, skb);
+ 	if (ret)
+ 		goto drop;
+ 
+ 	if (!bam_dmux_skb_dma_map(skb_dma, DMA_TO_DEVICE))
++		goto drop;
++
++	if (!bam_dmux_can_touch(dmux) || READ_ONCE(dmux->replay_pending) ||
++	    !bam_dmux_channel_is_open(dmux, bndev->ch))
+ 		goto drop;
+ 
+ 	if (active <= 0) {
+ 		/* Cannot sleep here so mark skb for wakeup handler and return */
+ 		if (!atomic_long_fetch_or(BIT(skb_dma - dmux->tx_skbs),
+ 					  &dmux->tx_deferred_skb))
+-			queue_pm_work(&dmux->tx_wakeup_work);
++			queue_delayed_work(system_wq, &dmux->tx_wakeup_work, 0);
++		mutex_unlock(&dmux->rearm_lock);
+ 		return NETDEV_TX_OK;
+ 	}
+ 
+ 	if (!bam_dmux_skb_dma_submit_tx(skb_dma))
+ 		goto drop;
+ 
+ 	dma_async_issue_pending(dmux->tx);
++	mutex_unlock(&dmux->rearm_lock);
+ 	return NETDEV_TX_OK;
+ 
+ drop:
+ 	bam_dmux_tx_done(skb_dma);
+ 	dev_kfree_skb_any(skb);
++	mutex_unlock(&dmux->rearm_lock);
+ 	return NETDEV_TX_OK;
++
++drop_unlocked:
++	dev_kfree_skb_any(skb);
++unlock:
++	mutex_unlock(&dmux->rearm_lock);
++	return NETDEV_TX_OK;
+ }
+ 
+ static void bam_dmux_tx_wakeup_work(struct work_struct *work)
+ {
+-	struct bam_dmux *dmux = container_of(work, struct bam_dmux, tx_wakeup_work);
++	struct bam_dmux *dmux = container_of(to_delayed_work(work),
++					   struct bam_dmux, tx_wakeup_work);
  	unsigned long pending;
++	struct sk_buff *skb;
  	int ret, i;
  
-+	if (dmux->dead) {
-+		atomic_long_set(&dmux->tx_deferred_skb, 0);
-+		return;
-+	}
-+
++	mutex_lock(&dmux->rearm_lock);
  	ret = pm_runtime_resume_and_get(dmux->dev);
  	if (ret < 0) {
  		dev_err(dmux->dev, "Failed to resume: %d\n", ret);
-@@ -609,7 +646,7 @@
+-		return;
+-	}
+-
+-	pending = atomic_long_xchg(&dmux->tx_deferred_skb, 0);
++		goto retry;
++	}
++
++	if (!bam_dmux_can_touch(dmux) || READ_ONCE(dmux->replay_pending))
++		goto retry_put;
++
++	pending = atomic_long_read(&dmux->tx_deferred_skb);
+ 	if (!pending)
+-		goto out;
++		goto out_put;
+ 
+ 	dev_dbg(dmux->dev, "pending skbs after wakeup: %#lx\n", pending);
+ 	for_each_set_bit(i, &pending, BAM_DMUX_NUM_SKB) {
+-		bam_dmux_skb_dma_submit_tx(&dmux->tx_skbs[i]);
+-	}
+-	dma_async_issue_pending(dmux->tx);
+-
+-out:
++		if (!bam_dmux_can_touch(dmux))
++			break;
++
++		skb = dmux->tx_skbs[i].skb;
++		if (!bam_dmux_skb_dma_submit_tx(&dmux->tx_skbs[i])) {
++			bam_dmux_tx_done(&dmux->tx_skbs[i]);
++			dev_kfree_skb_any(skb);
++		}
++		atomic_long_fetch_and(~BIT(i), &dmux->tx_deferred_skb);
++	}
++	if (bam_dmux_can_touch(dmux))
++		dma_async_issue_pending(dmux->tx);
++
++retry_put:
+ 	pm_runtime_mark_last_busy(dmux->dev);
+ 	pm_runtime_put_autosuspend(dmux->dev);
++retry:
++	if (!READ_ONCE(dmux->dead) && !READ_ONCE(dmux->restart_pending) &&
++	    atomic_long_read(&dmux->tx_deferred_skb))
++		mod_delayed_work(system_wq, &dmux->tx_wakeup_work,
++				 BAM_DMUX_REOPEN_DELAY);
++	mutex_unlock(&dmux->rearm_lock);
+ }
+ 
+ static const struct net_device_ops bam_dmux_ops = {
+ 	.ndo_open	= bam_dmux_netdev_open,
+ 	.ndo_stop	= bam_dmux_netdev_stop,
+ 	.ndo_start_xmit	= bam_dmux_netdev_start_xmit,
+ };
+ 
+ static const struct device_type wwan_type = {
+ 	.name = "wwan",
+ };
+ 
+ static void bam_dmux_netdev_setup(struct net_device *dev)
+ {
+ 	dev->netdev_ops = &bam_dmux_ops;
+ 
+ 	dev->type = ARPHRD_RAWIP;
+ 	SET_NETDEV_DEVTYPE(dev, &wwan_type);
+ 	dev->flags = IFF_POINTOPOINT | IFF_NOARP;
+ 
+ 	dev->mtu = ETH_DATA_LEN;
+-	dev->max_mtu = BAM_DMUX_MAX_DATA_SIZE;
++	dev->max_mtu = BAM_DMUX_MAX_MTU;
+ 	dev->needed_headroom = sizeof(struct bam_dmux_hdr);
+ 	dev->needed_tailroom = sizeof(u32); /* word-aligned */
+ 	dev->tx_queue_len = DEFAULT_TX_QUEUE_LEN;
+ 
+ 	/* This perm addr will be used as interface identifier by IPv6 */
+ 	dev->addr_assign_type = NET_ADDR_RANDOM;
+ 	eth_random_addr(dev->perm_addr);
+ }
+ 
+ static void bam_dmux_register_netdev_work(struct work_struct *work)
+ {
+-	struct bam_dmux *dmux = container_of(work, struct bam_dmux, register_netdev_work);
++	struct bam_dmux *dmux = container_of(work, struct bam_dmux, register_netdev_work.work);
+ 	struct bam_dmux_netdev *bndev;
+ 	struct net_device *netdev;
++	unsigned long flags;
++	DECLARE_BITMAP(channels, BAM_DMUX_NUM_CH);
+ 	int ch, ret;
+ 
+-	for_each_set_bit(ch, dmux->remote_channels, BAM_DMUX_NUM_CH) {
++	rtnl_lock();
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	bitmap_copy(channels, dmux->remote_channels, BAM_DMUX_NUM_CH);
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++	for_each_set_bit(ch, channels, BAM_DMUX_NUM_CH) {
+ 		if (dmux->netdevs[ch])
+ 			continue;
+ 
+ 		netdev = alloc_netdev(sizeof(*bndev), "wwan%d", NET_NAME_ENUM,
+ 				      bam_dmux_netdev_setup);
+ 		if (!netdev)
+-			return;
++			goto retry;
+ 
+ 		SET_NETDEV_DEV(netdev, dmux->dev);
+ 		netdev->dev_port = ch;
+ 
+ 		bndev = netdev_priv(netdev);
+ 		bndev->dmux = dmux;
+ 		bndev->ch = ch;
+ 
+-		ret = register_netdev(netdev);
++		ret = register_netdevice(netdev);
+ 		if (ret) {
+ 			dev_err(dmux->dev, "Failed to register netdev for channel %u: %d\n",
+ 				ch, ret);
+ 			free_netdev(netdev);
+-			return;
++			goto retry;
+ 		}
+ 
+ 		dmux->netdevs[ch] = netdev;
+-	}
++		spin_lock_irqsave(&dmux->state_lock, flags);
++		if (READ_ONCE(dmux->dead)) {
++			spin_unlock_irqrestore(&dmux->state_lock, flags);
++			dmux->netdevs[ch] = NULL;
++			unregister_netdevice(netdev);
++			goto out;
++		}
++		spin_unlock_irqrestore(&dmux->state_lock, flags);
++	}
++	goto out;
++
++retry:
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	if (!READ_ONCE(dmux->dead))
++		schedule_delayed_work(&dmux->register_netdev_work,
++				      BAM_DMUX_REOPEN_DELAY);
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++out:
++	rtnl_unlock();
+ }
+ 
+ static void bam_dmux_rx_callback(void *data);
+ 
+ static bool bam_dmux_skb_dma_submit_rx(struct bam_dmux_skb_dma *skb_dma)
+ {
+ 	struct bam_dmux *dmux = skb_dma->dmux;
+ 	struct dma_async_tx_descriptor *desc;
+ 
+ 	desc = dmaengine_prep_slave_single(dmux->rx, skb_dma->addr,
+ 					   skb_dma->skb->len, DMA_DEV_TO_MEM,
+ 					   DMA_PREP_INTERRUPT);
+ 	if (!desc) {
+ 		dev_err(dmux->dev, "Failed to prepare RX DMA buffer\n");
+ 		return false;
+ 	}
+ 
+ 	desc->callback = bam_dmux_rx_callback;
+ 	desc->callback_param = skb_dma;
+ 	desc->cookie = dmaengine_submit(desc);
++	if (dma_submit_error(desc->cookie)) {
++		dev_err(dmux->dev, "Failed to submit RX DMA buffer\n");
++		return false;
++	}
+ 	return true;
+ }
+ 
+ static bool bam_dmux_skb_dma_queue_rx(struct bam_dmux_skb_dma *skb_dma, gfp_t gfp)
+ {
+ 	if (!skb_dma->skb) {
+ 		skb_dma->skb = __netdev_alloc_skb(NULL, BAM_DMUX_BUFFER_SIZE, gfp);
+ 		if (!skb_dma->skb)
+ 			return false;
+ 		skb_put(skb_dma->skb, BAM_DMUX_BUFFER_SIZE);
+ 	}
+ 
+-	return bam_dmux_skb_dma_map(skb_dma, DMA_FROM_DEVICE) &&
+-	       bam_dmux_skb_dma_submit_rx(skb_dma);
++	if (!bam_dmux_skb_dma_map(skb_dma, DMA_FROM_DEVICE))
++		return false;
++	if (!bam_dmux_skb_dma_submit_rx(skb_dma)) {
++		bam_dmux_skb_dma_unmap(skb_dma, DMA_FROM_DEVICE);
++		return false;
++	}
++	return true;
++}
++
++static void bam_dmux_rx_queue_retry(struct bam_dmux *dmux, int slot)
++{
++	unsigned long flags;
++	bool retry;
++
++	spin_lock_irqsave(&dmux->rx_lock, flags);
++	retry = !READ_ONCE(dmux->dead) && !READ_ONCE(dmux->rx_stopped);
++	if (retry)
++		set_bit(slot, dmux->rx_refill_pending);
++	spin_unlock_irqrestore(&dmux->rx_lock, flags);
++
++	if (retry)
++		schedule_delayed_work(&dmux->rx_refill_work,
++				      BAM_DMUX_REOPEN_DELAY);
++}
++
++static void bam_dmux_rx_refill_work(struct work_struct *work)
++{
++	struct bam_dmux *dmux = container_of(work, struct bam_dmux, rx_refill_work.work);
++	unsigned long flags;
++	int ret, i;
++
++	mutex_lock(&dmux->rearm_lock);
++	ret = pm_runtime_resume_and_get(dmux->dev);
++	if (ret < 0) {
++		dev_err_ratelimited(dmux->dev, "Failed to resume for RX refill: %d\n",
++				    ret);
++		if (bam_dmux_can_touch(dmux))
++			schedule_delayed_work(&dmux->rx_refill_work,
++					      BAM_DMUX_REOPEN_DELAY);
++		goto out;
++	}
++	if (!bam_dmux_can_touch(dmux) || !dmux->rx)
++		goto out_put;
++
++	for (i = 0; i < BAM_DMUX_NUM_SKB; i++) {
++		spin_lock_irqsave(&dmux->rx_lock, flags);
++		if (!test_bit(i, dmux->rx_refill_pending)) {
++			spin_unlock_irqrestore(&dmux->rx_lock, flags);
++			continue;
++		}
++		clear_bit(i, dmux->rx_refill_pending);
++		spin_unlock_irqrestore(&dmux->rx_lock, flags);
++
++		if (!bam_dmux_skb_dma_queue_rx(&dmux->rx_skbs[i], GFP_KERNEL)) {
++			bam_dmux_rx_queue_retry(dmux, i);
++			goto out_put;
++		}
++		dma_async_issue_pending(dmux->rx);
++	}
++
++out_put:
++	pm_runtime_mark_last_busy(dmux->dev);
++	pm_runtime_put_autosuspend(dmux->dev);
++out:
++	mutex_unlock(&dmux->rearm_lock);
+ }
+ 
+ static void bam_dmux_cmd_data(struct bam_dmux_skb_dma *skb_dma)
+ {
+ 	struct bam_dmux *dmux = skb_dma->dmux;
+ 	struct sk_buff *skb = skb_dma->skb;
+ 	struct bam_dmux_hdr *hdr = (struct bam_dmux_hdr *)skb->data;
+ 	struct net_device *netdev = dmux->netdevs[hdr->ch];
+ 
+ 	if (!netdev || !netif_running(netdev)) {
+ 		dev_warn(dmux->dev, "Data for inactive channel %u\n", hdr->ch);
+ 		return;
+ 	}
+ 
+ 	if (hdr->len > BAM_DMUX_MAX_DATA_SIZE) {
+ 		dev_err(dmux->dev, "Data larger than buffer? (%u > %u)\n",
+ 			hdr->len, (u16)BAM_DMUX_MAX_DATA_SIZE);
+ 		return;
+ 	}
+ 
+ 	skb_dma->skb = NULL; /* Hand over to network stack */
+ 
+ 	skb_pull(skb, sizeof(*hdr));
+ 	skb_trim(skb, hdr->len);
+ 	skb->dev = netdev;
+ 
+ 	/* Only Raw-IP/QMAP is supported by this driver */
+ 	switch (skb->data[0] & 0xf0) {
+ 	case 0x40:
+ 		skb->protocol = htons(ETH_P_IP);
+ 		break;
+ 	case 0x60:
+ 		skb->protocol = htons(ETH_P_IPV6);
+ 		break;
+ 	default:
+ 		skb->protocol = htons(ETH_P_MAP);
+ 		break;
+ 	}
+ 
+ 	netif_receive_skb(skb);
+ }
+ 
+ static void bam_dmux_cmd_open(struct bam_dmux *dmux, struct bam_dmux_hdr *hdr)
+ {
+ 	struct net_device *netdev = dmux->netdevs[hdr->ch];
++	unsigned long flags;
++	bool register_netdev = false;
+ 
+ 	dev_dbg(dmux->dev, "open channel: %u\n", hdr->ch);
+ 
+-	if (__test_and_set_bit(hdr->ch, dmux->remote_channels)) {
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	if (READ_ONCE(dmux->dead)) {
++		spin_unlock_irqrestore(&dmux->state_lock, flags);
++		return;
++	}
++
++	if (__test_and_set_bit(hdr->ch, dmux->remote_channels))
+ 		dev_warn(dmux->dev, "Channel already open: %u\n", hdr->ch);
++
++	/* Only the remote OPEN confirms replay; local DMA completion does not. */
++	clear_bit(hdr->ch, dmux->replay_channels);
++	if (!netdev)
++		register_netdev = true;
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++
++	if (register_netdev)
++		schedule_delayed_work(&dmux->register_netdev_work, 0);
++	else if (!READ_ONCE(dmux->dead))
++		netif_device_attach(netdev);
++
++	bam_dmux_finish_replay(dmux);
++}
++
++static void bam_dmux_cmd_close(struct bam_dmux *dmux, struct bam_dmux_hdr *hdr)
++{
++	struct net_device *netdev = dmux->netdevs[hdr->ch];
++	unsigned long flags;
++
++	dev_dbg(dmux->dev, "close channel: %u\n", hdr->ch);
++
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	if (READ_ONCE(dmux->dead)) {
++		spin_unlock_irqrestore(&dmux->state_lock, flags);
+ 		return;
+ 	}
+ 
+-	if (netdev) {
+-		netif_device_attach(netdev);
+-	} else {
+-		/* Cannot sleep here, schedule work to register the netdev */
+-		schedule_work(&dmux->register_netdev_work);
+-	}
+-}
+-
+-static void bam_dmux_cmd_close(struct bam_dmux *dmux, struct bam_dmux_hdr *hdr)
+-{
+-	struct net_device *netdev = dmux->netdevs[hdr->ch];
+-
+-	dev_dbg(dmux->dev, "close channel: %u\n", hdr->ch);
+-
+-	if (!__test_and_clear_bit(hdr->ch, dmux->remote_channels)) {
++	/* A remote CLOSE also resolves replay: the channel is intentionally closed. */
++	clear_bit(hdr->ch, dmux->replay_channels);
++	if (!__test_and_clear_bit(hdr->ch, dmux->remote_channels))
+ 		dev_err(dmux->dev, "Channel not open: %u\n", hdr->ch);
+-		return;
+-	}
+-
+-	if (netdev)
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++
++	if (netdev && !READ_ONCE(dmux->dead))
+ 		netif_device_detach(netdev);
++
++	bam_dmux_finish_replay(dmux);
+ }
+ 
+ static void bam_dmux_rx_callback(void *data)
+ {
+ 	struct bam_dmux_skb_dma *skb_dma = data;
+ 	struct bam_dmux *dmux = skb_dma->dmux;
+-	struct sk_buff *skb = skb_dma->skb;
+-	struct bam_dmux_hdr *hdr = (struct bam_dmux_hdr *)skb->data;
+-
++	struct sk_buff *skb;
++	struct bam_dmux_hdr *hdr;
++	unsigned long flags;
++	int slot = skb_dma - dmux->rx_skbs;
++	bool queued;
++
++	if (READ_ONCE(dmux->dead))
++		return;
++
++	skb = skb_dma->skb;
++	hdr = (struct bam_dmux_hdr *)skb->data;
+ 	bam_dmux_skb_dma_unmap(skb_dma, DMA_FROM_DEVICE);
+ 
+ 	if (hdr->magic != BAM_DMUX_HDR_MAGIC) {
+ 		dev_err(dmux->dev, "Invalid magic in header: %#x\n", hdr->magic);
+ 		goto out;
+ 	}
+ 
+ 	if (hdr->ch >= BAM_DMUX_NUM_CH) {
+ 		dev_dbg(dmux->dev, "Unsupported channel: %u\n", hdr->ch);
+ 		goto out;
+ 	}
+ 
+ 	switch (hdr->cmd) {
+ 	case BAM_DMUX_CMD_DATA:
+ 		bam_dmux_cmd_data(skb_dma);
+ 		break;
+ 	case BAM_DMUX_CMD_OPEN:
+ 		bam_dmux_cmd_open(dmux, hdr);
+ 		break;
+ 	case BAM_DMUX_CMD_CLOSE:
+ 		bam_dmux_cmd_close(dmux, hdr);
+ 		break;
+ 	default:
+ 		dev_err(dmux->dev, "Unsupported command %u on channel %u\n",
+ 			hdr->cmd, hdr->ch);
+ 		break;
  	}
  
  out:
 -	if (bam_dmux_skb_dma_queue_rx(skb_dma, GFP_ATOMIC))
-+	if (!dmux->dead && bam_dmux_skb_dma_queue_rx(skb_dma, GFP_ATOMIC))
++	spin_lock_irqsave(&dmux->rx_lock, flags);
++	queued = !READ_ONCE(dmux->dead) && !READ_ONCE(dmux->rx_stopped) &&
++		 bam_dmux_skb_dma_queue_rx(skb_dma, GFP_ATOMIC);
++	if (queued)
  		dma_async_issue_pending(dmux->rx);
++	spin_unlock_irqrestore(&dmux->rx_lock, flags);
++	if (!queued)
++		bam_dmux_rx_queue_retry(dmux, slot);
  }
  
-@@ -622,6 +659,12 @@
+ static bool bam_dmux_power_on(struct bam_dmux *dmux)
+ {
+ 	struct device *dev = dmux->dev;
+ 	struct dma_slave_config dma_rx_conf = {
+ 		.direction = DMA_DEV_TO_MEM,
+ 		.src_maxburst = BAM_DMUX_BUFFER_SIZE,
  	};
++	unsigned long flags;
  	int i;
  
 +	/* Idempotent: both the subdev hook below and the remote's own
 +	 * power-collapse request arm the RX path.
 +	 */
++	if (!bam_dmux_can_touch(dmux))
++		return false;
 +	if (dmux->rx)
 +		return true;
 +
++	if (!bam_dmux_can_touch(dmux))
++		return false;
  	dmux->rx = dma_request_chan(dev, "rx");
  	if (IS_ERR(dmux->rx)) {
  		dev_err(dev, "Failed to request RX DMA channel: %pe\n", dmux->rx);
-@@ -676,21 +719,26 @@
+ 		dmux->rx = NULL;
+ 		return false;
+ 	}
+-	dmaengine_slave_config(dmux->rx, &dma_rx_conf);
++	if (dmaengine_slave_config(dmux->rx, &dma_rx_conf)) {
++		dev_err(dev, "Failed to configure RX DMA channel\n");
++		goto err;
++	}
+ 
+ 	for (i = 0; i < BAM_DMUX_NUM_SKB; i++) {
++		if (!bam_dmux_can_touch(dmux))
++			goto err;
+ 		if (!bam_dmux_skb_dma_queue_rx(&dmux->rx_skbs[i], GFP_KERNEL))
+-			return false;
+-	}
++			goto err;
++	}
++
++	spin_lock_irqsave(&dmux->rx_lock, flags);
++	if (!bam_dmux_can_touch(dmux)) {
++		WRITE_ONCE(dmux->rx_stopped, true);
++		goto err_unlock;
++	}
++	WRITE_ONCE(dmux->rx_stopped, false);
+ 	dma_async_issue_pending(dmux->rx);
++	spin_unlock_irqrestore(&dmux->rx_lock, flags);
+ 
+ 	return true;
++
++err_unlock:
++	spin_unlock_irqrestore(&dmux->rx_lock, flags);
++err:
++	if (bam_dmux_pc_is_up(dmux) && !READ_ONCE(dmux->restart_pending))
++		bam_dmux_power_off(dmux);
++	else
++		bam_dmux_drop_skbs(dmux);
++	return false;
+ }
+ 
+ static void bam_dmux_free_skbs(struct bam_dmux_skb_dma skbs[],
+ 			       enum dma_data_direction dir)
+ {
+ 	int i;
+ 
+ 	for (i = 0; i < BAM_DMUX_NUM_SKB; i++) {
+ 		struct bam_dmux_skb_dma *skb_dma = &skbs[i];
+ 
+ 		if (skb_dma->addr)
+ 			bam_dmux_skb_dma_unmap(skb_dma, dir);
+ 		if (skb_dma->skb) {
+ 			dev_kfree_skb(skb_dma->skb);
+ 			skb_dma->skb = NULL;
+ 		}
+ 	}
+ }
+ 
+ static void bam_dmux_power_off(struct bam_dmux *dmux)
+ {
++	unsigned long flags;
++
++	spin_lock_irqsave(&dmux->rx_lock, flags);
++	WRITE_ONCE(dmux->rx_stopped, true);
++	bitmap_zero(dmux->rx_refill_pending, BAM_DMUX_NUM_SKB);
++	spin_unlock_irqrestore(&dmux->rx_lock, flags);
++
+ 	if (dmux->tx) {
+ 		dmaengine_terminate_sync(dmux->tx);
+ 		dma_release_channel(dmux->tx);
+ 		dmux->tx = NULL;
+ 	}
+ 
+ 	if (dmux->rx) {
+ 		dmaengine_terminate_sync(dmux->rx);
+ 		dma_release_channel(dmux->rx);
+ 		dmux->rx = NULL;
+ 	}
+ 
+ 	bam_dmux_free_skbs(dmux->rx_skbs, DMA_FROM_DEVICE);
+ }
+ 
  static irqreturn_t bam_dmux_pc_irq(int irq, void *data)
  {
  	struct bam_dmux *dmux = data;
@@ -126,44 +1070,83 @@
  
  	dev_dbg(dmux->dev, "pc: %u\n", new_state);
  
++	dmux->pc_state = new_state;
  	if (new_state) {
 -		if (bam_dmux_power_on(dmux))
 -			bam_dmux_pc_ack(dmux);
 -		else
-+		if (!bam_dmux_rearm(dmux))
- 			bam_dmux_power_off(dmux);
+-			bam_dmux_power_off(dmux);
++		if (READ_ONCE(dmux->dead) &&
++			!READ_ONCE(dmux->restart_pending))
++			schedule_delayed_work(&dmux->reopen_work,
++						BAM_DMUX_REOPEN_DELAY);
  	} else {
 -		bam_dmux_power_off(dmux);
-+		dmux->dead = true;
++		WRITE_ONCE(dmux->dead, true);
++		/* Wait for any DMA/MMIO operation that passed the dead check. */
++		mutex_lock(&dmux->rearm_lock);
++		mutex_unlock(&dmux->rearm_lock);
++		bam_dmux_gate(dmux, false);
++		bam_dmux_quiesce_dma(dmux);
  		bam_dmux_pc_ack(dmux);
  	}
  
 -	dmux->pc_state = new_state;
-+	dmux->pc_state = new_state && !dmux->dead;
  	wake_up_all(&dmux->pc_wait);
  
  	return IRQ_HANDLED;
-@@ -728,6 +776,16 @@
+ }
  
- 	dev_dbg(dev, "runtime resume\n");
+ static irqreturn_t bam_dmux_pc_ack_irq(int irq, void *data)
+ {
+ 	struct bam_dmux *dmux = data;
  
-+	/* Inert while the remote is down: this path reaches the BAM through
-+	 * dma_request_chan(), and the BAM lives inside the MSS power domain.
-+	 * Accessing it there hangs the bus and the watchdog resets the AP.
-+	 * Return success anyway - a failure latches RPM_ERROR for the whole
-+	 * boot (see bam_dmux_runtime_suspend). bam_dmux_send_cmd() arms the
-+	 * rings on demand once the remote is really up again.
-+	 */
-+	if (dmux->dead)
-+		return 0;
-+
- 	/* U01/PM8916: vote for power, but never block on an ack this modem does
- 	 * not send, and rebuild the RX path here instead of failing - returning
- 	 * an error latches RPM_ERROR and kills the data path until the next
-@@ -755,6 +813,221 @@
+ 	dev_dbg(dmux->dev, "pc ack\n");
+ 	complete_all(&dmux->pc_ack_completion);
+ 
+ 	return IRQ_HANDLED;
+ }
+ 
+ static int bam_dmux_runtime_suspend(struct device *dev)
+ {
+ 	/* U01/PM8916: this MPSS build does not complete the pc/pc-ack power
+ 	 * collapse handshake, and bam_dmux_pc_irq() derives its state by toggling
+ 	 * rather than sampling the line, so a suspend here can tear the RX path
+ 	 * down for good.  The next resume then fails and the PM core latches this
+ 	 * device in RPM_ERROR, which leaves wwan0 un-openable for the rest of the
+ 	 * boot: "ip link set wwan0 up" -> EINVAL, carrier never comes up and not
+ 	 * a single byte moves even though the modem registered and dialled a PDN.
+ 	 * Stay voted and the data path simply remains powered.
+ 	 */
+ 	dev_dbg(dev, "runtime suspend (power collapse not used)\n");
+ 
  	return 0;
  }
  
+ static int __maybe_unused bam_dmux_runtime_resume(struct device *dev)
+ {
+ 	struct bam_dmux *dmux = dev_get_drvdata(dev);
+ 
+ 	dev_dbg(dev, "runtime resume\n");
+ 
+-	/* U01/PM8916: vote for power, but never block on an ack this modem does
+-	 * not send, and rebuild the RX path here instead of failing - returning
+-	 * an error latches RPM_ERROR and kills the data path until the next
+-	 * reboot (see bam_dmux_runtime_suspend).
++	/* DMA allocation is serialized by rearm_lock.  Calling it from the PM
++	 * callback would invert that lock through pm_runtime_get_sync().
+ 	 */
++	if (!bam_dmux_can_touch(dmux))
++		return 0;
++
+ 	bam_dmux_pc_vote(dmux, true);
+-
+-	if (!dmux->rx) {
+-		if (!bam_dmux_power_on(dmux))
+-			return -ENXIO;
++	return 0;
++}
++
 +/*
 + * Modem restart handling.
 + *
@@ -184,7 +1167,7 @@
 +static void bam_dmux_tx_flush(struct bam_dmux *dmux)
 +{
 +	unsigned long flags;
-+	int i, dropped = 0;
++	int i;
 +
 +	if (dmux->tx)
 +		dmaengine_terminate_sync(dmux->tx);
@@ -203,44 +1186,103 @@
 +			bam_dmux_skb_dma_unmap(skb_dma, DMA_TO_DEVICE);
 +		dev_kfree_skb_any(skb_dma->skb);
 +		skb_dma->skb = NULL;
-+		dropped++;
 +	}
 +	spin_unlock_irqrestore(&dmux->tx_lock, flags);
 +
-+	/* Each queued buffer holds one runtime-PM reference; drop them the way
-+	 * the completion callback does, outside the lock.
-+	 */
-+	for (i = 0; i < dropped; i++) {
-+		pm_runtime_mark_last_busy(dmux->dev);
-+		pm_runtime_put_autosuspend(dmux->dev);
-+	}
-+}
-+
-+/* Same arm sequence as bam_dmux_power_on(), for a channel that stayed
-+ * requested across the restart: the buffers have to be handed back to the
-+ * DMA engine before the new modem instance can write into them.
-+ */
-+static bool bam_dmux_rx_rearm(struct bam_dmux *dmux)
-+{
-+	int i;
-+
 +	for (i = 0; i < BAM_DMUX_NUM_SKB; i++) {
-+		if (!bam_dmux_skb_dma_queue_rx(&dmux->rx_skbs[i], GFP_KERNEL)) {
-+			dev_err(dmux->dev, "Failed to re-arm RX buffer %d\n", i);
-+			return false;
++		struct bam_dmux_skb_dma *skb_dma = &dmux->tx_skbs[i];
++
++		if (skb_dma->pm_ref) {
++			pm_runtime_mark_last_busy(dmux->dev);
++			pm_runtime_put_autosuspend(dmux->dev);
++			skb_dma->pm_ref = false;
 +		}
 +	}
-+
-+	dma_async_issue_pending(dmux->rx);
-+	return true;
 +}
 +
-+/* The BAM lives in the MSS power domain, so no BAM register may be read or
-+ * written while the remote is down: the access does not time out, it hangs the
-+ * bus, and the PON watchdog resets the AP without an oops or a ramoops record.
-+ * The pc line comes out of SMEM instead, so it stays readable either way and
-+ * can be asked directly whether the block is powered right now.
-+ */
++static void bam_dmux_drop_skbs(struct bam_dmux *dmux)
++{
++	unsigned long flags;
++	int i;
++
++	spin_lock_irqsave(&dmux->rx_lock, flags);
++	bitmap_zero(dmux->rx_refill_pending, BAM_DMUX_NUM_SKB);
++	spin_unlock_irqrestore(&dmux->rx_lock, flags);
++	atomic_long_set(&dmux->tx_deferred_skb, 0);
++
++	if (dmux->tx) {
++		dmaengine_release_channel_offline(dmux->tx);
++		dmux->tx = NULL;
++	}
++	if (dmux->rx) {
++		dmaengine_release_channel_offline(dmux->rx);
++		dmux->rx = NULL;
++	}
++
++	bam_dmux_free_skbs(dmux->tx_skbs, DMA_TO_DEVICE);
++	bam_dmux_free_skbs(dmux->rx_skbs, DMA_FROM_DEVICE);
++	for (i = 0; i < BAM_DMUX_NUM_SKB; i++) {
++		if (dmux->tx_skbs[i].pm_ref) {
++			pm_runtime_mark_last_busy(dmux->dev);
++			pm_runtime_put_autosuspend(dmux->dev);
++			dmux->tx_skbs[i].pm_ref = false;
++		}
++	}
++}
++
++static void bam_dmux_quiesce_dma(struct bam_dmux *dmux)
++{
++	struct dma_chan *chan = dmux->tx ? dmux->tx : dmux->rx;
++
++	if (chan)
++		dmaengine_quiesce_offline(chan);
++}
++
++static void bam_dmux_gate(struct bam_dmux *dmux, bool sync_reopen)
++{
++	unsigned long flags;
++
++	WRITE_ONCE(dmux->dead, true);
++	spin_lock_irqsave(&dmux->rx_lock, flags);
++	WRITE_ONCE(dmux->rx_stopped, true);
++	bitmap_zero(dmux->rx_refill_pending, BAM_DMUX_NUM_SKB);
++	spin_unlock_irqrestore(&dmux->rx_lock, flags);
++	rtnl_lock();
++	spin_lock_irqsave(&dmux->tx_lock, flags);
++	bam_dmux_tx_stop_queues(dmux);
++	spin_unlock_irqrestore(&dmux->tx_lock, flags);
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	WRITE_ONCE(dmux->replay_pending, true);
++	bitmap_zero(dmux->remote_channels, BAM_DMUX_NUM_CH);
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++	rtnl_unlock();
++
++	synchronize_net();
++	if (sync_reopen)
++		cancel_delayed_work_sync(&dmux->reopen_work);
++	cancel_delayed_work_sync(&dmux->register_netdev_work);
++	cancel_delayed_work_sync(&dmux->tx_wakeup_work);
++	cancel_delayed_work_sync(&dmux->rx_refill_work);
++
++	if (READ_ONCE(dmux->dead) && !READ_ONCE(dmux->restart_pending) &&
++	    bam_dmux_pc_is_up(dmux))
++		schedule_delayed_work(&dmux->reopen_work, BAM_DMUX_REOPEN_DELAY);
++}
++
++static void bam_dmux_reopen_work(struct work_struct *work)
++{
++	struct bam_dmux *dmux = container_of(work, struct bam_dmux, reopen_work.work);
++	struct rproc *rproc = READ_ONCE(dmux->rproc);
++
++	if (rproc)
++		mutex_lock(&rproc->lock);
++	rtnl_lock();
++	bam_dmux_rearm(dmux);
++	rtnl_unlock();
++	if (rproc)
++		mutex_unlock(&rproc->lock);
++}
++
 +static bool bam_dmux_pc_is_up(struct bam_dmux *dmux)
 +{
 +	bool level;
@@ -251,53 +1293,130 @@
 +	return level;
 +}
 +
-+/* Hand the rings back to the new modem instance. Callers must have established
-+ * that the BAM is powered; this is what clears ->dead, so nothing may reach the
-+ * engine through here before that condition holds.
-+ */
++static bool bam_dmux_can_touch(struct bam_dmux *dmux)
++{
++	return !READ_ONCE(dmux->dead) &&
++	       !READ_ONCE(dmux->restart_pending) &&
++	       bam_dmux_pc_is_up(dmux);
++}
++
 +static bool bam_dmux_rearm(struct bam_dmux *dmux)
 +{
-+	if (!dmux->dead)
-+		return true;
++	int ch, ret;
++	unsigned long flags;
++	DECLARE_BITMAP(channels, BAM_DMUX_NUM_CH);
 +
-+	/* A crash leaves the old descriptors linked in the DMA driver. They
-+	 * cannot be terminated while the BAM has no power; do it now, before
-+	 * queuing anything new, or the old ring would be issued a second time.
-+	 */
-+	bam_dmux_tx_flush(dmux);
++	mutex_lock(&dmux->rearm_lock);
++	if (READ_ONCE(dmux->restart_pending) || !bam_dmux_pc_is_up(dmux))
++		goto out;
 +
-+	if (dmux->rx) {
-+		dmaengine_terminate_sync(dmux->rx);
-+		bam_dmux_free_skbs(dmux->rx_skbs, DMA_FROM_DEVICE);
-+		if (!bam_dmux_rx_rearm(dmux))
-+			return false;
-+	} else if (!bam_dmux_power_on(dmux)) {
-+		dev_err(dmux->dev, "Failed to re-arm RX after modem restart\n");
-+		return false;
-+	}
++	dmux->pc_state = true;
 +
-+	/* A restarted remote waits on this ack just like the first one did. */
-+	bam_dmux_pc_ack(dmux);
++	if (READ_ONCE(dmux->dead)) {
++		/* The old controller was offline; release only software state here.
++		 * Pipe resets before q6v5_stop() can make the still-active MSS hit
++		 * a BAM fatal error.
++		 */
++		bam_dmux_drop_skbs(dmux);
 +
-+	/* The pc-ack path drops the TX channel on the way down and nothing
-+	 * else picks it back up: the device never becomes runtime-suspended
-+	 * here, so runtime_resume() does not run either.
-+	 */
-+	if (!dmux->tx) {
++		/* RX completions must keep recycling buffers while the new rings
++		 * are armed; TX stays blocked by replay_pending and rearm_lock.
++		 */
++		WRITE_ONCE(dmux->dead, false);
++		if (!bam_dmux_power_on(dmux)) {
++			dev_err(dmux->dev, "Failed to re-arm RX after modem restart\n");
++			WRITE_ONCE(dmux->dead, true);
++			goto retry;
++		}
++		if (!bam_dmux_can_touch(dmux))
++			goto out;
++
 +		dmux->tx = dma_request_chan(dmux->dev, "tx");
 +		if (IS_ERR(dmux->tx)) {
 +			dev_err(dmux->dev, "Failed to get TX channel: %pe\n", dmux->tx);
 +			dmux->tx = NULL;
-+			return false;
++			bam_dmux_drop_skbs(dmux);
++			WRITE_ONCE(dmux->dead, true);
++			goto retry;
 +		}
++		if (!bam_dmux_can_touch(dmux))
++			goto out;
++
+ 		bam_dmux_pc_ack(dmux);
+-	}
+-
+-	/* Request TX channel if necessary */
+-	if (dmux->tx)
+-		return 0;
+-
+-	dmux->tx = dma_request_chan(dev, "tx");
+-	if (IS_ERR(dmux->tx)) {
+-		dev_err(dev, "Failed to request TX DMA channel: %pe\n", dmux->tx);
+-		dmux->tx = NULL;
+-		return -ENXIO;
+-	}
+-
++		spin_lock_irqsave(&dmux->state_lock, flags);
++		WRITE_ONCE(dmux->replay_pending, true);
++		bitmap_zero(dmux->replay_channels, BAM_DMUX_NUM_CH);
++		for (ch = 0; ch < BAM_DMUX_NUM_CH; ch++) {
++			if (dmux->netdevs[ch] && netif_running(dmux->netdevs[ch]))
++				set_bit(ch, dmux->replay_channels);
++		}
++		bitmap_copy(channels, dmux->replay_channels, BAM_DMUX_NUM_CH);
++		spin_unlock_irqrestore(&dmux->state_lock, flags);
++		dev_info(dmux->dev, "BAM armed, remote is up\n");
++	} else {
++		spin_lock_irqsave(&dmux->state_lock, flags);
++		bitmap_copy(channels, dmux->replay_channels, BAM_DMUX_NUM_CH);
++		spin_unlock_irqrestore(&dmux->state_lock, flags);
 +	}
 +
-+	dmux->dead = false;
-+	dmux->pc_state = true;
-+	bam_dmux_tx_wake_queues(dmux);
-+	dev_info(dmux->dev, "BAM armed, remote is up\n");
++	for_each_set_bit(ch, channels, BAM_DMUX_NUM_CH) {
++		struct net_device *netdev = dmux->netdevs[ch];
++		struct bam_dmux_netdev *bndev;
 +
-+	return true;
++		if (!netdev || !netif_running(netdev)) {
++			spin_lock_irqsave(&dmux->state_lock, flags);
++			clear_bit(ch, dmux->replay_channels);
++			spin_unlock_irqrestore(&dmux->state_lock, flags);
++			continue;
++		}
++		if (!bam_dmux_can_touch(dmux))
++			goto out;
++
++		spin_lock_irqsave(&dmux->state_lock, flags);
++		if (!test_bit(ch, dmux->replay_channels)) {
++			spin_unlock_irqrestore(&dmux->state_lock, flags);
++			continue;
++		}
++		spin_unlock_irqrestore(&dmux->state_lock, flags);
++
++		bndev = netdev_priv(netdev);
++		ret = bam_dmux_send_cmd_locked(bndev, BAM_DMUX_CMD_OPEN);
++		if (ret) {
++			dev_err(dmux->dev, "Failed to replay OPEN on channel %d: %d\n",
++				ch, ret);
++			goto retry;
++		}
++		dev_info(dmux->dev, "Submitted replay OPEN on channel %d\n", ch);
++	}
++
++	bam_dmux_finish_replay(dmux);
++	spin_lock_irqsave(&dmux->state_lock, flags);
++	if (!READ_ONCE(dmux->dead) && READ_ONCE(dmux->replay_pending))
++		schedule_delayed_work(&dmux->reopen_work,
++				      BAM_DMUX_REMOTE_TIMEOUT);
++	spin_unlock_irqrestore(&dmux->state_lock, flags);
++	goto out;
++
++retry:
++	if (!READ_ONCE(dmux->restart_pending) && bam_dmux_pc_is_up(dmux))
++		schedule_delayed_work(&dmux->reopen_work,
++				      BAM_DMUX_REOPEN_DELAY);
++out:
++	mutex_unlock(&dmux->rearm_lock);
++	return !READ_ONCE(dmux->dead);
 +}
 +
 +static int bam_dmux_subdev_prepare(struct rproc_subdev *subdev)
@@ -309,40 +1428,43 @@
 +	 * takes: the new instance signals power through it, and the first
 +	 * ndo_open after that asks the line directly as a fallback.
 +	 */
-+	if (dmux->restart_pending)
++	if (READ_ONCE(dmux->restart_pending)) {
++		WRITE_ONCE(dmux->restart_pending, false);
 +		enable_irq(dmux->pc_irq);
++	}
 +
 +	/* Never fail here: an error would abort the modem boot for no reason. */
-+	return 0;
+ 	return 0;
 +}
 +
 +static void bam_dmux_subdev_stop(struct rproc_subdev *subdev, bool crashed)
 +{
 +	struct bam_dmux *dmux = container_of(subdev, struct bam_dmux, subdev);
 +
-+	/* Close the door first: from here on the engine is about to lose
-+	 * power, and any caller that still reaches it takes the AP down with
-+	 * it. Crashed means the collapse already happened, so not even the
-+	 * rings may be touched; rearm() terminates and frees them only after
-+	 * the new instance has powered the BAM back up.
-+	 */
-+	dmux->dead = true;
++	WRITE_ONCE(dmux->restart_pending, true);
 +	disable_irq(dmux->pc_irq);
-+	cancel_work_sync(&dmux->tx_wakeup_work);
-+	dev_info(dmux->dev, "Modem going down: BAM access gated\n");
++	/* rproc->lock is held here.  The reopen worker takes the same lock,
++	 * so it must be allowed to exit on restart_pending instead of waited on.
++	 * Do not reset pipes here: the MSS is still active until q6v5_stop().
++	 */
++	bam_dmux_gate(dmux, false);
++	bam_dmux_quiesce_dma(dmux);
++	dev_info(dmux->dev, "Modem going down (%s): BAM access gated\n",
++		 crashed ? "crashed" : "stopped");
++}
 +
-+	if (!crashed) {
-+		bam_dmux_tx_flush(dmux);
++static void bam_dmux_subdev_unprepare(struct rproc_subdev *subdev)
++{
++	struct bam_dmux *dmux = container_of(subdev, struct bam_dmux, subdev);
 +
-+		if (dmux->rx)
-+			dmaengine_terminate_sync(dmux->rx);
-+		bam_dmux_free_skbs(dmux->rx_skbs, DMA_FROM_DEVICE);
-+	}
++	WRITE_ONCE(dmux->restart_pending, true);
++	disable_irq(dmux->pc_irq);
++	bam_dmux_gate(dmux, false);
 +
-+	/* Nothing is open until the remote says so, after a restart. */
-+	bitmap_zero(dmux->remote_channels, BAM_DMUX_NUM_CH);
-+
-+	dmux->restart_pending = true;
++	/* q6v5_stop() has reclaimed MSS power before unprepare runs. */
++	mutex_lock(&dmux->rearm_lock);
++	bam_dmux_drop_skbs(dmux);
++	mutex_unlock(&dmux->rearm_lock);
 +}
 +
 +static int bam_dmux_match_rproc(struct device *dev, const void *data)
@@ -374,15 +1496,92 @@
 +	dmux->rdev = rdev;
 +	dmux->subdev.prepare = bam_dmux_subdev_prepare;
 +	dmux->subdev.stop = bam_dmux_subdev_stop;
++	dmux->subdev.unprepare = bam_dmux_subdev_unprepare;
++	mutex_lock(&dmux->rproc->lock);
 +	rproc_add_subdev(dmux->rproc, &dmux->subdev);
++	mutex_unlock(&dmux->rproc->lock);
 +
 +	dev_info(dmux->dev, "Modem restart hooked to %s\n", dmux->rproc->name);
 +}
 +
++static void bam_dmux_detach_modem(struct bam_dmux *dmux)
++{
++	if (!dmux->rproc)
++		return;
++
++	mutex_lock(&dmux->rproc->lock);
++	rproc_remove_subdev(dmux->rproc, &dmux->subdev);
++	mutex_unlock(&dmux->rproc->lock);
++	dmux->rproc = NULL;
++	put_device(dmux->rdev);
++	dmux->rdev = NULL;
+ }
+ 
  static int bam_dmux_probe(struct platform_device *pdev)
  {
  	struct device *dev = &pdev->dev;
-@@ -816,7 +1089,7 @@
+ 	struct bam_dmux *dmux;
+ 	int ret, pc_ack_irq, i;
+ 	unsigned int bit;
+ 
+ 	dmux = devm_kzalloc(dev, sizeof(*dmux), GFP_KERNEL);
+ 	if (!dmux)
+ 		return -ENOMEM;
+ 
+ 	dmux->dev = dev;
+ 	platform_set_drvdata(pdev, dmux);
+ 
+ 	dmux->pc_irq = platform_get_irq_byname(pdev, "pc");
+ 	if (dmux->pc_irq < 0)
+ 		return dmux->pc_irq;
+ 
+ 	pc_ack_irq = platform_get_irq_byname(pdev, "pc-ack");
+ 	if (pc_ack_irq < 0)
+ 		return pc_ack_irq;
+ 
+ 	dmux->pc = devm_qcom_smem_state_get(dev, "pc", &bit);
+ 	if (IS_ERR(dmux->pc))
+ 		return dev_err_probe(dev, PTR_ERR(dmux->pc),
+ 				     "Failed to get pc state\n");
+ 	dmux->pc_mask = BIT(bit);
+ 
+ 	dmux->pc_ack = devm_qcom_smem_state_get(dev, "pc-ack", &bit);
+ 	if (IS_ERR(dmux->pc_ack))
+ 		return dev_err_probe(dev, PTR_ERR(dmux->pc_ack),
+ 				     "Failed to get pc-ack state\n");
+ 	dmux->pc_ack_mask = BIT(bit);
+ 
+ 	init_waitqueue_head(&dmux->pc_wait);
+ 	init_completion(&dmux->pc_ack_completion);
+ 	complete_all(&dmux->pc_ack_completion);
+ 
+ 	spin_lock_init(&dmux->tx_lock);
+-	INIT_WORK(&dmux->tx_wakeup_work, bam_dmux_tx_wakeup_work);
+-	INIT_WORK(&dmux->register_netdev_work, bam_dmux_register_netdev_work);
++	spin_lock_init(&dmux->rx_lock);
++	spin_lock_init(&dmux->state_lock);
++	mutex_init(&dmux->rearm_lock);
++	INIT_DELAYED_WORK(&dmux->tx_wakeup_work, bam_dmux_tx_wakeup_work);
++	INIT_DELAYED_WORK(&dmux->rx_refill_work, bam_dmux_rx_refill_work);
++	INIT_DELAYED_WORK(&dmux->reopen_work, bam_dmux_reopen_work);
++	INIT_DELAYED_WORK(&dmux->register_netdev_work, bam_dmux_register_netdev_work);
+ 
+ 	for (i = 0; i < BAM_DMUX_NUM_SKB; i++) {
+ 		dmux->rx_skbs[i].dmux = dmux;
+ 		dmux->tx_skbs[i].dmux = dmux;
+ 	}
+ 
+ 	/* Runtime PM manages our own power vote.
+ 	 * Note that the RX path may be active even if we are runtime suspended,
+ 	 * since it is controlled by the remote side.
+ 	 */
+ 	pm_runtime_set_autosuspend_delay(dev, BAM_DMUX_AUTOSUSPEND_DELAY);
+ 	pm_runtime_use_autosuspend(dev);
+ 	pm_runtime_enable(dev);
+ 
+ 	ret = devm_request_threaded_irq(dev, pc_ack_irq, NULL, bam_dmux_pc_ack_irq,
+ 					IRQF_ONESHOT, NULL, dmux);
+ 	if (ret)
  		goto err_disable_pm;
  
  	ret = devm_request_threaded_irq(dev, dmux->pc_irq, NULL, bam_dmux_pc_irq,
@@ -391,33 +1590,151 @@
  	if (ret)
  		goto err_disable_pm;
  
-@@ -833,6 +1106,14 @@
- 			bam_dmux_power_off(dmux);
- 	}
+ 	ret = irq_get_irqchip_state(dmux->pc_irq, IRQCHIP_STATE_LINE_LEVEL,
+ 				    &dmux->pc_state);
+ 	if (ret)
+ 		goto err_disable_pm;
  
-+	/* Otherwise the block is not powered yet and the pc interrupt is what
-+	 * announces it; stay inert until then, exactly like after a restart.
+-	/* Check if remote finished initialization before us */
+-	if (dmux->pc_state) {
+-		if (bam_dmux_power_on(dmux))
+-			bam_dmux_pc_ack(dmux);
+-		else
+-			bam_dmux_power_off(dmux);
+-	}
++	/* Attach before touching DMA so a concurrent remoteproc stop cannot
++	 * miss the quiesce window. Re-sample under the same lock used by stop.
 +	 */
-+	dmux->dead = !dmux->pc_state;
-+
 +	bam_dmux_attach_modem(dmux);
-+	enable_irq(dmux->pc_irq);
++	if (dmux->rproc)
++		mutex_lock(&dmux->rproc->lock);
 +
++	ret = irq_get_irqchip_state(dmux->pc_irq, IRQCHIP_STATE_LINE_LEVEL,
++				    &dmux->pc_state);
++	if (ret)
++		goto err_unlock_rproc;
++
++	dmux->dead = READ_ONCE(dmux->restart_pending) || !dmux->pc_state;
++	mutex_lock(&dmux->rearm_lock);
++	if (!dmux->dead && bam_dmux_pc_is_up(dmux)) {
++		if (bam_dmux_power_on(dmux)) {
++			if (!READ_ONCE(dmux->dead) &&
++			    !READ_ONCE(dmux->restart_pending))
++				bam_dmux_pc_ack(dmux);
++		} else {
++			dmux->dead = true;
++			schedule_delayed_work(&dmux->reopen_work,
++					      BAM_DMUX_REOPEN_DELAY);
++		}
++	}
++	mutex_unlock(&dmux->rearm_lock);
++
++	if (!READ_ONCE(dmux->restart_pending))
++		enable_irq(dmux->pc_irq);
++	if (dmux->rproc)
++		mutex_unlock(&dmux->rproc->lock);
+ 
  	return 0;
  
++err_unlock_rproc:
++	if (dmux->rproc)
++		mutex_unlock(&dmux->rproc->lock);
  err_disable_pm:
-@@ -848,6 +1129,14 @@
++	bam_dmux_detach_modem(dmux);
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_dont_use_autosuspend(dev);
+ 	return ret;
+ }
+ 
+ static void bam_dmux_remove(struct platform_device *pdev)
+ {
+ 	struct bam_dmux *dmux = platform_get_drvdata(pdev);
+ 	struct device *dev = dmux->dev;
  	LIST_HEAD(list);
  	int i;
  
-+	/* Detach first: no subdev callback may run into a half-torn-down driver */
+-	/* Unregister network interfaces */
+-	cancel_work_sync(&dmux->register_netdev_work);
+-	rtnl_lock();
+-	for (i = 0; i < BAM_DMUX_NUM_CH; ++i)
+-		if (dmux->netdevs[i])
+-			unregister_netdevice_queue(dmux->netdevs[i], &list);
+-	unregister_netdevice_many(&list);
+-	rtnl_unlock();
+-	cancel_work_sync(&dmux->tx_wakeup_work);
+-
+-	/* Drop our own power vote */
++	WRITE_ONCE(dmux->restart_pending, true);
++	disable_irq(dmux->pc_irq);
++	bam_dmux_gate(dmux, true);
++
 +	if (dmux->rproc) {
++		mutex_lock(&dmux->rproc->lock);
 +		rproc_remove_subdev(dmux->rproc, &dmux->subdev);
++	}
++
++	mutex_lock(&dmux->rearm_lock);
++	if (bam_dmux_pc_is_up(dmux)) {
++		bam_dmux_tx_flush(dmux);
++		bam_dmux_power_off(dmux);
++	} else {
++		bam_dmux_drop_skbs(dmux);
++	}
++	mutex_unlock(&dmux->rearm_lock);
++
++	if (dmux->rproc) {
++		mutex_unlock(&dmux->rproc->lock);
 +		dmux->rproc = NULL;
 +		put_device(dmux->rdev);
 +		dmux->rdev = NULL;
 +	}
 +
- 	/* Unregister network interfaces */
- 	cancel_work_sync(&dmux->register_netdev_work);
- 	rtnl_lock();
+ 	pm_runtime_disable(dev);
+ 	pm_runtime_dont_use_autosuspend(dev);
+ 	bam_dmux_runtime_suspend(dev);
+ 	pm_runtime_set_suspended(dev);
+ 
+-	/* Try to wait for remote side to drop power vote */
+-	if (!wait_event_timeout(dmux->pc_wait, !dmux->rx, BAM_DMUX_REMOTE_TIMEOUT))
+-		dev_err(dev, "Timed out waiting for remote side to suspend\n");
+-
+-	/* Make sure everything is cleaned up before we return */
+-	disable_irq(dmux->pc_irq);
+-	bam_dmux_power_off(dmux);
+-	bam_dmux_free_skbs(dmux->tx_skbs, DMA_TO_DEVICE);
++	rtnl_lock();
++	for (i = 0; i < BAM_DMUX_NUM_CH; ++i) {
++		struct net_device *netdev = dmux->netdevs[i];
++
++		dmux->netdevs[i] = NULL;
++		if (netdev)
++			unregister_netdevice_queue(netdev, &list);
++	}
++	unregister_netdevice_many(&list);
++	rtnl_unlock();
+ }
+ 
+ static const struct dev_pm_ops bam_dmux_pm_ops = {
+ 	SET_RUNTIME_PM_OPS(bam_dmux_runtime_suspend, bam_dmux_runtime_resume, NULL)
+ };
+ 
+ static const struct of_device_id bam_dmux_of_match[] = {
+ 	{ .compatible = "qcom,bam-dmux" },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, bam_dmux_of_match);
+ 
+ static struct platform_driver bam_dmux_driver = {
+ 	.probe = bam_dmux_probe,
+ 	.remove = bam_dmux_remove,
+ 	.driver = {
+ 		.name = "bam-dmux",
+ 		.pm = &bam_dmux_pm_ops,
+ 		.of_match_table = bam_dmux_of_match,
+ 	},
+ };
+ module_platform_driver(bam_dmux_driver);
+ 
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("Qualcomm BAM-DMUX WWAN Network Driver");
+ MODULE_AUTHOR("Stephan Gerhold <stephan@gerhold.net>");

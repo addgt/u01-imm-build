@@ -436,13 +436,22 @@ else
 	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dmux-pc.patch，wwan0 还会被 RPM_ERROR 卡死"
 fi
 
-# ---- 912b：MSS 断电期间 bam-dmux 完全惰性，上电后才重建数据面 -----------
-# 911 只解决"别把 RX 拆掉"，解决不了"modem 换了实例"：两条环的描述符都是对着
-# 上一个 MPSS 武装的。912b 给驱动加 dead 总闸：xmit、wakeup、runtime resume、
-# RX 回收在断电期一律不进 DMA；stop(crashed=true) 连环都不碰，prepare 只恢复
-# pc IRQ。旧描述符的 terminate/free 也延后到 pc 抬线、BAM 确实上电之后，避免
-# 旧环被二次 issue。网卡保持 attached，重启后的 MPSS 只应答 ndo_open 的 CMD_OPEN。
-# 和 911 同一颗文件，串打顺序 911 -> 912，本地 make_bam_ssr_patch.py 已逐字节自证。
+# ---- 912c：MSS 断电期间 bam-dmux 完全惰性，上电后重建并重放会话 -----------
+# run#20/912b 已证明主动 SSR 与自然 LTE 断言都不复位 AP，但冷启动/SSR 后
+# bearer 与 wwan0 的 TX/RX 恒为 0。冷启动时序显示 pc 掉线再抬线时网卡已经
+# running；912b 既复用失效 DMA channel，也没补发新 MPSS 实例需要的 CMD_OPEN。
+# 912c 把所有 DMA 申请/提交/终止/释放串行到 rearm_lock：xmit 用 trylock，
+# 掉线先立即置 dead，再等待已通过 dead 检查的在途 DMA/MMIO 操作退出，
+# 停止 RX 回补，最后在 RTNL 下封门并 synchronize_net。
+# crashed 与 graceful stop 都只封门，绝不在 q6v5_mba_reclaim() 断电前复位
+# 仍可能被 MSS 使用的 BAM pipe；封门后只静默 provider IRQ/tasklet，断电后由
+# unprepare 统一走 offline release，纯软件停 IRQ/tasklet 并释放描述符，保留硬件 FIFO。
+# prepare 只清 restart_pending 并恢复 pc IRQ；unprepare 覆盖停止及启动失败回滚。
+# 抬线后完整释放旧 DMA，再重取 RX/TX，对仍 running 的通道逐个重放
+# CMD_OPEN；只有远端 OPEN 才确认重放，未确认通道按远端超时重试，全确认才开发队列。
+# subdev 增删与 probe/remove 的 DMA 生命周期受 rproc->lock 保护；和 911 同一颗文件，
+# 串打顺序 911 -> 912 -> 913。
+# 远端显式 CLOSE/OPEN 才 attach/detach；SSR 路径始终保持 attached，靠 OPEN 重放恢复。
 KPSB="$REPO_DIR/u01_local/patches/pm8916-bam-dmux-ssr.patch"
 if [ -f "$KPD/912-pm8916-bam-dmux-ssr.patch" ]; then
 	echo "== U01：patches-$KV 里已经有 912-pm8916-bam-dmux-ssr.patch（fork 同步过？），不覆盖 =="
@@ -451,6 +460,24 @@ elif [ -f "$KPSB" ]; then
 	echo "== U01：已把 bam-dmux 重启重建补丁放进 $KPD/912-pm8916-bam-dmux-ssr.patch =="
 else
 	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dmux-ssr.patch，modem 重启后数据面还是死的"
+fi
+
+# ---- 913：BAM DMA 真同步 + 整控制器低电离线释放 ----------------------------
+# v6.18 的 dmaengine_terminate_sync() 只有 provider 实现 device_synchronize
+# 才会等待 IRQ/start tasklet/vchan completion；qcom bam_dma 原来没实现。
+# 低电时不能写 BAM MMIO，因此再加显式 offline release：provider 先停共享
+# IRQ 与两个 tasklet，再纯软件清空 desc_list/issued/completed，但保留硬件
+# FIFO；重新上电后首次申请通道先 resume/reset，再复用 FIFO 并打开 IRQ。
+# 该 API 要求整控制器已离线，且在重新上电前释放其所有通道。顺序：
+# 911 -> 912 -> 913（913 同时改 provider、DMAengine core 与 public header）。
+KPSY="$REPO_DIR/u01_local/patches/pm8916-bam-dma-sync.patch"
+if [ -f "$KPD/913-pm8916-bam-dma-sync.patch" ]; then
+	echo "== U01：patches-$KV 里已经有 913-pm8916-bam-dma-sync.patch（fork 同步过？），不覆盖 =="
+elif [ -f "$KPSY" ]; then
+	cp "$KPSY" "$KPD/913-pm8916-bam-dma-sync.patch"
+	echo "== U01：已把 BAM DMA completion 同步钩子放进 $KPD/913-pm8916-bam-dma-sync.patch =="
+else
+	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dma-sync.patch，terminate_sync 等不到完成回调"
 fi
 
 # 注入自检：哪一项没落上就直接终止，别花一个半小时编一版跟上一版一样的固件
@@ -486,26 +513,353 @@ grep -Eq '^CONFIG_QCOM_BAM_DMUX=[ym]' .config 2>/dev/null \
 grep -q '^CONFIG_QCOM_SMP2P=y' .config 2>/dev/null \
 	|| echo "!! 警告：QCOM_SMP2P 没开，pc/pc-ack 中断通道不存在"
 # 912 只验 + 行；- 行是老代码，命中反而说明没拆干净。
+# 从统一 diff 重建目标函数，避免 RX 的 submit 检查冒充 TX 的检查。
+u01_patch_func() {
+	awk -v name="$2" '
+		/^(diff --git|--- |\+\+\+ |@@ )/ { next }
+		/^[ +]/ {
+			line = substr($0, 2)
+			if (!copy && line ~ /^static / && index(line, name "(") && line !~ /;[[:space:]]*$/) {
+				copy = 1
+			} else if (copy && line ~ /^static /) {
+				exit
+			}
+			if (copy) print line
+		}' "$1"
+}
 [ -f "$KPD/912-pm8916-bam-dmux-ssr.patch" ]                             || { echo "!! $KPD/912-pm8916-bam-dmux-ssr.patch 不在位，modem 一重启 wwan0 就又成死数据面"; u01_fail=1; }
 grep -q '^--- a/drivers/net/wwan/qcom_bam_dmux.c' "$KPD/912-pm8916-bam-dmux-ssr.patch" \
 	|| { echo "!! 912 补丁动的不是 drivers/net/wwan/qcom_bam_dmux.c，文件拿错了"; u01_fail=1; }
 for g in 'rproc_add_subdev' 'bam_dmux_subdev_prepare' 'bam_dmux_subdev_stop' \
-		 'bam_dmux_tx_flush' 'bam_dmux_rx_rearm' 'bam_dmux_rearm' \
-		 'bam_dmux_pc_is_up' 'bool dead;' 'IRQCHIP_STATE_LINE_LEVEL' \
-		 'IRQF_NO_AUTOEN' 'restart_pending'; do
+		 'bam_dmux_tx_flush' 'bam_dmux_drop_skbs' 'bam_dmux_gate' \
+		 'bam_dmux_rearm' 'bam_dmux_reopen_work' 'bam_dmux_pc_is_up' \
+			'bam_dmux_can_touch' 'bam_dmux_send_cmd_locked' \
+		 'struct delayed_work reopen_work;' 'DECLARE_BITMAP(replay_channels' \
+		 'bool dead;' 'bool replay_pending;' 'bool pm_ref;' 'IRQCHIP_STATE_LINE_LEVEL' \
+		 'spinlock_t rx_lock;' 'bool rx_stopped;' \
+		 'struct delayed_work rx_refill_work;' 'struct delayed_work tx_wakeup_work;' 'DECLARE_BITMAP(rx_refill_pending' \
+		 'queue_delayed_work(system_wq, &dmux->tx_wakeup_work, 0);' \
+			 'pending = atomic_long_read(&dmux->tx_deferred_skb);' \
+			 'atomic_long_fetch_and(~BIT(i), &dmux->tx_deferred_skb);' \
+			 'atomic_long_set(&dmux->tx_deferred_skb, 0);' 'pm_runtime_put_noidle(dmux->dev);' \
+			 'bam_dmux_rx_queue_retry(dmux, slot);' 'cancel_delayed_work_sync(&dmux->rx_refill_work);' \
+		 'if (dma_submit_error(desc->cookie))' 'Failed to submit TX DMA buffer' \
+			 'Wait for any DMA/MMIO operation that passed the dead check.' \
+			 'bam_dmux_channel_is_open(dmux, bndev->ch)' \
+		 'BAM_DMUX_MAX_MTU' 'dev->max_mtu = BAM_DMUX_MAX_MTU;' \
+		 'netif_device_attach(netdev);' 'netif_device_detach(netdev);' \
+		 'IRQF_NO_AUTOEN' 'restart_pending' 'rearm_lock' \
+		 'READ_ONCE(dmux->dead)' 'WRITE_ONCE(dmux->dead, true);' \
+		 'bam_dmux_gate(dmux, false);' 'bam_dmux_gate(dmux, true);' 'mutex_trylock(&dmux->rearm_lock)' 'synchronize_net();' 'cancel_delayed_work_sync(&dmux->reopen_work);' \
+		 'schedule_delayed_work(&dmux->reopen_work,' 'bam_dmux_power_off(dmux)' 'dmaengine_release_channel_offline(dmux->tx);' 'dmaengine_release_channel_offline(dmux->rx);' \
+		 'dmaengine_quiesce_offline(chan);' 'static void bam_dmux_quiesce_dma' \
+		 'WRITE_ONCE(dmux->replay_pending, false);' 'BAM_DMUX_CMD_OPEN' \
+			 'bam_dmux_finish_replay' 'clear_bit(hdr->ch, dmux->replay_channels);' \
+			 'Only the remote OPEN confirms replay; local DMA completion does not.' \
+			 'BAM_DMUX_REMOTE_TIMEOUT' \
+		 'WRITE_ONCE(dmux->restart_pending, false);' 'bam_dmux_subdev_unprepare' \
+		 'mutex_lock(&dmux->rproc->lock);' 'dmux->netdevs[i] = NULL;'; do
 	grep -Fq "$g" "$KPD/912-pm8916-bam-dmux-ssr.patch" \
 		|| { echo "!! 912 补丁缺 $g 这一笔，多半是复制错了文件或版本不对"; u01_fail=1; }
 done
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_skb_dma_submit_tx \
+	| grep -Fq 'if (dma_submit_error(desc->cookie))'; then
+	echo "!! 912 的 TX submit 没有检查 dmaengine_submit 错误，失败 skb 会永久占住环槽"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_netdev_start_xmit \
+	| awk '
+		/if \(!mutex_trylock\(&dmux->rearm_lock\)\)/ { waiting = 1; next }
+		waiting && /return NETDEV_TX_BUSY;/ { busy = 1; waiting = 0 }
+		waiting && /dev_kfree_skb/ { bad = 1 }
+		END { exit !(busy && !bad) }'; then
+	echo "!! 912 的 xmit 抢不到 rearm_lock 时丢了 skb，网络栈无法重试"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_send_cmd_locked \
+	| awk '
+		/pm_runtime_get_sync\(dmux->dev\);/ { get = NR }
+		/if \(ret < 0\)/ && get && !failed { failed = NR }
+		/pm_runtime_put_noidle\(dmux->dev\);/ && failed && !put { put = NR }
+		END { exit !(get && failed > get && put > failed) }'; then
+	echo "!! 912 的 send_cmd PM resume 失败没有归还 usage count"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_drop_skbs \
+	| grep -Fq 'atomic_long_set(&dmux->tx_deferred_skb, 0);'; then
+	echo "!! 912 的低电 drop 没清延迟发送位图，恢复后 TX 会永久停滞"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_tx_wakeup_work \
+	| awk '
+		/pending = atomic_long_read\(&dmux->tx_deferred_skb\);/ { read = NR }
+		/bam_dmux_skb_dma_submit_tx/ && read && !submit { submit = NR }
+		/atomic_long_fetch_and\(~BIT\(i\), &dmux->tx_deferred_skb\);/ && submit && !clear { clear = NR }
+		/mod_delayed_work\(system_wq, &dmux->tx_wakeup_work,/ && clear && !retry { retry = NR }
+		/atomic_long_xchg\(&dmux->tx_deferred_skb/ { bad = 1 }
+		END { exit !(read && submit > read && clear > submit && retry > clear && !bad) }'; then
+	echo "!! 912 的 tx_wakeup 提前清了未提交位图，或临时失败后没有重试"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_cmd_open \
+	| awk '
+		/clear_bit\(hdr->ch, dmux->replay_channels\);/ && !ack { ack = NR }
+		/bam_dmux_finish_replay\(dmux\);/ && ack && !finish { finish = NR }
+		END { exit !(ack && finish > ack) }'; then
+	echo "!! 912 没有用远端 OPEN 确认重放，丢帧后 TX/RX 会永久为 0"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_cmd_close \
+	| awk '
+		/clear_bit\(hdr->ch, dmux->replay_channels\);/ && !ack { ack = NR }
+		/bam_dmux_finish_replay\(dmux\);/ && ack && !finish { finish = NR }
+		END { exit !(ack && finish > ack) }'; then
+	echo "!! 912 的远端 CLOSE 没有解除重放等待，MPSS 拒绝 OPEN 时会永久占住队列"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_finish_replay \
+	| awk '
+		/bitmap_empty\(dmux->replay_channels, BAM_DMUX_NUM_CH\)/ && !empty { empty = NR }
+		/WRITE_ONCE\(dmux->replay_pending, false\);/ && empty && !clear { clear = NR }
+		/bam_dmux_tx_wake_queues\(dmux\);/ && clear && !wake { wake = NR }
+		END { exit !(empty && clear > empty && wake > clear) }'; then
+	echo "!! 912 没有等全部远端 OPEN 确认后再开发送队列"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_power_on \
+	| awk '
+		/bam_dmux_can_touch\(dmux\)/ { checks++ }
+		/dma_request_chan\(dev, "rx"\)/ {
+			request = NR
+			if (p2 ~ /if \(!bam_dmux_can_touch\(dmux\)\)/ && p1 ~ /return false;/) recheck = 1
+		}
+		{ p2 = p1; p1 = $0 }
+		END { exit !(request && recheck && checks >= 4) }'; then
+	echo "!! 912 的 power_on 没有紧挨申请 RX 前复查 PC，或环槽提交前检查不足"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_rearm \
+	| awk '
+		/bam_dmux_send_cmd_locked\(bndev, BAM_DMUX_CMD_OPEN\);/ { sent = NR }
+		sent && /clear_bit\(ch, dmux->replay_channels\);/ { bad = 1 }
+		/bam_dmux_finish_replay\(dmux\);/ { finish = NR }
+		/BAM_DMUX_REMOTE_TIMEOUT/ && finish > sent && !retry { retry = NR }
+		END { exit !(sent && retry > finish && !bad) }'; then
+	echo "!! 912 本地提交 OPEN 后清了重放位，或没有按远端超时重试"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_subdev_stop \
+	| awk '
+		/bam_dmux_gate\(dmux, false\);/ && !gate { gate = NR }
+		/bam_dmux_quiesce_dma\(dmux\);/ && gate && !quiesce { quiesce = NR }
+		END { exit !(gate && quiesce > gate) }'; then
+	echo "!! 912 的 stop 没有封门后静默 provider IRQ/tasklet，断电前仍有 MMIO 窗口"; u01_fail=1
+fi
+if u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_subdev_stop \
+	| grep -Eq 'bam_dmux_tx_flush|bam_dmux_power_off|bam_dmux_drop_skbs|dmaengine_terminate|dma_release_channel|dmaengine_release_channel_offline'; then
+	echo "!! 912 在 q6v5 断电前复位/释放 BAM pipe，仍活动的 MSS 会撞 BAM fatal"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_subdev_unprepare \
+	| grep -Fq 'bam_dmux_drop_skbs(dmux);'; then
+	echo "!! 912 断电后的 unprepare 没有离线释放 DMA"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_pc_irq \
+	| awk '
+		/WRITE_ONCE\(dmux->dead, true\);/ && !dead { dead = NR }
+		/mutex_lock\(&dmux->rearm_lock\);/ && dead && !barrier { barrier = NR }
+		/mutex_unlock\(&dmux->rearm_lock\);/ && barrier && !unlock { unlock = NR }
+		/bam_dmux_gate\(dmux, false\);/ && unlock && !gate { gate = NR }
+		/bam_dmux_quiesce_dma\(dmux\);/ && gate && !quiesce { quiesce = NR }
+		/bam_dmux_pc_ack\(dmux\);/ && quiesce && !ack { ack = NR }
+		END { exit !(dead && barrier > dead && unlock > barrier && gate > unlock && quiesce > gate && ack > quiesce) }'; then
+	echo "!! 912 的 pc 掉线没有按在途屏障->封门->静默 provider->ack 的顺序执行"; u01_fail=1
+fi
 if grep -Eq '^\+.*(wait_for_completion_timeout|wait_event_timeout)' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
 	echo "!! 912 补丁把 pc-ack 等待又带回来了（原厂 MPSS 不回），resume 必超时 latch RPM_ERROR"; u01_fail=1
 fi
 if grep -Eq '^\+.*bam_dmux_pc_vote\(dmux, false\)' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
 	echo "!! 912 补丁还留着往下投票，RX 会被 modem 侧掉电拆走"; u01_fail=1
 fi
-# 实测：重启后的 MPSS 不会自己补 CMD_OPEN，只会应答 ndo_open 发的那条。一 detach，
-# ip link set wwan0 up 就变 ENETDOWN，等于把唯一能开通道的路也堵死——不许出现在 912 里。
-if grep -Eq '^\+.*netif_device_detach' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
-	echo "!! 912 补丁把网卡 detach 了，重启后 wwan0 会卡在 ENETDOWN 打不开"; u01_fail=1
+if grep -Fq 'atomic_long_clear_bit(' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 补丁调用了不存在的 atomic_long_clear_bit API，内核无法编译"; u01_fail=1
+fi
+# 实测：重启后的 MPSS 不会自己补 CMD_OPEN，必须由驱动重放或 ndo_open 再发。
+# SSR 的 gate/rearm 不能 detach；只有远端显式 CLOSE 才 detach，显式 OPEN 再 attach。
+if grep -Eq '^\+.*dev->max_mtu = BAM_DMUX_MAX_DATA_SIZE;' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 的 max_mtu 没给 4 字节对齐留空间，2040 字节负载会写成 2052 字节越界"; u01_fail=1
+fi
+if grep -Eq '^\+.*if \(ret <= 0\)' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 把 pm_runtime_get_sync 的成功 0 当失败了"; u01_fail=1
+fi
+if grep -Fq 'if (active > 0)' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 补丁漏记 pm_runtime_get 的引用，deferred TX 会把 runtime-PM 计数永久抬住"; u01_fail=1
+fi
+# 913 必须同时落到 provider、DMAengine core 和 public header，只改一行不算。
+[ -f "$KPD/913-pm8916-bam-dma-sync.patch" ]                             || { echo "!! $KPD/913-pm8916-bam-dma-sync.patch 不在位，低电释放会碰 BAM MMIO"; u01_fail=1; }
+for g in '^--- a/drivers/dma/qcom/bam_dma.c' '^--- a/include/linux/dmaengine.h' '^--- a/drivers/dma/dmaengine.c'; do
+	grep -q "$g" "$KPD/913-pm8916-bam-dma-sync.patch" \
+		|| { echo "!! 913 补丁缺路径 $g，文件拿错了或只打了一半"; u01_fail=1; }
+done
+for g in 'device_synchronize = bam_dma_synchronize;' 'device_free_chan_resources_offline = bam_dma_free_chan_offline;' \
+		 'device_quiesce_offline = bam_dma_quiesce_offline;' \
+		 'static void bam_dma_synchronize' 'static void bam_dma_free_chan_offline' \
+		 'static void bam_dma_quiesce_offline' 'bool offline;' \
+			 'struct delayed_work irq_resume_work;' 'struct mutex irq_disable_lock;' \
+			 'mutex_init(&bdev->irq_disable_lock);' 'static void bam_dma_irq_resume_work' \
+			 'INIT_DELAYED_WORK(&bdev->irq_resume_work, bam_dma_irq_resume_work);' \
+			 'pm_runtime_put_noidle(bdev->dev);' 'mod_delayed_work(system_wq, &bdev->irq_resume_work,' \
+		 'atomic_t irq_disabled;' 'atomic_cmpxchg(&bdev->irq_disabled' 'disable_irq_nosync(bdev->irq);' \
+		 'dmaengine_desc_clear_reuse(&vd->tx);' 'bchan->reconfigure = 1;' 'bam_dma_enable_irq(bdev);' \
+		 'pm_runtime_resume_and_get(bdev->dev);' \
+			 'tasklet_kill(&bdev->channels[i].vc.task);' 'if (bdev->active_channels) {' \
+			 'Cannot resume BAM for removal:' \
+		 'Keep the hardware FIFO until the controller is reset on reallocation.' \
+		 'dma_chan_put(chan, false);' \
+		 'void (*device_free_chan_resources_offline)' 'void dmaengine_release_channel_offline' \
+		 'void (*device_quiesce_offline)' 'int dmaengine_quiesce_offline' \
+		 'static bool dma_release_channel_put' 'chan->client_count != 1' \
+		 'EXPORT_SYMBOL_GPL(dmaengine_quiesce_offline);' \
+		 'EXPORT_SYMBOL_GPL(dmaengine_release_channel_offline);' 'dma_release_channel_put(chan, true);'; do
+	grep -Fq "$g" "$KPD/913-pm8916-bam-dma-sync.patch" \
+		|| { echo "!! 913 补丁缺 $g 这一笔，多半是复制错了文件或版本不对"; u01_fail=1; }
+done
+if grep -Fq 'device_synchronize = vchan_synchronize;' "$KPD/913-pm8916-bam-dma-sync.patch"; then
+	echo "!! 913 还是旧同步钩子，停不掉 BAM 共享 IRQ/start tasklet"; u01_fail=1
+fi
+for u01_fn in bam_free_chan bam_pause bam_resume bam_start_dma; do
+	if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" "$u01_fn" \
+		| awk '
+			/pm_runtime_get_sync\(bdev->dev\);/ { get = NR }
+			/if \(ret < 0\)/ && get && !failed { failed = NR }
+			/pm_runtime_put_noidle\(bdev->dev\);/ && failed && !put { put = NR }
+			END { exit !(get && failed > get && put > failed) }'; then
+		echo "!! 913 的 $u01_fn PM resume 失败没有归还 usage count"; u01_fail=1
+	fi
+done
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_enable_irq \
+	| awk '
+		/atomic_cmpxchg\(&bdev->irq_disabled, 1, 0\)/ && !cas { cas = NR }
+		/return;/ && cas && !ret { ret = NR }
+		/enable_irq\(bdev->irq\);/ && ret && !enable { enable = NR }
+		END { exit !(cas && ret > cas && enable > ret) }'; then
+	echo "!! 913 enable helper 没有用 1->0 CAS 独占状态转换"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_irq \
+	| awk '
+		/pm_runtime_get_sync\(bdev->dev\);/ { get = NR }
+		/if \(ret < 0\)/ && get && !failed { failed = NR }
+		/pm_runtime_put_noidle\(bdev->dev\);/ && failed && !put { put = NR }
+		/atomic_cmpxchg\(&bdev->irq_disabled, 0, 1\)/ && put && !cas { cas = NR }
+		/disable_irq_nosync\(bdev->irq\);/ && cas && !disable { disable = NR }
+		/mod_delayed_work\(system_wq, &bdev->irq_resume_work,/ && disable && !retry { retry = NR }
+		/process_channel_irqs\(bdev\);/ && get && !process { process = NR }
+		END { exit !(get && failed > get && put > failed && cas > put && disable > cas && retry > disable && process > get) }'; then
+	echo "!! 913 IRQ resume 失败没有用 0->1 CAS 包住 PM 归还、nosync 屏蔽与重试入队"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_irq_resume_work \
+	| awk '
+		/if \(atomic_read\(&bdev->irq_disabled\) != 1\)/ && !guard { guard = NR }
+		/pm_runtime_resume_and_get\(bdev->dev\);/ && guard && !resume { resume = NR }
+		/bam_dma_enable_irq\(bdev\);/ && resume && !enable { enable = NR }
+		/mod_delayed_work\(system_wq, &bdev->irq_resume_work,/ && resume && !retry { retry = NR }
+		END { exit !(guard && resume > guard && enable > resume && retry > resume) }'; then
+	echo "!! 913 缺少 IRQ runtime PM 恢复后的禁用中门、enable 与失败重试"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_disable_irq \
+	| awk '
+		/mutex_lock\(&bdev->irq_disable_lock\);/ && !lock { lock = NR }
+		/atomic_xchg\(&bdev->irq_disabled, 2\)/ && lock && !first { first = NR }
+		/cancel_delayed_work_sync\(&bdev->irq_resume_work\);/ && first && !cancel { cancel = NR }
+		/if \(!was_disabled\)/ && cancel && !guard { guard = NR }
+		/disable_irq\(bdev->irq\);/ && guard && !disable { disable = NR }
+		/synchronize_irq\(bdev->irq\);/ && disable && !sync { sync = NR }
+		/tasklet_kill\(&bdev->task\);/ && sync && !task { task = NR }
+		/cancel_delayed_work_sync\(&bdev->irq_resume_work\);/ && task && !cancel2 { cancel2 = NR }
+		/atomic_set\(&bdev->irq_disabled, 1\);/ && cancel2 && !rearm { rearm = NR }
+		/mutex_unlock\(&bdev->irq_disable_lock\);/ && rearm && !unlock { unlock = NR }
+		END { exit !(lock && first > lock && cancel > first && guard > cancel && disable > guard && sync > disable && task > sync && cancel2 > task && rearm > cancel2 && unlock > rearm) }'; then
+	echo "!! 913 离线静默没有三态封门、同步硬中断并幂等确认永久屏蔽"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_alloc_chan \
+	| awk '
+		/pm_runtime_resume_and_get\(bdev->dev\);/ && !resume { resume = NR }
+		/bam_reset\(bdev\);/ && resume && !reset { reset = NR }
+		/bchan->offline = false;/ && reset && !offline { offline = NR }
+		/bam_dma_enable_irq\(bdev\);/ && offline && !irq { irq = NR }
+		END { exit !(resume && reset > resume && offline > reset && irq > offline) }'; then
+	echo "!! 913 首次申请没有先 resume/reset、清 offline 标记再打开 IRQ"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_alloc_chan \
+	| awk '
+		/if \(ret < 0\)/ { rollback = 1 }
+		rollback && /if \(allocated\) \{/ { guarded = 1 }
+		rollback && /bchan->fifo_virt = NULL;/ {
+			if (guarded) cleared = 1; else unguarded = 1
+		}
+		rollback && /^\t\t\}/ { rollback = 0 }
+		END { exit !(guarded && cleared && !unguarded) }'; then
+	echo "!! 913 上电失败会清掉离线保留的 FIFO 指针，或释放了并非本轮分配的 FIFO"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_synchronize \
+	| awk '/vchan_synchronize\(to_virt_chan\(chan\)\);/ { count++ } END { exit count == 2 ? 0 : 1 }'; then
+	echo "!! 913 普通同步没有在第二次停 start tasklet 后再次等待 vchan completion"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_quiesce_offline \
+	| awk '
+		/bam_dma_disable_irq\(bdev\);/ && !disable { disable = NR }
+		/tasklet_kill\(&bdev->channels\[i\].vc.task\);/ && disable { task = NR }
+		END { exit !(disable && task > disable) }'; then
+	echo "!! 913 的 offline quiesce 没有先停共享 IRQ 再等全部 vchan tasklet"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_free_chan_offline \
+	| awk '
+		/if \(!bchan->fifo_virt \|\| bchan->offline\)/ { guard = NR }
+		/bchan->offline = true;/ && guard && !offline { offline = NR }
+		/bdev->active_channels--;/ && offline { decrement = NR }
+		END { exit !(guard && offline > guard && decrement > offline) }'; then
+	echo "!! 913 的 offline release 缺重复释放守卫，可能把 active_channels 减成负数"; u01_fail=1
+fi
+if u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_free_chan_offline \
+	| grep -Eq 'dma_free_wc|bchan->fifo_virt = NULL;'; then
+	echo "!! 913 离线释放仍释放硬件可能引用的 FIFO"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_remove \
+	| awk '
+		/bam_dma_disable_irq\(bdev\);/ && !disable { disable = NR }
+		/tasklet_kill\(&bdev->channels\[i\].vc.task\);/ && disable && !task { task = NR }
+		/if \(bdev->active_channels\) \{/ && task && !active { active = NR }
+		/pm_runtime_resume_and_get\(bdev->dev\);/ && active && !resume { resume = NR }
+		/bam_dma_terminate_all\(&bchan->vc.chan\);/ && resume && !terminate { terminate = NR }
+		/pm_runtime_force_suspend\(&pdev->dev\);/ {
+			if (terminate && !suspend) suspend = NR; else bad = 1
+		}
+		/devm_free_irq\(bdev->dev, bdev->irq, bdev\);/ && suspend && !free_irq { free_irq = NR }
+		END { exit !(disable && task > disable && active > task && resume > active && terminate > resume && suspend > terminate && free_irq > suspend && !bad) }'; then
+	echo "!! 913 remove 没有先停 IRQ/tasklet、确认在线再清 DMA，或 force suspend 顺序错误"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_remove \
+	| awk '
+		/if \(ret < 0\) \{/ { failed = 1 }
+		failed && /if \(bchan->fifo_virt && !bchan->offline\)/ { guarded = 1 }
+		failed && /bam_dma_free_chan_offline/ && guarded { offline_free = 1 }
+		failed && /dma_free_wc/ && offline_free { fifo_free = 1 }
+		failed && /bdev->active_channels = 0;/ && fifo_free { cleared = 1 }
+		failed && /^\t\t\} else \{/ { failed = 0 }
+		END { exit !(guarded && offline_free && fifo_free && cleared) }'; then
+	echo "!! 913 remove 在 runtime PM resume 失败后没有跳过 offline 通道、释放其余软件描述符和保留 FIFO"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_remove \
+	| awk '
+		/if \(!bchan->offline\)/ { guarded = 1; next }
+		/bam_dma_terminate_all\(&bchan->vc.chan\);/ {
+			if (!guarded) bad = 1
+			terminate++
+			guarded = 0
+		}
+		END { exit !(terminate && !bad) }'; then
+	echo "!! 913 remove 的在线清理仍 terminate 已 offline 的通道"; u01_fail=1
+fi
+if ! u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_remove \
+	| awk '
+		/^\t\} else \{/ { offline = 1 }
+		offline && /dma_free_wc/ { fifo_free = 1 }
+		offline && /writel_relaxed|readl_relaxed|bam_addr\(|bam_dma_terminate_all/ { bad = 1 }
+		END { exit !(fifo_free && !bad) }'; then
+	echo "!! 913 remove 的 active_channels=0 分支仍碰 MMIO，或没有释放保留 FIFO"; u01_fail=1
+fi
+if u01_patch_func "$KPD/913-pm8916-bam-dma-sync.patch" bam_dma_remove \
+	| grep -Fq 'bam_dma_enable_irq(bdev);'; then
+	echo "!! 913 remove 在清理 FIFO 前重新打开了 IRQ"; u01_fail=1
 fi
 # 设备侧实测过两条硬禁忌，写进内核就是雷：unbind 活着的 bam-dmux（MSS 断电态）
 # = 整机硬复位；拿内核符号地址喂 devmem（高通 VA != PA）= 当场 panic。
@@ -740,7 +1094,7 @@ if [ "$u01_fail" != 0 ]; then
 	ls -l "$OVL/etc/" 2>&1 | sed 's/^/   /'
 	exit 1
 fi
-echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ 充电压 4.35 V×2 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + ramoops（cell 数已和 dtsi 兄弟对过、三个 size 在窗口内）+ 崩溃日志开机归档 + 覆盖层用户件齐全（拔线钩子/频段锁/网卡看门狗/两颗 qmi 空壳）+ 本机原厂基带固件 22 件 + 原厂 WCNSS 9 件 + libffi/mcopy 就位 + netfilter 已合一 =="
+echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ 充电压 4.35 V×2 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + ramoops（cell 数已和 dtsi 兄弟对过、三个 size 在窗口内）+ 崩溃日志开机归档 + 覆盖层用户件齐全（拔线钩子/频段锁/网卡看门狗/两颗 qmi 空壳）+ bam-dmux 911/912c + BAM DMA 913 completion 同步 + 本机原厂基带固件 22 件 + 原厂 WCNSS 9 件 + libffi/mcopy 就位 + netfilter 已合一 =="
 
 # ---- 7) 依赖缺口体检（只报，不拦）----
 # prepare-tmpinfo 扫全部 Makefile 时会把"某包依赖一个整棵树都不存在的包名"打成
