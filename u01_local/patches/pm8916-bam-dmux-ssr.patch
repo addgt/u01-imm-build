@@ -1,6 +1,6 @@
 --- a/drivers/net/wwan/qcom_bam_dmux.c
 +++ b/drivers/net/wwan/qcom_bam_dmux.c
-@@ -1,303 +1,423 @@
+@@ -1,303 +1,433 @@
  // SPDX-License-Identifier: GPL-2.0-only
  /*
   * Qualcomm BAM-DMUX WWAN network driver
@@ -316,8 +316,9 @@
  	struct bam_dmux_skb_dma *skb_dma;
  	struct bam_dmux_hdr *hdr;
  	struct sk_buff *skb;
++	unsigned long flags;
  	int ret;
- 
++
 +	if (!bam_dmux_can_touch(dmux)) {
 +		if (cmd == BAM_DMUX_CMD_CLOSE)
 +			return 0;
@@ -340,7 +341,7 @@
 +	}
 +	if (!bam_dmux_can_touch(dmux))
 +		return -EAGAIN;
-+
+ 
  	skb = alloc_skb(sizeof(*hdr), GFP_KERNEL);
  	if (!skb)
  		return -ENOMEM;
@@ -372,20 +373,29 @@
  
  	if (!bam_dmux_skb_dma_map(skb_dma, DMA_TO_DEVICE)) {
  		ret = -ENOMEM;
-+		goto tx_fail;
-+	}
-+
-+	if (!bam_dmux_can_touch(dmux)) {
-+		ret = -EAGAIN;
  		goto tx_fail;
  	}
  
++	if (!bam_dmux_can_touch(dmux)) {
++		ret = -EAGAIN;
++		goto tx_fail;
++	}
++
  	if (!bam_dmux_skb_dma_submit_tx(skb_dma)) {
  		ret = -EIO;
  		goto tx_fail;
  	}
  
  	dma_async_issue_pending(dmux->tx);
++	if (cmd == BAM_DMUX_CMD_OPEN) {
++		/* MPSS does not acknowledge every OPEN after a pc-line cycle. */
++		spin_lock_irqsave(&dmux->state_lock, flags);
++		set_bit(bndev->ch, dmux->remote_channels);
++		clear_bit(bndev->ch, dmux->replay_channels);
++		spin_unlock_irqrestore(&dmux->state_lock, flags);
++		dev_info(dmux->dev, "Local OPEN submitted on channel %u\n", bndev->ch);
++		bam_dmux_finish_replay(dmux);
++	}
  	return 0;
  
  tx_fail:
@@ -432,7 +442,7 @@
  	if (avail >= needed)
  		return 0;
  	return needed - avail;
-@@ -312,589 +432,1199 @@
+@@ -312,589 +442,1194 @@
  	struct bam_dmux_hdr *hdr;
  	int ret;
  
@@ -836,7 +846,7 @@
 +	if (__test_and_set_bit(hdr->ch, dmux->remote_channels))
  		dev_warn(dmux->dev, "Channel already open: %u\n", hdr->ch);
 +
-+	/* Only the remote OPEN confirms replay; local DMA completion does not. */
++	/* A duplicate remote OPEN also resolves any still-pending replay. */
 +	clear_bit(hdr->ch, dmux->replay_channels);
 +	if (!netdev)
 +		register_netdev = true;
@@ -1403,11 +1413,6 @@
 +	}
 +
 +	bam_dmux_finish_replay(dmux);
-+	spin_lock_irqsave(&dmux->state_lock, flags);
-+	if (!READ_ONCE(dmux->dead) && READ_ONCE(dmux->replay_pending))
-+		schedule_delayed_work(&dmux->reopen_work,
-+				      BAM_DMUX_REMOTE_TIMEOUT);
-+	spin_unlock_irqrestore(&dmux->state_lock, flags);
 +	goto out;
 +
 +retry:

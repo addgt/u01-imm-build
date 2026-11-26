@@ -436,7 +436,7 @@ else
 	echo "!! 仓库里没带 u01_local/patches/pm8916-bam-dmux-pc.patch，wwan0 还会被 RPM_ERROR 卡死"
 fi
 
-# ---- 912c：MSS 断电期间 bam-dmux 完全惰性，上电后重建并重放会话 -----------
+# ---- 912d：MSS 断电期间 bam-dmux 完全惰性，上电后重建并重放会话 -----------
 # run#20/912b 已证明主动 SSR 与自然 LTE 断言都不复位 AP，但冷启动/SSR 后
 # bearer 与 wwan0 的 TX/RX 恒为 0。冷启动时序显示 pc 掉线再抬线时网卡已经
 # running；912b 既复用失效 DMA channel，也没补发新 MPSS 实例需要的 CMD_OPEN。
@@ -448,7 +448,7 @@ fi
 # unprepare 统一走 offline release，纯软件停 IRQ/tasklet 并释放描述符，保留硬件 FIFO。
 # prepare 只清 restart_pending 并恢复 pc IRQ；unprepare 覆盖停止及启动失败回滚。
 # 抬线后完整释放旧 DMA，再重取 RX/TX，对仍 running 的通道逐个重放
-# CMD_OPEN；只有远端 OPEN 才确认重放，未确认通道按远端超时重试，全确认才开发队列。
+# CMD_OPEN；本地 OPEN 成功入队即开放通道并解除重放，不等待本机 MPSS 不补发的确认。
 # subdev 增删与 probe/remove 的 DMA 生命周期受 rproc->lock 保护；和 911 同一颗文件，
 # 串打顺序 911 -> 912 -> 913。
 # 远端显式 CLOSE/OPEN 才 attach/detach；SSR 路径始终保持 attached，靠 OPEN 重放恢复。
@@ -609,8 +609,9 @@ for g in 'rproc_add_subdev' 'bam_dmux_subdev_prepare' 'bam_dmux_subdev_stop' \
 		 'dmaengine_quiesce_offline(chan);' 'static void bam_dmux_quiesce_dma' \
 		 'WRITE_ONCE(dmux->replay_pending, false);' 'BAM_DMUX_CMD_OPEN' \
 			 'bam_dmux_finish_replay' 'clear_bit(hdr->ch, dmux->replay_channels);' \
-			 'Only the remote OPEN confirms replay; local DMA completion does not.' \
-			 'BAM_DMUX_REMOTE_TIMEOUT' \
+			 'set_bit(bndev->ch, dmux->remote_channels);' \
+			 'clear_bit(bndev->ch, dmux->replay_channels);' \
+			 'Local OPEN submitted on channel %u' \
 		 'WRITE_ONCE(dmux->restart_pending, false);' 'bam_dmux_subdev_unprepare' \
 		 'mutex_lock(&dmux->rproc->lock);' 'dmux->netdevs[i] = NULL;'; do
 	grep -Fq "$g" "$KPD/912-pm8916-bam-dmux-ssr.patch" \
@@ -636,6 +637,16 @@ if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_send_cmd_locke
 		END { exit !(get && failed > get && put > failed) }'; then
 	echo "!! 912 的 send_cmd PM resume 失败没有归还 usage count"; u01_fail=1
 fi
+if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_send_cmd_locked \
+	| awk '
+		/dma_async_issue_pending\(dmux->tx\);/ { issue = NR }
+		/if \(cmd == BAM_DMUX_CMD_OPEN\)/ && issue && !guard { guard = NR }
+		/set_bit\(bndev->ch, dmux->remote_channels\);/ && guard && !open { open = NR }
+		/clear_bit\(bndev->ch, dmux->replay_channels\);/ && open && !clear { clear = NR }
+		/bam_dmux_finish_replay\(dmux\);/ && clear && !finish { finish = NR }
+		END { exit !(issue && guard > issue && open > guard && clear > open && finish > clear) }'; then
+	echo "!! 912 本地 OPEN 入队后没有开放通道并解除重放，冷启动/SSR 后会静默丢包"; u01_fail=1
+fi
 if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_drop_skbs \
 	| grep -Fq 'atomic_long_set(&dmux->tx_deferred_skb, 0);'; then
 	echo "!! 912 的低电 drop 没清延迟发送位图，恢复后 TX 会永久停滞"; u01_fail=1
@@ -657,7 +668,7 @@ if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_cmd_open \
 		/clear_bit\(hdr->ch, dmux->replay_channels\);/ && !ack { ack = NR }
 		/bam_dmux_finish_replay\(dmux\);/ && ack && !finish { finish = NR }
 		END { exit !(ack && finish > ack) }'; then
-	echo "!! 912 没有用远端 OPEN 确认重放，丢帧后 TX/RX 会永久为 0"; u01_fail=1
+	echo "!! 912 的重复远端 OPEN 没有幂等解除重放，会占住发送队列"; u01_fail=1
 fi
 if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_cmd_close \
 	| awk '
@@ -672,7 +683,7 @@ if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_finish_replay 
 		/WRITE_ONCE\(dmux->replay_pending, false\);/ && empty && !clear { clear = NR }
 		/bam_dmux_tx_wake_queues\(dmux\);/ && clear && !wake { wake = NR }
 		END { exit !(empty && clear > empty && wake > clear) }'; then
-	echo "!! 912 没有等全部远端 OPEN 确认后再开发送队列"; u01_fail=1
+	echo "!! 912 没有等全部本地/远端 OPEN 成功处理完再开发送队列"; u01_fail=1
 fi
 if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_power_on \
 	| awk '
@@ -689,10 +700,10 @@ if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_rearm \
 	| awk '
 		/bam_dmux_send_cmd_locked\(bndev, BAM_DMUX_CMD_OPEN\);/ { sent = NR }
 		sent && /clear_bit\(ch, dmux->replay_channels\);/ { bad = 1 }
-		/bam_dmux_finish_replay\(dmux\);/ { finish = NR }
-		/BAM_DMUX_REMOTE_TIMEOUT/ && finish > sent && !retry { retry = NR }
-		END { exit !(sent && retry > finish && !bad) }'; then
-	echo "!! 912 本地提交 OPEN 后清了重放位，或没有按远端超时重试"; u01_fail=1
+		/bam_dmux_finish_replay\(dmux\);/ && sent && !finish { finish = NR }
+		sent && (/READ_ONCE\(dmux->replay_pending\)/ || /BAM_DMUX_REMOTE_TIMEOUT/) { bad = 1 }
+		END { exit !(sent && finish > sent && !bad) }'; then
+	echo "!! 912 本地 OPEN 后绕过 send_cmd 清重放位、没开发队列，或仍等本机 MPSS 不补发的确认"; u01_fail=1
 fi
 if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_subdev_stop \
 	| awk '
@@ -729,7 +740,7 @@ fi
 if grep -Fq 'atomic_long_clear_bit(' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
 	echo "!! 912 补丁调用了不存在的 atomic_long_clear_bit API，内核无法编译"; u01_fail=1
 fi
-# 实测：重启后的 MPSS 不会自己补 CMD_OPEN，必须由驱动重放或 ndo_open 再发。
+# 实测：重启后的 MPSS 不会自己补 CMD_OPEN；本地 OPEN 成功入队即开放通道。
 # SSR 的 gate/rearm 不能 detach；只有远端显式 CLOSE 才 detach，显式 OPEN 再 attach。
 if grep -Eq '^\+.*dev->max_mtu = BAM_DMUX_MAX_DATA_SIZE;' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
 	echo "!! 912 的 max_mtu 没给 4 字节对齐留空间，2040 字节负载会写成 2052 字节越界"; u01_fail=1
@@ -1150,7 +1161,7 @@ if [ "$u01_fail" != 0 ]; then
 	ls -l "$OVL/etc/" 2>&1 | sed 's/^/   /'
 	exit 1
 fi
-echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ 充电压 4.35 V×2 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + ramoops（cell 数已和 dtsi 兄弟对过、三个 size 在窗口内）+ 崩溃日志开机归档 + 覆盖层用户件齐全（拔线钩子/频段锁/网卡看门狗/两颗 qmi 空壳）+ bam-dmux 911/912c + BAM DMA 913 completion 同步 + 本机原厂基带固件 22 件 + 原厂 WCNSS 9 件 + libffi/mcopy 就位 + netfilter 已合一 =="
+echo "== U01 注入自检通过：BMS-VM + LBC 充电（含 910 补门补丁：CHGR/BAT_IF/CHG_USB/MISC 四路门 + DT 兜底）+ 充电压 4.35 V×2 + bat:1..4 + 机型名=$U01_MODEL + DEBUG_FS + ramoops（cell 数已和 dtsi 兄弟对过、三个 size 在窗口内）+ 崩溃日志开机归档 + 覆盖层用户件齐全（拔线钩子/频段锁/网卡看门狗/两颗 qmi 空壳）+ bam-dmux 911/912d + BAM DMA 913 completion 同步 + 本机原厂基带固件 22 件 + 原厂 WCNSS 9 件 + libffi/mcopy 就位 + netfilter 已合一 =="
 
 # ---- 7) 依赖缺口体检（只报，不拦）----
 # prepare-tmpinfo 扫全部 Makefile 时会把"某包依赖一个整棵树都不存在的包名"打成
