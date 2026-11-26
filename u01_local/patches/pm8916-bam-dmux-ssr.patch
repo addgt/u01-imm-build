@@ -1,6 +1,6 @@
 --- a/drivers/net/wwan/qcom_bam_dmux.c
 +++ b/drivers/net/wwan/qcom_bam_dmux.c
-@@ -1,303 +1,422 @@
+@@ -1,303 +1,423 @@
  // SPDX-License-Identifier: GPL-2.0-only
  /*
   * Qualcomm BAM-DMUX WWAN network driver
@@ -127,6 +127,7 @@
 +static bool bam_dmux_pc_is_up(struct bam_dmux *dmux);
 +static bool bam_dmux_can_touch(struct bam_dmux *dmux);
 +static bool bam_dmux_rearm(struct bam_dmux *dmux);
++static void bam_dmux_quiesce_dma(struct bam_dmux *dmux);
 +static int bam_dmux_send_cmd_locked(struct bam_dmux_netdev *bndev, u8 cmd);
  
  static void bam_dmux_pc_vote(struct bam_dmux *dmux, bool enable)
@@ -431,7 +432,7 @@
  	if (avail >= needed)
  		return 0;
  	return needed - avail;
-@@ -312,589 +431,1200 @@
+@@ -312,589 +432,1199 @@
  	struct bam_dmux_hdr *hdr;
  	int ret;
  
@@ -516,7 +517,6 @@
 +
 +drop_unlocked:
 +	dev_kfree_skb_any(skb);
-+unlock:
 +	mutex_unlock(&dmux->rearm_lock);
 +	return NETDEV_TX_OK;
  }
@@ -547,7 +547,7 @@
 +	pending = atomic_long_read(&dmux->tx_deferred_skb);
  	if (!pending)
 -		goto out;
-+		goto out_put;
++		goto retry_put;
  
  	dev_dbg(dmux->dev, "pending skbs after wakeup: %#lx\n", pending);
  	for_each_set_bit(i, &pending, BAM_DMUX_NUM_SKB) {

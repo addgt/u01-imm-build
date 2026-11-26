@@ -527,9 +527,63 @@ u01_patch_func() {
 			if (copy) print line
 		}' "$1"
 }
+u01_check_labels() {
+	printf '%s\n' "$1" | awk '
+		/goto[ \t]+[A-Za-z_][A-Za-z0-9_]*[ \t]*;/ {
+			name = $0
+			sub(/^.*goto[ \t]+/, "", name)
+			sub(/[ \t]*;.*/, "", name)
+			gotos[name] = 1
+		}
+		/^[ \t]*[A-Za-z_][A-Za-z0-9_]*:/ {
+			name = $0
+			sub(/^[ \t]*/, "", name)
+			sub(/:.*/, "", name)
+			if (name != "default") labels[name] = 1
+		}
+		END {
+			bad = 0
+			for (name in gotos) if (!(name in labels)) {
+				print "goto 目标没有标签：" name
+				bad = 1
+			}
+			for (name in labels) if (!(name in gotos)) {
+				print "标签没有被 goto 使用：" name
+				bad = 1
+			}
+			exit bad
+		}'
+}
 [ -f "$KPD/912-pm8916-bam-dmux-ssr.patch" ]                             || { echo "!! $KPD/912-pm8916-bam-dmux-ssr.patch 不在位，modem 一重启 wwan0 就又成死数据面"; u01_fail=1; }
 grep -q '^--- a/drivers/net/wwan/qcom_bam_dmux.c' "$KPD/912-pm8916-bam-dmux-ssr.patch" \
 	|| { echo "!! 912 补丁动的不是 drivers/net/wwan/qcom_bam_dmux.c，文件拿错了"; u01_fail=1; }
+for u01_fn in $(awk '
+	/^[ +]/ {
+		line = substr($0, 2)
+		if (line ~ /^static / && index(line, "(") && line !~ /;[[:space:]]*$/) {
+			prefix = line
+			sub(/^static[ \t]+/, "", prefix)
+			sub(/[ \t]*\(.*/, "", prefix)
+			n = split(prefix, words, /[ \t]+/)
+			current = words[n]
+		}
+		if (current && (line ~ /goto[ \t]+[A-Za-z_][A-Za-z0-9_]*[ \t]*;/ ||
+			(line ~ /^[ \t]*[A-Za-z_][A-Za-z0-9_]*:/ && line !~ /^[ \t]*default:/)))
+			print current
+	}' "$KPD/912-pm8916-bam-dmux-ssr.patch" | sort -u); do
+	if ! u01_labels=$(u01_check_labels "$(u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" "$u01_fn")"); then
+		echo "!! 912 的 $u01_fn 有未配对或未使用的 C 标签：$u01_labels"; u01_fail=1
+	fi
+done
+if ! awk '
+	/^[ +]/ {
+		line = substr($0, 2)
+		if (line == "static void bam_dmux_quiesce_dma(struct bam_dmux *dmux);") decl = NR
+		if (!first && line ~ /bam_dmux_quiesce_dma\(dmux\);/) first = NR
+	}
+	END { exit !(decl && first > decl) }' "$KPD/912-pm8916-bam-dmux-ssr.patch"; then
+	echo "!! 912 的 bam_dmux_quiesce_dma 前置声明缺失或晚于首次调用，内核无法编译"; u01_fail=1
+fi
 for g in 'rproc_add_subdev' 'bam_dmux_subdev_prepare' 'bam_dmux_subdev_stop' \
 		 'bam_dmux_tx_flush' 'bam_dmux_drop_skbs' 'bam_dmux_gate' \
 		 'bam_dmux_rearm' 'bam_dmux_reopen_work' 'bam_dmux_pc_is_up' \
@@ -589,12 +643,14 @@ fi
 if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_tx_wakeup_work \
 	| awk '
 		/pending = atomic_long_read\(&dmux->tx_deferred_skb\);/ { read = NR }
+		/if \(!pending\)/ && read && !empty { empty = NR }
+		/goto retry_put;/ && empty && !target { target = NR }
 		/bam_dmux_skb_dma_submit_tx/ && read && !submit { submit = NR }
 		/atomic_long_fetch_and\(~BIT\(i\), &dmux->tx_deferred_skb\);/ && submit && !clear { clear = NR }
 		/mod_delayed_work\(system_wq, &dmux->tx_wakeup_work,/ && clear && !retry { retry = NR }
 		/atomic_long_xchg\(&dmux->tx_deferred_skb/ { bad = 1 }
-		END { exit !(read && submit > read && clear > submit && retry > clear && !bad) }'; then
-	echo "!! 912 的 tx_wakeup 提前清了未提交位图，或临时失败后没有重试"; u01_fail=1
+		END { exit !(read && empty > read && target > empty && submit > read && clear > submit && retry > clear && !bad) }'; then
+	echo "!! 912 的 tx_wakeup 空 pending 跳转目标不对、提前清了未提交位图，或临时失败后没有重试"; u01_fail=1
 fi
 if ! u01_patch_func "$KPD/912-pm8916-bam-dmux-ssr.patch" bam_dmux_cmd_open \
 	| awk '
